@@ -22,23 +22,15 @@ Description of setup
 */
 function setup() {
   createCanvas(500,500);
-  background(255);
+  background(127,255,127);
   rectMode(CENTER);
-  noStroke();
+  //noStroke();
   fill(200);
-  rect(250,250,400,400);
-  fill(255,0,0,127);
-  rect(250,250,350,350);
-  fill(175);
   rect(250,250,300,300);
-  fill(0,255,0,127);
-  rect(250,250,250,250);
-  fill(150);
-  rect(250,250,200,200);
-  fill(0,0,255,127);
-  rect(250,250,150,150);
-  fill(125);
-  rect(250,250,100,100);
+  ellipse(200,200,50,50);
+  ellipse(300,200,50,50);
+  rect(250,200,25,200);
+  arc(250,300,200,100,0,PI/2);
 }
 
 
