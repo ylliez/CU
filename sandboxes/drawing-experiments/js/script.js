@@ -23,8 +23,12 @@ Description of setup
 function setup() {
   createCanvas(500,500);
   background(127, 255, 127);
-  line(0,0,500,500);
-  rect(200,200,100,100);
+  rectMode(CENTER);
+  rect(250,250,300,300);
+  ellipse(200,200,50,50);
+  ellipse(300,200,50,50);
+  rect(250,200,50,200);
+  arc(250,300,200,100,0,PI/2);
 }
 
 
