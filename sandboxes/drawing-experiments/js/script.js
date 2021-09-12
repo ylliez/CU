@@ -23,16 +23,14 @@ Description of setup
 function setup() {
   createCanvas(500,500);
   background(255, 127, 127);
-  rectMode(CENTER);
-  stroke(0,0,255);
-  fill(127,255,127);
-  rect(250,250,400,400);
-  fill(255,255,127);
-  rect(250,250,300,300);
-  fill(127,127,255);
-  rect(250,250,200,200);
-  fill(127,255,122557);
-  rect(250,250,100,100);
+  fill(255,0,0);
+  rect(0,0,250,250);
+  fill(254,0,0);
+  rect(250,0,250,250);
+  fill(235,0,0);
+  rect(0,250,250,250);
+  fill(200,0,0);
+  rect(250,250,250,250);
 }
 
 
