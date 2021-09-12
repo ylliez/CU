@@ -1,9 +1,8 @@
-/**
-Title of Project
-Author Name
+/*
+Face Drawing Machine
+illiez
 
-This is a template. You must fill in the title,
-author, and this description to match your project!
+Draws a simple face on the canvas
 */
 
 "use strict";
@@ -17,24 +16,37 @@ function preload() {
 }
 
 
-/**
-Description of setup
+/*
+setup()
+sets colour and draws a face made out of circles and a line
 */
 function setup() {
+  //create canvas
   createCanvas(500,500);
-  background(127,255,127);
-  rectMode(CENTER);
-  fill("#abcdef");
-  rect(250,250,300,300);
-  ellipse(200,200,50,50);
-  ellipse(300,200,50,50);
-  rect(250,200,25,200);
-  arc(250,300,200,100,0,PI/2);
+
+  //set background to millenial pink
+  background(255,200,200);
+
+  //draw face
+  ellipseMode(CENTER);
+  ellipse(250,250,200,200);
+
+  //draw eyes
+  fill(0);
+  //left eye
+  ellipse(200,225,20,20);
+  //right eye
+  ellipse(300,225,20,20);
+
+  //draw mouth
+  strokeWeight(10);
+  line(200,275,300,275);
 }
 
 
-/**
-Description of draw()
+/*
+draw()
+
 */
 function draw() {
 
