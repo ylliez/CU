@@ -1,8 +1,8 @@
 /*
-Face Drawing Machine
+Debugging script
 illiez
 
-Draws a simple face on the canvas
+debugging placeholder script
 */
 
 "use strict";
@@ -18,29 +18,15 @@ function preload() {
 
 /*
 setup()
-sets colour and draws a face made out of circles and a line
+debugging placeholder code
 */
 function setup() {
-  //create canvas
+  //make placeholder shape
   createCanvas(500,500);
-
-  //set background to millenial pink
-  background(255,200,200);
-
-  //draw face
+  bckground(255,200,200);
+  fill(0);
   ellipseMode(CENTER);
   ellipse(250,250,200,200);
-
-  //draw eyes
-  fill(0);
-  //left eye
-  ellipse(200,225,20,20);
-  //right eye
-  ellipse(300,225,20,20);
-
-  //draw mouth
-  strokeWeight(10);
-  line(200,275,300,275);
 }
 
 
