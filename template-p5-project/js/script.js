@@ -21,7 +21,7 @@ function preload() {
 Description of setup
 */
 function setup() {
-  background(0, 0, 0);
+
 }
 
 
