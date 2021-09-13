@@ -21,29 +21,30 @@ draws alien
 */
 function setup() {
 //create canvas
-createCanvas(500,500);
+createCanvas(640,480);
 //set background colour
 background(255,209,220);
 //draw body
+noStroke();
+fill(127);
+ellipse(320,480,300,200);
 //draw head
+fill(90);
+ellipse(320,240,200,400);
 //draw eyes
+fill(0);
+ellipse(260,240,25,100);
+ellipse(380,240,25,100);
 //draw nostrils
+fill(25);
+ellipse(305,280,10,10);
+ellipse(335,280,10,10);
 //draw mouth
+stroke(255,0,0);
+strokeWeight(3);
+rectMode(CENTER);
+rect(320,320,100,25)
 }
-
-/* Millenial pink
-createCanvas(500,500);
-//set background colour
-background(255,255,255);
-fill(255,209,220);
-rect(0,0,250,250);
-fill(209,255,216);
-rect(250,0,250,250);
-fill(209,255,220);
-rect(0,250,250,250);
-fill(220,255,209);
-rect(250,250,250,250);
-*/
 
 /**
 Description of draw()
