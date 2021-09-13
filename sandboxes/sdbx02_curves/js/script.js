@@ -25,17 +25,9 @@ function setup() {
   background(0);
   stroke(255);
   noFill();
-  bezier(0,0,width/3,height/2,2*width/3,height/2,width,0);
-  bezier(0,0,width/3,height/1.9,2*width/3,height/1.9,width,0);
-  bezier(0,0,width/3,height/1.8,2*width/3,height/1.8,width,0);
-  bezier(0,0,width/3,height/1.7,2*width/3,height/1.7,width,0);
-  bezier(0,0,width/3,height/1.6,2*width/3,height/1.6,width,0);
-  bezier(0,0,width/3,height/1.5,2*width/3,height/1.5,width,0);
-  bezier(0,0,width/3,height/1.4,2*width/3,height/1.4,width,0);
-  bezier(0,0,width/3,height/1.3,2*width/3,height/1.3,width,0);
-  bezier(0,0,width/3,height/1.2,2*width/3,height/1.2,width,0);
-  bezier(0,0,width/3,height/1.1,2*width/3,height/1.1,width,0);
-  bezier(0,0,width/3,height,2*width/3,height,width,0);
+  for (let i = 2; i > 0; i -= 0.025) {
+    bezier(0,0,width/3,height/i,2*width/3,height/i,width,0);
+  }
 }
 
 
@@ -44,3 +36,4 @@ Description of draw()
 */
 function draw() {
 
+}
