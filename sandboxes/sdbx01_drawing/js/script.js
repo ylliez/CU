@@ -1,5 +1,5 @@
 /*
-Debugging script
+Learning - Drawing
 illiez
 
 debugging placeholder script
@@ -24,7 +24,7 @@ function setup() {
   //make placeholder shape
   createCanvas(500,500);
   bckground(255,200,200);
-  fill(0);
+  fill(255);
   ellipseMode(CENTER);
   ellipse(250,250,200,200);
 }

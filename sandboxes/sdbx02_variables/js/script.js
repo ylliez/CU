@@ -1,19 +1,11 @@
 /**
-Title of Project
-Author Name
-
-This is a template. You must fill in the title,
-author, and this description to match your project!
+Learning - Variables
+illiez
 */
 
 "use strict";
 
-
-/**
-Description of preload
-*/
 function preload() {
-
 }
 
 
@@ -21,7 +13,7 @@ function preload() {
 Description of setup
 */
 function setup() {
-
+  createCanvas(500,500);
 }
 
 
