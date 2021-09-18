@@ -9,34 +9,13 @@ in the center while still growing. The background goes from black to red.
 
 "use strict";
 
-let bg = {
-  r: 0,
-  b: 0,
-  g: 0
-}
+let bg = { r: 0, g: 0, b: 0 };
 
-let circle1 = {
-  x: 0,
-  y: 250,
-  size: 100,
-  fill: 255,
-  alpha: 200,
-  speed: 1,
-  growth: 1
-}
+let circle1 = { x: 0, y: 250, size: 100, fill: 255, alpha: 200, speed: 1, growth: 1 }
 
-let circle2 = {
-  x: 500,
-  y: 250,
-  size: 90,
-  fill: 255,
-  alpha: 200,
-  speed: -1,
-  proportion: 0.9
-}
+let circle2 = { x: 500, y: 250, size: 75, fill: 255, alpha: 200, speed: -1, proportion: 0.75 }
 
-function preload() {
-}
+function preload() { }
 
 function setup() {
   createCanvas(500,500);
