@@ -9,7 +9,7 @@ in the center while still growing. The background goes from black to red.
 
 "use strict";
 
-let bd = {
+let bg = {
   r: 0,
   b: 0,
   g: 0
@@ -45,8 +45,8 @@ function setup() {
 
 function draw() {
   // background
-  bd.r = map(circle1.size,100,width,0,255);
-  background(bd.r,bd.b,bd.g);
+  bg.r = map(circle1.size,100,width,0,255);
+  background(bg.r,bg.b,bg.g);
   // circle 1
   fill(circle1.fill,circle1.fill,circle1.fill,circle1.alpha);
   ellipse(circle1.x,circle1.y,circle1.size);
