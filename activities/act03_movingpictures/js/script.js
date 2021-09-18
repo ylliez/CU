@@ -35,6 +35,8 @@ let circle2 = {
   proportion: 0.9
 }
 
+function preload {}
+  
 function setup() {
   createCanvas(500,500);
   noStroke();
