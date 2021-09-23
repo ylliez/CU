@@ -10,13 +10,14 @@ author, and this description to match your project!
 
 
 let rectangle = {
-  x: 0,
-  y: 0,
-  size: 5,
+  x: 250,
+  y: 250,
+  size: 100,
   vx: 0,
   vy: 0,
   shade: 255,
-  sizeAngle: 0
+  sizeAngle: 0,
+  angle: 0
 }
 
 
@@ -38,21 +39,20 @@ function setup() {
 Description of draw()
 */
 function draw() {
-  rectangle.x += rectangle.vx;
-  rectangle.y += rectangle.vy;
-  rectangle.sizeAngle += 0.1;
-  rectangle.size = map(sin(rectangle.sizeAngle),-1,1,10,200);
+  //rectangle.x += rectangle.vx;
+  //rectangle.y += rectangle.vy;
+  rectangle.sizeAngle += 0.05;
+  rectangle.size = map(sin(rectangle.sizeAngle),-1,1,10,500);
   rectangle.size += random(-2,2);
   rectangle.shade = map(sin(rectangle.sizeAngle),-1,1,10,200);
+  rectangle.angle += 0.2;
 
   rectMode(CENTER);
   noFill();
 
-  /*let r = map(mouseX,0,width,0,255);
-  let g = map(mouseY,0,height,0,255);
-  stroke(r,g,255);*/
   stroke(rectangle.shade);
-  rect(rectangle.x,rectangle.y,rectangle.size,rectangle.size);
 
-
+  translate(rectangle.x, rectangle.y);
+  rotate(rectangle.angle);
+  rect(0,0,rectangle.size,rectangle.size);
 }
