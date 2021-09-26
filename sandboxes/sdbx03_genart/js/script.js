@@ -45,7 +45,7 @@ function draw() {
   rectangle.size = map(sin(rectangle.sizeAngle),-1,1,10,500);
   rectangle.size += random(-2,2);
   rectangle.shade = map(sin(rectangle.sizeAngle),-1,1,10,200);
-  rectangle.angle += 0.2;
+  rectangle.angle += 0.1;
 
   rectMode(CENTER);
   noFill();

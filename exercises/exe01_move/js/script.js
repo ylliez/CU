@@ -18,34 +18,40 @@ then deep
 let abyss = {
   x: 0,
   y: 0,
-  size: 0,
-  dsize: 0.5,
-  curve: 0,
-  dcurve: 0.5,
-  shade: 125
+  sizeX: 0,
+  sizeY: 0,
+  dsize: 1,
+  //shade: 125
 }
 
-let flame = {
-  x: 0,
-  y: 0,
-  size: 0,
-  //ksize: 0,
-  curve: 0,
-  dcurve: 0.5,
-  shade: 125
-}
+//array of flames (x,y,size,r,g,b)
+let flame1;
+let flame2;
+let flame3;
 
 let rain = {}
-
 
 /**
 Description of setup
 */
 function setup() {
   createCanvas(windowWidth,windowHeight);
-  //translate(windowWidth/2,windowHeight/2);
+  flame1 = createFlame(255,0,0);
+  flame2 = createFlame(255,127,0);
+  flame3 = createFlame(255,255,0);
+
+
 }
 
+function createFlame(r, g, b) {
+  let flame = { x: 0, y: 0, size: 0, r: r, g: g, b: b };
+  return flame;
+}
+
+/*function createFrame(x, y) {
+  let frame = { x: 0, y: 0, str: };
+  return frame;
+}*/
 
 /**
 Description of draw()
@@ -56,14 +62,69 @@ function draw() {
   translate(windowWidth/2,windowHeight/2);
   rectMode(CENTER);
   fill(0);
-  rect(0,0,abyss.size,abyss.size);
-  //rect(0,0,abyss.size,abyss.size,abyss.curve);
-  abyss.size += abyss.dsize;
-  //abyss.curve += abyss.dcurve;
-  flame.size = abyss.size + random(abyss.size) - 1;
-  console.log(flame.size);
+  rect(0,0,abyss.sizeX,abyss.sizeY);
+  stroke(255);
+
+  line(0,0,0,-abyss.sizeY/2);
+  line(0,0,abyss.sizeY/8,-abyss.sizeY/2);
+  line(0,0,abyss.sizeY/4,-abyss.sizeY/2);
+  line(0,0,abyss.sizeY/4+abyss.sizeY/8,-abyss.sizeY/2)
+  line(0,0,abyss.sizeX/2,-abyss.sizeY/2);
+  line(0,0,abyss.sizeX/2,-abyss.sizeY/4);
+  line(0,0,abyss.sizeX/2,-abyss.sizeY/4-abyss.sizeY/8);
+  line(0,0,abyss.sizeX/2,-abyss.sizeY/8);
+  line(0,0,abyss.sizeX/2,0);
+  line(0,0,abyss.sizeX/2,abyss.sizeY/8);
+  line(0,0,abyss.sizeX/2,abyss.sizeY/4+abyss.sizeY/8);
+  line(0,0,abyss.sizeX/2,abyss.sizeY/4);
+  line(0,0,abyss.sizeX/2,abyss.sizeY/2);
+  line(0,0,abyss.sizeY/4+abyss.sizeY/8,abyss.sizeY/2);
+  line(0,0,abyss.sizeY/4,abyss.sizeY/2);
+  line(0,0,abyss.sizeY/8,abyss.sizeY/2);
+  line(0,0,0,abyss.sizeY/2);
+
+  line(0,0,-abyss.sizeY/8,-abyss.sizeY/2);
+  line(0,0,-abyss.sizeY/4,-abyss.sizeY/2);
+  line(0,0,-abyss.sizeY/4-abyss.sizeY/8,-abyss.sizeY/2)
+  line(0,0,-abyss.sizeX/2,-abyss.sizeY/2);
+  line(0,0,-abyss.sizeX/2,-abyss.sizeY/4);
+  line(0,0,-abyss.sizeX/2,-abyss.sizeY/4-abyss.sizeY/8);
+  line(0,0,-abyss.sizeX/2,-abyss.sizeY/8);
+  line(0,0,-abyss.sizeX/2,0);
+  line(0,0,-abyss.sizeX/2,abyss.sizeY/8);
+  line(0,0,-abyss.sizeX/2,abyss.sizeY/4+abyss.sizeY/8);
+  line(0,0,-abyss.sizeX/2,abyss.sizeY/4);
+  line(0,0,-abyss.sizeX/2,abyss.sizeY/2);
+  line(0,0,-abyss.sizeY/4-abyss.sizeY/8,abyss.sizeY/2);
+  line(0,0,-abyss.sizeY/4,abyss.sizeY/2);
+  line(0,0,-abyss.sizeY/8,abyss.sizeY/2);
+  line(0,0,0,abyss.sizeY/2);
+
+
+
+
+
+
+
+
+
+
+
+  abyss.sizeY += abyss.dsize;
+  abyss.sizeY = constrain(abyss.sizeY,0,windowHeight);
+  abyss.sizeX = constrain(abyss.sizeX += abyss.dsize,0,windowWidth);
+
+  flame1.size = abyss.sizeX + random(abyss.sizeX);
+  flame2.size = abyss.sizeX + random(abyss.sizeX);
+  flame3.size = abyss.sizeX + random(abyss.sizeX);
+
+
   noFill();
+  //strokeWeight(abyss.size/100);
   stroke(255,0,0);
-  strokeWeight(abyss.size/100);
-  rect(0,0,flame.size,flame.size);
+  rect(0,0,flame1.size,flame1.size);
+  stroke(255,127,0);
+  rect(0,0,flame2.size,flame2.size);
+  stroke(255,255,0);
+  rect(0,0,flame3.size,flame3.size);
 }
