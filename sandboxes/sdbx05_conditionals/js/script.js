@@ -37,10 +37,16 @@ function draw() {
     circle.speed = -circle.speed; // Change the speed from positive to negative!
   }
 
-fill(circle.fill);
-if (mouseX < width/2) {
-  fill(255,0,0);
-}
+   fill(circle.fill);
+  // if (mouseX < width/3) { fill(255,0,0); }
+  // else if (mouseX > 2*width/3) { fill(0,0,255); }
+  // else { fill(0,255,0); }
+
+  // if (mouseX > width/3 && mouseX < 2*width/3) { fill(255,0,0); }
+  // else { fill(0,0,0); }
+
+  if (mouseX < width/3 || mouseX > 2*width/3) { fill(255,0,0); }
+  else { fill(0,0,0); }
 
   ellipse(circle.x, circle.y, circle.size);
 }
