@@ -8,28 +8,33 @@ author, and this description to match your project!
 
 "use strict";
 
-let displayCircle = false;
+let caterpillar = {
+  x: 150,
+  y: 200,
+  totalSegments: 100,
+  segmentSize: 6,
+  segmentSpacing: 5
+};
 
 function setup() {
   createCanvas(500, 500);
 }
 
 function draw() {
-  // if (mouseIsPressed) { background(255); }
-  // else { background(0); }
+  background(0);
+  noStroke();
+  fill(100, 200, 100); // A nice green
 
-  // if (keyIsPressed) { background(255);}
-  // else { background(0); }
+  // let x = caterpillar.x;
+  // let segmentsDrawn = 0;
+  // while (segmentsDrawn < caterpillar.totalSegments) {
+  //   ellipse(x, caterpillar.y, caterpillar.segmentSize);
+  //   x += caterpillar.segmentSpacing;
+  //   segmentsDrawn++;
 
-  if (mouseIsPressed) {
-    background(255);
-    displayCircle = true;
-  }
-  else {
-    background(0);
-  }
-
-  if (displayCircle) {
-    ellipse(width/2,height/2,100,100); 
+let x = caterpillar.x;
+  for (let i = 0; i < caterpillar.totalSegments; i++) {
+    ellipse(x, caterpillar.y, caterpillar.segmentSize);
+    x += caterpillar.segmentSpacing;
   }
 }
