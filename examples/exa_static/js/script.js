@@ -14,8 +14,15 @@ function draw() {
     let y = random(height);
     point(x,y);
   }
-  // while(keyIsPressed) {
-  //   console.log(keyIsPressed);
+
+  // let stop = keyIsPressed;
+  // while(stop) {
+  //   click = keyIsPressed;
+  //   console.log(click);
   // }
-  //   console.log(keyIsPressed);
+  // console.log(click);
+
+  // while(mouseX>255 && mouseX<500) {
+  // }
+
 }
