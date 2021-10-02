@@ -1,24 +1,37 @@
 // We need to know how many stars we want to draw in the sky
-let numStars = 100;
+let circle = {
+  x: undefined,
+  y: undefined,
+  size: 100
+};
+
+let dangerZone = {
+  x: undefined,
+  y: undefined,
+  size: 100
+}
 
 function setup() {
   createCanvas(500, 500);
-  // White stroke because we're using point() on black
-  stroke(255);
+  background(0);
+
+  dangerZone.x = width/2;
+  dangerZone.y = height/2;
+  stroke(255,0,0);
+  noFill();
+  ellipse(dangerZone.x,dangerZone.y,dangerZone.size)
+
+  circle.x = random(width);
+  circle.y = random(height);
+  let d = dist(circle.x,circle.y,dangerZone.x,dangerZone.y);
+  while (d < (circle.size/2 + dangerZone.size/2)) {
+    circle.x = random(width);
+    circle.y = random(height);
+  }
+  fill(0,255,255);
+  noStroke();
+  ellipse(circle.x,circle.y,circle.size);
 }
 
 function draw() {
-  // Black sky
-  background(0);
-  // randomSeed() lets us make random() predictable: it will generate the same sequence of numbers
-  // each time draw() is called
-  random(0);
-  // Our for loop counts from 0 to numStars
-  for (let i = 0; i < numStars; i++) {
-    // Choose a random x and y position on the canvas
-    let x = random(0, width);
-    let y = random(0, height);
-    // Draw a point (star) there
-    point(x, y);
-  }
 }
