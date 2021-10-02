@@ -10,6 +10,12 @@ function setup() {
 function draw() {
   background(0);
   for (let i = 0; i < qtyStars; i ++) {
-    point(random(500), random(500));
+    let x = random(width);
+    let y = random(height);
+    point(x,y);
   }
+  // while(keyIsPressed) {
+  //   console.log(keyIsPressed);
+  // }
+  //   console.log(keyIsPressed);
 }
