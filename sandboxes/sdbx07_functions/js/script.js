@@ -74,8 +74,8 @@ function moveTarget() {
   target.x = map(noise(target.tx),0,1,0,width);
   target.y = map(noise(target.ty),0,1,0,height);
 
-  target.tx += 0.01;
-  target.ty += 0.01;
+  target.tx += 0.03;
+  target.ty += 0.03;
 }
 
 function displayScore() {
