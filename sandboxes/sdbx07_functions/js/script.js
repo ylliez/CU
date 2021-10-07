@@ -58,12 +58,14 @@ function game() {
   background(0);
   score++;
 
+  moveTarget();
+  displayTarget()
+  displayScore();
+}
+
+function moveTarget() {
   target.x += target.vx;
   target.y += target.vy;
-
-  displayTarget()
-
-  displayScore();
 }
 
 function displayScore() {
