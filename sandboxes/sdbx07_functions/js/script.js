@@ -28,8 +28,6 @@ function setup() {
 
   target.x = startCircle.x;
   target.y = startCircle.y;
-  target.vx = random(-1,1);
-  target.vy = random(-1,1);
 }
 
 function draw() {
