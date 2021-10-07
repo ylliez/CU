@@ -14,6 +14,8 @@ let target = {
   size: 100,
   vx: undefined,
   vy: undefined,
+  tx: 0,
+  ty: 1000,
 }
 
 let state = 'title';
@@ -56,6 +58,7 @@ function title() {
 
 function game() {
   background(0);
+
   score++;
 
   moveTarget();
@@ -64,8 +67,17 @@ function game() {
 }
 
 function moveTarget() {
-  target.x += target.vx;
-  target.y += target.vy;
+  // target.x = map(random(),0,1,0,width);
+  // target.y = map(random(),0,1,0,height);
+
+  // target.x = map(noise(0),0,1,0,width);
+  // target.y = map(noise(0),0,1,0,height);
+
+  target.x = map(noise(target.tx),0,1,0,width);
+  target.y = map(noise(target.ty),0,1,0,height);
+
+  target.tx += 0.01;
+  target.ty += 0.01;
 }
 
 function displayScore() {
