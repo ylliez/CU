@@ -25,12 +25,12 @@ function draw() {
   score++;
 
   // Velocity-based movement
-  target.x += target.vx;
-  target.y += target.vy;
+  // target.x += target.vx;
+  // target.y += target.vy;
 
   // Mouse-based movement
-  // target.x = mouseX;
-  // target.y = mouseY;
+  target.x = mouseX;
+  target.y = mouseY;
 
   displayTarget();
 
