@@ -3,12 +3,10 @@ easiest is to scale image (crop) according to predefined canvas dims, or at leas
 */
 
 "use strict";
-
 let bgImage = undefined;
 
 let state = 'start'; //start, simulation
 
-let startInstructionTimer = 90;
 let startInstructionVisible = false;
 
 function preload() {
@@ -17,6 +15,11 @@ function preload() {
 
 function setup() {
   createCanvas(500,500);
+  setTimeout(showInstruction,2000);
+}
+
+function showInstruction() {
+  startInstructionVisible = true;
 }
 
 function draw() {
@@ -26,20 +29,11 @@ function draw() {
   else if (state === 'simulation') {
     simulation();
   }
-  // background(bgImage);
-
 }
 
 function start() {
   background(0);
 
-  startInstructionTimer--;
-  if(startInstructionTimer <= 0) {
-    startInstructionVisible = true;
-  }
-
-  // if(frameCount > 120) {
-  // if(millis() > 2000) {
    if(startInstructionVisible) {
     push();
     textAlign(CENTER,CENTER);
@@ -50,5 +44,11 @@ function start() {
 }
 
 function simulation() {
+  background(bgImage);
+}
 
+function mousePressed() {
+  if (state === 'start' && startInstructionVisible) {
+    state = 'simulation';
+  }
 }
