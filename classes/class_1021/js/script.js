@@ -48,7 +48,7 @@ function mouseInsideBalloon(balloon) {
 function mousePressed() {
   for (let i = 0; i < balloons.length; i++) {
     let balloon = balloons[i];
-    if (mouseInsideBalloon(balloon) && mousePressed && i === nextBalloon) {
+    if (mouseInsideBalloon(balloon) && i === nextBalloon) {
       balloon.popped = true;
       nextBalloon++;
     }
