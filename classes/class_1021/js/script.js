@@ -2,6 +2,7 @@
 
 let balloons = [];
 let numBalloons = 5;
+let nextBalloon = 0;
 
 function setup() {
   createCanvas(500,500);
@@ -47,7 +48,10 @@ function mouseInsideBalloon(balloon) {
 function mousePressed() {
   for (let i = 0; i < balloons.length; i++) {
     let balloon = balloons[i];
-    if (mouseInsideBalloon(balloon) && mousePressed) { balloon.popped = true; }
+    if (mouseInsideBalloon(balloon) && mousePressed && i === nextBalloon) {
+      balloon.popped = true;
+      nextBalloon++;
+    }
   }
 }
 
@@ -56,23 +60,19 @@ function keyPressed() { reset(); }
 function reset() {
   balloons = [];
   for (let i = 0; i < numBalloons; i++) {
-    let balloon = createBalloon(255,0,0);
-    balloons.push(balloon); //push equivalent to add
-  }
-  for (let i = 0; i < numBalloons; i++) {
-    let balloon = createBalloon(255,242,50);
+    let balloon = createBalloon();
     balloons.push(balloon); //push equivalent to add
   }
 }
 
-function createBalloon(r,g,b) {
+function createBalloon() {
   let balloon = {
     x: random(0,width),
     y: random(0,height),
     size: 75,
-    fill: color(r-100, g, b),
-    highlightedFill: color(r,g,b),
-    normalFill: color(r-100, g, b),
+    fill: color(210, 0, 0),
+    highlightedFill: color(255, 0, 0),
+    normalFill: color(190, 0, 0),
     popped: false
   };
   return balloon;
