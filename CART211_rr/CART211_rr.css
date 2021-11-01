@@ -1,7 +1,7 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
 
 body {
-  background-color: #ffd1dc;
+  background-color: darkred;
 }
 
 h1 {
@@ -21,16 +21,16 @@ p {
   text-indent: 40px;
 }
 
-footer{
+footer {
   position: fixed;
   bottom: 0;
-  left: 0;
   width: 100vw;
   text-align: center;
   font-size: 17px;
-  color: #000;
-  background-color: powderBlue;
+  background-color: #000;
+  color: #FFF;
 }
+footer i { color: #FFF; }
 
 a.imgPop img { display: none; }
 a.imgPop:hover img {
