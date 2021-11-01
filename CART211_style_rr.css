@@ -1,0 +1,35 @@
+body {
+  background-color: #ffd1dc;
+}
+
+h1 {
+  border: 5px solid #000000;
+  background-color: #b0e0e6;
+  color: #000000;
+  text-align: center;
+}
+
+h3 {
+  text-decoration: underline;
+  text-align: justify;
+  text-indent: 40px;
+}
+
+p {
+  text-indent: 40px;
+}
+
+footer{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  text-align: center;
+  font-size: 15px;
+  color: #000;
+  background-color: powderBlue;
+}
+
+.hidden {
+  color: inherit;
+}
