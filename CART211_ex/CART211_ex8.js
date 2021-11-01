@@ -1,5 +1,5 @@
 let lastTit = "TEST SWAP";
-let lastImg = "CART211_exImg1.jpg";
+let lastImg = "../CART211_media/vhugo.jpg";
 const audio1 = new Audio("CART211_exAud1.wav"); //constructor, creates *new* object
 const audio2 = new Audio("CART211_exAud2.mp3");
 let imgX = 0;
