@@ -1,7 +1,7 @@
 let lastTit = "TEST SWAP";
 let lastImg = "../CART211_media/vhugo.jpg";
-const audio1 = new Audio("CART211_exAud1.wav"); //constructor, creates *new* object
-const audio2 = new Audio("CART211_exAud2.mp3");
+const audio1 = new Audio("../CART211_media/boing.wav"); //constructor, creates *new* object
+const audio2 = new Audio("../CART211_media/derek_cloud9.mp3");
 let imgPos = 0;
 
 setInterval(moveImg,20); // function is the parameter of call, so no parentheses + # of ms
