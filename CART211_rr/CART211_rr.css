@@ -23,6 +23,10 @@ h5 {
   text-indent: 40px;
 }
 
+.q {
+  text-decoration: underline;
+}
+
 p {
   text-indent: 40px;
 }
