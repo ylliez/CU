@@ -24,10 +24,11 @@ h5 {
 }
 
 p {
-  text-indent: 100px;
+  text-indent: 40px;
 }
 
 footer {
+  padding: 10px;
   position: fixed;
   bottom: 0;
   width: 100vw;
