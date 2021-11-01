@@ -30,6 +30,24 @@ footer{
   background-color: powderBlue;
 }
 
+a.imgPop img { display: none; }
+a.imgPop:hover img {
+  display: block;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 50%;
+  border: 10px solid #ffffff;
+  border-radius: 8px;
+}
+
+.imgCenter {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .hidden {
   color: inherit;
 }
