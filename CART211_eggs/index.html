@@ -5,33 +5,44 @@
     <link rel="stylesheet" href="../CART211_main.css">
     <meta charset=“utf-8”>
     <style>
-    .sidenav{
-      height: 100%;
-      width: 200px;
-      position: fixed;
-      z-index: -1;
-      top: 0;
-      left: 0;
-      background-color: #111;
-      overflow-x: hidden;
-      padding-top: 200px;
-      /* margin-top: 200px; */
-    }
-    .sidenav a {
-      padding: 20px 20px 20px 15px;
-      text-decoration: none;
-      font-size: 25px;
-      color: #818181;
-      display: block;
-    }
-    .sidenav a:hover { color: #f1f1f1; width: 200px; }
+  * {box-sizing: border-box}
 
-    .main { margin-left: 210px; display: block; z-index: 2; }
+/* Set height of body and the document to 100% */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
 
-    @media screen and (max-height: 450px) {
-      .sidenav {padding-top: 15px;}
-      .sidenav a {font-size: 18px;}
-    }
+/* Style tab links */
+.tablink {
+  background-color: #555;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 25%;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: white;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+
+#Home {background-color: red;}
+#News {background-color: green;}
+#Contact {background-color: blue;}
+#About {background-color: orange;}
     </style>
   </head>
   <body>
@@ -76,6 +87,30 @@
         </ul>
       </div>
     </header>
+    <button class="tablink" onclick="openPage('Home', this, 'red')">Home</button>
+<button class="tablink" onclick="openPage('News', this, 'green')" id="defaultOpen">News</button>
+<button class="tablink" onclick="openPage('Contact', this, 'blue')">Contact</button>
+<button class="tablink" onclick="openPage('About', this, 'orange')">About</button>
+
+<div id="Home" class="tabcontent">
+  <h3>Home</h3>
+  <p>Home is where the heart is..</p>
+</div>
+
+<div id="News" class="tabcontent">
+  <h3>News</h3>
+  <p>Some news this fine day!</p>
+</div>
+
+<div id="Contact" class="tabcontent">
+  <h3>Contact</h3>
+  <p>Get in touch, or swing by for a cup of coffee.</p>
+</div>
+
+<div id="About" class="tabcontent">
+  <h3>About</h3>
+  <p>Who we are and what we do.</p>
+</div>
     <div class="sidenav">
       <ul>
         <li><a href=".">PROPOSAL</a></li>
@@ -92,5 +127,6 @@
       <img src=></img>
       <img id="hugo" src="../CART211_media/rplace"></img>
     </div>
+
     </body>
 </html>
