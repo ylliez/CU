@@ -25,7 +25,7 @@ h5 {
 
 .q {
   text-decoration: underline;
-  text-emphasis: bold;
+  font-weight: bold;
 }
 
 p {
