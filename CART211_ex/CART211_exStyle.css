@@ -9,3 +9,8 @@ div.ex8 {
   z-index = 1;
   cursor: url("cursor.gif"), auto;
 }
+
+#dragImg {
+  position: absolute;
+  z-index: -3;
+}
