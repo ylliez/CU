@@ -16,6 +16,8 @@ function onLoad() {
   // dragY = window.localStorage.getItem("storedY");
   document.getElementById('dragImg').style.left = dragX + "px";
   document.getElementById('dragImg').style.top = dragY + "px";
+  document.getElementById('showXPos').innerHTML = dragX + "px";
+  document.getElementById('showYPos').innerHTML = dragY + "px";
 }
 
 function mouseMove()
@@ -26,6 +28,8 @@ function mouseMove()
   document.getElementById('dragImg').style.left = dragX + "px";
   dragY = event.pageY - dragOffsetV;
   document.getElementById('dragImg').style.top = dragY + "px";
+  document.getElementById('showXPos').innerHTML = dragX + "px";
+  document.getElementById('showYPos').innerHTML = dragY + "px";
   }
 }
 
