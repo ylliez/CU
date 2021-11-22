@@ -1,0 +1,7 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+
+body { margin: 0; background-color: #FFF; }
+
+p { margin-left: 10px; margin-right: 10px; text-indent: 40px; }
+
+.t { text-decoration: underline; font-weight: bold; text-align: center; }
