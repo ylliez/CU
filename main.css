@@ -44,38 +44,3 @@ footer i { color: #FFF; padding: 5px; }
 ::-webkit-scrollbar {
 display: none;
 }
-/* @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
-
-body {
-  margin: 0;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: 100%;
-}
-
-header { text-align: center; }
-h1 { margin: 0; background-color: #000; padding: 10px; font-size: 25px; color: #FFF; }
-h2 { margin: 0; background-color: #222; padding: 8px; font-size: 20px; color: #DDD; }
-.navbar {  overflow: hidden; background-color: #444; margin: 0; padding: 0; }
-.navbar a { display: inline-block; text-decoration: none; padding: 10px 30px; color: #BBB; }
-.navbar a:hover { background-color: #666; color: #444; }
-.dropdown { overflow: hidden; float: left; }
-.dropcontent { display: none; position: absolute; z-index: 1; background-color: #BBB;  width: 100%; }
-.dropcontent a { display: block; color: #666; text-align: left; padding: 10px 10px;}
-.dropdown:hover .dropcontent { display: block; }
-.dropcontent a:hover { background-color: #DDD; color: #222; }
-
-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100vw;
-  text-align: center;
-  font-size: 17px;
-  background-color: #000;
-  color: #FFF;
-}
-footer i { color: #FFF; }
-
-::-webkit-scrollbar {
-display: none;
-} */
