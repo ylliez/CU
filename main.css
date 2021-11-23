@@ -27,6 +27,9 @@ ul li ul li:hover { background: #DDD; }
 ul li ul li:hover a { color: #222; }
 ul li ul li:hover i { color: #222; }
 
+h3 { font-size: 20px; text-align: center; text-decoration: underline; font-weight: bold; }
+p { font-size: 18px; text-align: left; margin-left: 120px; margin-right: 120px; text-indent: 40px; }
+
 footer {
   position: fixed;
   bottom: 0;
@@ -36,7 +39,7 @@ footer {
   background-color: #000;
   color: #FFF;
 }
-footer i { color: #FFF; }
+footer i { color: #FFF; padding: 5px; }
 
 ::-webkit-scrollbar {
 display: none;
