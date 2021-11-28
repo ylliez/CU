@@ -1,139 +1,53 @@
 <!DOCTYPE html>
-<head>
-  <title> CART211 Eggs </title>
-  <link rel="icon" type="image/x-icon" href="CART211_media/gsad.ico">
-  <link rel="stylesheet" href="../CART211_main.css">
-  <meta charset=“utf-8”>
-  <style>
-  .tablink {
-    background-color: #555;
-    color: white;
-    float: left;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 5px 5px;
-    font-size: 17px;
-    width: 16.6666666667%;
-    height:
-  }
-  .tablink:hover { background-color: #777; }
-  .tabcontent {
-    color: white;
-    display: block;
-    height: 100%;
-    padding-top: 30px;
-  }
-  div.tabcontent a { color: #B6D0E2; }
-  p { margin-left: 15px; margin-right: 10px; }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>CART211</h1>
-    <h2>CREATIVE COMPUTING & NETWORK CULTURE</h2>
-    <div class="menu">
-      <ul>
-        <li> <a href="/CART211/"><i class="fa fa-home"></i></a></li>
-        <li> <a href="/CART211/CART211_admin.html"><i class="fa fa-wrench"></i></a>
-          <ul>
-            <li> <a href="https://hybrid.concordia.ca/jdesplan/" target="_blank">Syllabus</a> </li>
-            <li> <a href="https://hybrid.concordia.ca/jdesplan/schedule.html" target="_blank">Schedule</a> </li>
-          </ul>
-        </li>
-        <li> <a href="/CART211/CART211_rr/"><i class="fa fa-list-ol"></i></a>
-          <ul>
-            <li> <a href="/CART211/CART211_rr/CART211_rr1.html">Week 2</a> </li>
-            <li> <a href="/CART211/CART211_rr/CART211_rr2.html">Week 3</a> </li>
-            <li> <a href="/CART211/CART211_rr/CART211_rr3.html">Week 4</a> </li>
-            <li> <a href="/CART211/CART211_rr/CART211_rr4.html">Week 5</a> </li>
-            <li> <a href="/CART211/CART211_rr/CART211_rr5.html">Week 7</a> </li>
-            <li> <a href="/CART211/CART211_rr/CART211_rr6.html">Week 8</a> </li>
-          </ul>
-        </li>
-        <li> <a><i class="fa fa-paint-brush"></i></a>
-          <ul>
-            <li> <a href="/CART211/CART211_ex/CART211_ex7.html" target="_blank">Exercise 7</i></a></li>
-            <li> <a href="/CART211/CART211_ex/CART211_ex8.html" target="_blank">Exercise 8</i></a></li>
-          </ul>
-        </li>
-        <li> <a><i class="fa fa-vcard"></i></a>
-          <ul>
-            <li> <a href="https://www.facebook.com/illiez" target="_blank"><i class="fa fa-facebook"></i></a></li>
-            <li> <a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a> </li>
-            <li> <a href="https://www.instagram.com/illeyai/" target="_blank"><i class="fa fa-instagram"></i></a> </li>
-            <li> <a href="https://www.youtube.com/channel/UC7iSss5svNGAQXHGDte47LA" target="_blank"><i class="fa fa-youtube-play"></i></a> </li>
-          </ul>
-        </li>
-        <li> <a href="/CART211/CART211_eggs/"><i class="fa fa-question"></i></a>
-        </li>
-      </ul>
-    </div>
-  </header>
-  <button class="tablink" onclick="openPage('proposal', this, 'black')">Proposal</button>
-  <button class="tablink" onclick="openPage('layout', this, 'green')">Layout</button>
-  <button class="tablink" onclick="openPage('typo', this, 'blue')">Typography</button>
-  <button class="tablink" onclick="openPage('colour', this, 'orange')">Colour</button>
-  <button class="tablink" onclick="openPage('media', this, 'purple')">Media</button>
-  <button class="tablink" onclick="openPage('sketches', this, 'red')">Sketches</button>
-
-  <div id="proposal" class="tabcontent">
-    <p style="text-align: center; font-size: 19px;"> CYBERSTEGANOGRAPHY </p>
-    <p>Steganography, the semantic root of which comes from the Ancient Greek ‘στεγανός’ meaning covered or concealed, refers to a practice of dissimulating a message by rendering it inconspicuous. It differs in this from cryptography, its more popular lexical doppelgänger, which relies on the illegibility of the message rather than its invisibility. Whereas the latter attempts to encrypt the meaning of the message using logical and technical ciphers, the former seeks to obscure the very existence of the message itself.</p>
-    <img src="../CART211_media/prop_img3.jpg" width="100%"></img>
-    <p>The above photograph illustrates one of the earliest known forms of steganography, described by Herodotus in his Histories. By his telling, Histaeus, a Tyrant in 6th century BCE Greece, wanting to covertly convey information of strategic military importance, shaved the head of a servant to tattoo a message that would be dissimulated by hair regrowth (Petitcolas et al., 1065). A more trivial example can be found in the childhood experience of writing in invisible ink, most often using lemon juice which, although initially imperceptible, becomes visible when singed.</p>
-    <p>While military intelligence has been the principal driver of steganographic as well as cryptographic progress, using techniques such as knitting (Zarelli, 2017), microdots and null ciphers, its applications beyond this domain are wide-ranging. Indeed, steganography has been applied in a number of contexts, from subversive social or political communication, an example of which can be seen in Erhard Schön’s anamorphic Vexierbild, to commercial protection as well as from social subgroup targeting, such as La Fundación Anar’s powerful ad campaign against child abuse (2013), to entertainment, be it poetic (Meurice, 2018), programmatic (IOCCC) or otherwise.</p>
-    <img src="../CART211_media/prop2_vex.gif" width="33.3%" title="Erhard Schön's Vexierbild"></img><img src="../CART211_media/prop2_anar.png" width="33.3%" title="Fundación Anar ad campaign"></img><img src="../CART211_media/prop2_ioccc.png" width="33.3%" alt="IOCCC entry"></img>
-    <p>Although initially a linguistic matter, the advent of computation made encryption a principally technological affair. A particularly famous example is Alan Turing’s work decrypting the German Enigma machine. Since then, the practice has gained in complexity and diversity, and there now exists an impressive range of techniques to dissimulate information. Indeed, cybersteganographic messages can be concealed within images, sound files, video, network protocols as well as physical objects.</p>
-    <p>One glaring limitation of steganography in the context of web development is the accessibility of the underlying file to the minimally informed web surfer. This speaks directly to the longstanding conflict in security engineering over a phenomenon called security through obscurity - allegedly coined by the MIT’s Incompatible Timesharing System (ITS) team - which relies on secrecy as the principal method of concealment. This phenomenon suffers from a deficit of popularity in the face of the more cryptographic Kerckhoffs's principle, which holds that a message should be secure through its encryption key alone, even if the message in and of itself is public knowledge and assumed to be analysed in detail. However, there also exists a more ambiguous interstitial space between these two extremes, reliant in part on principles of psychological warfare. Examples of psychosteganography we could point to in the context of cybersecurity include obfuscation as well as honeypots.</p>
-    <p>While there is consequently much to be played with in this domain, the current website will experiment with technically simple forms of steganography, owing to the exploratory nature of the project and especially the limited technological skills of its creator. Rather than attempting to abide by strict security engineering principles and attain impenetrable outcomes, the intent here will be to explore steganographic encryption as the conceptual scaffolding around which newly acquired competencies in web development shall be dressed. Skills and techniques in HTML, CSS and Javascript learned in this class will be deployed and further refined in the context of a playfully puzzling website eschewing contemporary consumerist injunctions of sleek user-friendliness in favour of a mischievously interactive invitation to question our assumptions about the digital environment we often unreflectively bask in.</p>
-    <p>Concretely, the website will be centered around the mythical 404 error page, iterations of which the user will be able to navigate through via a variety of steganographic portals created by subverting style and script programming. It will present as a sort of choose-your-own-adventure situated somewhere between the cacophony of early internet art such as Jodi (Jodi, 1995) and the linearity of narrative websites such as The Boat (Le and Huynh), though it remains to be determined if the structure will be arborescent or rhizomatic, that is, whether there will be a central plot with auxiliary narrative branches or a more dispersed, non-linear experience.</p>
-    <br><p style="text-align: center; font-size: 17px;">WORKS CITED</p>
-    <p>Jodi. Joan Heemskerk and Dirk Paesmans, 1995, <a href="wwwwwwwww.jodi.org/" target="_blank">wwwwwwwww.jodi.org/</a>. Accessed 3 Oct 2021.<br>
-    La Fundación Anar. “La Fundación Anar contra el maltrato infantil necesita fondos.” YouTube, uploaded by Grey Spain, 24 Apr 2013, <a href="www.youtube.com/watch?v=N0h1mgpn95s" target="_blank">www.youtube.com/watch?v=N0h1mgpn95s</a>.<br>
-    Lederberg, Esther MZ. “Rhetoric of Anamorphisms.” Esther M. Z. Lederberg Memorial Website, 2006, <a href="www.estherlederberg.com/EImages/Extracurricular/Renaissance+Baroque/Perspective+Art/Anamorphisms/Anamorphisms.html" target="_blank">www.estherlederberg.com/EImages/Extracurricular/Renaissance+Baroque/Perspective+Art/Anamorphisms/Anamorphisms.html</a>.<br>
-    Meurice, Guillaume. Cosme. Paris, Éditions Arthaud, 2018.<br>
-    Petitcolas, Fabien AP et al. "Information hiding - A Survey." Proceedings of the IEEE, vol. 87, no. 7, 1999, pp. 1062-1078, <a href="www.petitcolas.net/fabien/publications/ieee99-infohiding.pdf">www.petitcolas.net/fabien/publications/ieee99-infohiding.pdf</a>.<br>
-    The Boat. Le Nam, adapted by Matt Huynh, <a href="www.sbs.com.au/theboat/" target="_blank">www.sbs.com.au/theboat/</a>. Accessed 1 Nov 2021.<br>
-    The International Obfuscated C Code Contest. Leo Broukhis, Simon Cooper and Landon Curt Noll, <a href="www.ioccc.org/" target="_blank">www.ioccc.org/</a>. Accessed 1 Nov 2021.<br>
-    Zarrelli, Natalie. "The wartime spies who used knitting as an espionage tool." Atlas Obscura vol. 1, 1 June 2017, <a href="www.atlasobscura.com/articles/knitting-spies-wwi-wwii" target="_blank">www.atlasobscura.com/articles/knitting-spies-wwi-wwii</a>. </p>
-    </div>
-    <div id="layout" class="tabcontent">
-      <p>Given the conceptual framework of the website, its layout will be intentionally pared-down, devoid of most functional components we have come to take for granted in our consumer-driven online world. As the experience will be centered around 404 error pages, the layout will mimic, reflect and distort a number of common error pages. In this principal thread, there will be little apparent information per page and few immediately intuitive orienting anchors (menu bar, icons, etc..). However, ancillary branches of the experience will delve deeper into separate experiences with individually cohesive aesthetics. The layout therein will be variegated, but will explore the use of images, video, sound and various style components, including area tags, block design and sticky features.</p>
-      <img src="../CART211_media/prop_404.png" width="100%"></img>
-    </div>
-    <div id="typo" class="tabcontent">
-      <p>The typography will reflect and extend from the fonts used in the aforementioned 404 error pages. In the case of Concordia’s web hosting server Hybrid, these are Verdana, Arial, Helvetica. From there, other 404 pages , fonts will be selected based on theme and personal preference. Possibilities will likely remain within the realm of minimalist sobriety, (e.g. Courier), but creative flourishes (e.g. Lobster, Architects Daughter) might appear.will also be emulated, the fonts being similarly harvested. In the ancillary pages offering tangential experiences.</p>
-      <img src="../CART211_media/prop_typo.png" width="100%"></img>
-    </div>
-    <div id="colour" class="tabcontent">
-      <p>In terms of the colour palette, my immediate preference would be for a minimalist black and white monochrome, with gradient accents (Fig. 1). Such a decision is based on personal aesthetic preference, which has followed me from photography and film to video art and visual design, but also harks back to an often inevitable condition of early internet art (in interesting contrast with the chromatic hypersaturation of late and post-internet art), seen in ASCII art as well as early internet art (e.g. Lialina’s 1996 My Boyfriend Came Back from the War).</p>
-      <p>That said, the conceptual framework of this website leaving a lot of aesthetic leeway, there will be opportunity to explore, deconstruct and critique more formal chromatic palettes. One avenue of exploration that immediately springs to mind concerns a cultural sociology of colour, most evident in generational palette shifts. In this framework, one specific colour has been theorized as generationally iconic: Millennial pink, <a href="https://www.avclub.com/read-this-a-cultural-history-of-millennial-pink-the-1798259547" target="_blank">elsewhere</a> known as rose gold, baby pink, coral candy or Tumblr pink. While as of yet difficult to circumscribe to a specific HEX code, Pantone’s cultural clout might sway future aesthetic historians in deeming Rose Quartz (#F7CAC9), their <a href="https://www.pantone.com/articles/color-of-the-year/color-of-the-year-2016" target="_blank">2016 co-colour of the year</a>, as a worthy contender for socio-chromatic iconicity. In their annual selection, Pantone associated Rose Quartz with Serenity (#92A8D1), a cool pastel blue. Following rules of triadic complimentarity, #F7CAC9 is associated with #C9F7CA and #CAC9F7. The strong contrast between these colours, however pastel, suggest the inclusion of a slight gradient to complete this palette. Exploration revealed that this could be accomplished through the monochromatic complement of the two triads, respectively #89DE8A and #8A89DE. A first generational palette might then look like <a href="https://coolors.co/f7cac9-c9f7ca-89de8a-cac9f7-8a89de-92a8d1" target="_blank">the second row</a> of the colour scheme. <br> However, this speculative exercise is confounded by historical recency and the existence of aesthetic variability. Indeed, while a pastel palette describes one aspect of the millennial chromatic aesthetic, there are also aspects of late-stage modernist muted minimalism as well as 90s nostalgic neon.</p>
-      <p>Similarly, we can harness Pantone's <a href="https://www.pantone.com/color-of-the-year-2021" target="_blank">2021 colour of the year</a> selection in conjunction with <a href="https://www.refinery29.com/en-us/2018/05/199357/gen-z-yellow" target="_blank">early</a> <a href="https://www.architecturaldigest.com/story/generational-color-trends" target="_blank">research</a> to propose a tentative Gen Z chromatic profile centered around #F8D948, aka Gen Z Yellow, visible in <a href="https://coolors.co/f8d948-ff6f61-f84886-48c3f8-4b9854-959a9c" target="_blank">the third row</a> of the colour scheme.</p>
-      <img src="../CART211_media/prop_palette.png" width="100%"></img>
-    </div>
-    <div id="media" class="tabcontent"><img src="../CART211_media/prop_media.png" width="100%"></img></div>
-    <div id="sketches" class="tabcontent">
-      <img src="../CART211_media/prop_sk1.jpg" width="49.8%"></img>
-      <img src="../CART211_media/prop_sk2.jpg" width="49.8%"></img>
-      <img src="../CART211_media/prop_sk3.jpg" width="49.8%"></img>
-      <img src="../CART211_media/prop_sk4.jpg" width="49.8%"></img>
-    </div>
-    <script>
-    function openPage(pageName,elmnt,color) {
-      var i, tabcontent, tablinks;
-      tabcontent = document.getElementsByClassName("tabcontent");
-      for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-      }
-      tablinks = document.getElementsByClassName("tablink");
-      for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].style.backgroundColor = "";
-      }
-      document.getElementById(pageName).style.display = "block";
-      elmnt.style.backgroundColor = color;
-    }
-    document.getElementById("defaultOpen").click();
-  </script>
-</body>
+<html lang=“en” dir=“ltr”>
+  <head>
+    <title> CART211 Eggs </title>
+    <link rel="stylesheet" href="../CART211_main.css">
+    <meta charset=“utf-8”>
+    <style>
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>CART211</h1>
+      <h2>CREATIVE COMPUTING & NETWORK CULTURE</h2>
+      <div class="menu">
+        <ul>
+          <li> <a href="/CART211/"><i class="fa fa-home"></i></a></li>
+          <li> <a href="/CART211/CART211_admin.html"><i class="fa fa-wrench"></i></a>
+              <ul>
+                <li> <a href="https://hybrid.concordia.ca/jdesplan/" target="_blank">Syllabus</a> </li>
+                <li> <a href="https://hybrid.concordia.ca/jdesplan/schedule.html" target="_blank">Schedule</a> </li>
+              </ul>
+          </li>
+          <li> <a href="/CART211/CART211_rr/"><i class="fa fa-list-ol"></i></a>
+            <ul>
+              <li> <a href="/CART211/CART211_rr/CART211_rr1.html">Week 2</a> </li>
+              <li> <a href="/CART211/CART211_rr/CART211_rr2.html">Week 3</a> </li>
+              <li> <a href="/CART211/CART211_rr/CART211_rr3.html">Week 4</a> </li>
+              <li> <a href="/CART211/CART211_rr/CART211_rr4.html">Week 5</a> </li>
+              <li> <a href="/CART211/CART211_rr/CART211_rr5.html">Week 7</a> </li>
+              <li> <a href="/CART211/CART211_rr/CART211_rr6.html">Week 8</a> </li>
+            </ul>
+          </li>
+          <li> <a><i class="fa fa-paint-brush"></i></a>
+            <ul>
+              <li> <a href="/CART211/CART211_ex/CART211_ex7.html" target="_blank">Exercise 7</i></a></li>
+              <li> <a href="/CART211/CART211_ex/CART211_ex8.html" target="_blank">Exercise 8</i></a></li>
+            </ul>
+          </li>
+          <li> <a><i class="fa fa-vcard"></i></a>
+            <ul>
+              <li> <a href="https://www.facebook.com/illiez" target="_blank"><i class="fa fa-facebook"></i></a></li>
+              <li> <a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a> </li>
+              <li> <a href="https://www.instagram.com/illeyai/" target="_blank"><i class="fa fa-instagram"></i></a> </li>
+              <li> <a href="https://www.youtube.com/channel/UC7iSss5svNGAQXHGDte47LA" target="_blank"><i class="fa fa-youtube-play"></i></a> </li>
+            </ul>
+          </li>
+          <li> <a href="/CART211/CART211_eggs/"><i class="fa fa-question"></i></a>
+          </li>
+        </ul>
+      </div>
+    </header>
+    </body>
 </html>
