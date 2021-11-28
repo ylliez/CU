@@ -2,14 +2,14 @@
 <html lang=“en” dir=“ltr”>
   <head>
     <title> CART211 Eggs </title>
-    <!-- <script type="text/javascript" src="CART211_eggmap.js"></script> -->
+    <script type="text/javascript" src="CART211_eggmap.js"></script>
     <style>
     body { margin: 0px; height: 100vh;}
     </style>
   </head>
   <body onload="genMap()">
     <iframe id="mapFrame" height="100%" width="100%"  style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-    <script>
+    <!-- <script>
     let coordX = 0;
     let coordY = 0;
     let mapX = 0;
@@ -20,10 +20,10 @@
       coordY = Math.random()*180-90;
       mapX = coordX.toFixed(7);
       mapY = coordY.toFixed(7)
-      mapCoord = "https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d1212.2403306142737!2d"+mapX+"!3d"+mapY+"!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sca!4v1636240704046!5m2!1sen!2sca";
+      mapCoord = "https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d121224.03306142737!2d"+mapX+"!3d"+mapY+"!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sca!4v1636240704046!5m2!1sen!2sca";
       document.getElementById('mapFrame').src = mapCoord;
       console.log(mapCoord);
     }
-  </script>
+  </script> -->
   </body>
 </html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>JavaScript Error Handling</h2>
+
+<p>How to use <b>catch</b> to display an error.</p>
+
+<p id="demo"></p>
+
+<div onload="genMap()">
+    <iframe id="mapFrame" height="100%" width="100%"  style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+
+
+<script>
+try {
+  let coordX = Math.random()*180-90; //*360-180
+  let coordY = Math.random()*180-90;
+  let mapX = coordX.toFixed(7);
+  let mapY = coordY.toFixed(7);
+  console.log(mapX);
+  console.log(mapY);
+  let mapCoord = "https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d121224.03306142737!2d"+mapX+"!3d"+mapY+"!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sca!4v1636240704046!5m2!1sen!2sca";
+  document.getElementById('mapFrame').src = mapCoord;
+  console.log(mapCoord);
+}
+catch(err) {
+  document.getElementById("demo").innerHTML = err.message;
+}
+</script>
+
+</body>
+</html>
