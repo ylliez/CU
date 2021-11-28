@@ -12,7 +12,7 @@
 <body onload="setCoords()">
   <div class="imgMap">
     <img src="../CART211_media/isp_noeThroat.png" height="100%" width="100%" usemap="#throatAccess">
-    <map name="throatAccess">
+    <map name="throatAccess" onload="repCoords()">
       <area id="imgPortal" shape="circle" href="CART211_egg.html">
     </map>
   </div>
@@ -75,6 +75,9 @@
     console.log(y);
     console.log(z);
     imgPortal.coords = x, y, z;
+  }
+  function repCoords() {
+    console.log(imgPortal.coords);
   }
   </script>
 </body>
