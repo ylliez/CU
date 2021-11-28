@@ -13,7 +13,7 @@
   <div class="imgMap">
     <img src="../CART211_media/isp_noeThroat.png" height="100%" width="100%" usemap="#throatAccess">
     <map name="throatAccess">
-      <area shape="poly" coords="376,340,362,396,390,452,460,509,525,532,578,523,636,500,685,453,706,396,699,352,674,320,625,298,582,297,547,314,525,319,493,307,456,299,417,305" href="CART211_egg.html">
+      <area shape="circle" coords="getW(),getH(),20" href="CART211_egg.html">
     </map>
   </div>
   <!-- <header>
@@ -67,12 +67,8 @@
     </div>
   </header> -->
   <script>
-  function getDims() {
-     let x = document.documentElement.clientWidth * 0.5;
-     let y = document.documentElement.clientHeight * 0.5;
-     console.log(x);
-     console.log(y);
-  }
+  function getW() { let x = document.documentElement.clientWidth * 0.5; return x; }
+  function getH() { let y = document.documentElement.clientHeight * 0.5; return y; }
   </script>
 </body>
 </html>
