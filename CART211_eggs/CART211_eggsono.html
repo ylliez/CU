@@ -2,13 +2,15 @@
 <head>
   <title> CART211 Eggs </title>
   <style>
-  button { position: absolute; top: 50%; left: 50%; font-family: serif; font-size: 20px; padding: 10px;}
+  .btn { display: flex; justify-content: center; align-items: center; margin-top: 50% }
+  button { font-family: serif; font-size: 20px; padding: 10px; }
   </style>
 </head>
 <body>
-  <audio id="sonoP" autoplay loop src="../CART211_media/shower3.mp3" type="audio/mpeg">
-  </audio>
-  <button onclick="playSono()">circumvent autoplay block</button>
+  <audio id="sonoP" autoplay loop src="../CART211_media/shower3.mp3" type="audio/mpeg"></audio>
+  <div class="btn">
+    <button onclick="playSono()">circumvent autoplay block</button>
+  </div>
   <script>
   var sono = document.getElementById("sonoP");
   function playSono() { sono.play(); }
