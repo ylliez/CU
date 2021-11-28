@@ -8,8 +8,12 @@
   </style>
 </head>
 <body>
-  <audio id="sound" autoplay loop src="../CART211_media/shower3.mp3" type="audio/mpeg">
+  <audio id="sonoP" autoplay loop src="../CART211_media/shower3.mp3" type="audio/mpeg">
   </audio>
-  <button onclick="reMap()">another sound</button>
+  <button onclick="playSono()">circumvent autoplay block</button>
+  <script>
+  var sono = document.getElementById("sonoP");
+  function playSono() { sono.play(); }
+  </script>
 </body>
 </html>
