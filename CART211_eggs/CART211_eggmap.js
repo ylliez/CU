@@ -9,7 +9,6 @@
 // }
 
 function genMap() {
-  try {
   let coordX = Math.random()*180-90; //*360-180
   let coordY = Math.random()*180-90;
   let mapX = coordX.toFixed(7);
@@ -25,9 +24,8 @@ function genMap() {
   // console.log(document.getElementById('mapFrame').src);
   console.log(mapCoord);
 }
-catch(err){location.reload();}
-
-
 // bounds: https://stackoverflow.com/questions/11849636/maximum-lat-and-long-bounds-for-the-world-google-maps-api-latlngbounds
 
+function reMap() {
+  location.reload();
 }
