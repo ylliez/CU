@@ -23,7 +23,7 @@ function cssChange() {
 function btnClick() {
   let posX = Math.random()*100;
   let posY = Math.random()*100;
-  if (posX < 90){
+  if (posX < 80){
     document.getElementById('stopBtn').style.left = posX+"%";
     document.getElementById('stopBtn').style.top = posY+"%";
   }
