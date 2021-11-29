@@ -22,9 +22,15 @@ function cssChange() {
 
 function btnClick() {
   let posX = Math.random()*100;
-  document.getElementById('stopBtn').style.left = posX+"%";
   let posY = Math.random()*100;
-  document.getElementById('stopBtn').style.top = posY+"%";
+  if (posX < 90){
+    document.getElementById('stopBtn').style.left = posX+"%";
+    document.getElementById('stopBtn').style.top = posY+"%";
+  }
+  else {
+    document.getElementById("bushVid").pause();
+    document.getElementById("stopBtn").style.top = "100%";
+  }
 }
 
 function notFade() {
