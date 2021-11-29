@@ -15,7 +15,9 @@
     <map name="throatAccess">
       <area id="imgPortal" shape="circle" href="CART211_egg.html">
     </map>
-  </div>
+    </div>
+    <canvas id="myCanvas" width="100vw" height="vh" style="border:1px solid #d3d3d3;">
+
   <!-- <header>
     <h1>CART211</h1>
     <h2>EGGS - ACCESS</h2>
@@ -67,6 +69,11 @@
     </div>
   </header> -->
   <script>
+  var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+ctx.beginPath();
+ctx.arc(275, 300, 125, 0, 2 * Math.PI);
+ctx.stroke();
   function setCoords() {
     let x = document.documentElement.clientWidth * 0.55;
     let y = document.documentElement.clientHeight * 0.6;
