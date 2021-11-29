@@ -18,8 +18,7 @@ function cssChange() {
       cssCount++;
       break;
     case 2:
-      let video = document.getElementById("bushVid");
-      video.play();
+      document.getElementById("bushVid").play();
       break;
     default: break;
   }
