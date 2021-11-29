@@ -4,9 +4,24 @@
 //    document.getElementById('toFade').innerHTML = "hi";
 //    document.getElementById('dynamicVid').src = myVar;
 // }
+let cssCount = 0;
 
-function makeWait() {
-    document.getElementById('spanCursor').style.color = "#FFFFFF";
+function cssChange() {
+  switch (cssCount) {
+    case 0:
+      document.getElementById('spanChange').style.cursor = "wait";
+      cssCount++;
+      break;
+    case 1:
+      document.getElementById('spanChange').style.cursor = "pointer";
+      document.getElementById('spanChange').style.color = "#FFFFFF";
+      cssCount++;
+      break;
+    case 2:
+      document.getElementById("bushVid").play();
+      break;
+    default: break;
+  }
 }
 
 function resourceFade() {
