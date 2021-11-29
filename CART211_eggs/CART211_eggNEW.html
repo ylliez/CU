@@ -15,12 +15,13 @@
       background-color:#555555;}
       #content{margin:0 0 0 2%;position:relative;}
       .content-container{background:#FFF;width:96%;margin-top:8px;padding:10px;position:relative;}
-      /* a.stegAccess{color:#000000;text-decoration:none;} */
       span{color:#222;cursor:help;}
-      #bushVid{position:fixed;z-index:-1;left:0;top:0;min-width:100%;min-height:100%;object-fit:cover;}
+      #bushVid{position:fixed;z-index:-1;left:0;top:100%;min-width:100%;min-height:100%;object-fit:cover;}
+      #stopBtn{position:absolute;z-index:1;left:50%;top:100%;padding:5px;background-color:magenta;font-size:20px;font-weight:bold;}
     </style>
   </head>
   <body>
+    <button id="stopBtn" onclick="btnClick()">STOP</button>
     <div id="header"><h1>Server Error</h1></div>
     <div id="content">
       <div class="content-container">

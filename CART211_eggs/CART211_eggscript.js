@@ -1,9 +1,3 @@
-//  let notColor =
-//
-// function makeWait() {
-//    document.getElementById('toFade').innerHTML = "hi";
-//    document.getElementById('dynamicVid').src = myVar;
-// }
 let cssCount = 0;
 
 function cssChange() {
@@ -18,20 +12,21 @@ function cssChange() {
       cssCount++;
       break;
     case 2:
+      document.getElementById("bushVid").style.top = "0";
       document.getElementById("bushVid").play();
+      document.getElementById("stopBtn").style.top = "50%";
       break;
     default: break;
   }
 }
 
-function resourceFade() {
-  // document.getElementById('toFade').innerHTML = "hi";
-  // document.getElementById('dynamicVid').src = myVar;
-    document.getElementById('resourceFade').style.color = "#FFFFFF";
+function btnClick() {
+  let posX = Math.random()*100;
+  document.getElementById('stopBtn').style.left = posX+"%";
+  let posY = Math.random()*100;
+  document.getElementById('stopBtn').style.top = posY+"%";
 }
 
 function notFade() {
-  // document.getElementById('toFade').innerHTML = "hi";
-  // document.getElementById('dynamicVid').src = myVar;
     document.getElementById('notFade').style.color = "#FFFFFF";
 }
