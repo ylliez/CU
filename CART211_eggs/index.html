@@ -66,14 +66,14 @@
       </ul>
     </div>
     <svg height="100vh" width="100vw">
-      <circle cx="55vw" cy="60vw" r="20vh" stroke="black" stroke-width="3" fill="none" />
-</svg>
+      <circle cx="55vw" cy="60vw" r="25vh" stroke="black" stroke-width="3" fill="none" />
+    </svg>
   </header>
   <script>
   function setCoords() {
     let x = document.documentElement.clientWidth * 0.55;
     let y = document.documentElement.clientHeight * 0.6;
-    let z = document.documentElement.clientHeight * 0.2;
+    let z = document.documentElement.clientHeight * 0.25;
     let eggCoords = x+","+y+","+z;
     document.getElementById("imgPortal").coords = eggCoords;
     console.log(document.getElementById("imgPortal").coords);
