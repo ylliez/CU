@@ -70,7 +70,7 @@
   function setCoords() {
     let x = document.documentElement.clientWidth * 0.5;
     let y = document.documentElement.clientHeight * 0.6;
-    let z = 100;
+    let z = document.documentElement.clientHeight * 0.4;
     let eggCoords = x+","+y+","+z;
     document.getElementById("imgPortal").coords = eggCoords;
     console.log(document.getElementById("imgPortal").coords);
