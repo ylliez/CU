@@ -4,6 +4,7 @@ function cssChange() {
   switch (cssCount) {
     case 0:
       document.getElementById('spanChange').style.cursor = "wait";
+      document.getElementById('favicon').setAttribute('href','../CART211_media/loading.ico')
       cssCount++;
       break;
     case 1:
