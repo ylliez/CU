@@ -71,10 +71,8 @@
     let x = document.documentElement.clientWidth * 0.5;
     let y = document.documentElement.clientHeight * 0.5;
     let z = 100;
-    console.log(""+x);
-    console.log(y);
-    console.log(z);
-    document.getElementById("imgPortal").coords = x+","+y+","+z;
+    let eggCoords = x+","+y+","+z;
+    document.getElementById("imgPortal").coords = eggCoords;
     console.log(document.getElementById("imgPortal").coords);
   }
   </script>
