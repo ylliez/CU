@@ -227,7 +227,7 @@
 
           // call api and get new shots
           var request = new XMLHttpRequest()
-          request.open('GET', '/colors/for_404.json?hex=' + hex.replace('#',''), true)
+          request.open('GET', 'https://dribbble.com/colors/for_404.json?hex=' + hex.replace('#',''), true)
           request.setRequestHeader("X-Requested-With", "XMLHttpRequest")
           request.onload = (function() {
             if (request.status == 200) {
