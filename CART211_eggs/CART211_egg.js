@@ -18,6 +18,7 @@ function cssChange() {
     document.body.style.cursor = "none";
     document.getElementById('dragImg').style.opacity = "100%";
     cssCount++;
+    break;
     case 3:
     window.location.href = '.'
     break;
