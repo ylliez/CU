@@ -4,38 +4,20 @@
     <link rel="stylesheet" href="../CART211_main.css">
     <meta charset=“utf-8”>
     <style>
-    .buttons {
-      position: absolute;
-      top: 50%;
-    }
-    button {
-      display: inline-table;
-      background-color: #36013F;
-      opacity: 0.7;
-      color: #FFF;
-      border: none;
-      padding: 15px;
-      margin: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    button:hover{ opacity: 1; }
-    .disabled{ opacity: .5 !important; cursor: not-allowed; }
-    embed { display: none; }
-    button:hover embed {
-      display: block;
-      position: absolute;
-      top: -500%;
-      left: inherit;
-      width: 50%;
-      height: 50vw;
-      z-index: 2;
-      border: 10px solid #ffffff;
-      border-radius: 8px;
-    }
+    button { position: absolute; opacity: 0.8; padding: 10px; border-radius: 10px; cursor: pointer; font-size: 15px; font-weight: bold; }
     </style>
+    <script>
+    function init() {
+      var buts = ["b0","b1","b2","b3","b4","b5","b6","b7","b8"]
+      for (var i = 0; i < buts.length; i++) {
+        document.getElementById(buts[i]).style.backgroundColor = "rgb(" + Math.floor(Math.random()*255) + "," + Math.floor(Math.random()*255) + "," + Math.floor(Math.random()*255) + ")";
+        let posX = Math.random()*100; document.getElementById(buts[i]).style.left = posX+"%";
+        let posY = Math.random()*100; document.getElementById(buts[i]).style.top = posY+"%";
+      }
+    }
+    </script>
   </head>
-  <body>
+  <body onload="init()">
     <header>
       <h1>CART211</h1>
       <h2>READING RESPONSES</h2>
@@ -88,15 +70,15 @@
     </header>
     <br><br>
     <div class="buttons">
-      <button onclick="document.location='CART211_rr1.html'">Week 2<embed src="CART211_rr1.html"></button>
-      <button onclick="document.location='CART211_rr2.html'">Week 3<embed src="CART211_rr2.html"></button>
-      <button onclick="document.location='CART211_rr3.html'">Week 4<embed src="CART211_rr3.html"></button>
-      <button onclick="document.location='CART211_rr4.html'">Week 5<embed src="CART211_rr4.html"></button>
-      <button onclick="document.location='CART211_rr5.html'">Week 7<embed src="CART211_rr5.html"></button>
-      <button onclick="document.location='CART211_rr6.html'">Week 8<embed src="CART211_rr6.html"></button>
-      <button onclick="document.location='CART211_rr7.html'">Week 10<embed src="CART211_rr7.html"></button>
-      <button onclick="document.location='CART211_rr8.html'">Week 11<embed src="CART211_rr8.html"></button>
-      <button onclick="document.location='CART211_rr9.html'">Week 12<embed src="CART211_rr9.html"></button>
+      <button id="b0" onclick="document.location='CART211_rr1.html'">Week 2</button>
+      <button id="b1" onclick="document.location='CART211_rr2.html'">Week 3</button>
+      <button id="b2" onclick="document.location='CART211_rr3.html'">Week 4</button>
+      <button id="b3" onclick="document.location='CART211_rr4.html'">Week 5</button>
+      <button id="b4" onclick="document.location='CART211_rr5.html'">Week 7</button>
+      <button id="b5" onclick="document.location='CART211_rr6.html'">Week 8</button>
+      <button id="b6" onclick="document.location='CART211_rr7.html'">Week 10</button>
+      <button id="b7" onclick="document.location='CART211_rr8.html'">Week 11</button>
+      <button id="b8" onclick="document.location='CART211_rr9.html'">Week 12</button>
     </div>
   </body>
 </html>
