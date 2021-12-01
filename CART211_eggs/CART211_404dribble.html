@@ -21,11 +21,11 @@
   </head>
   <body>
     <nav>
-      <a class="logo" href="https://dribbble.com/">
+      <a class="logo" href="https://ylliez.github.io/CART211/CART211_eggs/">
         <img src="https://dribbble.com/images/404-logo.png" alt="dribbble" width="125" />
       </a>
       <span>
-        <a href="https://dribbble.com/contact">Contact us</a>
+        <a href="https://ylliez.github.io/CART211/CART211_eggs/CART211_eggCtct.html">Contact us</a>
       </span>
     </nav>
     <main>
@@ -46,10 +46,10 @@
       </div>
     </main>
     <footer>
-      <form id="search" action="https://dribbble.com/search">
+      <form id="search" action="https://ylliez.github.io/CART211/CART211_eggs/CART211_eggSono.html">
         <div class="input input-search">
           <svg class="input-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip0)">
+            <g clip-path="url(https://ylliez.github.io/CART211/CART211_eggs/CART211_404canva.html)">
               <circle cx="6.75" cy="6.75" r="5.75" stroke="black" stroke-width="2"/>
               <path d="M11.5 11.5L15.5 15.5" stroke="black" stroke-width="2"/>
             </g>
@@ -216,7 +216,7 @@
           this.colorRange.style.color = hsl
           this.colorChoice.style.color = hsl
           this.colorChoice.innerHTML = hex
-          this.colorChoice.setAttribute('href','https://dribbble.com/colors/' + hex.replace('#',''))
+          this.colorChoice.setAttribute('href','https://ylliez.github.io/CART211/CART211_eggs/CART211_404canva.html')
           return hex
         },
         fetchAndBuildShots: function(){
@@ -228,7 +228,7 @@
 
           // call api and get new shots
           var request = new XMLHttpRequest()
-          request.open('GET', 'https://dribbble.com/colors/for_404.json?hex=' + hex.replace('#',''), true)
+          request.open('GET', 'https://dribbble.com/colors/' + hex.replace('#',''), true)
           request.setRequestHeader("X-Requested-With", "XMLHttpRequest")
           request.onload = (function() {
             if (request.status == 200) {
