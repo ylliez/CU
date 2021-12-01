@@ -39,7 +39,7 @@ footer {
   background-color: #000;
   color: #FFF;
 }
-footer i { color: #FFF; }
+footer i { color: #FFF; margin: 10px; }
 
 ::-webkit-scrollbar {
 display: none;
