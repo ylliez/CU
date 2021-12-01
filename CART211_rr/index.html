@@ -1,84 +1,83 @@
 <!DOCTYPE html>
-  <head>
-    <title>CART211 RR</title>
-    <link rel="stylesheet" href="../CART211_main.css">
-    <meta charset=“utf-8”>
-    <style>
-    button { position: absolute; opacity: 0.8; padding: 10px; border-radius: 10px; cursor: pointer; font-size: 15px; font-weight: bold; }
-    </style>
-    <script>
-    function init() {
-      var buts = ["b0","b1","b2","b3","b4","b5","b6","b7","b8"]
-      for (var i = 0; i < buts.length; i++) {
-        document.getElementById(buts[i]).style.backgroundColor = "rgb(" + Math.floor(Math.random()*255) + "," + Math.floor(Math.random()*255) + "," + Math.floor(Math.random()*255) + ")";
-        let posX = Math.random()*100; document.getElementById(buts[i]).style.left = posX+"%";
-        let posY = Math.random()*100; document.getElementById(buts[i]).style.top = posY+"%";
-      }
+<head>
+  <title>CART211 - Reading Reponses</title>
+  <link rel="icon" type="image/x-icon" href="CART211_media/code.ico">
+  <link rel="stylesheet" href="../CART211_main.css">
+  <meta charset=“utf-8”>
+  <style> button { position: absolute; opacity: 0.8; padding: 10px; border-radius: 10px; cursor: pointer; font-size: 15px; font-weight: bold; } </style>
+  <script>
+  function init() {
+    var buts = ["b0","b1","b2","b3","b4","b5","b6","b7","b8"]
+    for (var i = 0; i < buts.length; i++) {
+      document.getElementById(buts[i]).style.backgroundColor = "rgb(" + Math.floor(Math.random()*255) + "," + Math.floor(Math.random()*255) + "," + Math.floor(Math.random()*255) + ")";
+      let posX = Math.random()*100; document.getElementById(buts[i]).style.left = posX+"%";
+      let posY = Math.random()*100; document.getElementById(buts[i]).style.top = posY+"%";
     }
-    </script>
-  </head>
-  <body onload="init()">
-    <header>
-      <h1>CART211</h1>
-      <h2>READING RESPONSES</h2>
-      <div class="menu">
-        <ul>
-          <li> <a href="/CART211/"><i class="fa fa-home"></i></a></li>
-          <li> <a href="/CART211/CART211_admin.html"><i class="fa fa-wrench"></i></a>
-            <ul>
-              <li> <a href="https://hybrid.concordia.ca/jdesplan/" target="_blank">Syllabus</a> </li>
-              <li> <a href="https://hybrid.concordia.ca/jdesplan/schedule.html" target="_blank">Schedule</a> </li>
-            </ul>
-          </li>
-          <li> <a href="/CART211/CART211_rr/"><i class="fa fa-list-ol"></i></a>
-            <ul>
-              <li> <a href="/CART211/CART211_rr/CART211_rr1.html">Week 2</a> </li>
-              <li> <a href="/CART211/CART211_rr/CART211_rr2.html">Week 3</a> </li>
-              <li> <a href="/CART211/CART211_rr/CART211_rr3.html">Week 4</a> </li>
-              <li> <a href="/CART211/CART211_rr/CART211_rr4.html">Week 5</a> </li>
-              <li> <a href="/CART211/CART211_rr/CART211_rr5.html">Week 7</a> </li>
-              <li> <a href="/CART211/CART211_rr/CART211_rr6.html">Week 8</a> </li>
-              <li> <a href="/CART211/CART211_rr/CART211_rr7.html">Week 10</a> </li>
-              <li> <a href="/CART211/CART211_rr/CART211_rr8.html">Week 11</a> </li>
-              <li> <a href="/CART211/CART211_rr/CART211_rr9.html">Week 12</a> </li>
-            </ul>
-          </li>
-          <li> <a><i class="fa fa-paint-brush"></i></a>
-            <ul>
-              <li> <a href="/CART211/CART211_ex/CART211_ex1021.html" target="_blank">Ex 1021</i></a></li>
-              <li> <a href="/CART211/CART211_ex/CART211_ex1028.html" target="_blank">Ex 1028</i></a></li>
-              <li> <a href="/CART211/CART211_ex/CART211_ex1104.html" target="_blank">Ex 1104</i></a></li>
-              <li> <a href="/CART211/CART211_ex/CART211_ex1111.html" target="_blank">Ex 1111</i></a></li>
-            </ul>
-          </li>
-          <li> <a><i class="fa fa-vcard"></i></a>
-            <ul>
-              <li> <a href="https://www.facebook.com/illiez" target="_blank"><i class="fa fa-facebook"></i></a></li>
-              <li> <a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a> </li>
-              <li> <a href="https://www.instagram.com/illeyai/" target="_blank"><i class="fa fa-instagram"></i></a> </li>
-              <li> <a href="https://www.youtube.com/channel/UC7iSss5svNGAQXHGDte47LA" target="_blank"><i class="fa fa-youtube-play"></i></a> </li>
-            </ul>
-          </li>
-          <li> <a><i class="fa fa-question"></i></a>
-            <ul>
-              <li> <a href="/CART211/CART211_eggs/CART211_eggsprop.html">Proposal</i></a></li>
-              <li> <a href="/CART211/CART211_eggs/">Access</i></a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </header>
-    <br><br>
-    <div>
-      <button id="b0" onclick="document.location='CART211_rr1.html'">Week 2</button>
-      <button id="b1" onclick="document.location='CART211_rr2.html'">Week 3</button>
-      <button id="b2" onclick="document.location='CART211_rr3.html'">Week 4</button>
-      <button id="b3" onclick="document.location='CART211_rr4.html'">Week 5</button>
-      <button id="b4" onclick="document.location='CART211_rr5.html'">Week 7</button>
-      <button id="b5" onclick="document.location='CART211_rr6.html'">Week 8</button>
-      <button id="b6" onclick="document.location='CART211_rr7.html'">Week 10</button>
-      <button id="b7" onclick="document.location='CART211_rr8.html'">Week 11</button>
-      <button id="b8" onclick="document.location='CART211_rr9.html'">Week 12</button>
+  }
+  </script>
+</head>
+<body onload="init()">
+  <header>
+    <h1>CART211</h1>
+    <h2>READING RESPONSES</h2>
+    <div class="menu">
+      <ul>
+        <li> <a href="/CART211/"><i class="fa fa-home"></i></a></li>
+        <li> <a href="/CART211/CART211_admin.html"><i class="fa fa-wrench"></i></a>
+          <ul>
+            <li> <a href="https://hybrid.concordia.ca/jdesplan/" target="_blank">Syllabus</a> </li>
+            <li> <a href="https://hybrid.concordia.ca/jdesplan/schedule.html" target="_blank">Schedule</a> </li>
+          </ul>
+        </li>
+        <li> <a href="/CART211/CART211_rr/"><i class="fa fa-list-ol"></i></a>
+          <ul>
+            <li> <a href="/CART211/CART211_rr/CART211_rr1.html">Week 2</a> </li>
+            <li> <a href="/CART211/CART211_rr/CART211_rr2.html">Week 3</a> </li>
+            <li> <a href="/CART211/CART211_rr/CART211_rr3.html">Week 4</a> </li>
+            <li> <a href="/CART211/CART211_rr/CART211_rr4.html">Week 5</a> </li>
+            <li> <a href="/CART211/CART211_rr/CART211_rr5.html">Week 7</a> </li>
+            <li> <a href="/CART211/CART211_rr/CART211_rr6.html">Week 8</a> </li>
+            <li> <a href="/CART211/CART211_rr/CART211_rr7.html">Week 10</a> </li>
+            <li> <a href="/CART211/CART211_rr/CART211_rr8.html">Week 11</a> </li>
+            <li> <a href="/CART211/CART211_rr/CART211_rr9.html">Week 12</a> </li>
+          </ul>
+        </li>
+        <li> <a><i class="fa fa-paint-brush"></i></a>
+          <ul>
+            <li> <a href="/CART211/CART211_ex/CART211_ex1021.html" target="_blank">Ex 1021</i></a></li>
+            <li> <a href="/CART211/CART211_ex/CART211_ex1028.html" target="_blank">Ex 1028</i></a></li>
+            <li> <a href="/CART211/CART211_ex/CART211_ex1104.html" target="_blank">Ex 1104</i></a></li>
+            <li> <a href="/CART211/CART211_ex/CART211_ex1111.html" target="_blank">Ex 1111</i></a></li>
+          </ul>
+        </li>
+        <li> <a><i class="fa fa-vcard"></i></a>
+          <ul>
+            <li> <a href="https://www.facebook.com/illiez" target="_blank"><i class="fa fa-facebook"></i></a></li>
+            <li> <a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a> </li>
+            <li> <a href="https://www.instagram.com/illeyai/" target="_blank"><i class="fa fa-instagram"></i></a> </li>
+            <li> <a href="https://www.youtube.com/channel/UC7iSss5svNGAQXHGDte47LA" target="_blank"><i class="fa fa-youtube-play"></i></a> </li>
+          </ul>
+        </li>
+        <li> <a><i class="fa fa-question"></i></a>
+          <ul>
+            <li> <a href="/CART211/CART211_eggs/CART211_eggsprop.html">Proposal</i></a></li>
+            <li> <a href="/CART211/CART211_eggs/">Access</i></a></li>
+          </ul>
+        </li>
+      </ul>
     </div>
-  </body>
+  </header>
+  <br><br>
+  <div>
+    <button id="b0" onclick="document.location='CART211_rr1.html'">Week 2</button>
+    <button id="b1" onclick="document.location='CART211_rr2.html'">Week 3</button>
+    <button id="b2" onclick="document.location='CART211_rr3.html'">Week 4</button>
+    <button id="b3" onclick="document.location='CART211_rr4.html'">Week 5</button>
+    <button id="b4" onclick="document.location='CART211_rr5.html'">Week 7</button>
+    <button id="b5" onclick="document.location='CART211_rr6.html'">Week 8</button>
+    <button id="b6" onclick="document.location='CART211_rr7.html'">Week 10</button>
+    <button id="b7" onclick="document.location='CART211_rr8.html'">Week 11</button>
+    <button id="b8" onclick="document.location='CART211_rr9.html'">Week 12</button>
+  </div>
+</body>
 </html>
