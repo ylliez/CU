@@ -17,6 +17,9 @@ function cssChange() {
     document.getElementById("stopBtn").style.top = "50%";
     document.body.style.cursor = "none";
     document.getElementById('dragImg').style.opacity = "100%";
+    cssCount++;
+    case 3:
+    window.location.href = '.'
     break;
     default: break;
   }
