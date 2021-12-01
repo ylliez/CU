@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> reach out! or don't. most likely irrelevant. but you never know! </title>
+    <meta charset=“utf-8”>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+    body { margin: 0px; height: 100vh; }
+    a { position: absolute; font-size: 25px; color: #FE4}
+    </style>
+    <script>
+    function init() {
+      document.body.style.backgroundColor = "rgb(" + Math.floor(Math.random()*255) + "," + Math.floor(Math.random()*255) + "," + Math.floor(Math.random()*255) + ")";
+      var IDs = ["ph","ml","fb","tw","ig","yt"];
+      for (var i = 0; i < IDs.length; i++) {
+        document.getElementsByClassName("col")[i].style.color = "rgb(" + Math.floor(Math.random()*255) + "," + Math.floor(Math.random()*255) + "," + Math.floor(Math.random()*255) + ")";
+        let posX = Math.random()*100; document.getElementById(IDs[i]).style.left = posX+"%";
+        let posY = Math.random()*100; document.getElementById(IDs[i]).style.top = posY+"%";
+      }
+    }
+    </script>
+  </head>
+  <body onload="init()">
+    <div>
+      <a class="col" id="ph" href="tel:4388689248" target="_blank"><i class="material-icons">phone</i></a>
+      <a class="col" id="ml" href="mailto:illiez@hotmail.com" target="_blank"><i class="material-icons">mail</i></a>
+      <a class="col" id="fb" href="https://www.facebook.com/illiez" target="_blank"><i class="fa fa-facebook"></i></a></li>
+      <a class="col" id="tw" href="https://twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a> </li>
+      <a class="col" id="ig" href="https://www.instagram.com/illeyai/" target="_blank"><i class="fa fa-instagram"></i></a> </li>
+      <a class="col" id="yt" href="https://www.youtube.com/channel/UC7iSss5svNGAQXHGDte47LA" target="_blank"><i class="fa fa-youtube-play"></i></a> </li>
+
+    </div>
+  </body>
+</html>
