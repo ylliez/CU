@@ -1,31 +1,23 @@
 <!DOCTYPE html>
 <html>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- <base href="../CART211_media/"> -->
-<style>
-body {
-  margin: 0;
-  background-image: url('../CART211_media/GALL_gaspe.jpg'); */
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: 100% 100%;
-}
-.enterP { opacity: 80%; width: 100vw; height: 100vh; background-color: #FFF; z-index: 2; }
-span { position: absolute; top: 45%; left: 45%;  color: #000; font-size: 30px; font-weight: bold; cursor: pointer; }
-.prev, .next { cursor: pointer; position: absolute; top: 50%; width: auto; padding: 16px; margin-top: -50px; color: white; font-weight: bold; font-size: 20px; border-radius: 0 3px 3px 0; user-select: none; -webkit-user-select: none; }
-.next { right: 0; border-radius: 3px 0 0 3px; }
-.prev:hover, .next:hover { background-color: rgba(0, 0, 0, 0.8); }
+<head>
+  <title> eggs - photo </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-</style>
-
-<body>
-  <div id="weg" class="enterP">
-    <span onclick="initialize()">ENTER</span>
-  </div>
-  <audio id="audio" src="../CART211_media/AuArnalds.mp3" type="audio/mpeg"></audio>
-  <a class="prev" onclick="plusSlides(-1)">❮</a>
-  <a class="next" onclick="plusSlides(1)">❯</a>
-
+  <style>
+  body {
+    margin: 0;
+    background-image: url('../CART211_media/GALL_gaspe.jpg'); */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+  }
+  .enterP { opacity: 80%; width: 100vw; height: 100vh; background-color: #FFF; z-index: 2; }
+  span { position: absolute; top: 45%; left: 45%;  color: #000; font-size: 30px; font-weight: bold; cursor: pointer; }
+  .prev, .next { cursor: pointer; position: absolute; top: 50%; width: auto; padding: 16px; margin-top: -50px; color: white; font-weight: bold; font-size: 20px; border-radius: 0 3px 3px 0; user-select: none; -webkit-user-select: none; }
+  .next { right: 0; border-radius: 3px 0 0 3px; }
+  .prev:hover, .next:hover { background-color: rgba(0, 0, 0, 0.8); }
+  </style>
 
   <script>
   var imgIndex = 1;
@@ -36,40 +28,26 @@ span { position: absolute; top: 45%; left: 45%;  color: #000; font-size: 30px; f
     if (n > 6) {imgIndex = 1}
     if (n < 1) {imgIndex = 6}
     switch (imgIndex-1) {
-      case 0:
-      document.body.style.backgroundImage = "url('../CART211_media/GALL_gaspe.jpg')";
-      document.getElementById("audio").src = '../CART211_media/AuArnalds.mp3';
-      break;
-      case 1:
-      document.body.style.backgroundImage = "url('../CART211_media/GALL_eld.jpg')";
-      document.getElementById("audio").src = '../CART211_media/AuGlass.mp3';
-      break;
-      case 2:
-      document.body.style.backgroundImage = "url('../CART211_media/GALL_dry.jpg')";
-      document.getElementById("audio").src = '../CART211_media/AuOophoi.mp3';
-      break;
-      case 3:
-      document.body.style.backgroundImage = "url('../CART211_media/GALL_jok.jpg')";
-      document.getElementById("audio").src = '../CART211_media/AuRichter.mp3';
-      break;
-      case 4:
-      document.body.style.backgroundImage = "url('../CART211_media/GALL_nis.jpg')";
-      document.getElementById("audio").src = '../CART211_media/AuSea.mp3';
-      break;
-      case 5:
-      document.body.style.backgroundImage = "url('../CART211_media/GALL_phare.jpg')";
-      document.getElementById("audio").src = '../CART211_media/AuPart.mp3';
-      break;
-      default:
-      document.body.style.backgroundImage = "url('../CART211_media/GALL_gaspe.jpg')";
-      document.getElementById("audio").src = '../CART211_media/AuArnalds.mp3';
-      break;
-    }
-    document.getElementById("audio").play();
-  }
+      case 0: document.body.style.backgroundImage = "url('../CART211_media/GALL_gaspe.jpg')"; document.getElementById("audio").src = '../CART211_media/AuArnalds.mp3'; break;
+      case 1: document.body.style.backgroundImage = "url('../CART211_media/GALL_eld.jpg')"; document.getElementById("audio").src = '../CART211_media/AuGlass.mp3'; break;
+      case 2: document.body.style.backgroundImage = "url('../CART211_media/GALL_dry.jpg')"; document.getElementById("audio").src = '../CART211_media/AuOophoi.mp3'; break;
+      case 3: document.body.style.backgroundImage = "url('../CART211_media/GALL_jok.jpg')"; document.getElementById("audio").src = '../CART211_media/AuRichter.mp3'; break;
+      case 4: document.body.style.backgroundImage = "url('../CART211_media/GALL_nis.jpg')"; document.getElementById("audio").src = '../CART211_media/AuSea.mp3'; break;
+      case 5: document.body.style.backgroundImage = "url('../CART211_media/GALL_phare.jpg')"; document.getElementById("audio").src = '../CART211_media/AuPart.mp3'; break;
+      default: document.body.style.backgroundImage = "url('../CART211_media/GALL_gaspe.jpg')"; document.getElementById("audio").src = '../CART211_media/AuArnalds.mp3'; break;
+    } document.getElementById("audio").play(); }
   function plusSlides(n) { document.getElementById("weg").style.opacity = "0%"; changeBG(imgIndex += n); }
   </script>
 
+</head>
+
+<body>
+  <div id="weg" class="enterP">
+    <span onclick="initialize()">ENTER</span>
+  </div>
+  <audio id="audio" src="../CART211_media/AuArnalds.mp3" type="audio/mpeg"></audio>
+  <a class="prev" onclick="plusSlides(-1)">❮</a>
+  <a class="next" onclick="plusSlides(1)">❯</a>
 </body>
 </html>
 
