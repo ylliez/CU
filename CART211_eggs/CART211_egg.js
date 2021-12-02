@@ -15,7 +15,7 @@ function cssChange() {
     document.getElementById("bushVid").style.top = "0";
     document.getElementById("bushVid").play();
     document.getElementById("stopBtn").style.top = "50%";
-    // document.body.style.cursor = "none";
+    document.body.style.cursor = "none";
     document.getElementById('dragImg').style.opacity = "100%";
     cssCount++;
     break;
