@@ -10,10 +10,9 @@
   header { margin-bottom: 20px; }
   .collapsible { background-color: #777; color: white; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: center; outline: none; font-size: 17px; opacity: 80%; }
   .active, .collapsible:hover { background-color: #555; opacity: 95%; }
-  .content { background-color: #f1f1f1; padding: 0 15px; text-align: left; max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out; opacity: 70%; }
+  .content { background-color: #f1f1f1; padding: 0 15px; text-align: left; max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out; opacity: 70%; margin-bottom: 10px; }
   .collapsible:after { content: url('faviconw.ico'); float: right; transform: rotate(90deg); }
   .active:after { content: url('faviconw.ico'); float: right; transform: rotate(180deg); }
-  button { margin-top: 20px; }
   </style>
 </head>
 
@@ -27,7 +26,8 @@
         <li> <a href="."> <i class="fa fa-home"></i></a> </li>
         <li> <a href="about.html"> <i class="fa fa-list-ol"></i></a>
           <ul>
-            <li> <a href="about.html#ProjectDescription">project description</a> </li>
+            <li> <a href="about.html#Background">background</a> </li>
+            <li> <a href="about.html#Description">description</a> </li>
             <li> <a href="about.html#ArtistBio">artist bio</a> </li>
           </ul>
         </li>
@@ -44,7 +44,25 @@
     </div>
   </header>
 
-  <button type="button" class="collapsible" id="ProjectDescription">Project Description</button>
+  <body>
+  <button type="button" class="collapsible" id="Background">Background</button>
+  <div class="content">
+    <p style="text-indent:0px">
+      <b>Haptic</b> (from the Ancient Greek ἅπτω, ‘to touch, affect’): of or relating to the sense of touch<br>
+      <b>Haptic technology</b>: technology permitting haptic information transmission (e.g. vibration motor in cell phones)<br>
+      <b>Telehaptics</b>: haptic technology supporting remote information transmission (e.g. telesurgery apparatus)<br>
+      <b>Teledildonics</b>: telehaptics revolving around sexual activity (e.g. Bluetooth-enabled sex toys)<br>
+      <b>Onion dildonics</b>: teledildonics involving principles of cybersecurity (e.g. tor routing)<br>
+    </p>
+    <p>
+      The rise of teledildonics has led to a “world of connected sex toys […] without regards to what consent, privacy, or security means in that context” (Sarah Jamie Lewis, in <a href="https://www.wired.co.uk/article/sex-toy-bluetooth-hacks-security-fix" target="_blank">Burgess, 2018</a>). While <a href="https://www.reddit.com/r/ToyControl/" target="_blank">certain subcommunities</a> openly advertise anonymous teledildonic activity, there exists in the general population a strong concern of hacking - <a href="https://dl.acm.org/doi/pdf/10.1145/3139937.3139942" target="_blank">far from unreasonble</a> in the case of Bluetooth Low Energy devices - which has led to the emergence of onion dildonics, a field of encrypted teledildonics.
+    </p>
+    <p>
+      Considering onion routing as one form of cyberencryption among many, we can frame onion dildonics as a fragment of a broader realm of cryptodildonics. This rebranding conjures an analogical contrast between cryptography and steganography, in which the former seeks to encrypt the meaning of the message using a cipher (e.g. Caesar’s code) whereas the latter attempts to hide the very existence of the message itself (e.g. <span style="color:#f1f1f1">invisible ink</span>). I therefore propose to develop a field of steganodildonics, which promises cybersexual security via inconspicuous dissimulation.
+    </p>
+  </div>
+
+  <button type="button" class="collapsible" id="Description">Description</button>
   <div class="content">
     <p> Telomatic is an exploration of intersubjectivity through sculptural electronic art. <br> Drawing inspiration from technology ethics, telematic art and crypto-anarchism, this project seeks to comment on and propose playfully engaging solutions to the dematerialization of contemporary virtualized landscapes as well as address concerns of cybersecurity in our increasingly connected age. </p>
     <p> An interactive apparatus reverse-engineering embodied possibilities of telematic experience, Telomatic arose in an attempt to address these issues in a conceptually lighthearted way, using a disruptively telehaptic anal plug. On a surface level, this can appear to create a hyperspecific solution to re-engage users, a metamodern techno-commercial approach only post-ironically addressing the alienation of dematerialization. Yet, pragmatically dysfunctional and essentially meaningless without the conscious, critical and convivial involvement of its beholders, this artificially reincarnated object eschews practical application in favour of theoretical critique, problematizing the very notion of user engagement through absurdist excess. </p>
@@ -53,37 +71,50 @@
   </div>
   <button type="button" class="collapsible" id="ArtistBio">Artist Bio</button>
   <div class="content">
-    <p>
-      Lorem Ipsum
-    </p>
-    <p>
-      Lorem Ipsum
-    </p>
-  </div> <br>
+    <p>illiez is a human being currently residing in Tiohtià:ke. A creative fabricator, illiez uses a
+      variety of media in an attempt to shed light on the alterity and alienation that can arise from
+      intersubjective experience, most often using the body – whether physical object or conceptual
+      framework – as a starting point for these explorations. Usually idiosyncratic, frequently private
+      and sometimes selfish, the outcome is usually situated at an ever-shifting barycenter of
+      electronic, sculptural, biological and performance arts. The practice is also subjected to the
+      gravitational pull of poetry, technique and science, all of which distort the erratic, autotelic and
+      ultimately futile creative process.</p>
+      <p>Pacifying cryptographic pathorrhea – receptive and/or extrusive – fuels a simple quest to
+        understand and be understood by others. From there, either fulfillment manifests in enthusiastic
+        collaborative amusement or failure devolves into cathartic softcore masochism – physical,
+        psychological and/or technical.</p>
+        <p>Underlying yearnings are to ogle perceptual spaces outside the self, inquisitively reframe topical
+          epistemologies and contribute to diversifying cognitive topographies.</p>
+          <p>Tools used to this end include skin, circuits, silicone, software, sound and so on.</p>
+          <p>Mischievious, but earnest.</p>
+        </div> <br>
 
-  <script>
 
-  var coll = document.getElementsByClassName("collapsible");
-  for (var i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function() {
-      this.classList.toggle("active");
-      var content = this.nextElementSibling;
-      // if (content.style.display === "block") { content.style.display = "none"; }
-      // else { content.style.display = "block"; }
-      if (content.style.maxHeight){ content.style.maxHeight = null; }
-      else { content.style.maxHeight = content.scrollHeight + "px"; }
-    });
-  }
-  if(self.location.hash=="#ProjectDescription") { document.getElementById("ProjectDescription").click(); }
-  if(self.location.hash=="#ArtistBio") { document.getElementById("ArtistBio").click(); }
-  </script>
+        <footer>
+          <span>illiez, 2021</span>
+          <a href="https://www.youtube.com/channel/UC7iSss5svNGAQXHGDte47LA" target="_blank"><i class="fa fa-youtube-play"></i></a>
+          <a href="https://www.instagram.com/illeyai/" target="_blank"><i class="fa fa-instagram"></i></a>
+          <a href="https://www.facebook.com/illiez" target="_blank"><i class="fa fa-facebook"></i></a>
+        </footer>
 
-</body>
+        <script>
+        var coll = document.getElementsByClassName("collapsible");
+        for (var i = 0; i < coll.length; i++) {
+          coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            // if (content.style.display === "block") { content.style.display = "none"; }
+            // else { content.style.display = "block"; }
+            if (content.style.maxHeight){ content.style.maxHeight = null; }
+            else { content.style.maxHeight = content.scrollHeight + "px"; }
+          });
+        }
+        if(self.location.hash=="#Background") { document.getElementById("Background").click(); }
+        if(self.location.hash=="#Description") { document.getElementById("Description").click(); }
+        if(self.location.hash=="#ArtistBio") { document.getElementById("ArtistBio").click(); }
+        </script>
 
-<footer>
-  <span>illiez, 2021</span>
-  <a href="https://www.youtube.com/channel/UC7iSss5svNGAQXHGDte47LA" target="_blank"><i class="fa fa-youtube-play"></i></a>
-  <a href="https://www.instagram.com/illeyai/" target="_blank"><i class="fa fa-instagram"></i></a>
-    <a href="https://www.facebook.com/illiez" target="_blank"><i class="fa fa-facebook"></i></a>
-</footer>
-</html>
+      </body>
+
+
+      </html>
