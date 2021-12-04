@@ -63,6 +63,7 @@
     tablinks = document.getElementsByClassName("tablink");
     for (i = 0; i < tablinks.length; i++) { tablinks[i].style.backgroundColor = ""; }
     document.getElementById(tab).style.display = "block";
+    self.location.hash=tab;
   }
   if(self.location.hash=="#HW") { openPage('HW'); }
   if(self.location.hash=="#SW") { openPage('SW'); }
