@@ -1,14 +1,19 @@
 <!DOCTYPE html>
-<html lang=“en” dir=“ltr”>
 <head>
   <title>ABOUT</title>
   <link rel="stylesheet" href="main.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset=“utf-8”>
   <style>
   body { color: #000; background-image: url('assets/desk.jpg'); }
+  .collapsible { background-color: #777; color: white; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: center; outline: none; font-size: 17px; opacity: 80%; }
+  .active, .collapsible:hover { background-color: #555; opacity: 95%; }
+  .content { background-color: #f1f1f1; padding: 0 15px; text-align: left; max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out; opacity: 70%; }
   </style>
 </head>
+
 <body>
+
   <header>
     <h1>TELOMATIC</h1>
     <h2>ABOUT</h2>
@@ -46,35 +51,45 @@
       </ul>
     </div>
   </header>
-  <div id="ProjectDescription">
-    <h3>
-      PROJECT DESCRIPTION
-    </h3>
-    <p>
-      Telomatic is an exploration of intersubjectivity through sculptural electronic art. <br> Drawing inspiration from technology ethics, telematic art and crypto-anarchism, this project seeks to comment on and propose playfully engaging solutions to the dematerialization of contemporary virtualized landscapes as well as address concerns of cybersecurity in our increasingly connected age.
-    </p>
-    <p>
-      An interactive apparatus reverse-engineering embodied possibilities of telematic experience, Telomatic arose in an attempt to address these issues in a conceptually lighthearted way, using a disruptively telehaptic anal plug. On a surface level, this can appear to create a hyperspecific solution to re-engage users, a metamodern techno-commercial approach only post-ironically addressing the alienation of dematerialization. Yet, pragmatically dysfunctional and essentially meaningless without the conscious, critical and convivial involvement of its beholders, this artificially reincarnated object eschews practical application in favour of theoretical critique, problematizing the very notion of user engagement through absurdist excess.
-    </p>
-    <p>
-      Telomatic also exists to explore the notion of cybersecurity in a time of increasing (awareness of the) fragility of our digital identities. The rise of teledildonics - remote haptic technology involving sexuality - has further accelerated discussion around the meaning of consent, privacy and security online. While certain subcommunities openly invite anonymous teledildonic activity, there exists in the general population a strong concern of hacking, specifically in the case of popular but low-security toys using Bluetooth Low Energy protocols. This has led to the emergence of onion dildonics, a field concerned with the cybersecurity of teledildonics.
-    </p>
-    <p>
-      Framing onion dildonics as a fragment of a broader realm of cryptodildonics, we can consider the analogical distinction between cryptography and steganography, in which the former seeks to encrypt the meaning of the message using a cipher whereas the latter attempts to hide the very existence of the message itself. Telomatic proposes to eschew traditional principles of cryptographic cybersecurity in favour of steganography, heralding the advent of steganodildonics and promising cybersexual security via inconspicuous dissimulation.
-    </p>
-  </div> <br> <br>
-  <div id="ArtistStatement">
-    <h3>
-      ARTIST STATEMENT
-    </h3>
+
+  <br>
+  <button type="button" class="collapsible" id="ProjectDescription">Project Description</button>
+  <div class="content">
+    <p> Telomatic is an exploration of intersubjectivity through sculptural electronic art. <br> Drawing inspiration from technology ethics, telematic art and crypto-anarchism, this project seeks to comment on and propose playfully engaging solutions to the dematerialization of contemporary virtualized landscapes as well as address concerns of cybersecurity in our increasingly connected age. </p>
+    <p> An interactive apparatus reverse-engineering embodied possibilities of telematic experience, Telomatic arose in an attempt to address these issues in a conceptually lighthearted way, using a disruptively telehaptic anal plug. On a surface level, this can appear to create a hyperspecific solution to re-engage users, a metamodern techno-commercial approach only post-ironically addressing the alienation of dematerialization. Yet, pragmatically dysfunctional and essentially meaningless without the conscious, critical and convivial involvement of its beholders, this artificially reincarnated object eschews practical application in favour of theoretical critique, problematizing the very notion of user engagement through absurdist excess. </p>
+    <p> Telomatic also exists to explore the notion of cybersecurity in a time of increasing (awareness of the) fragility of our digital identities. The rise of teledildonics - remote haptic technology involving sexuality - has further accelerated discussion around the meaning of consent, privacy and security online. While certain subcommunities openly invite anonymous teledildonic activity, there exists in the general population a strong concern of hacking, specifically in the case of popular but low-security toys using Bluetooth Low Energy protocols. This has led to the emergence of onion dildonics, a field concerned with the cybersecurity of teledildonics. </p>
+    <p> Framing onion dildonics as a fragment of a broader realm of cryptodildonics, we can consider the analogical distinction between cryptography and steganography, in which the former seeks to encrypt the meaning of the message using a cipher whereas the latter attempts to hide the very existence of the message itself. Telomatic proposes to eschew traditional principles of cryptographic cybersecurity in favour of steganography, heralding the advent of steganodildonics and promising cybersexual security via inconspicuous dissimulation. </p>
+  </div>
+  <button type="button" class="collapsible" id="ArtistStatement">Artist Statement</button>
+  <div class="content">
     <p>
       Lorem Ipsum
     </p>
     <p>
       Lorem Ipsum
     </p>
-  </div> <br> <br>
+  </div> <br>
+
+  <script>
+  var coll = document.getElementsByClassName("collapsible");
+  for (var i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      // if (content.style.display === "block") { content.style.display = "none"; }
+      // else { content.style.display = "block"; }
+      if (content.style.maxHeight){
+        content.style.maxHeight = null;
+      } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+      }
+    });
+  }
+
+  </script>
+
 </body>
+
 <footer>
   <a href="."><i class="fa fa-home"></i></a>
 </footer>
