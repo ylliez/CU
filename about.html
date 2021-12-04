@@ -7,20 +7,14 @@
   <link rel="icon" type="image/ico" href="favicon.ico">
   <style>
   body { color: #000; background-image: url('assets/desk.jpg'); }
+  header { margin-bottom: 20px; }
   .collapsible { background-color: #777; color: white; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: center; outline: none; font-size: 17px; opacity: 80%; }
   .active, .collapsible:hover { background-color: #555; opacity: 95%; }
   .content { background-color: #f1f1f1; padding: 0 15px; text-align: left; max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out; opacity: 70%; }
-  .collapsible:after {
-  content: url('faviconw.ico');
-  float: right;
-  transform: rotate(90deg);
-}
-
-.active:after {
-  content: url('faviconw.ico');
-  float: right;
-  transform: rotate(180deg);
-}</style>
+  .collapsible:after { content: url('faviconw.ico'); float: right; transform: rotate(90deg); }
+  .active:after { content: url('faviconw.ico'); float: right; transform: rotate(180deg); }
+  button { margin-top: 20px; }
+  </style>
 </head>
 
 <body>
@@ -63,7 +57,6 @@
     </div>
   </header>
 
-  <br>
   <button type="button" class="collapsible" id="ProjectDescription">Project Description</button>
   <div class="content">
     <p> Telomatic is an exploration of intersubjectivity through sculptural electronic art. <br> Drawing inspiration from technology ethics, telematic art and crypto-anarchism, this project seeks to comment on and propose playfully engaging solutions to the dematerialization of contemporary virtualized landscapes as well as address concerns of cybersecurity in our increasingly connected age. </p>
@@ -71,7 +64,7 @@
     <p> Telomatic also exists to explore the notion of cybersecurity in a time of increasing (awareness of the) fragility of our digital identities. The rise of teledildonics - remote haptic technology involving sexuality - has further accelerated discussion around the meaning of consent, privacy and security online. While certain subcommunities openly invite anonymous teledildonic activity, there exists in the general population a strong concern of hacking, specifically in the case of popular but low-security toys using Bluetooth Low Energy protocols. This has led to the emergence of onion dildonics, a field concerned with the cybersecurity of teledildonics. </p>
     <p> Framing onion dildonics as a fragment of a broader realm of cryptodildonics, we can consider the analogical distinction between cryptography and steganography, in which the former seeks to encrypt the meaning of the message using a cipher whereas the latter attempts to hide the very existence of the message itself. Telomatic proposes to eschew traditional principles of cryptographic cybersecurity in favour of steganography, heralding the advent of steganodildonics and promising cybersexual security via inconspicuous dissimulation. </p>
   </div>
-  <button type="button" class="collapsible" id="ArtistStatement">Artist Statement</button>
+  <button type="button" class="collapsible" id="ArtistBio">Artist Bio</button>
   <div class="content">
     <p>
       Lorem Ipsum
@@ -82,6 +75,7 @@
   </div> <br>
 
   <script>
+
   var coll = document.getElementsByClassName("collapsible");
   for (var i = 0; i < coll.length; i++) {
     coll[i].addEventListener("click", function() {
@@ -93,12 +87,16 @@
       else { content.style.maxHeight = content.scrollHeight + "px"; }
     });
   }
-
+  if(self.location.hash=="#ProjectDescription") { document.getElementById("ProjectDescription").click(); }
+  if(self.location.hash=="#ArtistBio") { document.getElementById("ArtistBio").click(); }
   </script>
 
 </body>
 
 <footer>
-  <a href="."><i class="fa fa-home"></i></a>
+  <span>illiez, 2021</span>
+  <a href="https://www.youtube.com/channel/UC7iSss5svNGAQXHGDte47LA" target="_blank"><i class="fa fa-youtube-play"></i></a>
+  <a href="https://www.instagram.com/illeyai/" target="_blank"><i class="fa fa-instagram"></i></a>
+    <a href="https://www.facebook.com/illiez" target="_blank"><i class="fa fa-facebook"></i></a>
 </footer>
 </html>
