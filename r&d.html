@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<head>
+  <title>TELOMATIC</title>
+  <link rel="stylesheet" href="main.css">
+  <meta charset=“utf-8”>
+  <style>
+  .tablink { background-color: #555; color: white; float: left; border: none; outline: none; cursor: pointer; padding: 5px; font-size: 17px; width: 33.33333%; }
+  .tablink:hover { background-color: #777; }
+  .tabcontent { color: white; display: none; padding: 50px 20px; height: 100%; }
+  img { margin: auto; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>TELOMATIC</h1>
+    <h2>R&D - HARDWARE</h2>
+    <div class="menu">
+      <ul>
+        <li> <a href="."> <i class="fa fa-home"></i></a> </li>
+        <li> <a href="about.html"> <i class="fa fa-list-ol"></i></a>
+          <ul>
+            <li> <a href="about.html#ProjectDescription">project description</a> </li>
+            <li> <a href="about.html#ArtistBio">artist bio</a> </li>
+          </ul>
+        </li>
+        <li> <a href="./telo_tech/"> <i class="fa fa-wrench"></i></a>
+          <ul>
+            <li> <a href="r&d_hw.html">hardware</a> </li>
+            <li> <a href="r&d_sw.html">software</a> </li>
+            <li> <a href="r&d_fab.html">fabrication</a> </li>
+          </ul>
+        </li>
+        <li> <a href="soon.html"><i class="fa fa-download"></i></a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <button class="tablink" onclick="openPage('HW')">Hardware</button>
+  <button class="tablink" onclick="openPage('SW')">Software</button>
+  <button class="tablink" onclick="openPage('FAB')">Fabrication</button>
+
+  <div id="HW" class="tabcontent">
+    <img src="assets/telo_hw.jpg" width="50%" style="float:left">
+    <img src="assets/telo_circ.png" width="47.5%" style="float:right">
+  </div>
+
+  <div id="SW" class="tabcontent">
+    <img src="assets/telo_sw_ard.png" width="33%" style="float:left">
+    <img src="assets/telo_sw_and.png" width="33%">
+    <iframe src="https://hybrid.concordia.ca/jdesplan/" width="33%" style="float:right"></iframe>
+  </div>
+
+  <div id="FAB" class="tabcontent">
+
+  </div>
+
+  <script>
+  function openPage(tab) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; }
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < tablinks.length; i++) { tablinks[i].style.backgroundColor = ""; }
+    document.getElementById(tab).style.display = "block";
+  }
+  if(self.location.hash=="#HW") { openPage('HW'); }
+  if(self.location.hash=="#SW") { openPage('SW'); }
+  if(self.location.hash=="#FAB") { openPage('FAB'); }
+</script>
+
+</body>
+</html>
