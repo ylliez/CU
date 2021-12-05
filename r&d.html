@@ -10,7 +10,7 @@
   img { margin: auto; }
   </style>
 </head>
-<body>
+<body onload="isHash()">
   <header>
     <h1>TELOMATIC</h1>
     <h2>R&D - HARDWARE</h2>
@@ -26,9 +26,9 @@
         </li>
         <li> <a href="r&d.html"> <i class="fa fa-wrench"></i></a>
           <ul>
-            <li> <a href="r&d.html#HW">hardware</a> </li>
-            <li> <a href="r&d.html#SW">software</a> </li>
-            <li> <a href="r&d.html#FAB">fabrication</a> </li>
+            <li> <a href="https://ylliez.github.io/IMCA400/r&d.html#HW">hardware</a> </li>
+            <li> <a href="https://ylliez.github.io/IMCA400/r&d.html#SW">software</a> </li>
+            <li> <a href="https://ylliez.github.io/IMCA400/r&d.html#FAB">fabrication</a> </li>
           </ul>
         </li>
         <li> <a href="dl.html"><i class="fa fa-download"></i></a>
@@ -37,13 +37,14 @@
     </div>
   </header>
 
-  <div id="def" class="tabcontent">
-    <iframe src="" width="33%" style="float:right"></iframe>
-  </div>
-
+  <button class="tablink" id="DEFb" onclick="openPage('def', this)" style="display:none">Default</button>
   <button class="tablink" id="HWb" onclick="openPage('HW', this)">Hardware</button>
   <button class="tablink" id="SWb" onclick="openPage('SW', this)">Software</button>
   <button class="tablink" id="FABb" onclick="openPage('FAB', this)">Fabrication</button>
+
+  <div id="def" class="tabcontent">
+    <iframe src="https://docs.google.com/document/d/e/2PACX-1vTn1D4sFD3F0IYwl3qOfZG873NqOFpvhy5R-i_Nc6hI182qlJJFGjHY3b-FYZ12ygFJAalhbdJ6oluz/pub?embedded=true" width="100%" height="1000px" ></iframe>
+  </div>
 
   <div id="HW" class="tabcontent">
     <img src="assets/telo_hw.jpg" width="50%" style="float:left">
@@ -70,9 +71,12 @@
     tabbut.style.backgroundColor = "#777";
     self.location.hash=tab;
   }
-  if(self.location.hash=="#HW") { document.getElementById("HWb").click(); }
-  if(self.location.hash=="#SW") { document.getElementById("SWb").click(); }
-  if(self.location.hash=="#FAB") { document.getElementById("FABb").click(); }
+  function isHash() {
+    if(self.location.hash=="#HW") { document.getElementById("HWb").click(); }
+    else if(self.location.hash=="#SW") { document.getElementById("SWb").click(); }
+    else if(self.location.hash=="#FAB") { document.getElementById("FABb").click(); }
+    else { document.getElementById("DEFb").click(); }
+  }
 </script>
 
 </body>
