@@ -29,6 +29,7 @@ ul li ul li:hover i { color: #222; }
 
 h3 { font-size: 20px; text-align: center; text-decoration: underline; font-weight: bold; }
 p { font-size: 18px; text-align: left; margin-left: 120px; margin-right: 120px; text-indent: 40px; }
+.xind { font-size: 18px; text-align: left; margin-left: 120px; margin-right: 120px; text-indent: 0px; }
 
 .imgDisp { margin: 20px; display: inline-block; text-align: center; }
 
@@ -41,7 +42,7 @@ footer {
   background-color: #000;
   color: #FFF;
   padding: 5px 0;
-  margin-top: 5px; 
+  margin-top: 5px;
 }
 footer i { color: #FFF; padding-right: 10px; float: right; }
 
