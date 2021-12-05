@@ -129,9 +129,9 @@
       else { content.style.maxHeight = content.scrollHeight + "px"; }
     });
   }
-  if(self.location.hash=="#Background") { document.getElementById("Background").click(); }
-  if(self.location.hash=="#Description") { document.getElementById("Description").click(); }
-  if(self.location.hash=="#ArtistBio") { document.getElementById("ArtistBio").click(); }
+  if(self.location.hash=="#Background") { document.getElementById("Background").click(); history.pushState("", document.title, window.location.pathname + window.location.search); }
+  if(self.location.hash=="#Description") { document.getElementById("Description").click(); history.pushState("", document.title, window.location.pathname + window.location.search); }
+  if(self.location.hash=="#ArtistBio") { document.getElementById("ArtistBio").click(); history.pushState("", document.title, window.location.pathname + window.location.search); }
   </script>
 
 </body>

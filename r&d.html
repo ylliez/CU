@@ -5,7 +5,7 @@
   <meta charset=“utf-8”>
   <style>
   .tablink { background-color: #555; color: white; float: left; border: none; outline: none; cursor: pointer; padding: 5px; font-size: 17px; width: 33.33333%; }
-  .tablink:hover .active { background-color: #777; }
+  .tablink:hover { background-color: #777; }
   .tabcontent { color: white; display: none; padding: 50px 20px; height: 100%; }
   img { margin: auto; }
   </style>
@@ -37,9 +37,13 @@
     </div>
   </header>
 
-  <button class="tablink" onclick="openPage('HW')">Hardware</button>
-  <button class="tablink" onclick="openPage('SW')">Software</button>
-  <button class="tablink" onclick="openPage('FAB')">Fabrication</button>
+  <div id="def" class="tabcontent">
+    <iframe src="" width="33%" style="float:right"></iframe>
+  </div>
+
+  <button class="tablink" id="HWb" onclick="openPage('HW', this)">Hardware</button>
+  <button class="tablink" id="SWb" onclick="openPage('SW', this)">Software</button>
+  <button class="tablink" id="FABb" onclick="openPage('FAB', this)">Fabrication</button>
 
   <div id="HW" class="tabcontent">
     <img src="assets/telo_hw.jpg" width="50%" style="float:left">
@@ -49,7 +53,6 @@
   <div id="SW" class="tabcontent">
     <img src="assets/telo_sw_ard.png" width="33%" style="float:left">
     <img src="assets/telo_sw_and.png" width="33%">
-    <iframe src="https://hybrid.concordia.ca/jdesplan/" width="33%" style="float:right"></iframe>
   </div>
 
   <div id="FAB" class="tabcontent">
@@ -57,18 +60,19 @@
   </div>
 
   <script>
-  function openPage(tab) {
+  function openPage(tab,tabbut) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; }
     tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; }
     for (i = 0; i < tablinks.length; i++) { tablinks[i].style.backgroundColor = ""; }
     document.getElementById(tab).style.display = "block";
-    // self.location.hash=tab;
+    tabbut.style.backgroundColor = "#777";
+    self.location.hash=tab;
   }
-  if(self.location.hash=="#HW") { openPage('HW'); }
-  if(self.location.hash=="#SW") { openPage('SW'); }
-  if(self.location.hash=="#FAB") { openPage('FAB'); }
+  if(self.location.hash=="#HW") { document.getElementById("HWb").click(); }
+  if(self.location.hash=="#SW") { document.getElementById("SWb").click(); }
+  if(self.location.hash=="#FAB") { document.getElementById("FABb").click(); }
 </script>
 
 </body>
