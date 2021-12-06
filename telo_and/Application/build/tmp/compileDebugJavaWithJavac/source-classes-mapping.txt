@@ -1,0 +1,22 @@
+com/example/android/bluetoothlegatt/FingerPath.java
+ com.example.android.bluetoothlegatt.FingerPath
+com/example/android/bluetoothlegatt/PaintView.java
+ com.example.android.bluetoothlegatt.PaintView
+com/example/android/bluetoothlegatt/BuildConfig.java
+ com.example.android.bluetoothlegatt.BuildConfig
+com/example/android/bluetoothlegatt/BluetoothLeService.java
+ com.example.android.bluetoothlegatt.BluetoothLeService
+ com.example.android.bluetoothlegatt.BluetoothLeService$1
+ com.example.android.bluetoothlegatt.BluetoothLeService$LocalBinder
+com/example/android/bluetoothlegatt/DeviceControlActivity.java
+ com.example.android.bluetoothlegatt.DeviceControlActivity
+ com.example.android.bluetoothlegatt.DeviceControlActivity$1
+ com.example.android.bluetoothlegatt.DeviceControlActivity$2
+ com.example.android.bluetoothlegatt.DeviceControlActivity$3
+ com.example.android.bluetoothlegatt.DeviceControlActivity$4
+ com.example.android.bluetoothlegatt.DeviceControlActivity$5
+ com.example.android.bluetoothlegatt.DeviceControlActivity$6
+com/example/android/bluetoothlegatt/DrawLauncher.java
+ com.example.android.bluetoothlegatt.DrawLauncher
+ com.example.android.bluetoothlegatt.DrawLauncher$1
+ com.example.android.bluetoothlegatt.DrawLauncher$2

@@ -1,0 +1,86 @@
+[
+    {
+        "merged": "/Users/isp/Downloads/Telomatic/app/Application/build/intermediates/merged_res/debug/mipmap-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "/Users/isp/Downloads/Telomatic/app/Application/src/template/res/mipmap-xxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/Users/isp/Downloads/Telomatic/app/Application/build/intermediates/merged_res/debug/mipmap-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "/Users/isp/Downloads/Telomatic/app/Application/src/template/res/mipmap-xxxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/Users/isp/Downloads/Telomatic/app/Application/build/intermediates/merged_res/debug/drawable-hdpi_tile.9.png.flat",
+        "source": "/Users/isp/Downloads/Telomatic/app/Application/src/main/res/drawable-hdpi/tile.9.png"
+    },
+    {
+        "merged": "/Users/isp/Downloads/Telomatic/app/Application/build/intermediates/merged_res/debug/layout_canvas.xml.flat",
+        "source": "/Users/isp/Downloads/Telomatic/app/Application/src/main/res/layout/canvas.xml"
+    },
+    {
+        "merged": "/Users/isp/Downloads/Telomatic/app/Application/build/intermediates/merged_res/debug/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "/Users/isp/Downloads/Telomatic/app/Application/src/template/res/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "/Users/isp/Downloads/Telomatic/app/Application/build/intermediates/merged_res/debug/mipmap-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "/Users/isp/Downloads/Telomatic/app/Application/src/template/res/mipmap-xhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/Users/isp/Downloads/Telomatic/app/Application/build/intermediates/merged_res/debug/mipmap-mdpi_ic_launcher_foreground.png.flat",
+        "source": "/Users/isp/Downloads/Telomatic/app/Application/src/template/res/mipmap-mdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/Users/isp/Downloads/Telomatic/app/Application/build/intermediates/merged_res/debug/layout_title.xml.flat",
+        "source": "/Users/isp/Downloads/Telomatic/app/Application/src/main/res/layout/title.xml"
+    },
+    {
+        "merged": "/Users/isp/Downloads/Telomatic/app/Application/build/intermediates/merged_res/debug/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "/Users/isp/Downloads/Telomatic/app/Application/src/template/res/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/isp/Downloads/Telomatic/app/Application/build/intermediates/merged_res/debug/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "/Users/isp/Downloads/Telomatic/app/Application/src/template/res/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/isp/Downloads/Telomatic/app/Application/build/intermediates/merged_res/debug/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "/Users/isp/Downloads/Telomatic/app/Application/src/template/res/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/isp/Downloads/Telomatic/app/Application/build/intermediates/merged_res/debug/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "/Users/isp/Downloads/Telomatic/app/Application/src/template/res/mipmap-xxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/isp/Downloads/Telomatic/app/Application/build/intermediates/merged_res/debug/drawable_titleimg.png.flat",
+        "source": "/Users/isp/Downloads/Telomatic/app/Application/src/main/res/drawable/titleimg.png"
+    },
+    {
+        "merged": "/Users/isp/Downloads/Telomatic/app/Application/build/intermediates/merged_res/debug/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "/Users/isp/Downloads/Telomatic/app/Application/src/template/res/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/isp/Downloads/Telomatic/app/Application/build/intermediates/merged_res/debug/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "/Users/isp/Downloads/Telomatic/app/Application/src/template/res/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/isp/Downloads/Telomatic/app/Application/build/intermediates/merged_res/debug/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "/Users/isp/Downloads/Telomatic/app/Application/src/template/res/mipmap-xxxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/isp/Downloads/Telomatic/app/Application/build/intermediates/merged_res/debug/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "/Users/isp/Downloads/Telomatic/app/Application/src/template/res/mipmap-xhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/isp/Downloads/Telomatic/app/Application/build/intermediates/merged_res/debug/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "/Users/isp/Downloads/Telomatic/app/Application/src/template/res/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "/Users/isp/Downloads/Telomatic/app/Application/build/intermediates/merged_res/debug/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "/Users/isp/Downloads/Telomatic/app/Application/src/template/res/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/isp/Downloads/Telomatic/app/Application/build/intermediates/merged_res/debug/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "/Users/isp/Downloads/Telomatic/app/Application/src/template/res/mipmap-mdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/isp/Downloads/Telomatic/app/Application/build/intermediates/merged_res/debug/mipmap-hdpi_ic_launcher_foreground.png.flat",
+        "source": "/Users/isp/Downloads/Telomatic/app/Application/src/template/res/mipmap-hdpi/ic_launcher_foreground.png"
+    }
+]
