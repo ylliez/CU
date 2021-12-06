@@ -4,10 +4,16 @@
   <link rel="stylesheet" href="main.css">
   <meta charset=“utf-8”>
   <style>
+  * { box-sizing: border-box; }
+  .column { float: left; height: 81vh; }
+  .left { width: 15%; }
+  .right { width: 85%; }
+  .row:after { content: ""; display: table; clear: both; }
   .tablink { background-color: #555; color: white; float: left; border: none; outline: none; cursor: pointer; padding: 5px; font-size: 17px; width: 33.33333%; }
   .tablink:hover { background-color: #777; }
   .tabcontent { color: white; display: none; padding: 50px 20px; height: 100%; }
   img { margin: auto; }
+  h5 { font-size: 20px; text-indent: 20px;}
   </style>
 </head>
 <body onload="isHash()">
@@ -24,13 +30,7 @@
             <li> <a href="about.html#ArtistBio">artist bio</a> </li>
           </ul>
         </li>
-        <li> <a href="r&d.html"> <i class="fa fa-wrench"></i></a>
-          <ul>
-            <li> <a href="r&d.html#SW">software</a> </li>
-            <li> <a href="r&d.html#HW">hardware</a> </li>
-            <li> <a href="r&d.html#FAB">fabrication</a> </li>
-          </ul>
-        </li>
+        <li> <a href="r&d.html"> <i class="fa fa-wrench"></i></a></li>
         <li> <a href="dl.html"><i class="fa fa-download"></i></a>
         </li>
       </ul>
@@ -40,30 +40,41 @@
   <button class="tablink" id="DEFb" onclick="openPage('def', this)" style="display:none">Default</button>
   <button class="tablink" id="SWb" onclick="openPage('SW', this)">Software</button>
   <button class="tablink" id="HWb" onclick="openPage('HW', this)">Hardware</button>
-  <button class="tablink" id="FABb" onclick="openPage('FAB', this)">Fabrication</button>
+  <button class="tablink" id="FABb" onclick="openPage('FAB', this)" >Fabrication</button>
 
-  <div id="def" class="tabcontent">
-    <iframe src="https://docs.google.com/document/d/e/2PACX-1vTn1D4sFD3F0IYwl3qOfZG873NqOFpvhy5R-i_Nc6hI182qlJJFGjHY3b-FYZ12ygFJAalhbdJ6oluz/pub?embedded=true" width="100%" height="1000px"></iframe>
-  </div>
+  <div class="row">
+    <div class="column left" style="background-color:#aaa;">
 
-  <div id="SW" class="tabcontent">
-    <h5>arduino</h5>
-    <a href="assets/telo_sw_ard.png">software screenshot</a><br>
-    <a href="https://github.com/ylliez/IMCA400/tree/main/telo_ard">code (GitHub)</a><br>
-    <h4>android</h4>
-    <a href="assets/telo_sw_and.png">software screenshot</a> <br>
-    <a href="assets/appmerge.png">app screenshot</a> <br>
-    <a href="https://github.com/ylliez/IMCA400/tree/main/telo_and">code (GitHub)</a>
+      <div id="def" class="tabcontent">
+        <h4>r&d notebook</h4>
+      </div>
 
-  </div>
+      <div id="SW" class="tabcontent">
+        <h4>arduino</h4>
+        <a href="javascript:changeSrc('assets/telo_sw_ard.png')">IDE screenshot</a><br>
+        <a style="cursor:alias" target="_blank" href="https://github.com/ylliez/IMCA400/tree/main/telo_ard">code (GitHub)</a><br>
+        <br><br>
+        <h4>android</h4>
+        <a href="javascript:changeSrc('assets/telo_sw_and.png')">IDE screenshot</a> <br>
+        <a href="javascript:changeSrc('assets/appMergeS.png')">app screenshot</a> <br>
+        <a style="cursor:alias" target="_blank" href="https://github.com/ylliez/IMCA400/tree/main/telo_and">code (GitHub)</a>
+      </div>
 
-  <div id="HW" class="tabcontent">
-    <img src="assets/telo_hw.jpg" width="50%" style="float:left">
-    <img src="assets/telo_circ.png" width="47.5%" style="float:right">
-  </div>
+      <div id="HW" class="tabcontent">
+        <h4>circuit</h4>
+        <a href="javascript:changeSrc('assets/telo_hwS.jpg')">image</a> <br>
+        <a href="javascript:changeSrc('assets/telo_circ.png')">schematic</a> <br>
+      </div>
 
-  <div id="FAB" class="tabcontent">
+      <div id="FAB" class="tabcontent">
+        <h4>[[Semester 2]]</h4>
+      </div>
 
+    </div>
+
+    <div class="column right" style="background-color:#bbb;">
+      <iframe  id="frame" src="https://docs.google.com/document/d/e/2PACX-1vTn1D4sFD3F0IYwl3qOfZG873NqOFpvhy5R-i_Nc6hI182qlJJFGjHY3b-FYZ12ygFJAalhbdJ6oluz/pub?embedded=true" width="100%" height="100%" maxHeight="100%"></iframe>
+    </div>
   </div>
 
   <script>
@@ -76,6 +87,7 @@
     document.getElementById(tab).style.display = "block";
     tabbut.style.backgroundColor = "#777";
     self.location.hash=tab;
+    document.getElementById("frame").src = "https://docs.google.com/document/d/e/2PACX-1vTn1D4sFD3F0IYwl3qOfZG873NqOFpvhy5R-i_Nc6hI182qlJJFGjHY3b-FYZ12ygFJAalhbdJ6oluz/pub?embedded=true";
   }
   function isHash() {
     if(self.location.hash=="#SW") { document.getElementById("SWb").click(); }
@@ -83,6 +95,13 @@
     else if(self.location.hash=="#FAB") { document.getElementById("FABb").click(); }
     else { document.getElementById("DEFb").click(); }
   }
+  function changeSrc(newSrc) {
+    document.getElementById("frame").src = newSrc;
+    // document.getElementById("frame").style.height = "50%" ;
+  }
+  // function defaultSrc() {
+  //   document.getElementById("frame").src = ;
+  // }
 </script>
 
 </body>
