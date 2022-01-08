@@ -27,7 +27,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(500,500);
+  createCanvas(640,480);
 //  createCanvas(640,640);
 //  createCanvas(windowWidth,windowHeight);
 }
@@ -90,5 +90,5 @@ console.log("circleX is " + circleX);
   ellipse(circle.x,circle.y,circle.size);
   circle.x += circle.speed;
   circle.x = constrain(circle.x,0,width);
-  console.log(circle.x);
+  console.log(`circle.x: ${circle.x}`);
 }

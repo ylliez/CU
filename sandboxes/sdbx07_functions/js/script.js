@@ -28,6 +28,8 @@ function setup() {
 
   target.x = startCircle.x;
   target.y = startCircle.y;
+  // target.vx = random(-1,1);
+  // target.vy = random(-1,1);
 }
 
 function draw() {
@@ -65,6 +67,10 @@ function game() {
 }
 
 function moveTarget() {
+
+    // target.x += target.vx;
+    // target.y += target.vy;
+  
   // target.x = map(random(),0,1,0,width);
   // target.y = map(random(),0,1,0,height);
 
