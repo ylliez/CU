@@ -11,12 +11,15 @@ win by clicking on
 // declare global program variables (e.g. state, arrays, array sizes)
 let state = 'title1';
 
+let maxIndexes = [];
+let imageIndexes = [];
+let randomIndexes = [];
 let genFilePath = [];
 let displayFilePath = [];
 let display = [];
 let imagesFilePath = [];
 let images = [];
-let numImages = 2;
+let numImages = 10;
 const MIN_NUM_IMAGES = 2;
 const MAX_NUM_IMAGES = 11;
 let animals = [];
@@ -42,28 +45,35 @@ function selectDifficulty() {
   // numImages = MIN_NUM_IMAGES;
 }
 
-// load images into animal array
+// load random animal images into array (it hurts to know that there must be a one line solution to all this nonsense...)
 function loadArrayImages() {
-  for (var i = 0; i < numImages; i++) {
-    genFilePath[i] = `assets/images/animal-images/animal${i}.png`;
-    // display[i] = loadImage(`assets/images/animal-images/animal${i}.png`);
-    // images[i] = loadImage(`assets/images/animal-images/animal${i}.png`);
+  // create array of possible image indexes
+  for (var i = 0; i < MAX_NUM_IMAGES; i++) {
+    maxIndexes[i] = i;
   }
-  displayFilePath = shuffle(genFilePath);
-  arrayCopy(displayFilePath, imagesFilePath);
+  // define a local variable for maximum number of images that can be deceremented
+  let localMaxNumImages = MAX_NUM_IMAGES;
+  // select indexes for image selection in a random-no-replace paradigm
   for (var i = 0; i < numImages; i++) {
-    display[i] = loadImage(displayFilePath[i]);
-    images[i] = loadImage(imagesFilePath[i]);
+    let localRandomIndex = floor(random(0, localMaxNumImages));
+    randomIndexes[i] = maxIndexes[localRandomIndex];
+    maxIndexes.splice(localRandomIndex,1);
+    localMaxNumImages--;
+  }
+  print(randomIndexes);
+  // load two arrays (one for display, other for object creation) with images at selected random indexes
+  for (var i = 0; i < numImages; i++) {
+    display[i] = loadImage(`assets/images/animal-images/animal${randomIndexes[i]}.png`);
+    images[i] = loadImage(`assets/images/animal-images/animal${randomIndexes[i]}.png`);
   }
 }
 
-// remove one animal from array by splicing at random index and load spliced animal into isolated variable
+// select random animal from object-creation array, load into isolated variable and splice from array
 function spliceAndLoadRandom() {
-  randomIndex = floor(random(0, numImages + 1));
+  randomIndex = floor(random(0, numImages));
   animalToFindImg = images[randomIndex];
-  // animalToFindImg = loadImage(randomImage);
   images.splice(randomIndex, 1);
-  // `assets/images/animal-images/animal${randomIndex}.png`;
+  print(randomIndex);
 }
 
 // creates the animal and animal to find objects
@@ -156,17 +166,25 @@ function writeSubtitle(toWrite) {
 function displayAnimals() {
   imageMode(CENTER);
   for (var i = 0; i < display.length; i++) {
+    // image(display[i], (width / display.length * i) + (display[i].width / 2*numImages), height / 2);
     image(display[i], (width / display.length * i) + (display[i].width / 2), height / 2);
   }
 }
 
 function displayAnimalToFind() {
-  // indexOfRandom = imageFilePath.indexOf(randomImage);
-  // image(display[indexOfRandom], width / display.length * indexOfRandom, height * 2);
   push();
+  noStroke();
+  fill(255);
+  rectMode(CENTER);
+  // rect((width / display.length * randomIndex) + (display[randomIndex].width / 2*numImages), height / 2, display[randomIndex].width, display[randomIndex].height);
+  rect((width / display.length * randomIndex) + (display[randomIndex].width / 2), height / 2, display[randomIndex].width, display[randomIndex].height);
+  pop();
+  push();
+  imageMode(CENTER);
+  // translate((width / display.length * randomIndex) + (display[randomIndex].width / 2*numImages), height / 2)
   translate((width / display.length * randomIndex) + (display[randomIndex].width / 2), height / 2)
   rotate(angle);
-  angle += 0.10;
+  angle += 0.2;
   image(display[randomIndex], 0, 0);
   pop();
 }
@@ -229,7 +247,7 @@ function softReset() {
 
 function hardReset() {
   numImages++;
-  constrain(numImages,MIN_NUM_IMAGES,MAX_NUM_IMAGES);
+  constrain(numImages, MIN_NUM_IMAGES, MAX_NUM_IMAGES-1);
   reset();
 }
 
