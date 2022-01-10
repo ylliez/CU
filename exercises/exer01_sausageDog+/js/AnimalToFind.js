@@ -10,14 +10,19 @@ class AnimalToFind extends Animal {
   update() {
     super.update();
     if (this.found) {
-      this.angle += this.rotationSpeed;
+      this.victorySpin();
     }
   }
 
   mousePressed() {
     if (this.overlap(mouseX,mouseY)) {
       this.found = true;
+      return true;
     }
+  }
+
+  victorySpin() {
+    this.angle += this.rotationSpeed;
   }
 
 }
