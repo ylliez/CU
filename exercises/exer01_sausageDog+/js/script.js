@@ -11,10 +11,14 @@ win by clicking on
 // declare global program variables (e.g. state, arrays, array sizes)
 let state = 'title1';
 
+let genFilePath = [];
+let displayFilePath = [];
 let display = [];
-let imageFilePath = [];
+let imagesFilePath = [];
 let images = [];
-let numImages = 11;
+let numImages = 2;
+const MIN_NUM_IMAGES = 2;
+const MAX_NUM_IMAGES = 11;
 let animals = [];
 let numAnimals = 100;
 let angle = 0;
@@ -28,25 +32,38 @@ let animalToFindImg = undefined;
 
 // preloads images into animal array and animal to find
 function preload() {
+  selectDifficulty();
   loadArrayImages();
   spliceAndLoadRandom();
+}
+
+// select difficulty setting for game
+function selectDifficulty() {
+  // numImages = MIN_NUM_IMAGES;
 }
 
 // load images into animal array
 function loadArrayImages() {
   for (var i = 0; i < numImages; i++) {
-    imageFilePath[i] = `assets/images/animal-images/animal${i}.png`;
-    display[i] = loadImage(`assets/images/animal-images/animal${i}.png`);
-    images[i] = loadImage(`assets/images/animal-images/animal${i}.png`);
+    genFilePath[i] = `assets/images/animal-images/animal${i}.png`;
+    // display[i] = loadImage(`assets/images/animal-images/animal${i}.png`);
+    // images[i] = loadImage(`assets/images/animal-images/animal${i}.png`);
+  }
+  displayFilePath = shuffle(genFilePath);
+  arrayCopy(displayFilePath, imagesFilePath);
+  for (var i = 0; i < numImages; i++) {
+    display[i] = loadImage(displayFilePath[i]);
+    images[i] = loadImage(imagesFilePath[i]);
   }
 }
 
 // remove one animal from array by splicing at random index and load spliced animal into isolated variable
 function spliceAndLoadRandom() {
   randomIndex = floor(random(0, numImages + 1));
+  animalToFindImg = images[randomIndex];
+  // animalToFindImg = loadImage(randomImage);
   images.splice(randomIndex, 1);
-  randomImage = `assets/images/animal-images/animal${randomIndex}.png`;
-  animalToFindImg = loadImage(randomImage);
+  // `assets/images/animal-images/animal${randomIndex}.png`;
 }
 
 // creates the animal and animal to find objects
@@ -144,13 +161,13 @@ function displayAnimals() {
 }
 
 function displayAnimalToFind() {
-  indexOfRandom = imageFilePath.indexOf(randomImage);
+  // indexOfRandom = imageFilePath.indexOf(randomImage);
   // image(display[indexOfRandom], width / display.length * indexOfRandom, height * 2);
   push();
-  translate((width / display.length * indexOfRandom) + (display[indexOfRandom].width / 2), height / 2)
+  translate((width / display.length * randomIndex) + (display[randomIndex].width / 2), height / 2)
   rotate(angle);
   angle += 0.10;
-  image(display[indexOfRandom], 0, 0);
+  image(display[randomIndex], 0, 0);
   pop();
 }
 
@@ -197,7 +214,6 @@ function mousePressed() {
 
 function keyPressed() {
   if (state === `found`) {
-    console.log(`yes?`);
     if (keyCode === 71) {
       softReset();
     }
@@ -212,7 +228,8 @@ function softReset() {
 }
 
 function hardReset() {
-  numAnimals += 50;
+  numImages++;
+  constrain(numImages,MIN_NUM_IMAGES,MAX_NUM_IMAGES);
   reset();
 }
 
