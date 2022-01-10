@@ -176,7 +176,9 @@ function found() {
   updateAnimals();
   updateAnimalToFind();
   writeTitle(`AGAIN?`);
-
+  writeSubtitle(`Press 'G' to play again at same level
+  Press 'H' to play again at harder level`);
+}
 
 function mousePressed() {
   if (state === `title1`) {
@@ -191,4 +193,33 @@ function mousePressed() {
       state = `found`;
     }
   }
+}
+
+function keyPressed() {
+  if (state === `found`) {
+    console.log(`yes?`);
+    if (keyCode === 71) {
+      softReset();
+    }
+    else if (keyCode === 72) {
+      hardReset();
+    }
+  }
+}
+
+function softReset() {
+  reset();
+}
+
+function hardReset() {
+  numAnimals += 50;
+  reset();
+}
+
+function reset() {
+  loadArrayImages();
+  spliceAndLoadRandom();
+  createAnimals();
+  createAnimalToFind();
+  state = `title1`;
 }
