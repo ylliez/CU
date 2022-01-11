@@ -3,7 +3,7 @@ Where's Sausage Dog? New Game+
 illiez
 
 zoological pictorial puzzle program
-win by clicking on
+win by clicking on the lonely animal
 */
 
 "use strict";
