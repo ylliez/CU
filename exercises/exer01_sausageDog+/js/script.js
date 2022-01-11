@@ -9,17 +9,13 @@ win by clicking on
 "use strict";
 
 // declare global program variables (e.g. state, arrays, array sizes)
-let state = 'title1';
+let state = 'title0';
 
-let maxIndexes = [];
-let imageIndexes = [];
-let randomIndexes = [];
-let genFilePath = [];
-let displayFilePath = [];
-let display = [];
-let imagesFilePath = [];
 let images = [];
-let numImages = 10;
+let localImages = [];
+let randomImages = [];
+let displayImages = [];
+let numImages = 2;
 const MIN_NUM_IMAGES = 2;
 const MAX_NUM_IMAGES = 11;
 let animals = [];
@@ -27,84 +23,34 @@ let numAnimals = 100;
 let angle = 0;
 
 let randomIndex = undefined;
-let indexOfRandom = undefined;
-let randomImage = undefined;
 let animalToFind = undefined;
 let animalToFindImg = undefined;
 
 
 // preloads images into animal array and animal to find
 function preload() {
-  selectDifficulty();
-  loadArrayImages();
-  spliceAndLoadRandom();
-}
-
-// select difficulty setting for game
-function selectDifficulty() {
-  // numImages = MIN_NUM_IMAGES;
+  loadImageArray();
 }
 
 // load random animal images into array (it hurts to know that there must be a one line solution to all this nonsense...)
-function loadArrayImages() {
-  // create array of possible image indexes
+function loadImageArray() {
   for (var i = 0; i < MAX_NUM_IMAGES; i++) {
-    maxIndexes[i] = i;
+    images[i] = loadImage(`assets/images/animal-images/animal${i}.png`);
   }
-  // define a local variable for maximum number of images that can be deceremented
-  let localMaxNumImages = MAX_NUM_IMAGES;
-  // select indexes for image selection in a random-no-replace paradigm
-  for (var i = 0; i < numImages; i++) {
-    let localRandomIndex = floor(random(0, localMaxNumImages));
-    randomIndexes[i] = maxIndexes[localRandomIndex];
-    maxIndexes.splice(localRandomIndex,1);
-    localMaxNumImages--;
-  }
-  print(randomIndexes);
-  // load two arrays (one for display, other for object creation) with images at selected random indexes
-  for (var i = 0; i < numImages; i++) {
-    display[i] = loadImage(`assets/images/animal-images/animal${randomIndexes[i]}.png`);
-    images[i] = loadImage(`assets/images/animal-images/animal${randomIndexes[i]}.png`);
-  }
-}
-
-// select random animal from object-creation array, load into isolated variable and splice from array
-function spliceAndLoadRandom() {
-  randomIndex = floor(random(0, numImages));
-  animalToFindImg = images[randomIndex];
-  images.splice(randomIndex, 1);
-  print(randomIndex);
 }
 
 // creates the animal and animal to find objects
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  createAnimals();
-  createAnimalToFind();
-}
-
-// creates all the animals except the animal to find
-function createAnimals() {
-  for (var i = 0; i < numAnimals; i++) {
-    let x = random(0, width);
-    let y = random(0, height);
-    let image = random(images);
-    animals[i] = new Animal(x, y, image);
-  }
-}
-
-// creates the animal to find
-function createAnimalToFind() {
-  let x = random(0, width);
-  let y = random(0, height);
-  let image = animalToFindImg;
-  animalToFind = new AnimalToFind(x, y, image);
 }
 
 // draws the background and calls updates on the animals and animal to find
 function draw() {
   background(255);
   switch (state) {
+    case `title0`:
+    title0();
+    break;
     case `title1`:
     title1();
     break;
@@ -121,17 +67,72 @@ function draw() {
   }
 }
 
-// first title page, with animal display
-function title1() {
+// first title page, keypress difficulty selector
+function title0() {
   writeTitle(`FIND THE LONELY ANIMAL`);
-  writeSubtitle(`Click anywhere to start`);
+  writeSubtitle(`Enter difficulty level (0-9)`);
+  writeText(`Instructions:
+    Find the animal that is one of a kind
+    & click on it before the time runs out!`);
+}
+
+// // select difficulty setting for game
+// function selectDifficulty(level) {
+//   createRandomArray(level);
+// }
+
+function createRandomArray(size) {
+  // define a local variable for maximum number of images that can be deceremented
+  let localMaxNumImages = MAX_NUM_IMAGES;
+  // copy preloaded image array into local array that can be spliced
+  arrayCopy(images, localImages);
+  // select indexes for image selection in a random-no-replace paradigm
+  for (var i = 0; i < size; i++) {
+    let localRandomIndex = floor(random(0, localMaxNumImages));
+    randomImages[i] = localImages[localRandomIndex];
+    localImages.splice(localRandomIndex, 1);
+    localMaxNumImages--;
+  }
+  // copy randomized image array into a separate display array for title page display
+  arrayCopy(randomImages, displayImages);
+}
+
+// second title page, with animal images
+function title1() {
+  writeTitle(`The animals:`);
+  writeSubtitle(`Press ENTER to see lost animal`);
   displayAnimals();
 }
 
-// second title page, with animal to find rotating
+// select random image from randomized image array, load into isolated variable and splice from array
+function spliceAndLoadRandom() {
+  randomIndex = floor(random(0, randomImages.length));
+  animalToFindImg = randomImages[randomIndex];
+  randomImages.splice(randomIndex, 1);
+}
+
+// creates all the animal objects except the animal to find object
+function createAnimals() {
+  for (var i = 0; i < numAnimals; i++) {
+    let x = random(0, width);
+    let y = random(0, height);
+    let image = random(randomImages);
+    animals[i] = new Animal(x, y, image);
+  }
+}
+
+// creates the animal to find object
+function createAnimalToFind() {
+  let x = random(0, width);
+  let y = random(0, height);
+  let image = animalToFindImg;
+  animalToFind = new AnimalToFind(x, y, image);
+}
+
+// third title page, with animal to find rotating
 function title2() {
-  writeTitle(`You are looking for:`);
-  writeSubtitle(`Click anywhere to start`);
+  writeTitle(`You will be looking for:`)
+  writeSubtitle(`Press ENTER to start`);
   displayAnimals();
   displayAnimalToFind();
 }
@@ -149,47 +150,58 @@ function writeTitle(toWrite) {
   pop();
 }
 
-// write subtitle two thirdways down the page in smaller black letters
+// write subtitle two thirdways down the page in smaller grey letters
 function writeSubtitle(toWrite) {
   push();
   textAlign(CENTER, CENTER);
   textSize(32);
   textStyle(BOLD);
-  fill(0);
+  fill(100);
   stroke(0);
   strokeWeight(2);
   text(toWrite, width/2, 2 * height / 3);
   pop();
 }
 
-//
+// write text halfway down the page in small black letters
+function writeText(toWrite) {
+  push();
+  textAlign(CENTER, CENTER);
+  textSize(20);
+  fill(0);
+  text(toWrite, width/2, height / 2);
+  pop();
+}
+
+// display all animals in the current iteration of the game
 function displayAnimals() {
   imageMode(CENTER);
-  for (var i = 0; i < display.length; i++) {
-    // image(display[i], (width / display.length * i) + (display[i].width / 2*numImages), height / 2);
-    image(display[i], (width / display.length * i) + (display[i].width / 2), height / 2);
+  for (var i = 0; i < displayImages.length; i++) {
+    image(displayImages[i], (width / displayImages.length * i) + (width / (5 * (displayImages.length - 1))) - (2 * displayImages.length) + (displayImages[i].width / 2), height / 2);
   }
 }
 
+// highlight animal to find in current iteration of the game by making it rotate
 function displayAnimalToFind() {
+  // draw white square over the animal to find in the generic animal display
   push();
   noStroke();
   fill(255);
   rectMode(CENTER);
-  // rect((width / display.length * randomIndex) + (display[randomIndex].width / 2*numImages), height / 2, display[randomIndex].width, display[randomIndex].height);
-  rect((width / display.length * randomIndex) + (display[randomIndex].width / 2), height / 2, display[randomIndex].width, display[randomIndex].height);
+  rect((width / displayImages.length * randomIndex) + (width / (5 * (displayImages.length - 1)))  - (2 * displayImages.length) + (displayImages[randomIndex].width / 2), height / 2, displayImages[randomIndex].width, displayImages[randomIndex].height);
   pop();
+  // draw the animal to find on top of the white square and make rotate
   push();
   imageMode(CENTER);
-  // translate((width / display.length * randomIndex) + (display[randomIndex].width / 2*numImages), height / 2)
-  translate((width / display.length * randomIndex) + (display[randomIndex].width / 2), height / 2)
+  translate((width / displayImages.length * randomIndex) + (width / (5 * (displayImages.length - 1)))  - (2 * displayImages.length) + (displayImages[randomIndex].width / 2), height / 2)
   rotate(angle);
   angle += 0.2;
-  image(display[randomIndex], 0, 0);
+  image(displayImages[randomIndex], 0, 0);
+  print(randomIndex);
   pop();
 }
 
-// creates the animal and animal to find objects
+// draw the the animal and animal to find objects
 function sim() {
   updateAnimals();
   updateAnimalToFind();
@@ -207,6 +219,7 @@ function updateAnimalToFind() {
   animalToFind.update();
 }
 
+//  draw the the animal and animal to find objects, the latter rotates when clicked, propose replay
 function found() {
   updateAnimals();
   updateAnimalToFind();
@@ -216,13 +229,7 @@ function found() {
 }
 
 function mousePressed() {
-  if (state === `title1`) {
-    state = `title2`;
-  }
-  else if (state === `title2`) {
-    state = `sim`;
-  }
-  else if (state === `sim`) {
+  if (state === `sim`) {
     animalToFind.mousePressed();
     if (animalToFind.mousePressed()) {
       state = `found`;
@@ -239,6 +246,27 @@ function keyPressed() {
       hardReset();
     }
   }
+  else if (state === `title2`) {
+    if (keyCode === 13) {
+      createAnimals();
+      createAnimalToFind();
+      state = `sim`;
+    }
+  }
+  else if (state === `title1`) {
+    if (keyCode === 13) {
+      spliceAndLoadRandom();
+      state = `title2`;
+    }
+  }
+  else if (state === `title0`) {
+    if (keyCode >= 48 && keyCode <= 57) {
+      numImages = keyCode - 46;
+      createRandomArray(numImages);
+      state = `title1`;
+    }
+  }
+
 }
 
 function softReset() {
@@ -247,14 +275,11 @@ function softReset() {
 
 function hardReset() {
   numImages++;
-  constrain(numImages, MIN_NUM_IMAGES, MAX_NUM_IMAGES-1);
+  numImages = constrain(numImages, MIN_NUM_IMAGES, MAX_NUM_IMAGES);
   reset();
 }
 
 function reset() {
-  loadArrayImages();
-  spliceAndLoadRandom();
-  createAnimals();
-  createAnimalToFind();
+  createRandomArray(numImages);
   state = `title1`;
 }
