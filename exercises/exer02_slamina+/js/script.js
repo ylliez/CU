@@ -170,16 +170,16 @@ animal names from Darius Kazemi's corpora project (https://github.com/dariusk/co
     // display user input
     textSize(32);
     textAlign(CENTER, CENTER);
-    text(currentAnswer.toUpperCase(), width / 2, height / 2);
+    text(currentAnswer.toUpperCase(), width / 2, height / 3);
   }
 
   function mousePressed() {
-    currentAnimal = random(animals);
-    let reverseAnimal = reverseString(currentAnimal);
-    responsiveVoice.speak(reverseAnimal);
-    // annyang.debug(true);
-    // annyang.trigger(`weasel`);
-    // guessAnimal(`weasel`);
+    // currentAnimal = random(animals);
+    // let reverseAnimal = reverseString(currentAnimal);
+    // responsiveVoice.speak(reverseAnimal);
+    annyang.debug(true);
+    annyang.trigger(`dog`);
+    guessAnimal(`dog`);
   }
 
   // Reverses the provided string
@@ -196,4 +196,8 @@ animal names from Darius Kazemi's corpora project (https://github.com/dariusk/co
 
   function guessAnimal(animal) {
     currentAnswer = animal.toLowerCase();
+    // let url = 'https://cors-anywhere.herokuapp.com/http://api.flickr.com/services/rest/?tags='+animal;
+    let url = 'http://api.flickr.com/services/rest/?tags='+animal;
+    // let url = 'https://cors-anywhere.herokuapp.com/https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=Google';
+    $.getJSON(url);
   }
