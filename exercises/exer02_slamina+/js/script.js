@@ -159,6 +159,7 @@ animal names from Darius Kazemi's corpora project (https://github.com/dariusk/co
       annyang.addCommands(commands);
       annyang.start();
     }
+    annyang.trigger(`dog`);
   }
 
   //
@@ -196,8 +197,4 @@ animal names from Darius Kazemi's corpora project (https://github.com/dariusk/co
 
   function guessAnimal(animal) {
     currentAnswer = animal.toLowerCase();
-    // let url = 'https://cors-anywhere.herokuapp.com/http://api.flickr.com/services/rest/?tags='+animal;
-    let url = 'http://api.flickr.com/services/rest/?tags='+animal;
-    // let url = 'https://cors-anywhere.herokuapp.com/https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=Google';
-    $.getJSON(url);
   }
