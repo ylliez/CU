@@ -1,13 +1,15 @@
-// //basic synth use
-// "use strict";
-//
-// let synth;
-//
+/**
+learning about Web Speech API, a text-speech browser functionality
+https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API
+
+learning about ResponsiveVoice, a JS library for browser text-to-speech
+homepage: https://responsivevoice.org/
+API res: https://responsivevoice.org/api/
+*/
+
+// // testing parameters
 // function setup() {
-//   createCanvas(600, 600);
-//   userStartAudio();
-//
-//   synth = new p5.PolySynth();
+//   createCanvas(500,500);
 // }
 //
 // function draw() {
@@ -15,137 +17,100 @@
 // }
 //
 // function mousePressed() {
-//   synth.play(`C4`, 1, 0, 1);
+//   // responsiveVoice.speak("hello world");
+//   // responsiveVoice.speak("hello... world?");
+//   // responsiveVoice.speak("Salut, monde. Comment ça va?");
+//   // responsiveVoice.speak("23948903284023");
+//   // responsiveVoice.speak("2 3 9 4 8 9 0 3 2 8 4 0 2 3");
+//   // responsiveVoice.speak("sdjfhlsfhlasdmuhleuwifmla");
+//   // responsiveVoice.speak("hello world", "UK English Male");
+//   // responsiveVoice.speak("I say! Pip pip! Toodle-oo!", "UK English Male");
+//   // responsiveVoice.speak("I say! Pip pip! Toodle-oo!", "US English Male");
+//   // responsiveVoice.speak("I am crawling on the ceiling just above your head right now, watching you...", "UK English Male");
+//   // responsiveVoice.speak("hello world", "Frida Kahlo as performed by Salma Hayek");
+//   // responsiveVoice.speak("hello world", "French Female");
+//   // responsiveVoice.speak("Bonjour! Comment ça va?", "French Female");
+//   // responsiveVoice.speak("Hello world", "UK English Male");
+//   // responsiveVoice.speak("Hello world", "UK English Male", { pitch: 0.5} );
+//   // responsiveVoice.speak("Hello world", "UK English Male", { pitch: 2} );
+//   // responsiveVoice.speak("Hello world", "UK English Male", { rate: 0.5} );
+//   // responsiveVoice.speak("Hello world", "UK English Male", { rate: 2} );
+//   // responsiveVoice.speak("Hello world", "UK English Male", { volume: 0.5} );
+//   // responsiveVoice.speak("Hello world", "UK English Male", { volume: 0.1} );
+//   // //Fast and squeaky?
+//   // responsiveVoice.speak("Hello world", "UK English Male", {
+//   //   pitch: 2,
+//   //   rate: 2,
+//   //   volume: 1
+//   // });
+//   // //Slow and scary?
+//   // responsiveVoice.speak("Hello world", "UK English Male", {
+//   //   pitch: 0.2,
+//   //   rate: 0.5,
+//   //   volume: 1
+//   // });
 // }
 
-// // fake player (keypress random)
-// "use strict";
-//
-// let synth; // Our synthesizer
-// let notes = [`F4`, `G4`, `Ab4`, `Bb4`, `C4`, `Db4`, `Eb4`, `F5`]; // The scale for F minor
+// // callbacks
+// let phrase = `Hello, world!`;
+// let saying = ``; // Track what is currently being said
 //
 // function setup() {
-//   createCanvas(600, 600);
-//   userStartAudio();
-//
-//   // Create the synthesizer
-//   synth = new p5.PolySynth();
+//   createCanvas(windowWidth, windowHeight);
 // }
 //
 // function draw() {
-//   background(0);
+//   // Display what is currently being said...
+//   background(255);
+//
+//   push();
+//   textSize(32);
+//   textAlign(CENTER);
+//   text(saying, width / 2, height / 2);
+//   pop();
 // }
 //
-// // keyPressed() plays a note
-// function keyPressed() {
-//   playRandomNote()
-// }
-//
-// // playRandomNote() plays a random note
-// function playRandomNote() {
-//   // Chose a random note
-//   let note = random(notes);
-//   // Play it
-//   synth.play(note, 1, 0, 1);
-// }
-
-// // ghost player (interval)
-// "use strict";
-//
-// // Our synthesizer
-// let synth;
-// // The scale for F minor ("b" means "flat" if you haven't seen it before)
-// let notes = [`F4`, `G4`, `Ab4`, `Bb4`, `C4`, `Db4`, `Eb4`, `F5`];
-// // To track the interval that plays note
-// let interval;
-//
-// function setup() {
-//   createCanvas(600, 600);
-//   userStartAudio();
-//
-//   // Create the synthesizer
-//   synth = new p5.PolySynth();
-// }
-//
-// function draw() {
-//   background(0);
-// }
-//
-// // mousePressed() starts and stops our piano playing
 // function mousePressed() {
-//   // First check that the piano isn't already playing
-//   // The interval will be undefined if it hasn't started
-//   if (interval === undefined) {
-//     // Start our interval, calling playRandomNote every 500 milliseconds
-//     // Assign the result to interval to remember the interval
-//     interval = setInterval(playRandomNote, 500);
-//   }
-//   else {
-//     // If they click when it's playing, clear the interval and set interval
-//     // back to undefined to stop play
-//     clearInterval(interval);
-//     interval = undefined;
-//   }
+//   responsiveVoice.speak(phrase, "UK English Male", {
+//     onstart: showSpeaking,
+//     onend: hideSpeaking
+//   });
 // }
 //
-// // playRandomNote() plays a random note
-// function playRandomNote() {
-//   // Chose a random note
-//   let note = random(notes);
-//   // Play it
-//   synth.play(note, 1, 0, 1);
+// function showSpeaking() {
+//   saying = phrase;
+// }
+//
+// function hideSpeaking() {
+//   saying = ``;
 // }
 
-// player piano
-"use strict";
-
-// Our synthesizer
-let synth;
-// The scale for F minor ("b" means "flat" if you haven't seen it before)
-let notes = [`F4`, `G4`, `Ab4`, `Bb4`, `C4`, `Db4`, `Eb4`, `F5`];
-// The current note to play, start at the beginning
-let currentNote = 0;
-// To track the interval that plays note
-let interval;
+let voiceList; // To remember the array of voices
+let currentVoiceName = ``;
 
 function setup() {
-  createCanvas(600, 600);
-  userStartAudio();
+  createCanvas(windowWidth, windowHeight);
 
-  // Create the synthesizer
-  synth = new p5.PolySynth();
+  // Get the array of voices
+  voiceList = responsiveVoice.getVoices();
 }
 
 function draw() {
-  background(0);
+  background(255);
+
+  push();
+  textSize(32);
+  textAlign(CENTER);
+  text(currentVoiceName,width/2,height/2);
+  pop();
 }
 
-// mousePressed() starts and stops our piano playing
 function mousePressed() {
-  // First check that the piano isn't already playing
-  // The interval will be undefined if it hasn't started
-  if (interval === undefined) {
-    // Start our interval, calling playNextNote every 500 milliseconds
-    // Assign the result to interval to remember the interval
-    interval = setInterval(playNextNote, 500);
-  }
-  else {
-    // If they click when it's playing, clear the interval and set interval
-    // back to undefined to stop play
-    clearInterval(interval);
-    interval = undefined;
-  }
-}
+  // Choose a random voice object from the list
+  let voice = random(voiceList);
+  // We need the "name" property of our randomly chosen voice object
+  let currentVoiceName = voice.name;
 
-// playNextNote() plays the next note in our array
-function playNextNote() {
-  // Chose the note at the current position
-  let note = notes[currentNote];
-  // Play it
-  synth.play(note, 0.2, 0, 0.4);
-  // Increase the current position and go back to 0 when we reach the end
-  currentNote = currentNote + 1;
-  if (currentNote === notes.length) {
-    currentNote = 0;
-  }
+  // Say the text using the randomly chosen voice and with random rate and pitch.
+  responsiveVoice.speak("Now I talk like this.", currentVoiceName);
 }
