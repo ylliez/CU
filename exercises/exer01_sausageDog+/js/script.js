@@ -76,11 +76,6 @@ function title0() {
     & click on it before the time runs out!`);
 }
 
-// // select difficulty setting for game
-// function selectDifficulty(level) {
-//   createRandomArray(level);
-// }
-
 function createRandomArray(size) {
   // define a local variable for maximum number of images that can be deceremented
   let localMaxNumImages = MAX_NUM_IMAGES;
@@ -231,7 +226,7 @@ function found() {
 function mousePressed() {
   if (state === `sim`) {
     animalToFind.mousePressed();
-    if (animalToFind.mousePressed()) {
+    if (animalToFind.found) {
       state = `found`;
     }
   }

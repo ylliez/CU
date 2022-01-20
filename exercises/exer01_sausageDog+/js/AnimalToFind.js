@@ -15,9 +15,8 @@ class AnimalToFind extends Animal {
   }
 
   mousePressed() {
-    if (this.overlap(mouseX,mouseY)) {
+    if (this.overlap(mouseX,mouseY) && !this.found) {
       this.found = true;
-      return true;
     }
   }
 
