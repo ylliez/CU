@@ -23,18 +23,18 @@ let line = 0;
 const dialog = [
   `Oh, Hello there!`,
   `How polite! Are you eager to play a game?`,
-  `Well then little one, let me tell you how to play. please acknowledge that you've understood each step by saying ok?`,
+  `Well then little one, let me tell you how to play. please acknowledge that you've understood each step by saying ok.`,
   `I am going to say the name of an animal, but backwards, and you have to say which animal you think it is.`,
   `The timer is on the top right, you have 10 seconds to guess`,
   `Your score is on the top left, every time you get it right, you get a point`,
   `If you are ready to start, say 'Go!'`
 ];
 const commands = [
-  { 'hello': intro2, 'hi': intro2, 'bonjour': intro2, 'skip':startGame },
+  { 'hello': intro2, 'hi': intro2, 'bonjour': intro2, 'skip': startGame },
   { 'yes': intro3, 'ok': intro3, 'okay': intro3, 'no': abort },
   { 'yes': ack, 'ok': ack, 'okay': intro3,  'no': noAck , 'go': startGame},
 ];
-const apologies = { 'sorry': apologized }
+const apologies = { 'sorry': apologized. 'apologies': apologized, 'apologized': apologized }
 const animalCommands = { '*animal': guessAnimal }
 const overdue = [
   `What? You can't say 'hello' back? Were you raised during a period of systematic attentional undermining through enticingly compulsive technological sandboxing followed by a global pandemic enforcing intersubjective alienation at a societal scale? Get a hold of yourself and come back when you're ready to apologize.`,
