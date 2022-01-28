@@ -30,9 +30,9 @@ const dialog = [
   `If you are ready to start, say 'Go!'`
 ];
 const commands = [
-  { 'hello': intro2, 'hi': intro2, 'bonjour': intro2, 'skip': startGame },
+  { 'hello': intro2, 'hi': intro2, 'bonjour': intro2, 'skip':   startGame },
   { 'yes': intro3, 'ok': intro3, 'okay': intro3, 'no': abort },
-  { 'yes': ack, 'ok': ack, 'okay': intro3,  'no': noAck , 'go': startGame},
+  { 'yes': ack, 'ok': ack, 'okay': ack,  'no': noAck , 'go': startGame},
 ];
 const apologies = { 'sorry': apologized. 'apologies': apologized, 'apologized': apologized }
 const animalCommands = { '*animal': guessAnimal }
