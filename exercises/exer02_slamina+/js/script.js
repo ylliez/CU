@@ -23,7 +23,7 @@ let line = 0;
 const dialog = [
   `Oh, Hello there!`,
   `How polite! Are you eager to play a game?`,
-  `Well then little one, let me tell you how to play. please acknowledge that you've understood each step. ok?`,
+  `Well then little one, let me tell you how to play. please acknowledge that you've understood each step by saying ok?`,
   `I am going to say the name of an animal, but backwards, and you have to say which animal you think it is.`,
   `The timer is on the top right, you have 10 seconds to guess`,
   `Your score is on the top left, every time you get it right, you get a point`,
@@ -31,8 +31,8 @@ const dialog = [
 ];
 const commands = [
   { 'hello': intro2, 'hi': intro2, 'bonjour': intro2, 'skip':startGame },
-  { 'yes': intro3, 'ok': intro3, 'no': abort },
-  { 'yes': ack, 'ok': ack, 'no': noAck , 'go': startGame},
+  { 'yes': intro3, 'ok': intro3, 'okay': intro3, 'no': abort },
+  { 'yes': ack, 'ok': ack, 'okay': intro3,  'no': noAck , 'go': startGame},
 ];
 const apologies = { 'sorry': apologized }
 const animalCommands = { '*animal': guessAnimal }
