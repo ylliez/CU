@@ -34,7 +34,7 @@ const commands = [
   { 'yes': intro3, 'ok': intro3, 'okay': intro3, 'no': abort },
   { 'yes': ack, 'ok': ack, 'okay': ack,  'no': noAck , 'go': startGame},
 ];
-const apologies = { 'sorry': apologized. 'apologies': apologized, 'apologized': apologized }
+const apologies = { 'sorry': apologized, 'apologies': apologized, 'apologized': apologized }
 const animalCommands = { '*animal': guessAnimal }
 const overdue = [
   `What? You can't say 'hello' back? Were you raised during a period of systematic attentional undermining through enticingly compulsive technological sandboxing followed by a global pandemic enforcing intersubjective alienation at a societal scale? Get a hold of yourself and come back when you're ready to apologize.`,
