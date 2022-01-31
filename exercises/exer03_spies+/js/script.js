@@ -26,28 +26,30 @@ function preload() {
 
 // check for existence of previously stored data, if null, generate a new profile, else authenticate user
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  // createCanvas(windowWidth, windowHeight);
   profiles = JSON.parse(localStorage.getItem(DataKey));
-  username = prompt(`Username:`);
-  if (!profiles) { console.log(`x`); generateSpyProfile(); }
-  else {
-    queryUser();
+  if (!profiles) { profiles = []; generateSpyProfile(); }
+// username = prompt(`Username:`);
+  // if (!profiles) { generateSpyProfile(); }
+  // else {
+    // queryUser();
     // authenticateUser();
-  }
+  // }
 }
 
 // display spy profile, values change based on user authentication
 function draw() {
   background(255);
-  displayProfile();
+  // displayProfile();
 }
 
-// generate spy profile object properties and save object to local storage
+// generate new spy profile object, push to profiles array and save object to local storage
 function generateSpyProfile() {
-  // profiles = profiles || [];
+  // create new object from class
   profile = new Profile();
   // generate name property from user entry
-  profile.name = username;
+  // profile.name = username;
+  profile.name = `i`;
   // generate alias property via random selection from instrument list
   profile.alias = random(instrumentData.instruments);
   // generate alias property via random selection from object list
@@ -79,11 +81,32 @@ function authenticateUser() {
   }
 }
 
+function login(formContents) {
+  // console.log(`login attempt`);
+  let username = formContents.elements[0].value;
+  // console.log(username);
+  let password = formContents.elements[1].value;
+  // console.log(password);
+  for (let i = 0; i < profiles.length; i++) {
+    if (username === profiles[i].name) {
+      console.log(`username found!`);
+      profile = profiles[i];
+      if (password === profile.password) {
+        console.log(`password found!`);
+        displayProfile();
+      }
+    }
+  }
+}
+
 function queryUser() {
   for (let i = 0; i < profiles.length; i++) {
     if (username === profiles[i].name) {
       profile = profiles[i];
       authenticateUser();
+    }
+    else if (username === `new`) {
+
     }
   }
 }
@@ -105,7 +128,7 @@ function displayProfile() {
     Name: ${profile.name}
     Alias: ${profile.alias}
     Weapon: ${profile.weapon}
-    Password: ${profile.password}`, width / 2, height / 2);
+    Password: ${profile.password}`, width / 2, 2 * height / 3);
   text()
   pop();
 }
@@ -116,15 +139,11 @@ function keyPressed() {
       if (keyIsDown(ALT)) {
         localStorage.clear();
         console.log(`Purged database.`);
-
       }
       else {
-        console.log(`Purged all profiles.`);
+        localStorage.removeItem(DataKey);
+        console.log(`Purged profile.`);
       }
-    }
-    else {
-      localStorage.removeItem(DataKey);
-      console.log(`Purged profile.`);
     }
   }
 }
