@@ -64,6 +64,7 @@
 //   pop();
 // }
 
+// JSON with callback (2nd argument, calls back w/ data set as first argument)
 // A global variable to store our data in
 let tarot;
 // A global variable to store our fortune in
