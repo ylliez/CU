@@ -1,9 +1,9 @@
 class Profile {
 
   constructor() {
-    this.name = `REDACTED`;
+    this.username = `REDACTED`;
+    this.password = `REDACTED`;
     this.alias = `REDACTED`;
     this.weapon = `REDACTED`;
-    this.password = `REDACTED`;
   }
 }

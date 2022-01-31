@@ -3,8 +3,15 @@
 // object to store spy profile properties
 let profiles;
 let profile = {};
+let profileIndex;
 let username;
-let userAuthenticated = false;
+let unAuth = false;
+let pwAuth = false;
+let userCreated = false;
+let authFirstTry = true;
+let loginBtn;
+let signupBtn;
+let authPrompts = [`Password:`,`Try Again:`,`Last Try:`];
 // file paths for JSON files
 const TarotDataURL = `https://raw.githubusercontent.com/dariusk/corpora/master/data/divination/tarot_interpretations.json`
 const ObjectDataURL = `https://raw.githubusercontent.com/dariusk/corpora/master/data/objects/objects.json`;
@@ -28,140 +35,172 @@ function preload() {
 // check for existence of previously stored data, if null, generate a new profile, else authenticate user
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  // search for previous data, if found load, otherwise create empty array
   profiles = JSON.parse(localStorage.getItem(DataKey));
   if (!profiles) { profiles = []; }
-// username = prompt(`Username:`);
-  // if (!profiles) { generateSpyProfile(); }
-  // else {
-    // queryUser();
-    // authenticateUser();
-  // }
+  console.log(profiles);
+
+  loginBtn = createButton(`Log In`);
+  loginBtn.position(width/3,height/2);
+  loginBtn.mousePressed(login);
+
+  signupBtn = createButton(`Sign Up`);
+  signupBtn.position(2*width/3,height/2);
+  signupBtn.mousePressed(signup);
 }
 
 // display spy profile, values change based on user authentication
 function draw() {
   background(125);
-  if (userAuthenticated) {
+  if (pwAuth || userCreated) {
     displayProfile();
+  }
+  else {
   }
 }
 
 function signup() {
-  generateSpyProfile();
+  username = prompt(`Username:`);
+  if (!usernameOverwriting()) {
+    clearButtons();
+    generateProfile();
+  }
+}
+
+function usernameOverwriting() {
+  for (let i = 0; i < profiles.length; i++) {
+    if (username === profiles[i].username) {
+      alert(`
+        Username already attributed.
+        Login or choose a different username.`)
+      return true;
+    }
+  }
 }
 
 // generate new spy profile object, push to profiles array and save object to local storage
-function generateSpyProfile() {
+function generateProfile() {
   // create new object from class
   profile = new Profile();
   // generate name property from user entry
-  username = prompt(`Username:`);
-  profile.name = username;
-  // profile.name = `i`;
+  profile.username = username;
+  // generate password property via random selection from tarot divination list
+  let card = random(tarotData.tarot_interpretations);
+  profile.password = random(card.keywords);
   // generate alias property via random selection from instrument list
   profile.alias = random(instrumentData.instruments);
   // generate alias property via random selection from object list
   profile.weapon = random(objectData.objects);
-  // generate password property via random selection from tarot divination list
-  let card = random(tarotData.tarot_interpretations);
-  profile.password = random(card.keywords);
-  // save generated profile object to local storage
-  console.log(profile.name);
-  console.log(profile);
-  // define profiles as new array (also check/create: "profiles = profiles || [];""
-  profiles = [];
+  // add new spy profile to profiles array
   profiles.push(profile);
-  localStorage.setItem(DataKey, JSON.stringify(profiles));
-  userAuthenticated = true;
+  // save updated profiles array to local storage
+  updateProfiles();
+  userCreated = true;
 }
 
-// authenticate user via password
-function authenticateUser() {
-  let pwTry = prompt(`Password:`);
-  if (pwTry !== profile.password) {
-    let pwTry2 = prompt(`Second Try:`);
-    if (pwTry2 !== profile.password) {
-      let pwTry3 = prompt(`Last Try:`);
-      if (pwTry3 !== profile.password) {
-        localStorage.clear();
-        console.log(`Purged database.`);
-      }
-    }
-  }
-  else {
-    console.log(`password found!`);
-    userAuthenticated = true;
-  }
+function updateProfiles() {
+  localStorage.setItem(DataKey, JSON.stringify(profiles));
+  console.log(profiles);
 }
 
 function login() {
+  clearButtons();
   username = prompt(`Username:`);
-  console.log(username);
+  authenticateUsername();
+}
+
+function authenticateUsername() {
   for (let i = 0; i < profiles.length; i++) {
-    if (username === profiles[i].name) {
-      console.log(`username found!`);
-      profile = profiles[i];
-      authenticateUser();
+    if (username === profiles[i].username) {
+      profileIndex = i;
+      unAuth = true;
+      i = profiles.length;
+    }
+  }
+  if (unAuth) {
+    profile = profiles[profileIndex];
+    authenticatePassword();
+  }
+  else {
+    if (authFirstTry) {
+      authFirstTry = false;
+      usernameUnrecognized();
+    }
+    else {
+      purgeDatabase();
     }
   }
 }
 
-// function mousePressed() {
-//   setTimeout(clearButtons, 100);
-//   // clearButtons();
-// }
+// authenticate user via password
+function authenticatePassword() {
+  for (let i = 0; i < authPrompts.length; i++) {
+    let authAttempt = prompt(authPrompts[i]);
+    if (authAttempt === profile.password) {
+      console.log(`password found!`);
+      pwAuth = true;
+      i = authPrompts.length;
+    }
+  }
+  if (!pwAuth) {
+    purgeProfile();
+  }
+}
+
+function usernameUnrecognized() {
+  alert(`
+    Username not recognized.
+    Second failure will purge database.`)
+  username = prompt(`Username:`);
+  authenticateUsername();
+}
 
 function clearButtons() {
-  document.getElementById("buttons").style.display = 'none';
-  // document.getElementById("signupBtn").style.display = 'none';
-  // console.log(document.getElementById("loginBtn").style.display);
-}
-
-function queryUser() {
-  for (let i = 0; i < profiles.length; i++) {
-    if (username === profiles[i].name) {
-      profile = profiles[i];
-      authenticateUser();
-    }
-    else if (username === `new`) {
-
-    }
-  }
-}
-
-// populate profile with previously stored profile data
-function setSpyProfile() {
-  spyProfile.name = data.name;
-  spyProfile.alias = data.alias;
-  spyProfile.weapon = data.weapon;
-  spyProfile.password = data.password;
+  loginBtn.hide();
+  signupBtn.hide();
 }
 
 // display profile information, if user not authenticate, reverts to default values
 function displayProfile() {
   push();
   textSize(32);
-  textAlign(CENTER);
+  textAlign(LEFT);
   text(`
-    Name: ${profile.name}
+    Username: ${profile.username}
+    Password: ${profile.password}
     Alias: ${profile.alias}
-    Weapon: ${profile.weapon}
-    Password: ${profile.password}`, width / 2, height / 3);
+    Weapon: ${profile.weapon}`, width / 3, height / 3);
   text()
   pop();
 }
 
 function keyPressed() {
-  if (keyCode == 8) {
-    if (keyIsDown(SHIFT)) {
-      if (keyIsDown(ALT)) {
-        localStorage.clear();
-        console.log(`Purged database.`);
-      }
-      else {
-        localStorage.removeItem(DataKey);
-        console.log(`Purged profile.`);
-      }
-    }
+  if (keyCode == 8 && keyIsDown(SHIFT) && keyIsDown(ALT)) {
+    purgeDatabase();
+  }
+}
+
+function purgeProfile() {
+  profiles.splice(profileIndex,1);
+  localStorage.setItem(DataKey, JSON.stringify(profiles));
+  alert(`Purged profile.`);
+  // console.log(`purging3.`);
+  // if (profile) {
+  //   profiles.splice(index,1);
+  //   updateProfiles();
+  //   console.log(`Purged profile.`);
+  // }
+  // else {
+  //   console.log(`No profile to purge.`);
+  // }
+}
+
+function purgeDatabase() {
+  if (profiles) {
+    localStorage.removeItem(DataKey);
+    alert(`Purged database.`);
+  }
+  else {
+    console.log(`No database to purge.`);
   }
 }
