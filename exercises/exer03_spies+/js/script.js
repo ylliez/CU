@@ -66,9 +66,16 @@ function generateSpyProfile() {
 
 // authenticate user via password
 function authenticateUser() {
-  let password = prompt(`Password:`);
-  if (password === data.password) {
-    setSpyProfile();
+  let pwTry = prompt(`Password:`);
+  if (pwTry !== profile.password) {
+    let pwTry2 = prompt(`Second Try:`);
+    if (pwTry2 !== profile.password) {
+      let pwTry3 = prompt(`Last Try:`);
+      if (pwTry3 !== profile.password) {
+        localStorage.clear();
+        console.log(`Purged database.`);
+      }
+    }
   }
 }
 
@@ -76,6 +83,7 @@ function queryUser() {
   for (let i = 0; i < profiles.length; i++) {
     if (username === profiles[i].name) {
       profile = profiles[i];
+      authenticateUser();
     }
   }
 }
