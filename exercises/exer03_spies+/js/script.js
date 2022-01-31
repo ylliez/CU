@@ -1,7 +1,9 @@
 "use strict";
 
 // object to store spy profile properties
-let spyProfile = new Profile;
+let profiles;
+let profile = {};
+let username;
 // file paths for JSON files
 const TarotDataURL = `https://raw.githubusercontent.com/dariusk/corpora/master/data/divination/tarot_interpretations.json`
 const ObjectDataURL = `https://raw.githubusercontent.com/dariusk/corpora/master/data/objects/objects.json`;
@@ -11,7 +13,7 @@ let tarotData;
 let objectData;
 let instrumentData;
 // key for data storage
-const DataKey = `spy-profile`;
+const DataKey = `profiles`;
 // stored data
 let data;
 
@@ -25,9 +27,13 @@ function preload() {
 // check for existence of previously stored data, if null, generate a new profile, else authenticate user
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  data = JSON.parse(localStorage.getItem(DataKey));
-  if (!data) { generateSpyProfile(); }
-  else { authenticateUser(); }
+  profiles = JSON.parse(localStorage.getItem(DataKey));
+  username = prompt(`Username:`);
+  if (!profiles) { console.log(`x`); generateSpyProfile(); }
+  else {
+    queryUser();
+    // authenticateUser();
+  }
 }
 
 // display spy profile, values change based on user authentication
@@ -38,17 +44,24 @@ function draw() {
 
 // generate spy profile object properties and save object to local storage
 function generateSpyProfile() {
+  // profiles = profiles || [];
+  profile = new Profile();
   // generate name property from user entry
-  spyProfile.name = prompt(`What is your name?`);
+  profile.name = username;
   // generate alias property via random selection from instrument list
-  spyProfile.alis = random(instrumentData.instruments);
+  profile.alias = random(instrumentData.instruments);
   // generate alias property via random selection from object list
-  spyProfile.weapon = random(objectData.objects);
+  profile.weapon = random(objectData.objects);
   // generate password property via random selection from tarot divination list
   let card = random(tarotData.tarot_interpretations);
-  spyProfile.password = random(card.keywords);
+  profile.password = random(card.keywords);
   // save generated profile object to local storage
-  localStorage.setItem(DataKey, JSON.stringify(spyProfile));
+  console.log(profile.name);
+  console.log(profile);
+  // define profiles as new array (also check/create: "profiles = profiles || [];""
+  profiles = [];
+  profiles.push(profile);
+  localStorage.setItem(DataKey, JSON.stringify(profiles));
 }
 
 // authenticate user via password
@@ -56,6 +69,14 @@ function authenticateUser() {
   let password = prompt(`Password:`);
   if (password === data.password) {
     setSpyProfile();
+  }
+}
+
+function queryUser() {
+  for (let i = 0; i < profiles.length; i++) {
+    if (username === profiles[i].name) {
+      profile = profiles[i];
+    }
   }
 }
 
@@ -73,10 +94,29 @@ function displayProfile() {
   textSize(32);
   textAlign(LEFT);
   text(`
-    Name: ${spyProfile.name}
-    Alias: ${spyProfile.alias}
-    Weapon: ${spyProfile.weapon}
-    Password: ${spyProfile.password}`, width / 2, height / 2);
+    Name: ${profile.name}
+    Alias: ${profile.alias}
+    Weapon: ${profile.weapon}
+    Password: ${profile.password}`, width / 2, height / 2);
   text()
   pop();
+}
+
+function keyPressed() {
+  if (keyCode == 8) {
+    if (keyIsDown(SHIFT)) {
+      if (keyIsDown(ALT)) {
+        localStorage.clear();
+        console.log(`Purged database.`);
+
+      }
+      else {
+        console.log(`Purged all profiles.`);
+      }
+    }
+    else {
+      localStorage.removeItem(DataKey);
+      console.log(`Purged profile.`);
+    }
+  }
 }
