@@ -18,3 +18,13 @@ body {
   height: 100vh; /* Body is the height of the viewport */
   overflow: hidden; /* Hide anything that goes off the window size */
 }
+
+canvas {
+  z-index: 1;
+}
+#button {
+  position: absolute;
+  left: 100px;
+  top: 150px;
+  z-index: 10;
+}
