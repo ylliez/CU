@@ -11,6 +11,7 @@ let userCreated = false;
 let authFirstTry = true;
 let loginBtn;
 let signupBtn;
+let deleteBtn;
 let authPrompts = [`Password:`,`Try Again:`,`Last Try:`];
 // file paths for JSON files
 const TarotDataURL = `https://raw.githubusercontent.com/dariusk/corpora/master/data/divination/tarot_interpretations.json`
@@ -39,7 +40,11 @@ function setup() {
   profiles = JSON.parse(localStorage.getItem(DataKey));
   if (!profiles) { profiles = []; }
   console.log(profiles);
+  uiSetup();
+}
 
+function uiSetup() {
+  background(125);
   loginBtn = createButton(`Log In`);
   loginBtn.position(width/3,height/2);
   loginBtn.mousePressed(login);
@@ -47,6 +52,12 @@ function setup() {
   signupBtn = createButton(`Sign Up`);
   signupBtn.position(2*width/3,height/2);
   signupBtn.mousePressed(signup);
+
+  deleteBtn = createButton(`Delete Profile`);
+  deleteBtn.position(width/2,3*height/4);
+  deleteBtn.mousePressed(purgeProfile);
+
+  buttonsTitle();
 }
 
 // display spy profile, values change based on user authentication
@@ -62,7 +73,7 @@ function draw() {
 function signup() {
   username = prompt(`Username:`);
   if (!usernameOverwriting()) {
-    clearButtons();
+    buttonsProfile();
     generateProfile();
   }
 }
@@ -96,6 +107,7 @@ function generateProfile() {
   // save updated profiles array to local storage
   updateProfiles();
   userCreated = true;
+  profileIndex = profiles.length - 1;
 }
 
 function updateProfiles() {
@@ -104,7 +116,7 @@ function updateProfiles() {
 }
 
 function login() {
-  clearButtons();
+  buttonsProfile();
   username = prompt(`Username:`);
   authenticateUsername();
 }
@@ -155,9 +167,16 @@ function usernameUnrecognized() {
   authenticateUsername();
 }
 
-function clearButtons() {
+function buttonsTitle() {
+  loginBtn.show();
+  signupBtn.show();
+  deleteBtn.hide();
+}
+
+function buttonsProfile() {
   loginBtn.hide();
   signupBtn.hide();
+  deleteBtn.show();
 }
 
 // display profile information, if user not authenticate, reverts to default values
@@ -184,15 +203,7 @@ function purgeProfile() {
   profiles.splice(profileIndex,1);
   localStorage.setItem(DataKey, JSON.stringify(profiles));
   alert(`Purged profile.`);
-  // console.log(`purging3.`);
-  // if (profile) {
-  //   profiles.splice(index,1);
-  //   updateProfiles();
-  //   console.log(`Purged profile.`);
-  // }
-  // else {
-  //   console.log(`No profile to purge.`);
-  // }
+  reset();
 }
 
 function purgeDatabase() {
@@ -203,4 +214,11 @@ function purgeDatabase() {
   else {
     console.log(`No database to purge.`);
   }
+}
+
+function reset() {
+  buttonsTitle();
+  pwAuth = false;
+  userCreated = false;
+  // setup();
 }
