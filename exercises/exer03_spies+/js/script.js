@@ -5,11 +5,8 @@ let profiles;
 let profile = {};
 let profileIndex;
 let username;
-let unAuth = false;
-let pwAuth = false;
-let userAuth = false;
-let userCreated = false;
-let authFirstTry = true;
+let userAuth;
+let authAttempt;
 let loginBtn, signupBtn, logoutBtn, deleteBtn;
 let authPrompts = [`Password:`,`Try Again:`,`Last Try:`];
 // file paths for JSON files
@@ -17,13 +14,10 @@ const TarotDataURL = `https://raw.githubusercontent.com/dariusk/corpora/master/d
 const ObjectDataURL = `https://raw.githubusercontent.com/dariusk/corpora/master/data/objects/objects.json`;
 const InstrumentDataURL = `https://raw.githubusercontent.com/dariusk/corpora/master/data/music/instruments.json`;
 // variables for JSON data
-let tarotData;
-let objectData;
-let instrumentData;
+let tarotData, objectData, instrumentData;
 // key for data storage
 const DataKey = `profiles`;
-// stored data
-let data;
+
 let profilePhoto;
 // const BackgroundLockedURL = 'assets/images/lock_closed.jpg';
 // const BackgroundUnlockedURL = 'assets/images/lock_open.jpg';
@@ -50,7 +44,7 @@ function setup() {
   // create buttons for login, signup, log out and profile deletion
   createButtons();
   // set default state (unuserAuth, entry buttons, anonymous profile)
-  reset();
+  resetProfile();
 }
 
 // create buttons for login, signup, log out and profile deletion
@@ -70,7 +64,7 @@ function createButtons() {
   // create delete button
   deleteBtn = createButton(`Delete`);
   deleteBtn.position(2*width/3-height/9,2*height/3+height/30);
-  deleteBtn.mousePressed(purgeProfile);
+  deleteBtn.mousePressed(deleteProfile);
 }
 
 // title button display: login & signup shown, delete hidden
@@ -92,7 +86,7 @@ function buttonsProfile() {
 // display spy profile, values change based on user authentication
 function draw() {
   // background(125);
-  if (pwAuth || userCreated || userAuth) {
+  if (userAuth) {
     document.body.style.backgroundImage = "url('assets/images/lock_open.jpg')";
   }
   else {
@@ -102,9 +96,9 @@ function draw() {
 }
 
 /*
-SIGN-UP:
+SIGN-UP: on signup button press
 1 query username, must be entered, not only spaces and not pre-existing to proceed (1.1), otherwise staged responses (1.2)
-1.1 proceed to generate profile
+1.1 proceed to generate and set profile to be displayed
 1.2 response stages: cancelled (1.2.1), only spaces (1.2.2) or pre-existing (1.2.3)
 1.2.1 close prompt, return to default state
 1.2.2 alert user to invalid username, return to default state
@@ -117,8 +111,13 @@ function signup() {
     // check if username is valid (i.e. does not contain only spaces), otherwise indicate invalididty
     if (username.trim().length) {
       // check if username already exists
-      if (!usernameExists()) {
+      if (!usernameMatch()) {
         generateProfile();
+      }
+      else {
+        alert(`
+          Username already attributed.
+          Login or choose a different username.`);
       }
     }
     else {
@@ -130,12 +129,10 @@ function signup() {
 }
 
 // check if username exists
-function usernameExists() {
+function usernameMatch() {
   for (let i = 0; i < profiles.length; i++) {
     if (username === profiles[i].username) {
-      alert(`
-        Username already attributed.
-        Login or choose a different username.`);
+      profileIndex = i;
       return true;
     }
   }
@@ -154,79 +151,87 @@ function generateProfile() {
   profile.alias = random(instrumentData.instruments);
   // generate alias property via random selection from object list
   profile.weapon = random(objectData.objects);
-
+  // generate photo property via random selection from API
+  profile.photo = `assets/images/clown.png`;
+  // ???
   // profilePhoto = loadJSON(profile.photo);
-  // profilePhoto = loadImage(`https://cors-anywhere.herokuapp.com/https://100k-faces.glitch.me/random-image`);
+  // profile.photo = loadImage(`https://cors-anywhere.herokuapp.com/https://100k-faces.glitch.me/random-image`);
   // profilePhoto = https://fakeface.rest/face/json
-  // profile.photo =
+
   // add new spy profile to profiles array
   profiles.push(profile);
   // save updated profiles array to local storage
   updateProfiles();
   profileIndex = profiles.length - 1;
-  set();
+  setProfile();
 }
 
+// saves current profiles state to local storage
 function updateProfiles() {
   localStorage.setItem(DataKey, JSON.stringify(profiles));
   console.log(profiles);
 }
 
+/*
+LOG-IN: on login button press
+2 query username, must exist to proceed (2.1), otherwise staged responses (2.2)
+2.1 proceed to authenticate password
+2.2 response stages: cancelled (2.2.1) or inexistant (2.2.2)
+2.2.1 close prompt, return to default state
+2.2.2 alert user to inexistent username and purge on repeat failure, return to default state
+*/
 function login() {
-  buttonsProfile();
   username = prompt(`Username:`);
-  authenticateUsername();
-}
-
-function authenticateUsername() {
-  for (let i = 0; i < profiles.length; i++) {
-    if (username === profiles[i].username) {
-      profileIndex = i;
-      unAuth = true;
-      i = profiles.length;
-    }
-  }
-  if (unAuth) {
-    profile = profiles[profileIndex];
-    authenticatePassword();
-  }
-  else {
-    if (authFirstTry) {
-      authFirstTry = false;
-      usernameUnrecognized();
+  // check if user entered a username, otherwise accept cancel and do nothing
+  if (username != null) {
+    // check if username already exists
+    if (usernameMatch()) {
+      profile = profiles[profileIndex];
+      authenticatePassword();
     }
     else {
-      purgeDatabase();
+      if (!authAttempt) {
+        authAttempt = true;
+        alert(`
+          Username not recognized.
+          Second failure will purge database.`);
+      }
+      else {
+        purgeDatabase();
+      }
     }
   }
 }
 
 // authenticate user via password
 function authenticatePassword() {
-  for (let i = 0; i < authPrompts.length; i++) {
-    let authAttempt = prompt(authPrompts[i]);
-    if (authAttempt === profile.password) {
-      console.log(`password found!`);
-      // profilePhoto = loadImage(profile.photo);
-      // pwAuth = true;
-      userAuth = true;
-      i = authPrompts.length;
-    }
+  if (passwordMatch()) {
+    profilePhoto = loadImage(profile.photo);
+    setProfile();
   }
-  if (!userAuth) {
+  else {
     purgeProfile();
   }
 }
 
-function usernameUnrecognized() {
-  alert(`
-    Username not recognized.
-    Second failure will purge database.`)
-  username = prompt(`Username:`);
-  authenticateUsername();
+function passwordMatch() {
+  for (let i = 0; i < authPrompts.length; i++) {
+    let authAttempt = prompt(authPrompts[i]);
+    if (authAttempt === profile.password) {
+      return true;
+    }
+  }
 }
 
-// display profile information, if user not authenticate, reverts to default values
+//
+function setProfile() {
+  profilePhoto = loadImage(profile.photo);
+  buttonsProfile();
+  userAuth = true;
+  authAttempt = false;
+}
+
+// display profile information, if user not (yet) authenticated, reverts to default values
 function displayProfile() {
   push();
   noStroke();
@@ -245,48 +250,64 @@ function displayProfile() {
             ${profile.username}
            PASSWORD:
             ${profile.password}
+
  ALIAS: ${profile.alias}
- WEAPON: ${profile.weapon}`, width / 3, height / 3);
-  // image(profilePhoto, width / 4, height / 2);
+ WEAPON: ${profile.weapon}`, width / 3, height / 3, width / 3, height / 3);
+  image(profilePhoto, width / 3 + 10, height / 3 + 10, 130, 140);
   pop();
 }
 
+// logout fonction, reverts display to default information
 function logout() {
-  reset();
-  alert(`Log out?`);
+  if (confirm(`Log out?`)) {
+    resetProfile();
+  }
 }
 
+// delete fonction, purges profile and reverts display to default information
+function deleteProfile() {
+  if (confirm(`Delete profile?`)) {
+    purgeProfile();
+  }
+}
+
+// profile purge function
 function purgeProfile() {
-  alert(`Delete profile?`);
   profiles.splice(profileIndex,1);
   localStorage.setItem(DataKey, JSON.stringify(profiles));
-  reset();
+  alert(`Purged profile.`);
+  resetProfile();
 }
 
+// database purge function
 function purgeDatabase() {
-  if (profiles) {
-    localStorage.removeItem(DataKey);
-    alert(`Purged database.`);
-  }
-  else {
-    console.log(`No database to purge.`);
-  }
+  profiles = [];
+  updateProfiles();
+  alert(`Purged database.`);
+  resetProfile();
 }
 
-function set() {
-  buttonsProfile();
-  userAuth = true;
-}
-
-function reset() {
+// resets profile values to default
+function resetProfile() {
   profile = new Profile();
+  profileIndex = 0;
+  profilePhoto = loadImage(profile.photo);
   buttonsTitle();
+  authAttempt = false;
   userAuth = false;
-  unAuth = false;
 }
 
 function keyPressed() {
-  if (keyCode == 8 && keyIsDown(SHIFT) && keyIsDown(ALT)) {
-    purgeDatabase();
+  // database purge using ALT+SHIFT+DELETE
+  if (keyCode === 8 && keyIsDown(SHIFT) && keyIsDown(ALT)) {
+    if (confirm(`Purge database?`)) {
+      purgeDatabase();
+    }
+  }
+  // DEBUG-remove: database log using SHIFT+ENTER
+  if (keyCode === 13 && keyIsDown(SHIFT)) {
+    localStorage.setItem(DataKey, JSON.stringify(profiles));
+    profiles = JSON.parse(localStorage.getItem(DataKey));
+    console.log(profiles);
   }
 }
