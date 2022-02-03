@@ -150,24 +150,28 @@ function generateProfile() {
   profilePassword = profile.password;
   // generate alias property via random selection from instrument list
   profile.alias = random(instrumentData.instruments);
-  // generate alias property via random selection from object list
+  // generate weapon property via random selection from object list
   profile.weapon = random(objectData.objects);
+  // generate photo property via random gitHub folder link
+  let url1 = floor(random()*10);
+  let url2 = floor(random()*10);
+  let url3 = floor(random()*10);
+  profile.photo = `https://ozgrozer.github.io/100k-faces/0/0/000${url1}${url2}${url3}.jpg`
+  console.log(profile.photo);
+  // other [tragic] attempts
   // generate photo property via random selection from API
   // let url = document.getElementById("photo").src;
   // document.getElementById("photo").src =
   // let imgID = JSON.parse(document.getElementById("photo").src);
-
-
   // = "url('assets/images/lock_open.jpg')";
-// console.log(url);
+  // console.log(url);
   // profile.photo = `assets/images/clown.png`;
   // profilePhoto = createImg(`https://100k-faces.glitch.me/random-image-url`);
   // httpGet(`https://100k-faces.glitch.me/random-image-url`, function (response) {
   //   console.log(response); });
-  httpDo(`https://cors-anywhere.herokuapp.com/https://100k-faces.glitch.me/random-image-url`);
+  // httpDo(`https://cors-anywhere.herokuapp.com/https://100k-faces.glitch.me/random-image-url`);
   // profilePhoto = loadJSON(photoURL);
   // profile.photo = profilePhoto;
-
   // ???
   // profilePhoto = loadJSON(profile.photo);
   // profile.photo = loadImage(`https://cors-anywhere.herokuapp.com/https://100k-faces.glitch.me/random-image`);
