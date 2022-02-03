@@ -25,12 +25,20 @@ let instrumentData;
 const DataKey = `profiles`;
 // stored data
 let data;
+let profilePhoto;
+// const BackgroundLockedURL = 'assets/images/lock_closed.jpg';
+// const BackgroundUnlockedURL = 'assets/images/lock_open.jpg';
+// let backgroundLocked;
+// let backgroundUnlocked;
 
-// load JSON files from URL into local variables
 function preload() {
+  // load JSON files from URL into local variables
   tarotData = loadJSON(TarotDataURL);
   objectData = loadJSON(ObjectDataURL);
   instrumentData = loadJSON(InstrumentDataURL);
+  // // load background images
+  // backgroundUnlocked = loadImage(BackgroundUnlockedURL);
+  // backgroundLocked = loadImage(BackgroundLockedURL);
 }
 
 // check for existence of previously stored data, if null, generate a new profile, else authenticate user
@@ -40,21 +48,21 @@ function setup() {
   profiles = JSON.parse(localStorage.getItem(DataKey));
   if (!profiles) { profiles = []; }
   console.log(profiles);
-  uiSetup();
+  createButtons();
 }
 
-function uiSetup() {
-  background(125);
+function createButtons() {
+  //background(125);
   loginBtn = createButton(`Log In`);
-  loginBtn.position(width/3,height/2);
+  loginBtn.position(width/3+height/30,2*height/3+height/30);
   loginBtn.mousePressed(login);
 
   signupBtn = createButton(`Sign Up`);
-  signupBtn.position(2*width/3,height/2);
+  signupBtn.position(2*width/3-height/30,2*height/3+height/30);
   signupBtn.mousePressed(signup);
 
   deleteBtn = createButton(`Delete Profile`);
-  deleteBtn.position(width/2,3*height/4);
+  deleteBtn.position(width/2,2*height/3+height/30);
   deleteBtn.mousePressed(purgeProfile);
 
   buttonsTitle();
@@ -62,12 +70,15 @@ function uiSetup() {
 
 // display spy profile, values change based on user authentication
 function draw() {
-  background(125);
+  // background(125);
   if (pwAuth || userCreated) {
-    displayProfile();
+    document.body.style.backgroundImage = "url('assets/images/lock_open.jpg')";
+    //displayProfile();
   }
   else {
+    document.body.style.backgroundImage = "url('assets/images/lock_closed.jpg')";
   }
+  displayProfile();
 }
 
 function signup() {
@@ -102,6 +113,9 @@ function generateProfile() {
   profile.alias = random(instrumentData.instruments);
   // generate alias property via random selection from object list
   profile.weapon = random(objectData.objects);
+
+  profilePhoto = loadImage(`https://cors-anywhere.herokuapp.com/https://100k-faces.glitch.me/random-image`);
+  // profilePhoto = loadJSON(profile.photo);
   // add new spy profile to profiles array
   profiles.push(profile);
   // save updated profiles array to local storage
@@ -150,6 +164,7 @@ function authenticatePassword() {
     let authAttempt = prompt(authPrompts[i]);
     if (authAttempt === profile.password) {
       console.log(`password found!`);
+      // profilePhoto = loadImage(profile.photo);
       pwAuth = true;
       i = authPrompts.length;
     }
@@ -182,14 +197,25 @@ function buttonsProfile() {
 // display profile information, if user not authenticate, reverts to default values
 function displayProfile() {
   push();
-  textSize(32);
+  noStroke();
+  for (var i = 0; i < 6; i++) {
+    fill(255 - i * 51);
+    rect(width / 3 - i, height / 3 - i, width / 3, height / 3, 15);
+  }
+  pop();
+  push();
+  textSize(24);
   textAlign(LEFT);
+  textFont(`Courier New`);
+  fill(65, 255, 0);
   text(`
-    Username: ${profile.username}
-    Password: ${profile.password}
-    Alias: ${profile.alias}
-    Weapon: ${profile.weapon}`, width / 3, height / 3);
-  text()
+           USERNAME:
+            ${profile.username}
+           PASSWORD:
+            ${profile.password}
+ ALIAS: ${profile.alias}
+ WEAPON: ${profile.weapon}`, width / 3, height / 3);
+  // image(profilePhoto, width / 4, height / 2);
   pop();
 }
 
