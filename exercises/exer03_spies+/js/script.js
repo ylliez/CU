@@ -7,11 +7,10 @@ let profileIndex;
 let username;
 let unAuth = false;
 let pwAuth = false;
+let userAuth = false;
 let userCreated = false;
 let authFirstTry = true;
-let loginBtn;
-let signupBtn;
-let deleteBtn;
+let loginBtn, signupBtn, logoutBtn, deleteBtn;
 let authPrompts = [`Password:`,`Try Again:`,`Last Try:`];
 // file paths for JSON files
 const TarotDataURL = `https://raw.githubusercontent.com/dariusk/corpora/master/data/divination/tarot_interpretations.json`
@@ -48,32 +47,53 @@ function setup() {
   profiles = JSON.parse(localStorage.getItem(DataKey));
   if (!profiles) { profiles = []; }
   console.log(profiles);
+  // create buttons for login, signup, log out and profile deletion
   createButtons();
+  // set default state (unuserAuth, entry buttons, anonymous profile)
+  reset();
 }
 
+// create buttons for login, signup, log out and profile deletion
 function createButtons() {
-  //background(125);
+  // create login button
   loginBtn = createButton(`Log In`);
   loginBtn.position(width/3+height/30,2*height/3+height/30);
   loginBtn.mousePressed(login);
-
+  // create signup button
   signupBtn = createButton(`Sign Up`);
-  signupBtn.position(2*width/3-height/30,2*height/3+height/30);
+  signupBtn.position(2*width/3-height/9,2*height/3+height/30);
   signupBtn.mousePressed(signup);
-
-  deleteBtn = createButton(`Delete Profile`);
-  deleteBtn.position(width/2,2*height/3+height/30);
+  // create logout button
+  logoutBtn = createButton(`Log Out`);
+  logoutBtn.position(width/3+height/30,2*height/3+height/30);
+  logoutBtn.mousePressed(logout);
+  // create delete button
+  deleteBtn = createButton(`Delete`);
+  deleteBtn.position(2*width/3-height/9,2*height/3+height/30);
   deleteBtn.mousePressed(purgeProfile);
+}
 
-  buttonsTitle();
+// title button display: login & signup shown, delete hidden
+function buttonsTitle() {
+  loginBtn.show();
+  signupBtn.show();
+  logoutBtn.hide();
+  deleteBtn.hide();
+}
+
+// profile button display: login & signup hidden, delete shown
+function buttonsProfile() {
+  loginBtn.hide();
+  signupBtn.hide();
+  logoutBtn.show();
+  deleteBtn.show();
 }
 
 // display spy profile, values change based on user authentication
 function draw() {
   // background(125);
-  if (pwAuth || userCreated) {
+  if (pwAuth || userCreated || userAuth) {
     document.body.style.backgroundImage = "url('assets/images/lock_open.jpg')";
-    //displayProfile();
   }
   else {
     document.body.style.backgroundImage = "url('assets/images/lock_closed.jpg')";
@@ -81,20 +101,41 @@ function draw() {
   displayProfile();
 }
 
+/*
+SIGN-UP:
+1 query username, must be entered, not only spaces and not pre-existing to proceed (1.1), otherwise staged responses (1.2)
+1.1 proceed to generate profile
+1.2 response stages: cancelled (1.2.1), only spaces (1.2.2) or pre-existing (1.2.3)
+1.2.1 close prompt, return to default state
+1.2.2 alert user to invalid username, return to default state
+1.2.3 alert user to pre-existence, return to default state
+*/
 function signup() {
   username = prompt(`Username:`);
-  if (!usernameOverwriting()) {
-    buttonsProfile();
-    generateProfile();
+  // check if user entered a username, otherwise accept cancel and do nothing
+  if (username != null) {
+    // check if username is valid (i.e. does not contain only spaces), otherwise indicate invalididty
+    if (username.trim().length) {
+      // check if username already exists
+      if (!usernameExists()) {
+        generateProfile();
+      }
+    }
+    else {
+      alert(`
+        Invalid username.
+        Try again.`);
+    }
   }
 }
 
-function usernameOverwriting() {
+// check if username exists
+function usernameExists() {
   for (let i = 0; i < profiles.length; i++) {
     if (username === profiles[i].username) {
       alert(`
         Username already attributed.
-        Login or choose a different username.`)
+        Login or choose a different username.`);
       return true;
     }
   }
@@ -114,14 +155,16 @@ function generateProfile() {
   // generate alias property via random selection from object list
   profile.weapon = random(objectData.objects);
 
-  profilePhoto = loadImage(`https://cors-anywhere.herokuapp.com/https://100k-faces.glitch.me/random-image`);
   // profilePhoto = loadJSON(profile.photo);
+  // profilePhoto = loadImage(`https://cors-anywhere.herokuapp.com/https://100k-faces.glitch.me/random-image`);
+  // profilePhoto = https://fakeface.rest/face/json
+  // profile.photo =
   // add new spy profile to profiles array
   profiles.push(profile);
   // save updated profiles array to local storage
   updateProfiles();
-  userCreated = true;
   profileIndex = profiles.length - 1;
+  set();
 }
 
 function updateProfiles() {
@@ -165,11 +208,12 @@ function authenticatePassword() {
     if (authAttempt === profile.password) {
       console.log(`password found!`);
       // profilePhoto = loadImage(profile.photo);
-      pwAuth = true;
+      // pwAuth = true;
+      userAuth = true;
       i = authPrompts.length;
     }
   }
-  if (!pwAuth) {
+  if (!userAuth) {
     purgeProfile();
   }
 }
@@ -180,18 +224,6 @@ function usernameUnrecognized() {
     Second failure will purge database.`)
   username = prompt(`Username:`);
   authenticateUsername();
-}
-
-function buttonsTitle() {
-  loginBtn.show();
-  signupBtn.show();
-  deleteBtn.hide();
-}
-
-function buttonsProfile() {
-  loginBtn.hide();
-  signupBtn.hide();
-  deleteBtn.show();
 }
 
 // display profile information, if user not authenticate, reverts to default values
@@ -219,16 +251,15 @@ function displayProfile() {
   pop();
 }
 
-function keyPressed() {
-  if (keyCode == 8 && keyIsDown(SHIFT) && keyIsDown(ALT)) {
-    purgeDatabase();
-  }
+function logout() {
+  reset();
+  alert(`Log out?`);
 }
 
 function purgeProfile() {
+  alert(`Delete profile?`);
   profiles.splice(profileIndex,1);
   localStorage.setItem(DataKey, JSON.stringify(profiles));
-  alert(`Purged profile.`);
   reset();
 }
 
@@ -242,9 +273,20 @@ function purgeDatabase() {
   }
 }
 
+function set() {
+  buttonsProfile();
+  userAuth = true;
+}
+
 function reset() {
+  profile = new Profile();
   buttonsTitle();
-  pwAuth = false;
-  userCreated = false;
-  // setup();
+  userAuth = false;
+  unAuth = false;
+}
+
+function keyPressed() {
+  if (keyCode == 8 && keyIsDown(SHIFT) && keyIsDown(ALT)) {
+    purgeDatabase();
+  }
 }
