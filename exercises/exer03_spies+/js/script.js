@@ -4,10 +4,8 @@
 let profiles;
 let profile = {};
 let profileIndex;
-let username;
-let userAuth;
-let authAttempt;
 let loginBtn, signupBtn, logoutBtn, deleteBtn;
+let username, userAuth, authAttempt, profilePassword;
 let authPrompts = [`Password:`,`Try Again:`,`Last Try:`];
 // file paths for JSON files
 const TarotDataURL = `https://raw.githubusercontent.com/dariusk/corpora/master/data/divination/tarot_interpretations.json`
@@ -145,14 +143,31 @@ function generateProfile() {
   // generate name property from user entry
   profile.username = username;
   // generate password property via random selection from tarot divination list
-  let card = random(tarotData.tarot_interpretations);
-  profile.password = random(card.keywords);
+  do {
+    let card = random(tarotData.tarot_interpretations);
+    profile.password = random(card.keywords);
+  } while (textWidth(profile.password) >= 50);
+  profilePassword = profile.password;
   // generate alias property via random selection from instrument list
   profile.alias = random(instrumentData.instruments);
   // generate alias property via random selection from object list
   profile.weapon = random(objectData.objects);
   // generate photo property via random selection from API
-  profile.photo = `assets/images/clown.png`;
+  // let url = document.getElementById("photo").src;
+  // document.getElementById("photo").src =
+  // let imgID = JSON.parse(document.getElementById("photo").src);
+
+
+  // = "url('assets/images/lock_open.jpg')";
+// console.log(url);
+  // profile.photo = `assets/images/clown.png`;
+  // profilePhoto = createImg(`https://100k-faces.glitch.me/random-image-url`);
+  // httpGet(`https://100k-faces.glitch.me/random-image-url`, function (response) {
+  //   console.log(response); });
+  httpDo(`https://cors-anywhere.herokuapp.com/https://100k-faces.glitch.me/random-image-url`);
+  // profilePhoto = loadJSON(photoURL);
+  // profile.photo = profilePhoto;
+
   // ???
   // profilePhoto = loadJSON(profile.photo);
   // profile.photo = loadImage(`https://cors-anywhere.herokuapp.com/https://100k-faces.glitch.me/random-image`);
@@ -164,6 +179,11 @@ function generateProfile() {
   updateProfiles();
   profileIndex = profiles.length - 1;
   setProfile();
+}
+
+function getName() {
+  console.log(elements);
+
 }
 
 // saves current profiles state to local storage
@@ -207,6 +227,7 @@ function login() {
 function authenticatePassword() {
   if (passwordMatch()) {
     profilePhoto = loadImage(profile.photo);
+    profilePassword = `*********`;
     setProfile();
   }
   else {
@@ -247,9 +268,9 @@ function displayProfile() {
   fill(65, 255, 0);
   text(`
            USERNAME:
-            ${profile.username}
+             ${profile.username}
            PASSWORD:
-            ${profile.password}
+             ${profilePassword}
 
  ALIAS: ${profile.alias}
  WEAPON: ${profile.weapon}`, width / 3, height / 3, width / 3, height / 3);
@@ -275,7 +296,7 @@ function deleteProfile() {
 function purgeProfile() {
   profiles.splice(profileIndex,1);
   localStorage.setItem(DataKey, JSON.stringify(profiles));
-  alert(`Purged profile.`);
+  alert(`Profile deleted.`);
   resetProfile();
 }
 
@@ -283,7 +304,7 @@ function purgeProfile() {
 function purgeDatabase() {
   profiles = [];
   updateProfiles();
-  alert(`Purged database.`);
+  alert(`Database purged.`);
   resetProfile();
 }
 
@@ -292,6 +313,7 @@ function resetProfile() {
   profile = new Profile();
   profileIndex = 0;
   profilePhoto = loadImage(profile.photo);
+  profilePassword = profile.password;
   buttonsTitle();
   authAttempt = false;
   userAuth = false;
