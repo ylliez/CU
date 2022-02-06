@@ -1,16 +1,16 @@
 //strings can use either "...", '...' or `...` , need to use escape backslash (\) to use same character inside
 //therefore best to use template strings `...` which are then called using ${...}
 
-//text
-function setup() {
-  createCanvas(500,500);
-}
-
-function draw() {
-  background(127);
-  rect(250,250,10,10);
-  text(`Hello, World!`,250,250);
-}
+// //text
+// function setup() {
+//   createCanvas(500,500);
+// }
+//
+// function draw() {
+//   background(127);
+//   rect(250,250,10,10);
+//   text(`Hello, World!`,250,250);
+// }
 
 //same but with typo specs
 function setup() {

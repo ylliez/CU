@@ -1,3 +1,4 @@
-# Template p5 project
+# Activity 4 - Bubble Popper
 
-This is the README file for the entire project. For more official projects you should write information here about the nature of the project, your name, any special explanations of how the project works, etc.
+Pop the bubble with the tip of your index finger!
+Uses ml5.js Handpose feature.
