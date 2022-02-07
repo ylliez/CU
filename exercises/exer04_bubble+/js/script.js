@@ -1,9 +1,12 @@
+
 let state = `loading`;
 let video;
 let handpose;
 let predictions = [];
 let bubble;
 let baseX, baseY, tipX, tipY;
+let gameScore = 0;
+let highScore = 0;
 
 
 /**
@@ -14,6 +17,13 @@ function setup() {
 
   video = createCapture(VIDEO);
   video.hide();
+
+  let data = JSON.parse(localStorage.getItem(`bubble+-highscore`));
+  // Check if there's anything there
+  if (data !== null) {
+    // There is data! So replace our default game data with the save data
+    highScore = data;
+  }
 
   handpose = ml5.handpose(video, { flipHorizontal: true }, () => { state = `running`; } );
 
@@ -59,6 +69,8 @@ function sim() {
   }
 
   bubble.update();
+
+  displayScores();
 }
 
 function resetBubble() {
@@ -86,5 +98,32 @@ function checkPop() {
   let d = dist(tipX, tipY, bubble.x, bubble.y);
   if (d < bubble.size / 2) {
     resetBubble();
+    gameScore++;
+    checkScore();
+  }
+}
+
+function displayScores() {
+  push();
+  fill(255);
+  textAlign(RIGHT,TOP);
+  textSize(32);
+  text(gameScore, width - width/8, height/8);
+  pop();
+  push();
+  fill(255);
+  textAlign(LEFT,TOP);
+  textSize(32);
+  text(highScore, width/8, height/8);
+  pop();
+}
+
+
+function checkScore() {
+  if (gameScore > highScore) {
+    // Set the new high score
+    highScore = gameScore;
+    // Save the game data to remember for next time, remembering to stringify the data first
+    localStorage.setItem(`bubble+-highscore`, JSON.stringify(highScore));
   }
 }
