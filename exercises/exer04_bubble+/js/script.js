@@ -7,14 +7,12 @@ let handpose;
 // holds current set of handpose predictions
 let predictions = [];
 // holds bubble and pin objects;
-let bubble, pin;
+let bubble, tool, pin, scissors;
 // holds score for current game as well as high score
 let gameScore = 0;
 let highScore = 0;
-// holds loadscreen typewriter effect variables
-let loadString = `LOADING...`;
-let currentCharacter = 0;
-let currentString;
+// holds loadscreen typewriter effect
+let loadType;
 
 
 /**
@@ -23,6 +21,8 @@ create canvas, create webcam feed, load highscore data, initialize handpose obec
 function setup() {
   // create canvas
   createCanvas(640,480);
+  // create loading typewriter effect
+  loadType = new Typewriter(`LOADING...`, width / 2, height / 2, 48, 350, 200, 0.1);
   // create webcam feed, hide display
   video = createCapture(VIDEO);
   video.hide();
@@ -30,10 +30,12 @@ function setup() {
   highScore = localStorage.getItem(`bubble+-highscore`) ?? 0;
   // initialize handpose object
   handpose = ml5.handpose(video, { flipHorizontal: true }, () => { state = `running`; } );
-  handpose.on(`predict`, (results) => { predictions = results; } );
+  handpose.on(`predict`, (results) => { predictions = results; console.log(predictions); } );
   // create bubble
   bubble = new Bubble();
   pin = new Pin();
+  scissors = new Scissors();
+  tool = scissors;
 }
 
 
@@ -49,15 +51,19 @@ function draw() {
 }
 
 function load() {
-  typeLoad();
+  loadType.update();
 }
 
 function sim() {
   if (predictions.length > 0) {
-    pin.coordinates = predictions[0];
-    pin.coordinate();
-    pin.update();
-    checkPop();
+    // pin.coordinates = predictions[0];
+    // pin.update();
+    tool.coordinates = predictions[0];
+    tool.update();
+    if (tool === scissors)
+      checkSnip();
+    else
+      checkPop();
   }
 
   bubble.update();
@@ -72,6 +78,15 @@ function resetBubble() {
 
 function checkPop() {
   let d = dist(pin.tip.x, pin.tip.y, bubble.x, bubble.y);
+  if (d < bubble.size / 2) {
+    resetBubble();
+    gameScore++;
+    checkScore();
+  }
+}
+
+function checkSnip() {
+  let d = dist(tool.index.tip.x, tool.index.tip.y, bubble.x, bubble.y);
   if (d < bubble.size / 2) {
     resetBubble();
     gameScore++;
@@ -100,20 +115,4 @@ function checkScore() {
     highScore = gameScore;
     localStorage.setItem(`bubble+-highscore`, highScore);
   }
-}
-
-function typeLoad() {
-  currentString = loadString.substring(0, currentCharacter);
-  push();
-  textAlign(LEFT, TOP);
-  textSize(64);
-  textFont(`Courier`);
-  text(currentString, height / 2, width / 2);
-  pop();
-  // currentCharacter += 0.1;
-  // currentCharacter = (currentCharacter >= loadString.length) ? (currentCharacter + 0.1) : 0;
-  if (currentCharacter >= loadString.length)
-    currentCharacter = 0;
-  else
-    currentCharacter += 0.1;
 }

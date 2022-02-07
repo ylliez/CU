@@ -18,12 +18,21 @@ class Pin {
   }
 
   update() {
+    this.coordinate();
     this.display();
+  }
+
+  coordinate() {
+    this.base.x = this.coordinates.annotations.indexFinger[0][0];
+    this.base.y = this.coordinates.annotations.indexFinger[0][1];
+    this.tip.x = this.coordinates.annotations.indexFinger[3][0];
+    this.tip.y = this.coordinates.annotations.indexFinger[3][1];
   }
 
   display() {
     push();
     fill(this.tip.col);
+    strokeWeight(2);
     line(this.base.x, this.base.y, this.tip.x, this.tip.y);
     pop();
 
@@ -32,13 +41,6 @@ class Pin {
     noStroke();
     circle(this.base.x, this.base.y, this.base.size, this.base.size);
     pop();
-  }
-
-  coordinate() {
-    this.base.x = this.coordinates.annotations.indexFinger[0][0];
-    this.base.y = this.coordinates.annotations.indexFinger[0][1];
-    this.tip.x = this.coordinates.annotations.indexFinger[3][0];
-    this.tip.y = this.coordinates.annotations.indexFinger[3][1];
   }
 
 }

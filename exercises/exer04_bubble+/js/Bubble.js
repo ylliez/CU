@@ -9,9 +9,9 @@ class Bubble {
   }
 
   update() {
-    this.display();
     this.move();
     this.wrap();
+    this.display();
   }
 
   display() {
@@ -28,9 +28,8 @@ class Bubble {
   }
 
   wrap() {
-    if (this.y < 0) {
+    if (this.y < 0)
       this.y = height;
-    }
   }
 
   reset() {
