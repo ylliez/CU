@@ -55,6 +55,8 @@ function load() {
 }
 
 function sim() {
+  let flippedVideo = ml5.flipImage(video);
+  image(flippedVideo, 0, 0, width, height);
   if (predictions.length > 0) {
     // pin.coordinates = predictions[0];
     // pin.update();
@@ -86,8 +88,7 @@ function checkPop() {
 }
 
 function checkSnip() {
-  let d = dist(tool.index.tip.x, tool.index.tip.y, bubble.x, bubble.y);
-  if (d < bubble.size / 2) {
+  if (scissors.t2t <= (scissors.b2b * 1.2)) {
     resetBubble();
     gameScore++;
     checkScore();

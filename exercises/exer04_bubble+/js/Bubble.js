@@ -3,7 +3,7 @@ class Bubble {
   constructor() {
     this.x = random(width);
     this.y = height;
-    this.size = 15;
+    this.size = 20;
     this.vx = 0;
     this.vy = -2;
   }
