@@ -1,35 +1,35 @@
-
+// defines simulation states (loading or running)
 let state = `loading`;
+// holds webcam feed
 let video;
+// holds handpose object
 let handpose;
+// holds current set of handpose predictions
 let predictions = [];
-let bubble;
-let baseX, baseY, tipX, tipY;
+// holds bubble and pin objects;
+let bubble, pin;
+// holds score for current game as well as high score
 let gameScore = 0;
 let highScore = 0;
 
 
 /**
-Description of setup
+create canvas, create webcam feed, load highscore data, initialize handpose obecjts, create bubble
 */
 function setup() {
+  // create canvas
   createCanvas(640,480);
-
+  // create webcam feed, hide display
   video = createCapture(VIDEO);
   video.hide();
-
-  let data = JSON.parse(localStorage.getItem(`bubble+-highscore`));
-  // Check if there's anything there
-  if (data !== null) {
-    // There is data! So replace our default game data with the save data
-    highScore = data;
-  }
-
+  // load highscore data
+  highScore = localStorage.getItem(`bubble+-highscore`) ?? 0;
+  // initialize handpose object
   handpose = ml5.handpose(video, { flipHorizontal: true }, () => { state = `running`; } );
-
   handpose.on(`predict`, (results) => { predictions = results; } );
-
+  // create bubble
   bubble = new Bubble();
+  pin = new Pin();
 }
 
 
@@ -39,32 +39,20 @@ Description of draw()
 function draw() {
   background(125);
   switch (state) {
-    case `loading`:
-      load();
-      break;
-    case `running`:
-      sim();
-      break;
-    default:
-
+    case `loading`: load(); break;
+    case `running`: sim(); break;
   }
 }
 
 function load() {
-  push();
-  textAlign(CENTER, CENTER);
-  textSize(64);
-  fill(200, 100, 200);
-  stroke(0);
-  strokeWeight(2);
-  text(`LOADING...`, height / 2, width / 2);
-  pop();
+  typeLoad();
 }
 
 function sim() {
   if (predictions.length > 0) {
-    let hand = predictions[0];
-    pinHand(hand);
+    pin.coordinates = predictions[0];
+    pin.coordinate();
+    pin.update();
     checkPop();
   }
 
@@ -78,24 +66,8 @@ function resetBubble() {
   bubble.y = height;
 }
 
-function pinHand(hand) {
-  baseX = hand.annotations.indexFinger[0][0];
-  baseY = hand.annotations.indexFinger[0][1];
-  tipX = hand.annotations.indexFinger[3][0];
-  tipY = hand.annotations.indexFinger[3][1];
-
-  push();
-  line(baseX, baseY, tipX, tipY);
-  pop();
-
-  push();
-  fill(255, 0, 0);
-  circle(baseX, baseY, 10, 10);
-  pop();
-}
-
 function checkPop() {
-  let d = dist(tipX, tipY, bubble.x, bubble.y);
+  let d = dist(pin.tip.x, pin.tip.y, bubble.x, bubble.y);
   if (d < bubble.size / 2) {
     resetBubble();
     gameScore++;
@@ -118,12 +90,24 @@ function displayScores() {
   pop();
 }
 
-
+// check if current game score exceeds previous highscore, if so update highscore and save it to local storage
 function checkScore() {
   if (gameScore > highScore) {
-    // Set the new high score
     highScore = gameScore;
-    // Save the game data to remember for next time, remembering to stringify the data first
-    localStorage.setItem(`bubble+-highscore`, JSON.stringify(highScore));
+    localStorage.setItem(`bubble+-highscore`, highScore);
   }
+}
+
+function typeLoad() {
+  let loadString = `LOADING...`;
+  let currentCharacter = 0;
+  let currentString = loadString.substring(0, currentCharacter);
+  console.log(currentString);
+  push();
+  textAlign(LEFT, TOP);
+  textSize(64);
+  textFont(`Courier`);
+  text(currentString, height / 2, width / 2);
+  // text(`LOADING...`, height / 2, width / 2);
+  pop();
 }
