@@ -11,6 +11,10 @@ let bubble, pin;
 // holds score for current game as well as high score
 let gameScore = 0;
 let highScore = 0;
+// holds loadscreen typewriter effect variables
+let loadString = `LOADING...`;
+let currentCharacter = 0;
+let currentString;
 
 
 /**
@@ -99,15 +103,17 @@ function checkScore() {
 }
 
 function typeLoad() {
-  let loadString = `LOADING...`;
-  let currentCharacter = 0;
-  let currentString = loadString.substring(0, currentCharacter);
-  console.log(currentString);
+  currentString = loadString.substring(0, currentCharacter);
   push();
   textAlign(LEFT, TOP);
   textSize(64);
   textFont(`Courier`);
   text(currentString, height / 2, width / 2);
-  // text(`LOADING...`, height / 2, width / 2);
   pop();
+  // currentCharacter += 0.1;
+  // currentCharacter = (currentCharacter >= loadString.length) ? (currentCharacter + 0.1) : 0;
+  if (currentCharacter >= loadString.length)
+    currentCharacter = 0;
+  else
+    currentCharacter += 0.1;
 }
