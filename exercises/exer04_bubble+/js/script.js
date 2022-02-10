@@ -37,11 +37,7 @@ function setup() {
   // initialize handpose object
   handpose = ml5.handpose(video, { flipHorizontal: true }, () => { state = `title`; } );
   handpose.on(`predict`, (results) => { predictions = results; } );
-  // initialize bubble maker
-  setInterval( () => {
-    let newBubble = new Bubble();
-    bubbles.push(newBubble);
-  }, 3000);
+
 }
 
 /* run loading sequence or simulation */
@@ -50,7 +46,7 @@ function draw() {
   switch (state) {
     case `loading`: load(); break;
     case `title`: title(); break;
-    case `running`: sim(); break;
+    case `sim`: sim(); break;
   }
 }
 
@@ -61,16 +57,33 @@ function load() {
 
 // title sequence until user consents
 function title() {
-  startButton = createButton('Click to Start');
-  startButton.position(width / 2, height / 2);
-  startButton.mousePressed( () => { startButton.hide(); state = `running`; } );
+  // create start button
+  if (!startButton) {
+    startButton = createButton('Click to Start');
+    startButton.position(windowWidth / 2, windowHeight/2);
+    startButton.mousePressed(initSim);
+  }
+  // write title and subtitle lines
   writeTitle(`POP THE BUBBLES`);
   writeSubtitle(`
+
   Use the webcam and your hand to pop the bubbles.
   Change tools by closing your fist.
   Needle: Use your index fingertip as a needle to stab the bubble
   Scissors: Use your index and middle fingers as scissors to cut it
   Bellows: Use your middle finger to blow it up until it explodes`);
+}
+
+function initSim () {
+  // hide button
+  startButton.hide();
+  // initialize bubble maker
+  setInterval( () => {
+    let newBubble = new Bubble();
+    bubbles.push(newBubble);
+  }, 3000);
+  // set state to sim
+  state = `sim`;
 }
 
 // simulation sequence once handpose object is initialized
@@ -162,9 +175,9 @@ function writeTitle(toWrite) {
 // write text halfway down the page in small black letters
 function writeSubtitle(toWrite) {
   push();
-  textAlign(LEFT, CENTER);
+  textAlign(CENTER, CENTER);
   textSize(20);
   fill(0);
-  text(toWrite, 0, 2 * height / 3);
+  text(toWrite, width / 2, 2 * height / 3);
   pop();
 }
