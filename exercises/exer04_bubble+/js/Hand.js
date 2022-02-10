@@ -84,6 +84,7 @@ class Hand {
     this.dist.p2T.p2r = dist(this.palm.base.x, this.palm.base.y, this.ring.tip.x, this.ring.tip.y);
     this.dist.p2T.p2p = dist(this.palm.base.x, this.palm.base.y, this.pinky.tip.x, this.pinky.tip.y);
     // distances between fingerbases & fingertips
+    this.dist.T2B.i2i = dist(this.index.tip.x, this.index.tip.y, this.index.base.x, this.index.base.y);
     this.dist.T2B.t2i = dist(this.thumb.tip.x, this.thumb.tip.y, this.index.base.x, this.index.base.y);
     // distances between other handmarks
     this.dist.spec.i32t1 = dist(this.index.tip.x, this.index.tip.y, this.thumb.knuckle.x, this.thumb.knuckle.y);
