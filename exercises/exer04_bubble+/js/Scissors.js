@@ -11,7 +11,7 @@ class Scissors extends Hand {
 
   display() {
     push();
-    fill(0);
+    stroke(0);
     strokeWeight(2);
     line(this.middle.base.x, this.middle.base.y, this.index.tip.x, this.index.tip.y);
     line(this.index.base.x, this.index.base.y, this.middle.tip.x, this.middle.tip.y);
@@ -38,10 +38,13 @@ class Scissors extends Hand {
     // pop();
   }
 
-  checkFeature(bubble) {
+  checkInteraction(bubble) {
     let ellipseInScissors = collidePointTriangle(bubble.x, bubble.y, this.midB.i2m.x, this.midB.i2m.y, this.index.tip.x, this.index.tip.y, this.middle.tip.x, this.middle.tip.y);
-    console.log(hand.isSnip);
-    if (ellipseInScissors && this.isSnip) { console.log(`true`); return true; }
+    if (ellipseInScissors && this.isSnip) { return true; }
+  }
+
+  drawSkeleton() {
+    super.drawSkeleton();
   }
 
 }

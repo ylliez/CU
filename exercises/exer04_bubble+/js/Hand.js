@@ -105,4 +105,15 @@ class Hand {
     else { this.isSnip = false; }
   }
 
+  drawSkeleton() {
+    for (let i = 0; i < this.coordinates.landmarks.length; i += 1) {
+      let keypoint = this.coordinates.landmarks[i];
+      pop();
+      fill(0, 255, 0);
+      noStroke();
+      ellipse(keypoint[0], keypoint[1], 10, 10);
+      push();
+    }
+  }
+
 }

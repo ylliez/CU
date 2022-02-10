@@ -68,16 +68,19 @@ function sim() {
   // let flippedVideo = ml5.flipImage(video);
   // image(flippedVideo, 0, 0, width, height);
 
+  if (predictions.length > 0) {
+    tool.coordinates = predictions[0];
+    // uncomment to display skeleton of handpose
+    // tool.drawSkeleton();
+    tool.update();
+    updateTool();
+  }
+
+  // update bubbles and check for tool interactions
   for (let i = 0; i < bubbles.length; i++) {
     // update bubble position and display
     bubbles[i].update();
-    // if hand found
-    if (predictions.length > 0) {
-      tool.coordinates = predictions[0];
-      tool.update();
-      checkTool();
-      if (tool.checkFeature(bubbles[i])) { resolveBubble(bubbles[i]); }
-    }
+    if (tool.checkInteraction(bubbles[i])) { resolveBubble(bubbles[i]); }
   }
 
 
@@ -86,17 +89,16 @@ function sim() {
   // drawKeypoints();
 }
 
-function drawKeypoints() {
-  for (let i = 0; i < predictions.length; i += 1) {
-    const hand = predictions[i];
-    for (let j = 0; j < hand.landmarks.length; j += 1) {
-      const keypoint = hand.landmarks[j];
-      fill(0, 255, 0);
-      noStroke();
-      ellipse(keypoint[0], keypoint[1], 10, 10);
-    }
-  }
-}
+// function drawKeypoints() {
+//   let tester =[];
+//    tester = predictions[0];
+//     for (let j = 0; j < tester.landmarks.length; j += 1) {
+//       const keypoint = tester.landmarks[j];
+//       fill(0, 255, 0);
+//       noStroke();
+//       ellipse(keypoint[0], keypoint[1], 10, 10);
+//   }
+// }
 
 function resolveBubble(bubble) {
   bubbles.splice(bubbles.indexOf(bubble),1);
@@ -128,7 +130,7 @@ function checkScore() {
   }
 }
 
-function checkTool() {
+function updateTool() {
   if(tool.isFist) {
     if (!toolSwitched) {
       console.log(`switch!!!`);
