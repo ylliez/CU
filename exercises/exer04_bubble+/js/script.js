@@ -7,10 +7,9 @@ let handpose;
 // holds current set of handpose predictions
 let predictions = [];
 // holds tool objects;
-let tool, fist, pin, scissors;
+let tool, fist, pin, scissors, blower;
 // Information for bubbles
-let bubble;
-let bubbleIndex = 0;
+let createdBubble, checkedBubble;
 let bubbles = [];
 // holds score for current game as well as high score
 let gameScore = 0;
@@ -43,13 +42,9 @@ function setup() {
   scissors = new Scissors();
   fist = new Fist();
   tool = pin;
-  // create bubble
-  bubbles[bubbleIndex] = new Bubble();
   setInterval( () => {
-    bubbleIndex++;
-    bubble = new Bubble();
-    bubbles.push(bubble);
-    // bubbles[bubbleIndex] = new Bubble();
+    createdBubble = new Bubble();
+    bubbles.push(createdBubble);
   }, 3000);
 }
 
@@ -73,22 +68,19 @@ function sim() {
   // let flippedVideo = ml5.flipImage(video);
   // image(flippedVideo, 0, 0, width, height);
 
-
   for (let i = 0; i < bubbles.length; i++) {
     bubbles[i].update();
 
     if (predictions.length > 0) {
       fist.coordinates = predictions[0];
-      changeTool();
+      checkTool();
       tool.coordinates = predictions[0];
       tool.update();
-      if (tool === scissors)
-        checkSnip(bubbles[i]);
-      else
-        checkPop(bubbles[i]);
-
+      if (tool === pin && pin.checkPop(bubbles[i].x, bubbles[i].y, bubbles[i].size)) { resolveBubble(bubbles[i]); }
+      else if (tool === scissors && scissors.checkSnip(bubbles[i].x, bubbles[i].y)) { resolveBubble(bubbles[i]); }
     }
   }
+
 
   displayScores();
 
@@ -107,32 +99,20 @@ function drawKeypoints() {
   }
 }
 
-function resetBubble(bubble) {
-  bubble.x = random(width);
-  bubble.y = height;
+function resolveBubble(bubble) {
+  bubbles.splice(bubbles.indexOf(bubble),1);
+  gameScore++;
+  checkScore();
 }
 
-function checkPop(bubble) {
-  let d = dist(pin.tip.x, pin.tip.y, bubble.x, bubble.y);
-  if (d < bubble.size / 2) {
-    resetBubble(bubble);
-    gameScore++;
-    checkScore();
-  }
-}
-
-function checkSnip(bubble) {
-  var hit = collidePointTriangle(bubble.x, bubble.y, scissors.average.base.x, scissors.average.base.y, scissors.index.tip.x, scissors.index.tip.y, scissors.middle.tip.x, scissors.middle.tip.y);
-  if (hit) {
-    let targeted = true;
-    setTimeout( () => { targeted = false; }, 1000);
-    if (targeted && (scissors.t2t <= (scissors.b2b * 1.2)) && hit) {
-      resetBubble(bubble);
-      gameScore++;
-      checkScore();
-    }
-  }
-}
+// function checkSnip(bubble) {
+//   let hit = collidePointTriangle(bubble.x, bubble.y, scissors.average.base.x, scissors.average.base.y, scissors.index.tip.x, scissors.index.tip.y, scissors.middle.tip.x, scissors.middle.tip.y);
+//   if (hit) {
+//     let targeted = true;
+//     setTimeout( () => { targeted = false; }, 1000);
+//     if (targeted && (scissors.t2t <= (scissors.b2b * 1.2)) && hit) { resolveBubble(bubble); }
+//   }
+// }
 
 
 function displayScores() {
@@ -158,7 +138,7 @@ function checkScore() {
   }
 }
 
-function changeTool() {
+function checkTool() {
   if(fist.checkFist()) {
     console.log(`FIST!!!`);
     if (!toolSwitched) {
@@ -241,7 +221,7 @@ function changeTool() {
 //   // image(flippedVideo, 0, 0, width, height);
 //   if (predictions.length > 0) {
 //     fist.coordinates = predictions[0];
-//     changeTool();
+//     checkTool();
 //     tool.coordinates = predictions[0];
 //     tool.update();
 //     if (tool === scissors)
@@ -270,7 +250,7 @@ function changeTool() {
 //   }
 // }
 //
-// function resetBubble() {
+// function resolveBubble() {
 //   bubble.x = random(width);
 //   bubble.y = height;
 // }
@@ -278,7 +258,7 @@ function changeTool() {
 // function checkPop() {
 //   let d = dist(pin.tip.x, pin.tip.y, bubble.x, bubble.y);
 //   if (d < bubble.size / 2) {
-//     resetBubble();
+//     resolveBubble();
 //     gameScore++;
 //     checkScore();
 //   }
@@ -290,7 +270,7 @@ function changeTool() {
 //     let targeted = true;
 //     setTimeout( () => { targeted = false; }, 1000);
 //     if (targeted && (scissors.t2t <= (scissors.b2b * 1.2)) && hit) {
-//       resetBubble();
+//       resolveBubble();
 //       gameScore++;
 //       checkScore();
 //     }
@@ -321,7 +301,7 @@ function changeTool() {
 //   }
 // }
 //
-// function changeTool() {
+// function checkTool() {
 //   if(fist.checkFist()) {
 //     console.log(`FIST!!!`);
 //     if (!toolSwitched) {
