@@ -2,11 +2,10 @@ class Pin extends Hand {
 
   constructor() {
     super();
-    this.headSize = 15;
   }
 
   update() {
-    super.coordinate();
+    super.update();
     this.display();
   }
 
@@ -20,13 +19,18 @@ class Pin extends Hand {
     push();
     fill(255, 0, 0);
     noStroke();
-    circle(this.index.base.x, this.index.base.y, this.headSize);
+    circle(this.index.base.x, this.index.base.y, 15);
     pop();
   }
 
-  checkPop(ellipseX, ellipseY, ellipseSize) {
-    let d = dist(this.index.tip.x, this.index.tip.y, ellipseX, ellipseY);
-    if (d < ellipseSize / 2) { return true; }
+  // checkFeature(ellipseX, ellipseY, ellipseSize) {
+  //   let d = dist(this.index.tip.x, this.index.tip.y, ellipseX, ellipseY);
+  //   if (d < ellipseSize / 2) { return true; }
+  // }
+
+  checkFeature(bubble) {
+    let d = dist(this.index.tip.x, this.index.tip.y, bubble.x, bubble.y);
+    if (d < bubble.size / 2) { return true; }
   }
 
 }
