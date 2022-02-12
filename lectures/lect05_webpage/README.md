@@ -1,18 +1,16 @@
 # CART263 - Lecture 05 - The Webpage
 ## HTML
 **H**yper **T**ext **M**arkup **L**anguage is used to define and structure the content of a webpage.<br>
+HTML functions in a linear and hierarchical fashion.<br>
 Uses markup tags like `<html>`, `<p>`, `<img>` and stored in text file with extension `.html` or `.htm`.<br>
 The landing page of a specific folder is usually `index.html`.<br>
 ### Formatting
 ```
-<!-- obligatory document type declaration -->
-<!DOCTYPE html>
-<!-- container for entire content -->
-<html>
-
-  <head>
-    <title>Title of webpage</title>
-  </head>
+<!DOCTYPE html>  <!-- obligatory document type declaration -->
+<html>  <!-- container for entire content -->
+  <head>  <!-- undisplayed webpage information (e.g. title, css, js, meta) -->
+    <title>Title of webpage</title>  <!-- title appearing on browser and bookmark -->
+  </head> <!-- usually obligatory tag closure using /*tag_name* -->
   <body>
     <header>
       <h1>Main heading</h1>
