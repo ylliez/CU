@@ -1,5 +1,5 @@
-#CART263 - Lecture 05 - The Webpage
-##HTML
+# CART263 - Lecture 05 - The Webpage
+## HTML
 **H**yper **T**ext **M**arkup **L**anguage is used to define and structure the content of a webpage.<br>
 Stored in text file with extension `.html` or `.htm`.<br>
 The landing page of a specific folder is usually `index.html`.<br>
@@ -130,14 +130,14 @@ Some markup tags are purely structural (e.g. `<div>`, `<nav>`, `<header>`, `<sec
   </body>
 </html>
 ```
-##CSS
+## CSS
 **C**ascading **S**tyle **S**heets is used to define the layout and style of a webpage.<br>
 Stored in a `.css` file, a `<style>`tag in the HTML `<head>` or a `style` attribute in an HTML tag, with inverse priority.<br>
 If in a file, called using `<link rel="stylesheet" href="CSS_FILE_PATH/CSS_FILE_NAME.css">`.<br>
 Uses selectors to target specific parts, such as tags, id (single), class (group), or span (specified in HTML by `<span>`)<br>
 Uses properties to specify style such as font size (e.g. `3rem`), typeface (e.g. `Helvetica`) and colour (e.g. `#4488aa`)<br>
 Pseudo-classes can be added on top of existing selectors (e.g. `:hover`, `:nth-child(2)`, `:invalid`)
-####TEMPLATE
+#### TEMPLATE
 ```
 body { }
 h1 { }
@@ -157,7 +157,7 @@ strong { }
 /* color: #fff (white) / #000 (black) / #f00 (red) / #ff8888 (pink) / #ff00ff (purple) ; */
 /* text-decoration: overline / line-through / underline ; */
 ```
-####ANNOTATED
+#### ANNOTATED
 ```
 body { /* selector, applies styling information to body of HTML */
   font-family: Helvetica, sans-serif; /* property name: value, ?fallback; */
@@ -198,8 +198,18 @@ a:hover { /* pseudo-classes, added to existing selectors */
 ## DOM
 **D**ocument **O**bject **M**odel is a JavaScript representation of the currently loaded webpage the program is running on.<br>
 DOM API allows access and manipulation of HTML elements and CSS styling from scripts, using a variable called `document`.<br>
+### DOM & CSS
 All CSS properties are stored as strings (e.g. `5rem` ,`#000000`, `Helvetica, sans-serif`).
-1. Access specific elements on the page (e.g. `document.getElementById(id_name)`, )
+1. Access specific elements on the page (e.g. `document.getElementById(id_name)`)
 2. Access CSS property using style (`document.getElementById(id_name).style`)
 3. Access element property using brackets (e.g. ```document.getElementById(id_name).style[`font-size`]```<br>or written in camelCase (e.g. `document.getElementById(id_name).style.backgroundColor`).<br>
-Can change text of elements using `.innerText` (e.g. `document.getElementById(id_name).innerText(new_id_text);`)
+### DOM & HTML
+Can obtain HTML element text using `.innerText` (e.g. `document.getElementById(id_name).innerText`)
+Can change HTML element text (e.g. `document.getElementById(id_name).innerText = new_id_text;`)
+Can obtain HTML element attributes using `.getAttribute()` (e.g. ```document.getElementById(id_name).getAttribute(`src`)```)
+Can change HTML element attributes using `.setAttribute()` (e.g. ```document.getElementById(id_name).setAttribute(`src`, new_src)```)
+### MORE DOM
+HTML elements can be accessed by other attributes returning `HTMLCollection` objects that we can manipulate using arrays (e.g. `for` loop with `.length`)
+- class: ```document.getElementsByClassName(`class_name`)```
+- tag: ```document.getElementsByTagName(`tag_name`)```
+- CSS selector: ```document.querySelector(`selector_name`)``` (first match) or ```document.querySelectorAll(`selector_name`)``` (every match)
