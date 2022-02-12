@@ -1,132 +1,147 @@
 // defines simulation states (loading or running)
 let state = `loading`;
-// holds webcam feed
-let video;
-// holds handpose object
-let handpose;
-// holds current set of handpose predictions
-let predictions = [];
-// holds bubble and pin objects;
-let bubble, tool, fist, pin, scissors;
+let startButton;
 // holds score for current game as well as high score
-let gameScore = 0;
-let highScore = 0;
+let gameScore, highScore;
 // holds loadscreen typewriter effect
 let loadType;
-
-let toolSwitched = false;
+// holds webcam feed and handpose object
+let video, handpose;
+// holds current set of handpose predictions
+let predictions = [];
+// holds bubble objects
+let bubbles = [];
+// tool information
+let pin = new Pin();
+let scissors = new Scissors();
+let blower = new Blower();
+let tools = [pin, scissors, blower];
 let toolIndex = 0;
+let tool = tools[toolIndex];
+let toolSwitched = false;
 
-
-/**
-create canvas, create webcam feed, load highscore data, initialize handpose obecjts, create bubble
-*/
+/* initialize scores, create canvas, webcam feed and handpose object, start bubble maker */
 function setup() {
+  // load scoring data
+  gameScore = 0;
+  highScore = localStorage.getItem(`bubble+-highscore`) ?? 0;
   // create canvas
-  createCanvas(640,480);
+  createCanvas(640, 480);
+  // create startButton
+  startButton
   // create loading typewriter effect
   loadType = new Typewriter(`LOADING...`, width / 2, height / 2, 48, 350, 200, 0.1);
   // create webcam feed, hide display
   video = createCapture(VIDEO);
   video.hide();
-  // load highscore data
-  highScore = localStorage.getItem(`bubble+-highscore`) ?? 0;
   // initialize handpose object
-  handpose = ml5.handpose(video, { flipHorizontal: true }, () => { state = `running`; } );
-  handpose.on(`predict`, (results) => { predictions = results; console.log(predictions); } );
-  // create bubble
-  bubble = new Bubble();
-  pin = new Pin();
-  scissors = new Scissors();
-  fist = new Fist();
-  tool = pin;
+  handpose = ml5.handpose(video, { flipHorizontal: true }, () => { state = `title`; } );
+  handpose.on(`predict`, (results) => { predictions = results; } );
+
 }
 
-
-/**
-Description of draw()
-*/
+/* run loading sequence or simulation */
 function draw() {
   background(125);
   switch (state) {
     case `loading`: load(); break;
-    case `running`: sim(); break;
+    case `title`: title(); break;
+    case `sim`: sim(); break;
   }
 }
 
+// loading sequence until handpose object is initialized
 function load() {
   loadType.update();
 }
 
+// title sequence until user consents
+function title() {
+  // create start button
+  if (!startButton) {
+    startButton = createButton('Click to Start');
+    startButton.position(windowWidth / 2, windowHeight/2);
+    startButton.mousePressed(initSim);
+  }
+  // write title and subtitle lines
+  writeTitle(`POP THE BUBBLES`);
+  writeSubtitle(`
+
+  Use the webcam and your hand to pop the bubbles.
+  Change tools by closing your fist.
+  Needle: Use your index fingertip as a needle to stab the bubble
+  Scissors: Use your index and middle fingers as scissors to cut it
+  Bellows: Use your middle finger to blow it up until it explodes`);
+}
+
+function initSim () {
+  // hide button
+  startButton.hide();
+  // initialize bubble maker
+  setInterval( () => {
+    let newBubble = new Bubble();
+    bubbles.push(newBubble);
+  }, 3000);
+  // set state to sim
+  state = `sim`;
+}
+
+// simulation sequence once handpose object is initialized
 function sim() {
-  // let flippedVideo = ml5.flipImage(video);
-  // image(flippedVideo, 0, 0, width, height);
+  // debugging/uncomment - display webcam image
+  // image(ml5.flipImage(video), 0, 0, width, height);
+
+  // check for hand
   if (predictions.length > 0) {
-    fist.coordinates = predictions[0];
-    changeTool();
+    // pass hand position values to tool object
     tool.coordinates = predictions[0];
+    // debugging/uncomment - display skeleton of handpose
+    // tool.drawSkeleton();
+    // update tool position, check for specific gestures and display
     tool.update();
-    if (tool === scissors)
-      checkSnip();
-    else
-      checkPop();
-
+    // if hand is a fist, change tool
+    if(tool.isFist) { changeTool(); }
   }
 
-  bubble.update();
-
+  // cycle through bubbles to update and check for tool interactions
+  for (let i = 0; i < bubbles.length; i++) {
+    // update bubble position and display
+    bubbles[i].update();
+    // check for interation between bubble and tool
+    if (tool.checkInteraction(bubbles[i])) { resolveInteraction(bubbles[i]); }
+  }
+  // display current game score and highscore
   displayScores();
-
-  // drawKeypoints();
 }
 
-function drawKeypoints() {
-  for (let i = 0; i < predictions.length; i += 1) {
-    const hand = predictions[i];
-    for (let j = 0; j < hand.landmarks.length; j += 1) {
-      const keypoint = hand.landmarks[j];
-      fill(0, 255, 0);
-      noStroke();
-      ellipse(keypoint[0], keypoint[1], 10, 10);
+function changeTool() {
+    if (!toolSwitched) {
+      toolIndex++;
+      if (toolIndex === 3) { toolIndex = 0; }
+      tool = tools[toolIndex];
+      toolSwitched = true;
+      setTimeout( () => { toolSwitched = false; }, 1000);
     }
-  }
 }
 
-function resetBubble() {
-  bubble.x = random(width);
-  bubble.y = height;
-}
-
-function checkPop() {
-  let d = dist(pin.tip.x, pin.tip.y, bubble.x, bubble.y);
-  if (d < bubble.size / 2) {
-    resetBubble();
+function resolveInteraction(bubble) {
+    // remove bubble from array
+    bubbles.splice(bubbles.indexOf(bubble),1);
+    // increment score
     gameScore++;
+    // check and update highscore if current score higher
     checkScore();
-  }
 }
-
-function checkSnip() {
-  var hit = collidePointTriangle(bubble.x, bubble.y, scissors.average.base.x, scissors.average.base.y, scissors.index.tip.x, scissors.index.tip.y, scissors.middle.tip.x, scissors.middle.tip.y);
-  if (hit) {
-    let targeted = true;
-    setTimeout( () => { targeted = false; }, 1000);
-    if (targeted && (scissors.t2t <= (scissors.b2b * 1.2)) && hit) {
-      resetBubble();
-      gameScore++;
-      checkScore();
-    }
-  }
-}
-
 
 function displayScores() {
+  // display current game score
   push();
   fill(255);
   textAlign(RIGHT,TOP);
   textSize(32);
   text(gameScore, width - width/8, height/8);
   pop();
+  // display highscore
   push();
   fill(255);
   textAlign(LEFT,TOP);
@@ -135,27 +150,34 @@ function displayScores() {
   pop();
 }
 
-// check if current game score exceeds previous highscore, if so update highscore and save it to local storage
 function checkScore() {
+  // check if current game score exceeds previous highscore
   if (gameScore > highScore) {
+    // update highscore and save it to local storage
     highScore = gameScore;
     localStorage.setItem(`bubble+-highscore`, highScore);
   }
 }
 
-function changeTool() {
-  if(fist.checkFist()) {
-    console.log(`FIST!!!`);
-    if (!toolSwitched) {
-      console.log(`switch!!!`);
-      toolIndex++;
-      switch (toolIndex) {
-        case 0: tool = pin; break;
-        case 1: tool = scissors; break;
-        case 2: tool = pin; toolIndex = 0; break;
-      }
-      toolSwitched = true;
-    }
-    setTimeout( () => { console.log(`reset`); toolSwitched = false; }, 2000);
-  }
+// write subtitle two thirdways down the page in smaller grey letters
+function writeTitle(toWrite) {
+  push();
+  textAlign(CENTER, CENTER);
+  textSize(32);
+  textStyle(BOLD);
+  fill(200);
+  stroke(0);
+  strokeWeight(2);
+  text(toWrite, width / 2, height / 3);
+  pop();
+}
+
+// write text halfway down the page in small black letters
+function writeSubtitle(toWrite) {
+  push();
+  textAlign(CENTER, CENTER);
+  textSize(20);
+  fill(0);
+  text(toWrite, width / 2, 2 * height / 3);
+  pop();
 }

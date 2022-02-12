@@ -1,4 +1,4 @@
 # Exercise 4 - Bubble Popper+
 
-Pop the bubble with the tip of your index finger!
+Get rid of all the bubbles
 Uses ml5.js Handpose feature.

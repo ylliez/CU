@@ -1,8 +1,8 @@
 class Bubble {
 
-  constructor() {
-    this.x = random(width);
-    this.y = height;
+  constructor(x = random(width), y = height) {
+    this.x = x;
+    this.y = y;
     this.size = 20;
     this.vx = 0;
     this.vy = -2;
