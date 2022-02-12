@@ -213,3 +213,14 @@ HTML elements can be accessed by other attributes returning `HTMLCollection` obj
 - class: ```document.getElementsByClassName(`class_name`)```
 - tag: ```document.getElementsByTagName(`tag_name`)```
 - CSS selector: ```document.querySelector(`selector_name`)``` (first match) or ```document.querySelectorAll(`selector_name`)``` (every match)
+HTML elements can be created & displayed using `.createElement()` & `.appendChild()` (also, `.insertBefore()`, `.firstChild`, `.nextSibling`)
+```
+let newParagraph = document.createElement(`p`);
+newParagraph.innerText = `new paragraph.`;
+document.getElementById(`id_name`).appendChild(newParagraph);
+```
+HTML elements can be removed using `.removeChild()` through their parent element
+```
+let toRemove = document.getElementById(`id_name`);
+toRemove.parentElement.removeChild(toRemove);
+```
