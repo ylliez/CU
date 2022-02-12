@@ -5,8 +5,11 @@ Uses markup tags like `<html>`, `<p>`, `<img>` and stored in text file with exte
 The landing page of a specific folder is usually `index.html`.<br>
 ### Formatting
 ```
+<!-- obligatory document type declaration -->
 <!DOCTYPE html>
+<!-- container for entire content -->
 <html>
+
   <head>
     <title>Title of webpage</title>
   </head>
