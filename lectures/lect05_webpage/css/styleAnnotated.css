@@ -18,11 +18,11 @@ strong, em {  /* multiple selectors separated by comma */
   color: #4488aa;
 }
 
-#first-section {
+#first-section {  /* id selector */
   background-color: rgb(200,200,200);
 }
 
-.sub-sub {
+.sub-sub { /* class selector */
  background-color: rgb(200,255,255);
 }
 
