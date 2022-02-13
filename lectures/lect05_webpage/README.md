@@ -210,7 +210,7 @@ Can change HTML element text (e.g. `document.getElementById(id_name).innerText =
 Can obtain HTML element attributes using `.getAttribute()` (e.g. ```document.getElementById(id_name).getAttribute(`src`)```)<br>
 Can change HTML element attributes using `.setAttribute()` (e.g. ```document.getElementById(id_name).setAttribute(`src`, new_src)```)
 #### MORE DOM
-HTML elements can be accessed by other attributes returning `HTMLCollection` objects that we can manipulate using arrays (e.g. `for` loop with `.length`)
+HTML elements can be accessed by other attributes returning `HTMLCollection` objects manipulable using arrays (e.g. `for` loop with `.length`)
 - class: ```document.getElementsByClassName(`class_name`)```
 - tag: ```document.getElementsByTagName(`tag_name`)```
 - CSS selector: ```document.querySelector(`selector_name`)``` (first match) or ```document.querySelectorAll(`selector_name`)``` (every match)<br>
@@ -261,7 +261,7 @@ Important properties include `.keyCode` (ASCII) and `.key` (name) of key pressed
 `focus` and `blur`
 `beforeprint` and `afterprint`
 #### Time
-`setTimeout()`: run once after a set amount of time
+`setTimeout()`: run once after a set amount of time<br>
 ```setTimeout(() => { document.getElementById(`id_name`).style[`property`] = `value`; }, time_in_ms);
 ```
 `setInterval()`: run repeatedly after set amount of time
