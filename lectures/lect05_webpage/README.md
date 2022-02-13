@@ -274,3 +274,16 @@ setInterval(() => { document.getElementById(`id_name`).style[`property`] = `valu
 ```
 setInterval(() => { document.getElementById(`id_name`).style[`property`] = `value`; }, time_in_ms);
 ```
+## INPUT
+Enable user input through specific elements, most simply via `<input>`, which has many types:
+- `"text"`: field to be typed in by user<br>
+- `"button"`: button to be pressed by user<br>
+- `"range"`: slider to be moved by user<br>
+- `"color"`: color picker to be chosen by user<br>
+- `"date"`: date to be picked by user<br>
+Some types have their own tags, such as:
+- `<button>`: same as `<input type="button" value="button_value">`<br>
+- `<datalist>`: for creating lists of default options<br>
+- `<progress>`: for displaying progress bars<br>
+- `<select>`: for displaying a selection menu<br>
+- `<textarea>`: for creating a larger text entry element<br>
