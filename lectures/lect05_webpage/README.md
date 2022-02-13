@@ -235,4 +235,9 @@ event-driven programming > event listener > trigger > event handler/callback
 ```setInterval(() => { document.getElementById(`id_name`).style[`property`] = `value`; }, time_in_ms);
 ```
 `requestAnimationFrame()`: run once on next animation frame
-```setInterval(() => { document.getElementById(`id_name`).style[`property`] = `value`; }, time_in_ms);```
+```setInterval(() => { document.getElementById(`id_name`).style[`property`] = `value`; }, time_in_ms);
+```
+#### General
+`.addEventListener(type, callback)``
+(whole document or specific element)
+callback function automatically receives event parameter
