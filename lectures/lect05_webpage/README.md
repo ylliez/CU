@@ -281,6 +281,7 @@ Enable user input through specific elements, most simply via `<input>`, which ha
 - `"range"`: slider to be moved by user<br>
 - `"color"`: color picker to be chosen by user<br>
 - `"date"`: date to be picked by user<br>
+
 Some types have their own tags, such as:
 - `<button>`: same as `<input type="button" value="button_value">`<br>
 - `<datalist>`: for creating lists of default options<br>
