@@ -262,11 +262,14 @@ Important properties include `.keyCode` (ASCII) and `.key` (name) of key pressed
 `beforeprint` and `afterprint`
 #### Time
 `setTimeout()`: run once after a set amount of time<br>
-```setTimeout(() => { document.getElementById(`id_name`).style[`property`] = `value`; }, time_in_ms);
+```
+setTimeout(() => { document.getElementById(`id_name`).style[`property`] = `value`; }, time_in_ms);
 ```
 `setInterval()`: run repeatedly after set amount of time
-```setInterval(() => { document.getElementById(`id_name`).style[`property`] = `value`; }, time_in_ms);
+```
+setInterval(() => { document.getElementById(`id_name`).style[`property`] = `value`; }, time_in_ms);
 ```
 `requestAnimationFrame()`: run once on next animation frame
-```setInterval(() => { document.getElementById(`id_name`).style[`property`] = `value`; }, time_in_ms);
+```
+setInterval(() => { document.getElementById(`id_name`).style[`property`] = `value`; }, time_in_ms);
 ```
