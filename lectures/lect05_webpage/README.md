@@ -232,7 +232,8 @@ The event listener usually takes the form of `.addEventListener(type_string, cal
 Can target the whole document or a specific element<br>
 The callback function automatically receives an event parameter (e.g. ```document.addEventListener(type_string, (event) => { console.log(event); });```)<br>
 Optional third argument which can be used to specify options, such as `once`:
-```document.addEventListener(type_string, (event) => { console.log(event); }, { once: true });
+```
+document.addEventListener(type_string, (event) => { console.log(event); }, { once: true });
 ```
 #### Mouse events
 Mouse event types return the event `MouseEvent`, which derives from `UIEvent` which itself derives from `Event`<br>
@@ -261,7 +262,7 @@ Important properties include `.keyCode` (ASCII) and `.key` (name) of key pressed
 `focus` and `blur`
 `beforeprint` and `afterprint`
 #### Time
-`setTimeout()`: run once after a set amount of time<br>
+`setTimeout()`: run once after a set amount of time
 ```
 setTimeout(() => { document.getElementById(`id_name`).style[`property`] = `value`; }, time_in_ms);
 ```
