@@ -6,6 +6,9 @@
 let wordsObj = undefined;
 let wordsKey = undefined;
 let words = [];
+let solutionsObj = undefined;
+let solutionsKey = undefined;
+let solutions = [];
 const WORD_LENGTH = 5;
 let SINGLE_LETTERS;
 let TOTAL_LETTERS;
@@ -17,6 +20,7 @@ let letterWidth;
 
 function preload() {
   wordsObj = loadJSON("assets/data/words.json");
+  // solutionsObj = loadJSON("assets/data/solutions.json");
 }
 
 function setup() {
@@ -30,6 +34,11 @@ function setup() {
   words = words.sort();
   SINGLE_LETTERS = words.length ;
   TOTAL_LETTERS = words.length * 5;
+
+  // solutionsKey = Object.keys(solutionsObj);
+  // for (let i = 0; i < solutionsKey.length; i++) {
+  //   solutions[i] = solutionsObj[solutionsKey[i]];
+  // }
 
   // getLetterProbs();
   // getLetterPercent('a');
@@ -89,8 +98,8 @@ function dodo() {
     for (let j = 0; j < letters.length; j++) {
       for (var k = 0; k < letters.length; k++) {
         let sol = `${letters[j]}o${letters[k]}in`;
-        console.log(sol);
-        if (sol === words[i]) {
+        // console.log(sol);
+        if (sol === words[i] && letters[j] !== `c` && letters[k] !== `c` && letters[j] !== `l` && letters[k] !== `l`) {
           console.log(sol);
         }
       }
