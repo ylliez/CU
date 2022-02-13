@@ -228,9 +228,12 @@ toRemove.parentElement.removeChild(toRemove);
 ### DOM EVENTS
 event-driven programming: event listener > trigger > event handler/callback
 #### General
-The event listener usually takes the form of `.addEventListener(type_string, callback_function)`<br>
+The event listener usually takes the form of `.addEventListener(type_string, callback_function, ?option)`<br>
 Can target the whole document or a specific element<br>
-The callback function automatically receives an event parameter (e.g.  ```document.addEventListener(type_string, (event) => { console.log(event); });```)
+The callback function automatically receives an event parameter (e.g. ```document.addEventListener(type_string, (event) => { console.log(event); });```)<br>
+Optional third argument which can be used to specify options, such as `once`:
+```document.addEventListener(type_string, (event) => { console.log(event); }, { once: true });
+```
 #### Mouse events
 Mouse event types return the event `MouseEvent`, which derives from `UIEvent` which itself derives from `Event`<br>
 Important properties include `.clientX`/`.clientY` (coords of click) awa `.target` (element affected by event)<br>
@@ -254,12 +257,9 @@ Important properties include `.keyCode` (ASCII) and `.key` (name) of key pressed
 `scroll` and `resize`<br>
 `drag` and `drop`<br>
 `cut`, `copy`, and `paste`<br>
-[online](https://developer.mozilla.org/en-US/docs/Web/API/Window/online_event) and `offline`<br>
+`online` and `offline`
 `focus` and `blur`
-beforeprint and afterprint
-
-
-
+`beforeprint` and `afterprint`
 #### Time
 `setTimeout()`: run once after a set amount of time
 ```setTimeout(() => { document.getElementById(`id_name`).style[`property`] = `value`; }, time_in_ms);
