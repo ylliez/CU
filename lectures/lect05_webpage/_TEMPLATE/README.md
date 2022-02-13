@@ -1,11 +1,7 @@
-# CART263 - Lecture 05 - The Webpage
-## HTML
-**H**yper **T**ext **M**arkup **L**anguage is used to define and structure the content of a webpage.<br>
-Stored in text file with extension `.html` or `.htm`.<br>
-The landing page of a specific folder is usually `index.html`.<br>
-HTML functions in a linear and hierarchical fashion.<br>
-Uses markup tags (e.g. `<html>`, `<p>`, `<img>`) with attributes (e.g. `src=`, `href=`).<br>
-Some markup tags are purely structural (e.g. `<div>`, `<nav>`, `<header>`, `<section>`, `<article>`, `<aside>`, `<footer>`).<br>
+# DEFAULT README TITLE
+## DEFAULT README SUBTITLE
+
+Default text
 #### TEMPLATE
 ```
 <!DOCTYPE html>
