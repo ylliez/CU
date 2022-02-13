@@ -213,7 +213,7 @@ Can change HTML element attributes using `.setAttribute()` (e.g. ```document.get
 HTML elements can be accessed by other attributes returning `HTMLCollection` objects that we can manipulate using arrays (e.g. `for` loop with `.length`)
 - class: ```document.getElementsByClassName(`class_name`)```
 - tag: ```document.getElementsByTagName(`tag_name`)```
-- CSS selector: ```document.querySelector(`selector_name`)``` (first match) or ```document.querySelectorAll(`selector_name`)``` (every match)
+- CSS selector: ```document.querySelector(`selector_name`)``` (first match) or ```document.querySelectorAll(`selector_name`)``` (every match)<br>
 HTML elements can be created & displayed using `.createElement()` & `.appendChild()` (also, `.insertBefore()`, `.firstChild`, `.nextSibling`)
 ```
 let newParagraph = document.createElement(`p`);
@@ -232,14 +232,14 @@ The event listener usually takes the form of `.addEventListener(type_string, cal
 Can target the whole document or a specific element<br>
 The callback function automatically receives an event parameter (e.g.  ```document.addEventListener(type_string, (event) => { console.log(event); });```)
 #### Mouse events
-Mouse event types return the event `MouseEvent`, which derives from `UIEvent` which itself derives from `Event`
-Important properties include `.clientX`/`.clientY` (coords of click) awa `.target` (element affected by event)
+Mouse event types return the event `MouseEvent`, which derives from `UIEvent` which itself derives from `Event`<br>
+Important properties include `.clientX`/`.clientY` (coords of click) awa `.target` (element affected by event)<br>
 `click`: triggered when user clicks the element<br>
 `contextmenu`: triggered when user right-clicks<br>
 `mouseenter`: triggered when user enters the element<br>
 `mouseleave`: triggered when user leaves the element<br>
 `mouseleave`: triggered when user leaves the element<br>
-e.g. rollover functions
+e.g. rollover function:
 ```
 let originalText = document.getElementById(`paragraph`).innerText;
 document.getElementById(`paragraph`).addEventListener(`mouseenter`, (event) => { event.target.innerText = `SECRET MESSAGE!!!`; });
@@ -250,11 +250,11 @@ Keyboard event types return the event `KeyboardEvent`, which has the same inheri
 Important properties include `.keyCode` (ASCII) and `.key` (name) of key pressed<br>
 `keydown`: triggered when user presses key<br>
 `keyup`: triggered when user releases key<br>
-##### Other events
-`scroll` and `resize`
-`drag` and `drop`
-`cut`, `copy`, and `paste`
-`[online](https://developer.mozilla.org/en-US/docs/Web/API/Window/online_event)` and `offline`
+#### Other events
+`scroll` and `resize`<br>
+`drag` and `drop`<br>
+`cut`, `copy`, and `paste`<br>
+[online](https://developer.mozilla.org/en-US/docs/Web/API/Window/online_event) and `offline`<br>
 `focus` and `blur`
 beforeprint and afterprint
 
