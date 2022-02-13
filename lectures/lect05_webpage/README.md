@@ -226,7 +226,40 @@ let toRemove = document.getElementById(`id_name`);
 toRemove.parentElement.removeChild(toRemove);
 ```
 ### DOM EVENTS
-event-driven programming > event listener > trigger > event handler/callback
+event-driven programming: event listener > trigger > event handler/callback
+#### General
+The event listener usually takes the form of `.addEventListener(type_string, callback_function)`<br>
+Can target the whole document or a specific element<br>
+The callback function automatically receives an event parameter (e.g.  ```document.addEventListener(type_string, (event) => { console.log(event); });```)
+#### Mouse events
+Mouse event types return the event `MouseEvent`, which derives from `UIEvent` which itself derives from `Event`
+Important properties include `.clientX`/`.clientY` (coords of click) awa `.target` (element affected by event)
+`click`: triggered when user clicks the element<br>
+`contextmenu`: triggered when user right-clicks<br>
+`mouseenter`: triggered when user enters the element<br>
+`mouseleave`: triggered when user leaves the element<br>
+`mouseleave`: triggered when user leaves the element<br>
+e.g. rollover functions
+```
+let originalText = document.getElementById(`paragraph`).innerText;
+document.getElementById(`paragraph`).addEventListener(`mouseenter`, (event) => { event.target.innerText = `SECRET MESSAGE!!!`; });
+document.getElementById(`paragraph`).addEventListener(`mouseleave`, (event) => { event.target.innerText = originalText; });
+```
+#### Keyboard events
+Keyboard event types return the event `KeyboardEvent`, which has the same inheritance chain as the mouse events<br>
+Important properties include `.keyCode` (ASCII) and `.key` (name) of key pressed<br>
+`keydown`: triggered when user presses key<br>
+`keyup`: triggered when user releases key<br>
+##### Other events
+`scroll` and `resize`
+`drag` and `drop`
+`cut`, `copy`, and `paste`
+`[online](https://developer.mozilla.org/en-US/docs/Web/API/Window/online_event)` and `offline`
+`focus` and `blur`
+beforeprint and afterprint
+
+
+
 #### Time
 `setTimeout()`: run once after a set amount of time
 ```setTimeout(() => { document.getElementById(`id_name`).style[`property`] = `value`; }, time_in_ms);
@@ -237,7 +270,3 @@ event-driven programming > event listener > trigger > event handler/callback
 `requestAnimationFrame()`: run once on next animation frame
 ```setInterval(() => { document.getElementById(`id_name`).style[`property`] = `value`; }, time_in_ms);
 ```
-#### General
-`.addEventListener(type, callback)``
-(whole document or specific element)
-callback function automatically receives event parameter
