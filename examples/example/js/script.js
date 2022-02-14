@@ -97,9 +97,10 @@ function dodo() {
   for (let i = 0; i < words.length; i++) {
     for (let j = 0; j < letters.length; j++) {
       for (var k = 0; k < letters.length; k++) {
-        let sol = `${letters[j]}o${letters[k]}in`;
+        let sol = `${letters[j]}y${letters[k]}`;
         // console.log(sol);
-        if (sol === words[i] && letters[j] !== `c` && letters[k] !== `c` && letters[j] !== `l` && letters[k] !== `l`) {
+        // if (sol === words[i]) {
+        if (sol === words[i] && letters[j] !== `o` && letters[k] !== `o` && letters[j] !== `l` && letters[k] !== `l`) {
           console.log(sol);
         }
       }
