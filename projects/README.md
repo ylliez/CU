@@ -36,7 +36,8 @@ movie-based:<br>
 | Les escargots                        | Laloux, 1966     | INT growing field | ml5/ObjRecog               |   |
 | Everything & Everything & Everything | Roldan, 2014     | INT/ART           | ml5/Handpose               |   |
 | Stalker                              | Tarkovsky, 1979  | ART               | ?                          |   |
-
+| Film ist Rhythmus: Rhythmus 21       | Richter, 1921    | ART               | geométrique/son?           |   |
+| Symphonie Diagonale                  | Eggeling, 1924   | ART               | geométrique/son?           |   |
 
 Marclay1
 - rip image and associate time of access with congruent sequency? no access...

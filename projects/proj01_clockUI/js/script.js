@@ -24,7 +24,7 @@ function draw() {
   m = now.getMinutes();
   s = now.getSeconds();
 
-  var time = h + ":" + m + ":" + s;
+  time = h + ":" + m + ":" + s;
   print(time);
 
   angleH = map(h,0,12,0,2*PI)-PI/2;
