@@ -1,7 +1,7 @@
 "use strict";
 
 /* TEXT */
-let hour, minute, time;
+let now, hour, minute, time;
 
 // object, key and array for timestamp JSON file (times.json)
 let timesObj;
@@ -16,6 +16,7 @@ let scenes = [];
 let h, m, t;
 let angleH, angleM, angleS;
 
+// load JSON files
 function preload() {
   timesObj = loadJSON("assets/data/times.json");
   scenesObj = loadJSON("assets/data/scenes.json");
@@ -23,24 +24,52 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  var now = new Date();
 
-  /* TEXT */
-  if (now.getHours() >= 10) { hour = `${now.getHours()}`; }
-  else { hour = `0${now.getHours()}`; }
-  if (now.getMinutes() >= 10) { minute = `${now.getMinutes()}`; }
-  else { minute = `0${now.getMinutes()}`; }
-  time = `${hour}${minute}`;
-  // debugging placeholder
-  // time = `2200`;
-  console.log(`the time is: ${now.getHours()-1}`);
-
+  // map JSON files to corresponding arrays
   timesKey = Object.keys(timesObj);
   for (let i = 0; i < timesKey.length; i++) {
     times[i] = timesObj[timesKey[i]];
     scenes[i] = scenesObj[timesKey[i]];
   }
 
+  now = new Date();
+
+  /* TEXT */
+  // if (now.getHours() >= 10) { hour = `${now.getHours()}`; }
+  // else { hour = `0${now.getHours()}`; }
+  // if (now.getMinutes() >= 10) { minute = `${now.getMinutes()}`; }
+  // else { minute = `0${now.getMinutes()}`; }
+  hour = now.getHours();
+  minute = now.getMinutes();
+  time = `${hour}${minute}`;
+  // debugging placeholder
+  // time = `956`;
+  console.log(`the time is: ${time}`);
+
+
+
+  // while(!checkTime(time)) {
+  //   console.log(`COPYRIGHT ISSUE`);
+  //   time = `${parseInt(time)-1}`;
+  //
+  // }
+
+}
+
+function checkTime(timeChecked) {
+  console.log(timeChecked);
+  drawTime();
+  if (times.includes(timeChecked)) {
+    console.log(`in`);
+    console.log(times.indexOf(timeChecked));
+    console.log(scenes[times.indexOf(timeChecked)]);
+    // document.getElementById(timeChecked).style.display = "block";
+    return true;
+  }
+}
+
+
+function drawTime() {
   /* IMAGE */
   if (hour >= 12) { h = hour - 12; }
   else { h = hour; }
@@ -68,28 +97,4 @@ function setup() {
   translate(150, 0);
   rect(0, 0, 200, 50);
   pop();
-
-  while(!checkTime(time)) {
-    console.log(`COPYRIGHT ISSUE`);
-    time = `${parseInt(time)-1}`;
-
-  }
-
-}
-
-function checkTime(timeChecked) {
-  console.log(timeChecked);
-  drawTime();
-  if (times.includes(timeChecked)) {
-    console.log(`in`);
-    console.log(times.indexOf(timeChecked));
-    console.log(scenes[times.indexOf(timeChecked)]);
-    // document.getElementById(timeChecked).style.display = "block";
-    return true;
-  }
-}
-
-
-function drawTime() {
-
 }
