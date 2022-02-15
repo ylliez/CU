@@ -14,7 +14,7 @@ supercut?
 magic 8-ball (e.g. Herzog, Varda, Jodorowsky)
 movie-condition check (silence, lights off, etc..)
 
-movie-based:
+movie-based:<br>
 | The Clock | Marclay, 2011 | ART | ? |
 | Schizopolis | Soderbergh, 1996 | ? | clip: facial expressions |
 | Woman Walking Downstairs | Muybridge, 1887 | ART/INT | ? |
