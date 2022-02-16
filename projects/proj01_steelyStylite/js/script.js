@@ -4,7 +4,7 @@
 let state = `pre`;
 
 // images
-let imgDesierto, imgSimon;
+let imgDesierto, imgSimon, imgSimSimon;
 
 // loading page
 let loadString = `LOADING...`;
@@ -30,6 +30,7 @@ let balance;
 function preload() {
   imgDesierto = loadImage(`assets/images/sdd_desierto.png`);
   imgSimon = loadImage(`assets/images/sdd_simon.png`);
+  imgSimSimon = loadImage(`assets/images/sdd_simSimon.png`);
   instructionsObj = loadJSON("assets/data/instructions.json");
 }
 
@@ -101,6 +102,7 @@ function typeLoad() {
 }
 
 function titleLoad() {
+  // display fireground image
   image(imgSimon, 0, 0, width, height);
   if (!buttonedUp) {
     document.getElementById("instructionsButton").style.display = "block";
@@ -131,29 +133,37 @@ function startClicked() {
   document.getElementById("startButton").style.display = "none";
   document.getElementById("instructionsText").style.display = "none";
   document.getElementById("okButton").style.display = "none";
-  image(imgDesierto, 0, 0, width, height);
   state = `sim`;
 }
 
 function sim() {
-  // Display the webcam with reveresd image so it's a mirror
-  // let flippedVideo = ml5.flipImage(video);
-  // image(flippedVideo, 0, 0, width, height);
+  // DEBUG - display webcam
+  // image(ml5.flipImage(video), 0, 0, width, height);
 
-  // Check if there currently pose to display
-  if (poses.length > 0) {
-    pose.coordinates = poses[0];
-    pose.coordinate();
-    balance = pose.checkBalanceShoulders();
-    console.log(balance);
-    rotateSymeon();
-  }
+  // display background image
+  image(imgDesierto, 0, 0, width, height);
   image(imgSimon, 0, 0, width, height);
+
+  // check poseNet event
+  assessPose();
 }
 
-function rotateSymeon() {
-  let rotation = map(balance, 0, 100, 0, PI/2);
-  translate(width/2,20);
-  rotate(rotation);
+function assessPose() {
+  if (poses.length > 0) {
+    pose.coordinates = poses[0];
+    pose.update();
+    balance = pose.checkBalanceShoulders();
+    if (abs(balance) <= 10) { balanceSymeon(); }
+    else { console.log(`YOU FELL`); }
+  }
+}
 
+function balanceSymeon() {
+  let rotation = map(balance, 0, 100, 0, PI/2);
+  push();
+  translate(width / 1.9, height / 6);
+  rotate(rotation);
+  imageMode(CENTER);
+  image(imgSimSimon, 0, 0, width/12, height/6);
+  pop();
 }

@@ -12,8 +12,6 @@ class Pose {
 
   update() {
     this.coordinate();
-    this.drawKeypoints();
-    this.drawSkeleton();
   }
 
   coordinate() {
@@ -22,6 +20,11 @@ class Pose {
     this.frame = this.coordinates.skeleton;
     this.shoulders.ly = this.coordinates.pose.leftShoulder.y;
     this.shoulders.ry = this.coordinates.pose.rightShoulder.y;
+  }
+
+  drawPose() {
+    this.drawKeypoints();
+    this.drawSkeleton();
   }
 
   drawKeypoints()  {
