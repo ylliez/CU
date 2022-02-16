@@ -1,7 +1,7 @@
 "use strict";
 
 // program state (loading, running)
-let state = `loading`;
+let state = `pre`;
 // loading
 let loadString = `LOADING...`;
 let loadMin = false;
@@ -13,20 +13,18 @@ let instructionsKey = [];
 let instructions = [];
 let instructionsPage = 0;
 let buttonedUp = false;
-// user webcam feed & handpose object
+// user webcam feed & poseNet object
 let video;
-// handpose object
-let handpose;
+// poseNet object
+let poseNet;
 let ml5Initialized = false;
-// current set of predictions made by Handpose once it's running
-let predictions = [];
-let index;
+// current set of pose made by poseNet once it's running
+let pose = [];
+let index;// graphics elements for drawing overlay
+let trailBlazer;
 
 // images
 let imgDesierto, imgSimon;
-
-// start button
-let startButton;
 
 function preload() {
   imgDesierto = loadImage(`assets/images/sdd_desierto.png`);
@@ -36,19 +34,22 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  // createCanvas(500, 238);
-  // createCanvas(1000, 476);
+  // createCanvas(1600, 900);
 
-  // Start webcam and hide the resulting HTML element
-  // video = createCapture(VIDEO);
-  // video.hide();
+  // start webcam and hide the resulting HTML element
+  video = createCapture(VIDEO);
+  video.hide();
 
-  // start the Handpose model and switch to our running state when it loads
-  // handpose = ml5.handpose(video, { flipHorizontal: true }, () => { ml5Initialized = true; });
-  setTimeout( () => { ml5Initialized = true; }, 2000);
+  // start the poseNet model and signal when loads
+  poseNet = ml5.poseNet(video, { flipHorizontal: true }, () => { ml5Initialized = true; });
+  // DEBUG - short ml5
+  // setTimeout( () => { ml5Initialized = true; }, 2000);
 
-  // listen for prediction events from Handpose and store the results in our predictions array when they occur
-  // handpose.on(`predict`, (results) => { predictions = results; });
+  // listen for pose events from poseNet and store the results in pose array
+  poseNet.on(`pose`, (results) => { pose = results; });
+
+  index = new Index();
+  trailBlazer = createGraphics(width, height);
 
   instructionsKey = Object.keys(instructionsObj);
   for (let i = 0; i < instructionsKey.length; i++) {
@@ -62,22 +63,20 @@ Handles the two states of the program: loading, running
 */
 function draw() {
   switch (state) {
-    case `loading`: loading(); break;
-    case `running`: running(); break;
+    case `load`: load(); break;
+    case `sim`: sim(); break;
   }
   line(0,height/2,width,height/2);
   line(width/4,0,width/4,height);
   line(width/3,0,width/3,height);
 }
 
-/* Load screen */
-function loading() {
-  // background(0);
+function load() {
   // draw background image
   image(imgDesierto, 0, 0, width, height);
 
-  // debugging - load process
-  // console.log(`${!ml5Initialized} || ${!loadMin} = ${!ml5Initialized || !loadMin}`);
+  // DEBUG - print conditions
+  // console.log(`${!ml5Initialized} || ${!Min} = ${!ml5Initialized || !loadMin}`);
   if (!ml5Initialized || !loadMin) {
     // display loading text with typewriter effect
     typeLoad();
@@ -116,13 +115,6 @@ function titleLoad() {
   }
 }
 
-function startClicked() {
-  document.getElementById("instructionsButton").style.display = "none";
-  document.getElementById("startButton").style.display = "none";
-  document.getElementById("instructionsText").style.display = "none";
-  document.getElementById("okButton").style.display = "none";
-}
-
 function instructionsClicked() {
   document.getElementById("instructionsText").innerHTML = instructions[instructionsPage];
   document.getElementById("instructionsButton").style.display = "none";
@@ -132,63 +124,44 @@ function instructionsClicked() {
 }
 
 function okClicked () {
-  if (instructionsPage < instructions.length - 2) {
-    instructionsPage++;
-    document.getElementById("instructionsText").innerHTML = instructions[instructionsPage];
-  }
-  else {
+  instructionsPage++;
+  document.getElementById("instructionsText").innerHTML = instructions[instructionsPage];
+  if (instructionsPage >= instructions.length - 1) {
     document.getElementById("okButton").style.display = "none";
     document.getElementById("startButton").style.display = "block";
   }
 }
 
-function initialize() {
-  state = `running`;
+function startClicked() {
+  document.getElementById("instructionsButton").style.display = "none";
+  document.getElementById("startButton").style.display = "none";
+  document.getElementById("instructionsText").style.display = "none";
+  document.getElementById("okButton").style.display = "none";
+  state = `sim`;
 }
 
-// function playIntro() {
-//   document.getElementById("startButton").style.display = "none";
-//   setInterval(() => { playFrame(); }, 3.33);
-// }
+function sim() {
+  // Display the webcam with reveresd image so it's a mirror
+  let flippedVideo = ml5.flipImage(video);
+  image(flippedVideo, 0, 0, width, height);
 
-// function playFrame() {
-//   if (introFrame < closeUpFrame) {
-//     image(images[introFrame], 0, 0, width, height);
-//     introFrame++;
-//   }
-//   else { state = `running`; }
-// }
+  console.log(pose);
+
+  // Check if there currently pose to display
+  // if (pose.length > 0) {
+  //   index.coordinates = pose[0];
+  //   index.coordinate(width,height);
+  // }
+  // drawIndexTip();
+}
+
 //
-// function running() {
-//   // Display the webcam with reveresd image so it's a mirror
-//   // let flippedVideo = ml5.flipImage(video);
-//   // image(flippedVideo, 0, 0, width, height);
-//
-//   // startButton.draw();
-//
-//   // Check if there currently predictions to display
-//   if (predictions.length > 0) {
-//     index.coordinates = predictions[0];
-//     index.coordinate(width,height);
-//   }
-//
-//   line(0,height/2,width,height/2);
-//   line(0,2*height/3,width,2*height/3);
-//   line(3*width/4,0,3*width/4,height)
-//   // if (index.tip.y/480*height < 2*height/3 && index.tip.y/480*height > height/2) {
-//   if (index.tip.y < 2*height/3 && index.tip.y > height/2 && index.tip.x > 3*width/4) {
-//     drawIndexTip();
-//     // image(images[introFrame], 0, 0, width, height);
-//   }
-// }
-//
-// //
-// function drawIndexTip() {
-//   trailBlazer.push();
-//   trailBlazer.stroke(255,0,0);
-//   trailBlazer.strokeWeight(3);
-//   // trailBlazer.line(index.prev.x/640*width, index.prev.y/480*height, index.tip.x, index.tip.y/480*height);
-//   trailBlazer.line(index.prev.x, index.prev.y, index.tip.x, index.tip.y);
-//   trailBlazer.pop();
-//   image(trailBlazer, 0, 0);
-// }
+function drawIndexTip() {
+  trailBlazer.push();
+  trailBlazer.stroke(255,0,0);
+  trailBlazer.strokeWeight(3);
+  // trailBlazer.line(index.prev.x/640*width, index.prev.y/480*height, index.tip.x, index.tip.y/480*height);
+  trailBlazer.line(index.prev.x, index.prev.y, index.tip.x, index.tip.y);
+  trailBlazer.pop();
+  image(trailBlazer, 0, 0);
+}
