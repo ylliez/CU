@@ -21,7 +21,14 @@
   </head>
 
   <body>
-    <button id="startButton" onclick="playIntro()" style="display:none">START</button>
+    <div class="buttons">
+      <button id="startButton" onclick="startClicked()">START</button>
+      <button id="okButton" onclick="okClicked()">OK</button>
+      <button id="instructionsButton" onclick="instructionsClicked()">INSTRUCTIONS</button>
+    </div>
+    <div class="text">
+      <p id="instructionsText"></p>
+    </div>
   </body>
 
 </html>

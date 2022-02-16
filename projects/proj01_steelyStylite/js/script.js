@@ -2,10 +2,17 @@
 
 // program state (loading, running)
 let state = `loading`;
-// holds loadscreen typewriter effect
+// loading
 let loadString = `LOADING...`;
+let loadMin = false;
 let currentCharacter = 0;
 let currentString;
+// instructions
+let instructionsObj;
+let instructionsKey = [];
+let instructions = [];
+let instructionsPage = 0;
+let buttonedUp = false;
 // user webcam feed & handpose object
 let video;
 // handpose object
@@ -24,24 +31,29 @@ let startButton;
 function preload() {
   imgDesierto = loadImage(`assets/images/sdd_desierto.png`);
   imgSimon = loadImage(`assets/images/sdd_simon.png`);
+  instructionsObj = loadJSON("assets/data/instructions.json");
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   // createCanvas(500, 238);
   // createCanvas(1000, 476);
-  background(0);
 
   // Start webcam and hide the resulting HTML element
   // video = createCapture(VIDEO);
   // video.hide();
-  //
-  // // start the Handpose model and switch to our running state when it loads
-  // // handpose = ml5.handpose(video, { flipHorizontal: true }, () => { ml5Initialized = true; });
-  // handpose = ml5.handpose(video, { flipHorizontal: true }, () => {  });
-  //
-  // // listen for prediction events from Handpose and store the results in our predictions array when they occur
+
+  // start the Handpose model and switch to our running state when it loads
+  // handpose = ml5.handpose(video, { flipHorizontal: true }, () => { ml5Initialized = true; });
+  setTimeout( () => { ml5Initialized = true; }, 2000);
+
+  // listen for prediction events from Handpose and store the results in our predictions array when they occur
   // handpose.on(`predict`, (results) => { predictions = results; });
+
+  instructionsKey = Object.keys(instructionsObj);
+  for (let i = 0; i < instructionsKey.length; i++) {
+    instructions[i] = instructionsObj[instructionsKey[i]];
+  }
 
 }
 
@@ -53,16 +65,20 @@ function draw() {
     case `loading`: loading(); break;
     case `running`: running(); break;
   }
+  line(0,height/2,width,height/2);
+  line(width/4,0,width/4,height);
+  line(width/3,0,width/3,height);
 }
 
-/**
-Displays a simple loading screen with the loading model's name
-*/
+/* Load screen */
 function loading() {
-  background(0);
+  // background(0);
+  // draw background image
   image(imgDesierto, 0, 0, width, height);
 
-  if (!ml5Initialized) {
+  // debugging - load process
+  // console.log(`${!ml5Initialized} || ${!loadMin} = ${!ml5Initialized || !loadMin}`);
+  if (!ml5Initialized || !loadMin) {
     // display loading text with typewriter effect
     typeLoad();
   }
@@ -84,18 +100,46 @@ function typeLoad() {
   textSize(height/10);
   textStyle(BOLD);
   // display incrementally increasing substring
-  // text(currentString, height / 12, -width / 80);
-  text(currentString, height / 12, width / 50);
-  // text(currentString, height / 12, 0);
+  text(currentString, height / 12, width / 58);
   pop();
   // increment or wrap substring boundary
   if (currentCharacter <= loadString.length + 2) { currentCharacter += 0.1; }
-  else { currentCharacter = -2; }
+  else { currentCharacter = -2; loadMin = true; }
 }
 
 function titleLoad() {
   image(imgSimon, 0, 0, width, height);
-  document.getElementById("startButton").style.display = "block";
+  if (!buttonedUp) {
+    document.getElementById("instructionsButton").style.display = "block";
+    document.getElementById("startButton").style.display = "block";
+    buttonedUp = true;
+  }
+}
+
+function startClicked() {
+  document.getElementById("instructionsButton").style.display = "none";
+  document.getElementById("startButton").style.display = "none";
+  document.getElementById("instructionsText").style.display = "none";
+  document.getElementById("okButton").style.display = "none";
+}
+
+function instructionsClicked() {
+  document.getElementById("instructionsText").innerHTML = instructions[instructionsPage];
+  document.getElementById("instructionsButton").style.display = "none";
+  document.getElementById("startButton").style.display = "none";
+  document.getElementById("instructionsText").style.display = "block";
+  document.getElementById("okButton").style.display = "block";
+}
+
+function okClicked () {
+  if (instructionsPage < instructions.length - 2) {
+    instructionsPage++;
+    document.getElementById("instructionsText").innerHTML = instructions[instructionsPage];
+  }
+  else {
+    document.getElementById("okButton").style.display = "none";
+    document.getElementById("startButton").style.display = "block";
+  }
 }
 
 function initialize() {
