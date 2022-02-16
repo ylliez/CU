@@ -11,10 +11,13 @@ let times = [];
 let scenesObj;
 let scenesKey = [];
 let scenes = [];
+let scene;
+// index of
+let arrayIndex;
 
 /* IMAGE */
-let h, m, t;
-let angleH, angleM, angleS;
+let textHour, textMinute, textTime;
+let angleH, angleM;
 
 // load JSON files
 function preload() {
@@ -24,6 +27,7 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  background(0);
 
   // map JSON files to corresponding arrays
   timesKey = Object.keys(timesObj);
@@ -32,69 +36,102 @@ function setup() {
     scenes[i] = scenesObj[timesKey[i]];
   }
 
+  // set current time and associated variables
   now = new Date();
-
-  /* TEXT */
-  // if (now.getHours() >= 10) { hour = `${now.getHours()}`; }
-  // else { hour = `0${now.getHours()}`; }
-  // if (now.getMinutes() >= 10) { minute = `${now.getMinutes()}`; }
-  // else { minute = `0${now.getMinutes()}`; }
   hour = now.getHours();
   minute = now.getMinutes();
-  time = `${hour}${minute}`;
-  // debugging placeholder
-  // time = `956`;
+  setTime();
   console.log(`the time is: ${time}`);
 
-
-
-  // while(!checkTime(time)) {
-  //   console.log(`COPYRIGHT ISSUE`);
-  //   time = `${parseInt(time)-1}`;
-  //
-  // }
-
+  // check if current timestamp corresponds to an entry
+  checkTime();
 }
 
-function checkTime(timeChecked) {
-  console.log(timeChecked);
-  drawTime();
-  if (times.includes(timeChecked)) {
-    console.log(`in`);
-    console.log(times.indexOf(timeChecked));
-    console.log(scenes[times.indexOf(timeChecked)]);
-    // document.getElementById(timeChecked).style.display = "block";
-    return true;
+function setTime(){
+  if (hour >= 10) { textHour = `${hour}`; }
+  else { textHour = `0${hour}`; }
+  if (minute >= 10) { textMinute = `${minute}`; }
+  else { textMinute = `0${minute}`; }
+  time = `${textHour}${textMinute}`;
+  textTime = `${textHour}:${textMinute}`
+  // debugging placeholder
+  // time = `956`;
+}
+
+function checkTime() {
+  console.log(`checking: ${time}`);
+  if (times.includes(time)) {
+    scene = scenes[times.indexOf(time)];
+    console.log(scene);
+    drawTime(scene);
+  }
+  else {
+    drawTime("COPYWRITE");
+    if (minute === 0) {
+      hour = now.getHours()-1;
+      minute = 59;
+    }
+    else {
+      minute--;
+    }
+
+    setTime();
+    setTimeout(() => { checkTime(); }, 1000);
   }
 }
 
 
 function drawTime() {
-  /* IMAGE */
-  if (hour >= 12) { h = hour - 12; }
-  else { h = hour; }
-  // if (now.getHours() >= 12) { h = now.getHours() - 12; }
-  // else { h = now.getHours(); }
-  m = now.getMinutes();
-  // t = h + ":" + m;
-  // print(t);
+  background(0);
 
-  angleH = map(h,0,12,0,2*PI)-PI/2;
-  angleM = map(m,0,60,0,2*PI)-PI/2;
-
-  translate(width/2, height/2);
-  rectMode(CENTER);
+  angleH = map(hour,0,12,0,2*PI)-PI/2;
+  angleM = map(minute,0,60,0,2*PI)-PI/2;
 
   push();
-  rotate(angleM);
-  translate(200, 0);
-  rect(0, 0, 300, 50);
+  translate(width/2, height/2);
+  drawHourHand();
+  drawMinuteHand();
   pop();
-  console.log(height);
+}
 
+function drawHourHand() {
   push();
   rotate(angleH);
-  translate(150, 0);
-  rect(0, 0, 200, 50);
+  translate(14, 0);
+  rect(0, -12.5, 66, 25);
+  writeHour();
   pop();
+}
+
+function writeHour() {
+  push();
+  textAlign(LEFT,CENTER);
+  textSize(25);
+  text(textTime, 2, 0);
+  pop();
+}
+
+function drawMinuteHand() {
+  push();
+  rotate(angleM);
+  translate(100, 0);
+  rect(0, -25, 300, 50);
+  writeMinute();
+  pop();
+}
+
+function writeMinute() {
+  if (scene) {
+    push();
+    text(scene, 2, 0, 300, 50);
+    pop();
+  }
+  else {
+    push();
+    translate(150, 0);
+    textAlign(CENTER,CENTER);
+    textSize(25);
+    text("COPYRIGHT", 2, 0);
+    pop();
+  }
 }
