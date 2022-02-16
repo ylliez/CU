@@ -27,8 +27,6 @@ function setup() {
   highScore = localStorage.getItem(`bubble+-highscore`) ?? 0;
   // create canvas
   createCanvas(640, 480);
-  // create startButton
-  startButton
   // create loading typewriter effect
   loadType = new Typewriter(`LOADING...`, width / 2, height / 2, 48, 350, 200, 0.1);
   // create webcam feed, hide display
