@@ -2,89 +2,83 @@
 
 // program state (loading, running)
 let state = `pre`;
-// loading
+
+// images
+let imgDesierto, imgSimon;
+
+// loading page
 let loadString = `LOADING...`;
 let loadMin = false;
 let currentCharacter = 0;
 let currentString;
-// instructions
+
+// instructions page
 let instructionsObj;
 let instructionsKey = [];
 let instructions = [];
 let instructionsPage = 0;
 let buttonedUp = false;
-// user webcam feed & poseNet object
-let video;
-// poseNet object
-let poseNet;
-let ml5Initialized = false;
-// current set of pose made by poseNet once it's running
-let pose = [];
-let index;// graphics elements for drawing overlay
-let trailBlazer;
 
-// images
-let imgDesierto, imgSimon;
+// posture recognition
+let video, poseNet;
+let poseNetInit = false;
+let poses = [];
+let pose;
+let balance;
 
+// load images and instructions from assets
 function preload() {
   imgDesierto = loadImage(`assets/images/sdd_desierto.png`);
   imgSimon = loadImage(`assets/images/sdd_simon.png`);
   instructionsObj = loadJSON("assets/data/instructions.json");
 }
 
+// setup canvas, instructions and posture recognition
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  // createCanvas(1600, 900);
+  createCanvas(windowWidth, windowHeight); // createCanvas(1600, 900);
 
-  // start webcam and hide the resulting HTML element
-  video = createCapture(VIDEO);
-  video.hide();
-
-  // start the poseNet model and signal when loads
-  poseNet = ml5.poseNet(video, { flipHorizontal: true }, () => { ml5Initialized = true; });
-  // DEBUG - short ml5
-  // setTimeout( () => { ml5Initialized = true; }, 2000);
-
-  // listen for pose events from poseNet and store the results in pose array
-  poseNet.on(`pose`, (results) => { pose = results; });
-
-  index = new Index();
-  trailBlazer = createGraphics(width, height);
-
+  // load instructions array
   instructionsKey = Object.keys(instructionsObj);
   for (let i = 0; i < instructionsKey.length; i++) {
     instructions[i] = instructionsObj[instructionsKey[i]];
   }
 
+  // start webcam and hide resulting HTML element
+  video = createCapture(VIDEO);
+  video.hide();
+
+  // start poseNet model and signal when loaded
+  poseNet = ml5.poseNet(video, { flipHorizontal: true }, () => { poseNetInit = true; });
+  // DEBUG - shortcircuit poseNet
+  // setTimeout( () => { poseNetInit = true; }, 2000);
+
+  // listen for pose events from poseNet and store the results in poses array
+  poseNet.on(`pose`, (results) => { poses = results; });
+
+  // instantiate Pose object for poseNet manipulations
+  pose = new Pose();
+
 }
 
-/**
-Handles the two states of the program: loading, running
-*/
+// main function
 function draw() {
   switch (state) {
-    case `load`: load(); break;
+    case `pre`: pre(); break;
     case `sim`: sim(); break;
   }
-  line(0,height/2,width,height/2);
-  line(width/4,0,width/4,height);
-  line(width/3,0,width/3,height);
 }
 
-function load() {
+// loading state: draw background image and wait for poseNet load
+function pre() {
   // draw background image
   image(imgDesierto, 0, 0, width, height);
 
   // DEBUG - print conditions
-  // console.log(`${!ml5Initialized} || ${!Min} = ${!ml5Initialized || !loadMin}`);
-  if (!ml5Initialized || !loadMin) {
-    // display loading text with typewriter effect
-    typeLoad();
-  }
-  else {
-    // display title text & instructions
-    titleLoad();
-  }
+  // console.log(`${!poseNetInit} || ${!Min} = ${!poseNetInit || !loadMin}`);
+  // display loading text with typewriter effect
+  if (!poseNetInit || !loadMin) { typeLoad(); }
+  // display title text & instructions
+  else { titleLoad(); }
 }
 
 function typeLoad() {
@@ -137,31 +131,29 @@ function startClicked() {
   document.getElementById("startButton").style.display = "none";
   document.getElementById("instructionsText").style.display = "none";
   document.getElementById("okButton").style.display = "none";
+  image(imgDesierto, 0, 0, width, height);
   state = `sim`;
 }
 
 function sim() {
   // Display the webcam with reveresd image so it's a mirror
-  let flippedVideo = ml5.flipImage(video);
-  image(flippedVideo, 0, 0, width, height);
-
-  console.log(pose);
+  // let flippedVideo = ml5.flipImage(video);
+  // image(flippedVideo, 0, 0, width, height);
 
   // Check if there currently pose to display
-  // if (pose.length > 0) {
-  //   index.coordinates = pose[0];
-  //   index.coordinate(width,height);
-  // }
-  // drawIndexTip();
+  if (poses.length > 0) {
+    pose.coordinates = poses[0];
+    pose.coordinate();
+    balance = pose.checkBalanceShoulders();
+    console.log(balance);
+    rotateSymeon();
+  }
+  image(imgSimon, 0, 0, width, height);
 }
 
-//
-function drawIndexTip() {
-  trailBlazer.push();
-  trailBlazer.stroke(255,0,0);
-  trailBlazer.strokeWeight(3);
-  // trailBlazer.line(index.prev.x/640*width, index.prev.y/480*height, index.tip.x, index.tip.y/480*height);
-  trailBlazer.line(index.prev.x, index.prev.y, index.tip.x, index.tip.y);
-  trailBlazer.pop();
-  image(trailBlazer, 0, 0);
+function rotateSymeon() {
+  let rotation = map(balance, 0, 100, 0, PI/2);
+  translate(width/2,20);
+  rotate(rotation);
+
 }
