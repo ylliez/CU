@@ -1,28 +1,32 @@
 "use strict";
 
 // program state (loading, running)
-let state = `loading`;
-// user webcam feed
-let video;
-// handpose object
-let handpose;
-// current set of predictions made by Handpose once it's running
-let predictions = [];
-let index;
-// graphics elements for drawing overlay
-let trailBlazer;
+let state = `init`;
+let introFinished = false;
+let buttonedUp = false;
 
 // images
+const ImgFilepath = `BCBuñuel-`;
 let numImages = 83;
+let images = [];
 let introFrame = 0;
 let closeUpFrame = 32;
-const ImgFilepath = `BCBuñuel-`;
-let images = [];
+let dragFrame;
 
-let bladeTop, bladeBottom;
+// loading page
+let loadString = `LOADING...`;
+let loadMin = false;
+let currentCharacter = 0;
+let currentString;
 
-// start button
-let startButton;
+// ml5 hand recognition
+let video, handpose;
+let handposeLoaded = false;
+let predictions = [];
+let index;
+
+// simulation action frame
+let frameT, frameB, frameL, frameR, delta;
 
 function preload() {
   for (let i = 0; i < numImages; i++) {
@@ -32,65 +36,51 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowWidth/2);
-  // createCanvas(500, 238);
-  // createCanvas(1000, 476);
+  createCanvas(windowWidth, windowWidth/2); // GIF dims 500x238
   background(0);
+  image(images[0], 0, 0, width, height);
+  document.getElementById("playButton").style.display = "block";
 
-  // Start webcam and hide the resulting HTML element
-  video = createCapture(VIDEO);
-  video.hide();
-
-  // start the Handpose model and switch to our running state when it loads
-  handpose = ml5.handpose(video, { flipHorizontal: true }, () => { initialize() });
-
-  // listen for prediction events from Handpose and store the results in our predictions array when they occur
-  handpose.on(`predict`, (results) => { predictions = results; });
-
+  // instantiate index object and set action frame
   index = new Index();
-  trailBlazer = createGraphics(width, height);
-
-
-  // startButton = createButton(`START`);
-  console.log(document.getElementById("startButton").style.display);
-  // startButton.position(width/2, height/2);
+  frameT = height / 2;
+  frameB = 2 * height / 3;
+  frameL = 3 * width / 4;
+  frameR = width;
 }
 
-/**
-Handles the two states of the program: loading, running
-*/
+// main function
 function draw() {
   switch (state) {
-    case `loading`: loading(); break;
     case `init`: break;
-    case `running`: running(); break;
+    case `title`: title(); break;
+    case `sim`: sim(); break;
   }
 }
 
-/**
-Displays a simple loading screen with the loading model's name
-*/
-function loading() {
-  background(0);
+function playClicked() {
+  // hide start button
+  document.getElementById("playButton").style.display = "none";
 
-  push();
-  textSize(32);
-  textStyle(BOLD);
-  textAlign(CENTER, CENTER);
-  fill(255);
-  text(`Loading...`, width / 2, height / 2);
-  pop();
-}
+  setInterval(() => { playIntro(); }, 55.55);
 
-function initialize() {
-  state = `init`;
-  background(0);
-  document.getElementById("startButton").style.display = "block";
+  // start & hide webcam
+  video = createCapture(VIDEO);
+  video.hide();
+
+  // start  Handpose model and signal when loaded
+  handpose = ml5.handpose(video, { flipHorizontal: true }, () => { handposeLoaded = true; });
+  handpose.on(`predict`, (results) => { predictions = results; });
 }
 
 function playIntro() {
-  document.getElementById("startButton").style.display = "none";
-  setInterval(() => { playFrame(); }, 3.33);
+  // display loading animation
+  playFrame();
+  // display loading text
+  if (!handposeLoaded || !introFinished) { typeLoad(); }
+
+  else { titleLoad(); }
+
 }
 
 function playFrame() {
@@ -98,39 +88,82 @@ function playFrame() {
     image(images[introFrame], 0, 0, width, height);
     introFrame++;
   }
-  else { state = `running`; }
+  else { introFinished = true; }
 }
 
-function running() {
-  // Display the webcam with reveresd image so it's a mirror
-  // let flippedVideo = ml5.flipImage(video);
-  // image(flippedVideo, 0, 0, width, height);
+function typeLoad() {
+  // set incrementally increasing substring to print
+  currentString = loadString.substring(0, currentCharacter);
+  push();
+  // position to image element
+  translate(width / 3, height / 2);
+  textAlign(LEFT,BOTTOM);
+  textFont(`Arial`);
+  textSize(height/10);
+  textStyle(BOLD);
+  fill(255 - currentCharacter / loadString.length * 255);
+  // display incrementally increasing substring
+  text(currentString, height / 12, width / 58);
+  pop();
+  // increment or wrap substring boundary
+  if (currentCharacter <= loadString.length + 1) { currentCharacter += 1; }
+  else { currentCharacter = 0; loadMin = true; }
+}
 
-  // startButton.draw();
+function titleLoad() {
+  // display background image
+  image(images[closeUpFrame - 1], 0, 0, width, height);
+  if (!buttonedUp) {
+    document.getElementById("startButton").style.display = "block";
+    document.getElementById("instructionsButton").style.display = "block";
+    buttonedUp = true;
+  }
+}
 
-  // Check if there currently predictions to display
+function startClicked() {
+  document.getElementById("instructionsButton").style.display = "none";
+  document.getElementById("startButton").style.display = "none";
+  document.getElementById("instructionsText").style.display = "none";
+  state = `sim`;
+}
+
+function sim() {
+  // DEBUG - display webcam
+  // image(ml5.flipImage(video, 0, 0, width, height);
+
+  checkHand();
+}
+
+function checkHand() {
   if (predictions.length > 0) {
     index.coordinates = predictions[0];
     index.coordinate(width,height);
-  }
-
-  line(0,height/2,width,height/2);
-  line(0,2*height/3,width,2*height/3);
-  line(3*width/4,0,3*width/4,height)
-  // if (index.tip.y/480*height < 2*height/3 && index.tip.y/480*height > height/2) {
-  if (index.tip.y < 2*height/3 && index.tip.y > height/2 && index.tip.x > 3*width/4) {
-    drawIndexTip();
-    // image(images[introFrame], 0, 0, width, height);
+    checkFrame();
   }
 }
 
-//
-function drawIndexTip() {
-  trailBlazer.push();
-  trailBlazer.stroke(255,0,0);
-  trailBlazer.strokeWeight(3);
-  // trailBlazer.line(index.prev.x/640*width, index.prev.y/480*height, index.tip.x, index.tip.y/480*height);
-  trailBlazer.line(index.prev.x, index.prev.y, index.tip.x, index.tip.y);
-  trailBlazer.pop();
-  image(trailBlazer, 0, 0);
+function checkFrame() {
+  while (index.tip.y < frameB && index.tip.y > frameT && index.tip.x > frameL && index.tip.x < frameR) {
+    // image(images[closeUpFrame], 0, 0, width, height);
+    fill(255, 0, 0);
+    delta = index.tip.x - frameL;
+    dragFrame = floor(map(frameL, 0, closeUpFrame, numImages));
+    // image(images[dragFrame], 0, 0, width, height);
+    // frameL -= delta;
+  }
+  // else {
+    resetFrame();
+    fill(255);
+  // }
+  displayIndexTip();
+}
+
+function resetFrame() {
+  frameL = 3 * width / 4;
+  frameR = width;
+}
+
+function displayIndexTip() {
+  noStroke();
+  ellipse(index.tip.x, index.tip.y, 15, 15);
 }
