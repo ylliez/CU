@@ -123,15 +123,25 @@ function drawMinuteHand() {
 function writeMinute() {
   if (scene) {
     push();
-    text(scene, 2, 0, 300, 50);
+    let textLength = scene.length;
+    console.log(textLength);
+    if (textLength < 52) {
+      text(scene, 2, 0, 300, 50);
+    }
+    else if (textLength < 104) {
+      text(scene, 2, -16.6, 300, 50);
+    }
+    else {
+      text(scene, 2, -20, 300, 50);
+    }
+
     pop();
   }
   else {
     push();
-    translate(150, 0);
-    textAlign(CENTER,CENTER);
-    textSize(25);
-    text("COPYRIGHT", 2, 0);
+    textAlign(LEFT,CENTER);
+    textSize(50);
+    text("COPYRIGHT", 1, 2);
     pop();
   }
 }
