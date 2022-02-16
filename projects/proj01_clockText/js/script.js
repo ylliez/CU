@@ -134,7 +134,6 @@ function writeMinute() {
     else {
       text(scene, 2, -20, 300, 50);
     }
-
     pop();
   }
   else {
