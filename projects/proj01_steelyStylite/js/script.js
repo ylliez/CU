@@ -102,7 +102,7 @@ function typeLoad() {
 }
 
 function titleLoad() {
-  // display fireground image
+  // display foreground image
   image(imgSimon, 0, 0, width, height);
   if (!buttonedUp) {
     document.getElementById("instructionsButton").style.display = "block";
