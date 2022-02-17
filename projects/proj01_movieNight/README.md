@@ -1,25 +1,23 @@
 # Project 1: A Night at the Movies
 
 ## Assignment
-Prompt: https://pippinbarr.github.io/cart263/projects/project1/
+Prompt: https://pippinbarr.github.io/cart263/projects/project1/<br>
 Translate linear medium into non-linear and potentially interactive one
 
 ## R&D
 ### Tech-based
-| Tech | Specifics      | Proj                    | Poss                    |
-|------|----------------|-------------------------|-------------------------|
-| Data | API - GSheets  | movie selector          | N/A                     |
-| Data | API - Wiki     | movie describer         | N/A                     |
-| I/O  | annyang/webcam | movie condition checker | N/A                     |
-| Data | JSON           | cinemato magic 8-ball   | Herzog, Varda, Jodo     |
-| A/V  | A->V converter | visualize B/O           | absolute (Richter, Egg) |
-| A/V  | V->A converter | sonify film             | Qatsi/Fricke            |
-| A/V  | compress image | film concatenator       | Qatsi/Fricke            |
-| A/   |  |  |
-| ml5  |  |  |
-| ml5  |  |  |
-| ml5  |  |  |
-| ml5  |  |  |
+| Tech | Specifics      | Proj                      | Poss                    |
+|------|----------------|---------------------------|-------------------------|
+| Data | API - GSheets  | movie selector            | N/A                     |
+| Data | API - Wiki     | movie describer           | N/A                     |
+| I/O  | annyang/webcam | movie condition checker   | N/A                     |
+| Data | JSON           | cinemato magic 8-ball     | Herzog, Varda, Jodo     |
+| A/V  | A->V converter | visualize B/O             | absolute (Richter, Egg) |
+| A/V  | V->A converter | sonify film               | Qatsi/Fricke            |
+| A/V  | compress image | film concatenator         | Qatsi/Fricke            |
+| ml5  | Handpose       | thematic gestural control | Pi, Deer Hunter, etc    |
+| ml5  | PoseNet        | thematic postural control | LK, Simon, etc          |
+| ml5  | ObjRecognition | thematic obj recog/action | var..                   |
 
 ### Movie-based
 | Title                                | Dir, Date        | Genre | Specifics                  | Tech |
@@ -42,7 +40,7 @@ Translate linear medium into non-linear and potentially interactive one
 | Dr. Strangelove                      | Kubrick, 1964    | RPG   | prisoner's dilemma         | JSON |
 | Les escargots                        | Laloux, 1966     | INT   | snails / ObjRecog          | ml5  |
 | Everything & Everything & Everything | Roldan, 2014     | INT   | knobs / Handpose           | ml5  |
-| Stalker                              | Tarkovsky, 1979  | ART   | ?                          |      |
+| Stalker                              | Tarkovsky, 1979  | ART   | ?                          | ?    |
 | Film ist Rhythmus: Rhythmus 21       | Richter, 1921    | ART   | geométrique/son?           | son  |
 | Symphonie Diagonale                  | Eggeling, 1924   | ART   | geométrique/son?           | son  |
 
