@@ -5,7 +5,7 @@ let state = `init`;
 let introFinished = false;
 let buttonedUp = false;
 
-// images
+// movie images
 const ImgFilepath = `BCBuñuel-`;
 let numImages = 83;
 let images = [];
@@ -26,14 +26,15 @@ let index;
 
 // simulation action frame
 let frameT, frameB, frameL, frameR;
-let delta, frameToFrame;
-let checkedFrameOnce = false;
+let isTipInFrame, bladeImg;
+let delta, tipToFrame;
 
 function preload() {
   for (let i = 0; i < numImages; i++) {
     let loadedImage = loadImage(`assets/images/${ImgFilepath}${i}.png`);
     images.push(loadedImage);
   }
+  bladeImg = loadImage(`assets/images/blade.png`);
 }
 
 function setup() {
@@ -141,30 +142,41 @@ function checkHand() {
     index.coordinates = predictions[0];
     index.coordinate(width,height);
     checkFrame();
-  }
-}
-
-function checkFrame() {
-  if (index.tip.y < frameB && index.tip.y > frameT && index.tip.x > frameL && index.tip.x < frameR) {
-    delta = round(index.tip.x - index.prev.x);
-    if (abs(delta) > 1) {
-      frameToFrame = floor(map(index.tip.x, width, 0, closeUpFrame, numImages));
-      frameL += delta;
-      frameR += delta;
-    }
+    // DEBUG - display index tip
+    // displayIndexTip();
+    drawBlade();
+    // DEBUG - display bounding rectangle
+    if (isTipInFrame) { displayRect(); }
   }
   else { resetFrame(); }
-  image(images[frameToFrame], 0, 0, width, height);
-  // DEBUG - display index tip
-  displayIndexTip();
-  // DEBUG - display bounding rectangle
-  displayRect();
+}
+
+function drawBlade() {
+  push();
+  imageMode(CENTER);
+  image(bladeImg, index.tip.x, index.tip.y, );
+  pop();
+}
+function checkFrame() {
+  isTipInFrame = index.tip.y < frameB && index.tip.y > frameT && index.tip.x > frameL && index.tip.x < frameR;
+  if (isTipInFrame) { updateFrame(); }
+  else { resetFrame(); }
+  image(images[tipToFrame], 0, 0, width, height);
+}
+
+function updateFrame() {
+  delta = round(index.tip.x - index.prev.x);
+  if (abs(delta) > 1) {
+    tipToFrame = floor(map(index.tip.x, width, 0, closeUpFrame, numImages));
+    frameL += delta;
+    frameR += delta;
+  }
 }
 
 function resetFrame() {
   frameL = 3 * width / 4;
   frameR = width;
-  frameToFrame = closeUpFrame - 1;
+  tipToFrame = closeUpFrame - 1;
 }
 
 function displayIndexTip() {
