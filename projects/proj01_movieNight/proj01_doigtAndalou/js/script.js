@@ -1,9 +1,14 @@
 "use strict";
 
-// program state (loading, running)
-let state = `init`;
+// program outline (state, progress, instructions)
+let state = `title`;
 let introFinished = false;
 let buttonedUp = false;
+let instructions = `Wave your finger in front of the webcam to move the cursor.
+Place it on the razor to drag it forth and back across the screen.
+Keep a slow steady hand, if your cursor moves too far up or down,
+                                                                                      the game will reset.`;
+let isSim = false;
 
 // movie images
 const ImgFilepath = `BCBuñuel-`;
@@ -26,7 +31,8 @@ let index;
 
 // simulation action frame
 let frameT, frameB, frameL, frameR;
-let isTipInFrame, bladeImg;
+let frameH, frameW, frameX, frameY;
+let isTipInFrame, bladeCursor, bladeFrame;
 let delta, tipToFrame;
 
 function preload() {
@@ -34,28 +40,31 @@ function preload() {
     let loadedImage = loadImage(`assets/images/${ImgFilepath}${i}.png`);
     images.push(loadedImage);
   }
-  bladeImg = loadImage(`assets/images/blade.png`);
+  bladeCursor = loadImage(`assets/images/blade.png`);
+  bladeFrame = loadImage(`assets/images/bladeS.png`);
 }
 
 function setup() {
   createCanvas(windowWidth, windowWidth/2); // GIF dims 500x238
-  background(0);
+  // set background image
   image(images[0], 0, 0, width, height);
+  // display start button
   document.getElementById("playButton").style.display = "block";
-
   // instantiate index object and set action frame
   index = new Index();
   frameT = height / 2;
   frameB = 2 * height / 3;
   frameL = 3 * width / 4;
   frameR = width;
+  frameH = frameB - frameT;
+  frameW = frameR - frameL;
 }
 
 // main function
 function draw() {
   switch (state) {
-    case `init`: break;
-    case `title`: title(); break;
+    case `title`: break;
+    case `instruction`: instruction(); break;
     case `sim`: sim(); break;
   }
 }
@@ -80,9 +89,7 @@ function playIntro() {
   playFrame();
   // display loading text
   if (!handposeLoaded || !introFinished) { typeLoad(); }
-
   else { titleLoad(); }
-
 }
 
 function playFrame() {
@@ -122,11 +129,34 @@ function titleLoad() {
   }
 }
 
+function instructionsClicked() {
+  document.getElementById("instructionsButton").style.display = "none";
+  state = `instruction`;
+}
+
+function instruction () {
+  image(images[closeUpFrame - 1], 0, 0, width, height);
+  checkHand();
+  // if (currentCharacter <= loadString.length + 1) {
+  //   currentString = loadString.substring(0, currentCharacter);
+    push();
+    // position to image element
+    // textAlign(LEFT,BOTTOM);
+    textFont(`Arial`);
+    // textSize(height/20);
+    textSize(width / 50);
+    textStyle(BOLD);
+    fill(0);
+    // display incrementally increasing substring
+    text(instructions, width / 30, height * 6 / 10);
+    pop();
+  // }
+}
+
 function startClicked() {
   document.getElementById("instructionsButton").style.display = "none";
   document.getElementById("startButton").style.display = "none";
-  document.getElementById("instructionsText").style.display = "none";
-  background(0);
+  isSim = true;
   state = `sim`;
 }
 
@@ -141,25 +171,21 @@ function checkHand() {
   if (predictions.length > 0) {
     index.coordinates = predictions[0];
     index.coordinate(width,height);
-    checkFrame();
+    // if (isSim) {
+      checkFrame();
+    // }
+    drawBlade();
     // DEBUG - display index tip
     // displayIndexTip();
-    drawBlade();
-    // DEBUG - display bounding rectangle
-    if (isTipInFrame) { displayRect(); }
+    // DEBUG - display bounding rectangle frame and/or center
+    // if (isTipInFrame) { displayRect(false, true); }
   }
   else { resetFrame(); }
 }
 
-function drawBlade() {
-  push();
-  imageMode(CENTER);
-  image(bladeImg, index.tip.x, index.tip.y, );
-  pop();
-}
 function checkFrame() {
   isTipInFrame = index.tip.y < frameB && index.tip.y > frameT && index.tip.x > frameL && index.tip.x < frameR;
-  if (isTipInFrame) { updateFrame(); }
+  if (isTipInFrame & isSim) { updateFrame(); }
   else { resetFrame(); }
   image(images[tipToFrame], 0, 0, width, height);
 }
@@ -170,6 +196,8 @@ function updateFrame() {
     tipToFrame = floor(map(index.tip.x, width, 0, closeUpFrame, numImages));
     frameL += delta;
     frameR += delta;
+    frameX = frameL + (frameR - frameL) / 2;
+    frameY = frameT + (frameB - frameT) / 2;
   }
 }
 
@@ -177,6 +205,20 @@ function resetFrame() {
   frameL = 3 * width / 4;
   frameR = width;
   tipToFrame = closeUpFrame - 1;
+}
+
+function drawBlade() {
+  push();
+  imageMode(CENTER);
+  if (!isTipInFrame) {
+    image(bladeCursor, index.tip.x, index.tip.y);
+  }
+  else {
+    // translate(-3*frameW/2, -frameH/2);
+    translate(-width/2, -frameH/2);
+    image(bladeFrame, frameR, index.tip.y, width, height);
+  }
+  pop();
 }
 
 function displayIndexTip() {
@@ -187,10 +229,11 @@ function displayIndexTip() {
   pop();
 }
 
-function displayRect() {
+function displayRect(frame, center) {
   push();
   noFill();
   stroke(0);
-  rect(frameL, frameT, frameR - frameL, frameB - frameT);
+  if(frame) { rect(frameL, frameT, frameR - frameL, frameB - frameT); }
+  if(center) { ellipse(frameX, frameY, 10, 10); }
   pop();
 }
