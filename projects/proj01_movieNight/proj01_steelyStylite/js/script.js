@@ -5,6 +5,7 @@ let state = `pre`;
 
 // images
 let imgDesierto, imgSimon, imgSimSimon;
+let simSimonHeight;
 
 // loading page
 let loadString = `LOADING...`;
@@ -24,7 +25,7 @@ let video, poseNet;
 let poseNetInit = false;
 let poses = [];
 let pose;
-let balance;
+let balance, rotation;
 
 // load images and instructions from assets
 function preload() {
@@ -66,6 +67,7 @@ function draw() {
   switch (state) {
     case `pre`: pre(); break;
     case `sim`: sim(); break;
+    case `fall`: fall(); break;
   }
 }
 
@@ -133,6 +135,7 @@ function startClicked() {
   document.getElementById("startButton").style.display = "none";
   document.getElementById("instructionsText").style.display = "none";
   document.getElementById("okButton").style.display = "none";
+  simSimonHeight = height / 6;
   state = `sim`;
 }
 
@@ -153,17 +156,29 @@ function assessPose() {
     pose.coordinates = poses[0];
     pose.update();
     balance = pose.checkBalanceShoulders();
-    if (abs(balance) <= 10) { balanceSymeon(); }
-    else { console.log(`YOU FELL`); }
+    rotation = map(balance, 0, 100, 0, PI/2);
+    if (abs(balance) <= 20) { positionSymeon(); }
+    // else { console.log(`fall`); }
+    else { state = `fall`; }
   }
 }
 
-function balanceSymeon() {
-  let rotation = map(balance, 0, 100, 0, PI/2);
+function positionSymeon() {
   push();
-  translate(width / 1.9, height / 6);
+  translate(width / 1.9, simSimonHeight);
   rotate(rotation);
   imageMode(CENTER);
   image(imgSimSimon, 0, 0, width/12, height/6);
   pop();
+}
+
+function fall() {
+  frameRate(30);
+  while (simSimonHeight < height) {
+    image(imgDesierto, 0, 0, width, height);
+    simSimonHeight++;
+    if (rotation >= 50) { rotation++; }
+    else { rotation--; }
+    positionSymeon();
+  }
 }
