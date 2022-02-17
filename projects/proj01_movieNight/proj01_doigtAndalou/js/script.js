@@ -11,7 +11,6 @@ let numImages = 83;
 let images = [];
 let introFrame = 0;
 let closeUpFrame = 32;
-let dragFrame;
 
 // loading page
 let loadString = `LOADING...`;
@@ -26,7 +25,8 @@ let predictions = [];
 let index;
 
 // simulation action frame
-let frameT, frameB, frameL, frameR, delta;
+let frameT, frameB, frameL, frameR;
+let delta, frameToFrame;
 
 function preload() {
   for (let i = 0; i < numImages; i++) {
@@ -143,19 +143,35 @@ function checkHand() {
 }
 
 function checkFrame() {
-  while (index.tip.y < frameB && index.tip.y > frameT && index.tip.x > frameL && index.tip.x < frameR) {
-    // image(images[closeUpFrame], 0, 0, width, height);
+  if (index.tip.y < frameB && index.tip.y > frameT && index.tip.x > frameL && index.tip.x < frameR) {
+    
     fill(255, 0, 0);
-    delta = index.tip.x - frameL;
-    dragFrame = floor(map(frameL, 0, closeUpFrame, numImages));
-    // image(images[dragFrame], 0, 0, width, height);
-    // frameL -= delta;
+    if (index.tip.x < index.prev.x) {
+      delta = index.prev.x - index.tip.x;
+      // console.log(`L:${floor(frameL)}, R:${floor(frameR)}, D:${floor(delta)}`);
+      if (delta > 1) {
+        frameToFrame = frameR - delta;
+        // console.log(`F2F:${floor(frameToFrame)}`);
+        frameToFrame = floor(map(frameToFrame, width, 0, closeUpFrame, numImages));
+        console.log(`F2F:${frameToFrame}`);
+        image(images[frameToFrame], 0, 0, width, height);
+        frameL -= delta;
+        frameR -= delta;
+      }
+    }
   }
-  // else {
+  else {
     resetFrame();
+    image(images[closeUpFrame], 0, 0, width, height);
     fill(255);
-  // }
+  }
   displayIndexTip();
+  push();
+  stroke(2);
+  fill(0);
+  line(frameL, 0, frameL, height);
+  line(frameR, 0, frameR, height);
+  pop();
 }
 
 function resetFrame() {
