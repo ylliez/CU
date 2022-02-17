@@ -1,21 +1,28 @@
 # Project 1: A Night at the Movies
 
+## Assignment
 Prompt: https://pippinbarr.github.io/cart263/projects/project1/
 Translate linear medium into non-linear and potentially interactive one
 
-R&D:
-tech-based:
-wikipedia descriptions of movies
-take images and compress
-convert images to audio
-convert audio to drawing
-compress audio?
-supercut?
-magic 8-ball (e.g. Herzog, Varda, Jodorowsky)
-movie-condition check (silence, lights off, etc..)
+## R&D
+### Tech-based
+| Tech | Specifics      | Proj                    | Poss                    |
+|------|----------------|-------------------------|-------------------------|
+| Data | API - GSheets  | movie selector          | N/A                     |
+| Data | API - Wiki     | movie describer         | N/A                     |
+| I/O  | annyang/webcam | movie condition checker | N/A                     |
+| Data | JSON           | cinemato magic 8-ball   | Herzog, Varda, Jodo     |
+| A/V  | A->V converter | visualize B/O           | absolute (Richter, Egg) |
+| A/V  | V->A converter | sonify film             | Qatsi/Fricke            |
+| A/V  | compress image | film concatenator       | Qatsi/Fricke            |
+| A/   |  |  |
+| ml5  |  |  |
+| ml5  |  |  |
+| ml5  |  |  |
+| ml5  |  |  |
 
-movie-based:<br>
-| Title                                | Director, Date   | Genre | Spec                       | Tech |
+### Movie-based
+| Title                                | Dir, Date        | Genre | Specifics                  | Tech |
 |--------------------------------------|------------------|------ |----------------------------|------|
 | The Clock                            | Marclay, 2011    | ART   | copyright, maximalism      | JSON |
 | Schizopolis                          | Soderbergh, 1996 | ?     | WC faces expressions       | JSON |
@@ -23,7 +30,7 @@ movie-based:<br>
 | Pi                                   | Aronofsky, 1998  | RPG   | mental health/self-harm    | ml5? |
 | Primer                               | Carruth, 2004    | RPG   | time-travel                | ?    |
 | Upstream Color                       | Carruth, 2013    | ART   | ?                          | ?    |
-| Qatsi/Fricke trilogy                 | Fricke           | ART   | googleMaps?                | API? |
+| Qatsi/Fricke                         | Fricke           | ART   | googleMaps?                | API? |
 | Un chant d'amour                     | Genet, 1950      | ART   | ?                          | ?    |
 | La montaña sagrada                   | Jodorowsky, 1973 | RPG   | fantastic realism          | JSON |
 | Synecdoche New York                  | Kaufman, 2008    | RPG   | (un/semi)controlled        | ?    |
@@ -39,8 +46,11 @@ movie-based:<br>
 | Film ist Rhythmus: Rhythmus 21       | Richter, 1921    | ART   | geométrique/son?           | son  |
 | Symphonie Diagonale                  | Eggeling, 1924   | ART   | geométrique/son?           | son  |
 
+## Outcomes
+### Project 1.1 - ClockPirate
+
 Marclay1
-- rip image and associate time of access with congruent sequency? no access...
+- rip image and associate time of access with congruent sequence? no access...
 - use of crowdsourced clock variant? dead (but humanclock.com)
 - conceptual meta: associate access time with year and read wiki entry (or bible verse?)
 - Gordon's 24 Hour Psycho
@@ -49,3 +59,7 @@ Marclay2 (srced http://clockclock.ars.is/)
 - associate timestamp with text-repo of image descriptions
 - make shift live!
 - stress copyright/pirating more
+
+
+### Project 1.2 - Steely Stylite
+### Project 1.3 - Doigt Andalou

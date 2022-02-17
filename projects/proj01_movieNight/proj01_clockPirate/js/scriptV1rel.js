@@ -80,7 +80,6 @@ function checkTime() {
   }
 }
 
-let minDim;
 
 function drawTime() {
   background(0);
@@ -90,8 +89,6 @@ function drawTime() {
 
   push();
   translate(width/2, height/2);
-  minDim = min(width,height);
-  console.log(`min is: ${minDim}`);
   drawHourHand();
   drawMinuteHand();
   pop();
@@ -100,25 +97,25 @@ function drawTime() {
 function drawHourHand() {
   push();
   rotate(angleH);
-  rectMode(CENTER);
-  rect(0, 0, minDim/10, minDim/20, minDim/80); // 80, 40, 20
+  translate(14, 0);
+  rect(0, -12.5, 66, 25);
   writeHour();
   pop();
 }
 
 function writeHour() {
   push();
-  textAlign(CENTER,CENTER);
-  textSize(minDim/30);
-  text(textTime, 0, 0);
+  textAlign(LEFT,CENTER);
+  textSize(25);
+  text(textTime, 2, 0);
   pop();
 }
 
 function drawMinuteHand() {
   push();
   rotate(angleM);
-  translate(minDim/10, 0);
-  rect(0, -25, 300, 50, minDim/80);
+  translate(100, 0);
+  rect(0, -25, 300, 50);
   writeMinute();
   pop();
 }
@@ -127,9 +124,8 @@ function writeMinute() {
   if (scene) {
     push();
     let textLength = scene.length;
-    console.log(`textLength is: ${textLength}`);
+    console.log(textLength);
     if (textLength < 52) {
-      // textSize()
       text(scene, 2, 0, 300, 50);
     }
     else if (textLength < 104) {
@@ -144,7 +140,7 @@ function writeMinute() {
     push();
     textAlign(LEFT,CENTER);
     textSize(50);
-    text("COPYRIGHT", 0, 2);
+    text("COPYRIGHT", 1, 2);
     pop();
   }
 }
