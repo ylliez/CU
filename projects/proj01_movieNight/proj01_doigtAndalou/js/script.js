@@ -214,7 +214,6 @@ function drawBlade() {
     image(bladeCursor, index.tip.x, index.tip.y);
   }
   else {
-    // translate(-3*frameW/2, -frameH/2);
     translate(-width/2, -frameH/2);
     image(bladeFrame, frameR, index.tip.y, width, height);
   }
