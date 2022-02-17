@@ -27,6 +27,7 @@ let index;
 // simulation action frame
 let frameT, frameB, frameL, frameR;
 let delta, frameToFrame;
+let checkedFrameOnce = false;
 
 function preload() {
   for (let i = 0; i < numImages; i++) {
@@ -124,6 +125,7 @@ function startClicked() {
   document.getElementById("instructionsButton").style.display = "none";
   document.getElementById("startButton").style.display = "none";
   document.getElementById("instructionsText").style.display = "none";
+  background(0);
   state = `sim`;
 }
 
@@ -144,42 +146,39 @@ function checkHand() {
 
 function checkFrame() {
   if (index.tip.y < frameB && index.tip.y > frameT && index.tip.x > frameL && index.tip.x < frameR) {
-    
-    fill(255, 0, 0);
-    if (index.tip.x < index.prev.x) {
-      delta = index.prev.x - index.tip.x;
-      // console.log(`L:${floor(frameL)}, R:${floor(frameR)}, D:${floor(delta)}`);
-      if (delta > 1) {
-        frameToFrame = frameR - delta;
-        // console.log(`F2F:${floor(frameToFrame)}`);
-        frameToFrame = floor(map(frameToFrame, width, 0, closeUpFrame, numImages));
-        console.log(`F2F:${frameToFrame}`);
-        image(images[frameToFrame], 0, 0, width, height);
-        frameL -= delta;
-        frameR -= delta;
-      }
+    delta = round(index.tip.x - index.prev.x);
+    if (abs(delta) > 1) {
+      frameToFrame = floor(map(index.tip.x, width, 0, closeUpFrame, numImages));
+      frameL += delta;
+      frameR += delta;
     }
   }
-  else {
-    resetFrame();
-    image(images[closeUpFrame], 0, 0, width, height);
-    fill(255);
-  }
+  else { resetFrame(); }
+  image(images[frameToFrame], 0, 0, width, height);
+  // DEBUG - display index tip
   displayIndexTip();
-  push();
-  stroke(2);
-  fill(0);
-  line(frameL, 0, frameL, height);
-  line(frameR, 0, frameR, height);
-  pop();
+  // DEBUG - display bounding rectangle
+  displayRect();
 }
 
 function resetFrame() {
   frameL = 3 * width / 4;
   frameR = width;
+  frameToFrame = closeUpFrame - 1;
 }
 
 function displayIndexTip() {
+  push();
+  fill(255);
   noStroke();
   ellipse(index.tip.x, index.tip.y, 15, 15);
+  pop();
+}
+
+function displayRect() {
+  push();
+  noFill();
+  stroke(0);
+  rect(frameL, frameT, frameR - frameL, frameB - frameT);
+  pop();
 }
