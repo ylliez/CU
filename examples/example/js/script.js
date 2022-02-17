@@ -97,10 +97,18 @@ function dodo() {
   for (let i = 0; i < words.length; i++) {
     for (let j = 0; j < letters.length; j++) {
       for (var k = 0; k < letters.length; k++) {
-        let sol = `${letters[j]}y${letters[k]}`;
+        let sol = `s${letters[j]}a${letters[k]}e`;
         // console.log(sol);
-        // if (sol === words[i]) {
-        if (sol === words[i] && letters[j] !== `o` && letters[k] !== `o` && letters[j] !== `l` && letters[k] !== `l`) {
+        let non = [`t`,`r`,`c`,`o`,`l`,`i`,`n`,`d`,`u`,`m`,`p`,`y`];
+        let notest = true;
+
+        if (sol === words[i] && () => {
+          for (let l = 0; l < non.length; l++) {
+            if(non[l] === letters[i]) { return false };
+            if(non[l] === letters[j]) { return false };
+            if(non[l] === letters[k]) { return false };
+          }
+        }) {
           console.log(sol);
         }
       }
@@ -110,5 +118,6 @@ function dodo() {
   }
   // console.log(`${i}: ${letter}: ${letterPercentagesPerPosition[i]}`);
 }
+
 
 function draw() {}
