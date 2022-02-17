@@ -4,8 +4,8 @@
 let state = `pre`;
 
 // images
-let imgDesierto, imgSimon, imgSimSimon;
-let simSimonHeight;
+let imgDesierto, imgDel, imgSimSimon;
+let simonHeight;
 
 // loading page
 let loadString = `LOADING...`;
@@ -29,9 +29,9 @@ let balance, rotation;
 
 // load images and instructions from assets
 function preload() {
-  imgDesierto = loadImage(`assets/images/sdd_desierto.png`);
-  imgSimon = loadImage(`assets/images/sdd_simon.png`);
-  imgSimSimon = loadImage(`assets/images/sdd_simSimon.png`);
+  imgDesierto = loadImage(`assets/images/desierto.png`);
+  imgDel = loadImage(`assets/images/del.png`);
+  imgSimSimon = loadImage(`assets/images/simon.png`);
   instructionsObj = loadJSON("assets/data/instructions.json");
 }
 
@@ -105,7 +105,7 @@ function typeLoad() {
 
 function titleLoad() {
   // display foreground image
-  image(imgSimon, 0, 0, width, height);
+  image(imgDel, 0, 0, width, height);
   if (!buttonedUp) {
     document.getElementById("instructionsButton").style.display = "block";
     document.getElementById("startButton").style.display = "block";
@@ -135,7 +135,7 @@ function startClicked() {
   document.getElementById("startButton").style.display = "none";
   document.getElementById("instructionsText").style.display = "none";
   document.getElementById("okButton").style.display = "none";
-  simSimonHeight = height / 6;
+  simonHeight = height / 6;
   state = `sim`;
 }
 
@@ -145,7 +145,7 @@ function sim() {
 
   // display background image
   image(imgDesierto, 0, 0, width, height);
-  image(imgSimon, 0, 0, width, height);
+  image(imgDel, 0, 0, width, height);
 
   // check poseNet event
   assessPose();
@@ -157,15 +157,14 @@ function assessPose() {
     pose.update();
     balance = pose.checkBalanceShoulders();
     rotation = map(balance, 0, 100, 0, PI/2);
-    if (abs(balance) <= 20) { positionSymeon(); }
-    // else { console.log(`fall`); }
+    if (abs(balance) <= 30) { positionSymeon(); }
     else { state = `fall`; }
   }
 }
 
 function positionSymeon() {
   push();
-  translate(width / 1.9, simSimonHeight);
+  translate(width / 1.9, simonHeight);
   rotate(rotation);
   imageMode(CENTER);
   image(imgSimSimon, 0, 0, width/12, height/6);
@@ -173,10 +172,11 @@ function positionSymeon() {
 }
 
 function fall() {
-  frameRate(30);
-  while (simSimonHeight < height) {
+  // console.log(`fall`);
+  frameRate(1);
+  while (simonHeight < height) {
     image(imgDesierto, 0, 0, width, height);
-    simSimonHeight++;
+    simonHeight++;
     if (rotation >= 50) { rotation++; }
     else { rotation--; }
     positionSymeon();
