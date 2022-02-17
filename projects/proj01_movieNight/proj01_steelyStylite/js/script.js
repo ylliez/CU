@@ -5,7 +5,7 @@ let state = `pre`;
 
 // images
 let imgDesierto, imgDel, imgSimSimon;
-let simonHeight;
+let simonX, simonY;
 
 // loading page
 let loadString = `LOADING...`;
@@ -64,24 +64,21 @@ function setup() {
 
 // main function
 function draw() {
+  image(imgDesierto, 0, 0, width, height);
   switch (state) {
     case `pre`: pre(); break;
+    case `title`: title(); break;
     case `sim`: sim(); break;
     case `fall`: fall(); break;
   }
 }
 
-// loading state: draw background image and wait for poseNet load
+// wait for poseNet load
 function pre() {
-  // draw background image
-  image(imgDesierto, 0, 0, width, height);
-
-  // DEBUG - print conditions
-  // console.log(`${!poseNetInit} || ${!Min} = ${!poseNetInit || !loadMin}`);
   // display loading text with typewriter effect
   if (!poseNetInit || !loadMin) { typeLoad(); }
   // display title text & instructions
-  else { titleLoad(); }
+  else { state = `title`; }
 }
 
 function typeLoad() {
@@ -103,7 +100,9 @@ function typeLoad() {
   else { currentCharacter = -2; loadMin = true; }
 }
 
-function titleLoad() {
+function title() {
+  displayTitle(`STEELY`, width / 4);
+  displayTitle(`STYLITE`, 3 * width / 4);
   // display foreground image
   image(imgDel, 0, 0, width, height);
   if (!buttonedUp) {
@@ -111,6 +110,18 @@ function titleLoad() {
     document.getElementById("startButton").style.display = "block";
     buttonedUp = true;
   }
+}
+
+function displayTitle(titleText, xPos) {
+  push();
+  translate(xPos, height / 6);
+  textAlign(CENTER,CENTER);
+  textFont(`Arial`);
+  textSize(height/10);
+  textStyle(BOLD);
+  // display incrementally increasing substring
+  text(titleText, 0, 0);
+  pop();
 }
 
 function instructionsClicked() {
@@ -135,7 +146,7 @@ function startClicked() {
   document.getElementById("startButton").style.display = "none";
   document.getElementById("instructionsText").style.display = "none";
   document.getElementById("okButton").style.display = "none";
-  simonHeight = height / 6;
+  simonY = height / 6;
   state = `sim`;
 }
 
@@ -144,7 +155,6 @@ function sim() {
   // image(ml5.flipImage(video), 0, 0, width, height);
 
   // display background image
-  image(imgDesierto, 0, 0, width, height);
   image(imgDel, 0, 0, width, height);
 
   // check poseNet event
@@ -156,7 +166,6 @@ function assessPose() {
     pose.coordinates = poses[0];
     pose.update();
     balance = pose.checkBalanceShoulders();
-    rotation = map(balance, 0, 100, 0, PI/2);
     if (abs(balance) <= 30) { positionSymeon(); }
     else { state = `fall`; }
   }
@@ -164,7 +173,8 @@ function assessPose() {
 
 function positionSymeon() {
   push();
-  translate(width / 1.9, simonHeight);
+  translate(width / 1.9, simonY);
+  rotation = map(balance, -100, 100, -PI/2, PI/2);
   rotate(rotation);
   imageMode(CENTER);
   image(imgSimSimon, 0, 0, width/12, height/6);
@@ -172,13 +182,11 @@ function positionSymeon() {
 }
 
 function fall() {
-  // console.log(`fall`);
-  frameRate(1);
-  while (simonHeight < height) {
-    image(imgDesierto, 0, 0, width, height);
-    simonHeight++;
-    if (rotation >= 50) { rotation++; }
-    else { rotation--; }
+  if (simonY < height) {
+    simonY += 3;
+    if (balance > 0) { balance+=5; }
+    else { balance-=5; }
     positionSymeon();
   }
+
 }
