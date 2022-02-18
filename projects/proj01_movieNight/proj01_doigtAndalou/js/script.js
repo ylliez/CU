@@ -3,6 +3,7 @@
 // program outline (state, progress, instructions)
 let dynamicCanvas;
 let state = `title`;
+let buttPlay, buttInstr, buttGo;
 let introFinished = false;
 let buttonedUp = false;
 let instructions = `Wave your finger in front of the webcam to move the cursor.
@@ -48,22 +49,29 @@ function preload() {
 function setup() {
   dynamicCanvas = new DynamicCanvas(500, 238);
   // set background image
-  image(images[0], 0, 0, width, height);
-  // display start button
-  document.getElementById("playButton").style.display = "block";
-  // instantiate index object and set action frame
-  index = new Index();
+  image(images[0], 0, 0);
+  // create buttons and display play button
+  buttPlay = new DynamicButton(`PLAY`, 34, 46, playClicked);
+  buttInstr = new DynamicButton(`INSTRUCTIONS`, 1, 58, instructionsClicked);
+  buttGo = new DynamicButton(`GO`, 56.5, 41, goClicked, 1.6, 100);
+  buttPlay.show();
+  // set frame parameters
   frameT = height / 2;
   frameB = 2 * height / 3;
   frameL = 3 * width / 4;
   frameR = width;
   frameH = frameB - frameT;
   frameW = frameR - frameL;
+  // instantiale handpose holder
+  index = new Index();
 }
 
 // main function
 function draw() {
   dynamicCanvas.update();
+  buttPlay.update();
+  buttInstr.update();
+  buttGo.update();
   switch (state) {
     case `title`: break;
     case `instruction`: instruction(); break;
@@ -73,7 +81,7 @@ function draw() {
 
 function playClicked() {
   // hide start button
-  document.getElementById("playButton").style.display = "none";
+  buttPlay.hide();
 
   setInterval(() => { playIntro(); }, 55.55);
 
@@ -81,7 +89,7 @@ function playClicked() {
   video = createCapture(VIDEO);
   video.hide();
 
-  // start  Handpose model and signal when loaded
+  // start Handpose model and signal when loaded
   handpose = ml5.handpose(video, { flipHorizontal: true }, () => { handposeLoaded = true; });
   handpose.on(`predict`, (results) => { predictions = results; });
 }
@@ -125,14 +133,14 @@ function titleLoad() {
   // display background image
   image(images[closeUpFrame - 1], 0, 0, width, height);
   if (!buttonedUp) {
-    document.getElementById("startButton").style.display = "block";
-    document.getElementById("instructionsButton").style.display = "block";
+    buttGo.show();
+    buttInstr.show();
     buttonedUp = true;
   }
 }
 
 function instructionsClicked() {
-  document.getElementById("instructionsButton").style.display = "none";
+  buttInstr.hide();
   state = `instruction`;
 }
 
@@ -155,9 +163,9 @@ function instruction () {
   // }
 }
 
-function startClicked() {
-  document.getElementById("instructionsButton").style.display = "none";
-  document.getElementById("startButton").style.display = "none";
+function goClicked() {
+  buttInstr.hide();
+  buttGo.hide();
   isSim = true;
   state = `sim`;
 }
