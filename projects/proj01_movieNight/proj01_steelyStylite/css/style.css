@@ -10,20 +10,17 @@ body {
   overflow: hidden;
 }
 
-button, p {
+button {
   display: none;
   position: absolute;
+  top: 50vh;
   background-color: #666;
   border-radius: 15px;
   color: #bbb;
-  text-shadow: 0.25vw 0.25vh 0.5vh #000;
-}
-
-button {
-  top: 50vh;
   padding: 2px 10px 2px 8px;
   text-align: center;
-  font-size: 30px;
+  font-size: 5vh;
+  text-shadow: 0.25vw 0.25vh 0.5vh #000;
   cursor: pointer;
 }
 
@@ -34,7 +31,7 @@ button {
 #instructionsText {
   left: 10vw;
   text-align: left;
-  font-size: 22px;
-
+  font-size: 3vh;
+  cursor: none;
 }
 #reButton { top: 200px; left: 46vw; }
