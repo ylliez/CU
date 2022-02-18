@@ -1,5 +1,7 @@
 "use strict";
 
+let dynamicCanvas;
+
 /* TEXT */
 let now, hour, minute, time;
 
@@ -26,7 +28,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  dynamicCanvas = new DynamicCanvas(1800, 1800);
   background(0);
 
   // map JSON files to corresponding arrays
@@ -62,11 +64,11 @@ function checkTime() {
   console.log(`checking: ${time}`);
   if (times.includes(time)) {
     scene = scenes[times.indexOf(time)];
-    console.log(scene);
-    drawTime(scene);
+    // console.log(scene);
+    drawTime();
   }
   else {
-    drawTime("COPYWRITE");
+    drawTime();
     if (minute === 0) {
       hour = now.getHours()-1;
       minute = 59;
@@ -80,8 +82,6 @@ function checkTime() {
   }
 }
 
-let minDim;
-
 function drawTime() {
   background(0);
 
@@ -90,8 +90,6 @@ function drawTime() {
 
   push();
   translate(width/2, height/2);
-  minDim = min(width,height);
-  console.log(`min is: ${minDim}`);
   drawHourHand();
   drawMinuteHand();
   pop();
@@ -101,7 +99,7 @@ function drawHourHand() {
   push();
   rotate(angleH);
   rectMode(CENTER);
-  rect(0, 0, minDim/10, minDim/20, minDim/80); // 80, 40, 20
+  rect(0, 0, width/10, height/23, 0, 30, 30, 0);
   writeHour();
   pop();
 }
@@ -109,7 +107,7 @@ function drawHourHand() {
 function writeHour() {
   push();
   textAlign(CENTER,CENTER);
-  textSize(minDim/30);
+  textSize(width/30);
   text(textTime, 0, 0);
   pop();
 }
@@ -117,8 +115,10 @@ function writeHour() {
 function drawMinuteHand() {
   push();
   rotate(angleM);
-  translate(minDim/10, 0);
-  rect(0, -25, 300, 50, minDim/80);
+
+  rectMode(CENTER);
+  translate(width/3.8, 0);
+  rect(0, 0, width/3, height/23, 0, 30, 30, 0);
   writeMinute();
   pop();
 }
@@ -143,8 +143,12 @@ function writeMinute() {
   else {
     push();
     textAlign(LEFT,CENTER);
-    textSize(50);
+    textSize(width/20);
     text("COPYRIGHT", 0, 2);
     pop();
   }
+}
+
+function draw() {
+  dynamicCanvas.update();
 }
