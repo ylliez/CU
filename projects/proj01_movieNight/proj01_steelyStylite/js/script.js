@@ -1,5 +1,7 @@
 "use strict";
 
+let dynamicCanvas;
+
 // program state (loading, running)
 let state = `pre`;
 
@@ -9,7 +11,7 @@ let simonX, simonY;
 
 // loading page
 let loadString = `LOADING...`;
-let loadMin = false;
+let loadMin = 2;
 let currentCharacter = 0;
 let currentString;
 
@@ -37,7 +39,7 @@ function preload() {
 
 // setup canvas, instructions and posture recognition
 function setup() {
-  createCanvas(windowWidth, windowHeight); // createCanvas(1600, 900);
+  dynamicCanvas = new DynamicCanvas(1600, 900);
 
   // load instructions array
   instructionsKey = Object.keys(instructionsObj);
@@ -64,6 +66,7 @@ function setup() {
 
 // main function
 function draw() {
+  dynamicCanvas.update();
   image(imgDesierto, 0, 0, width, height);
   switch (state) {
     case `pre`: pre(); break;
@@ -76,7 +79,7 @@ function draw() {
 // wait for poseNet load
 function pre() {
   // display loading text with typewriter effect
-  if (!poseNetInit || !loadMin) { typeLoad(); }
+  if (!poseNetInit || loadMin > 0) { typeLoad(); }
   // display title text & instructions
   else { state = `title`; }
 }
@@ -88,23 +91,23 @@ function typeLoad() {
   // position to image element
   translate(width / 2, height);
   rotate(3*PI/2);
-  textAlign(LEFT,BOTTOM);
+  textAlign(LEFT,CENTER);
   textFont(`Arial`);
-  textSize(height/10);
+  textSize(90);
   textStyle(BOLD);
   // display incrementally increasing substring
-  text(currentString, height / 12, width / 58);
+  text(currentString, 70, 50); // inside pillar
+  // text(currentString, 70, -17); // left of pillar
   pop();
   // increment or wrap substring boundary
-  if (currentCharacter <= loadString.length + 2) { currentCharacter += 0.1; }
-  else { currentCharacter = -2; loadMin = true; }
+  if (currentCharacter < loadString.length) { currentCharacter += 0.1; }
+  else { currentCharacter = 0; loadMin--; }
 }
 
 function title() {
-  displayTitle(`STEELY`, width / 4);
-  displayTitle(`STYLITE`, 3 * width / 4);
-  // display foreground image
-  image(imgDel, 0, 0, width, height);
+// display title & foreground image
+  displayTitle();
+  image(imgDel, 0, 0);
   if (!buttonedUp) {
     document.getElementById("instructionsButton").style.display = "block";
     document.getElementById("startButton").style.display = "block";
@@ -112,15 +115,14 @@ function title() {
   }
 }
 
-function displayTitle(titleText, xPos) {
+function displayTitle() {
   push();
-  translate(xPos, height / 6);
   textAlign(CENTER,CENTER);
-  textFont(`Arial`);
-  textSize(height/10);
-  textStyle(BOLD);
-  // display incrementally increasing substring
-  text(titleText, 0, 0);
+  textFont(`cursive`);
+  textSize(150);
+  // textStyle(BOLD);
+  text(`Steely`, width / 4, height / 6);
+  text(`Stylite`, 3 * width / 4, height / 6);
   pop();
 }
 
