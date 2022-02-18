@@ -6,7 +6,11 @@ class Pose {
     this.frame = [];
     this.shoulders = {
       ly: undefined,
-      ry: undefined
+      ry: undefined,
+      delta: undefined,
+      deltaPrev: undefined,
+      balance: undefined,
+      disequilibrium: false
     }
   }
 
@@ -51,8 +55,10 @@ class Pose {
   }
 
   checkBalanceShoulders() {
-    let balance = this.shoulders.ry - this.shoulders.ly;
-    return balance;
+    this.shoulders.delta = this.shoulders.ry - this.shoulders.ly;
+    this.shoulders.balPrev = this.shoulders.balance;
+    this.shoulders.balance = map(this.shoulders.delta, -100, 100, -PI/2, PI/2);
+    this.shoulders.disequilibrium = abs(this.shoulders.delta) >= 30;
   }
 
 }

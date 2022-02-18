@@ -3,11 +3,13 @@
 let dynamicCanvas;
 
 // program state (loading, running)
-let state = `pre`;
+let state = `post`;
 
-// images
-let imgDesierto, imgDel, imgSimSimon;
-let simonX, simonY;
+// images (background, figure, extracted figure)
+let imgDesierto, imgDel, imgSimon;
+// offset of extracted figure from position of figure in background
+let symeonX = 847;
+let symeonY = 156;
 
 // loading page
 let loadString = `LOADING...`;
@@ -28,12 +30,14 @@ let poseNetInit = false;
 let poses = [];
 let pose;
 let balance, rotation;
+let stableSymeon = true;
+let fallParameter;
 
 // load images and instructions from assets
 function preload() {
   imgDesierto = loadImage(`assets/images/desierto.png`);
   imgDel = loadImage(`assets/images/del.png`);
-  imgSimSimon = loadImage(`assets/images/simon.png`);
+  imgSimon = loadImage(`assets/images/simon.png`);
   instructionsObj = loadJSON("assets/data/instructions.json");
 }
 
@@ -72,7 +76,8 @@ function draw() {
     case `pre`: pre(); break;
     case `title`: title(); break;
     case `sim`: sim(); break;
-    case `fall`: fall(); break;
+    case `falling`: falling(); break;
+    case `post`: post(); break;
   }
 }
 
@@ -120,7 +125,6 @@ function displayTitle() {
   textAlign(CENTER,CENTER);
   textFont(`cursive`);
   textSize(150);
-  // textStyle(BOLD);
   text(`Steely`, width / 4, height / 6);
   text(`Stylite`, 3 * width / 4, height / 6);
   pop();
@@ -148,16 +152,12 @@ function startClicked() {
   document.getElementById("startButton").style.display = "none";
   document.getElementById("instructionsText").style.display = "none";
   document.getElementById("okButton").style.display = "none";
-  simonY = height / 6;
   state = `sim`;
 }
 
 function sim() {
   // DEBUG - display webcam
   // image(ml5.flipImage(video), 0, 0, width, height);
-
-  // display background image
-  image(imgDel, 0, 0, width, height);
 
   // check poseNet event
   assessPose();
@@ -167,28 +167,60 @@ function assessPose() {
   if (poses.length > 0) {
     pose.coordinates = poses[0];
     pose.update();
-    balance = pose.checkBalanceShoulders();
-    if (abs(balance) <= 30) { positionSymeon(); }
-    else { state = `fall`; }
+    pose.checkBalanceShoulders();
+    drawSymeon();
+    if (stableSymeon) { balanceSymeon(); }
+    else { fellSymeon();  }
   }
 }
 
-function positionSymeon() {
+function balanceSymeon() {
+  if (pose.shoulders.disequilibrium) {
+    fallParameter = pose.shoulders.balance - pose.shoulders.balPrev;
+    // fallParameter = 0.05;
+    // fallParameter = PI/4;
+    stableSymeon = false;
+  }
+  rotation = pose.shoulders.balance;
+}
+
+function fellSymeon() {
+  if (symeonY >= height + 20) { state = `post`; }
+  else {
+    symeonX += fallParameter * 15;
+    symeonY += abs(fallParameter) * 30;
+    rotation += fallParameter / 2;
+  }
+}
+
+function drawSymeon() {
   push();
-  translate(width / 1.9, simonY);
-  rotation = map(balance, -100, 100, -PI/2, PI/2);
+  translate(symeonX, symeonY);
   rotate(rotation);
   imageMode(CENTER);
-  image(imgSimSimon, 0, 0, width/12, height/6);
+  image(imgSimon, 0, 0);
   pop();
 }
 
-function fall() {
-  if (simonY < height) {
-    simonY += 3;
-    if (balance > 0) { balance+=5; }
-    else { balance-=5; }
-    positionSymeon();
-  }
+function post() {
+  displayOver();
+  document.getElementById("reButton").style.display = "block";
+}
 
+function displayOver() {
+  push();
+  textAlign(CENTER,CENTER);
+  textFont(`cursive`);
+  textSize(400);
+  text(`You`, width / 4, height / 2);
+  text(`fell`, 3 * width / 4, height / 2);
+  pop();
+}
+
+function reClicked() {
+  document.getElementById("reButton").style.display = "none";
+  symeonX = 847;
+  symeonY = 156;
+  stableSymeon = true;
+  startClicked();
 }
