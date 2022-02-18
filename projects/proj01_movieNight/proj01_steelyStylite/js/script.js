@@ -1,9 +1,8 @@
 "use strict";
 
+// general
 let dynamicCanvas;
-
-// program state (loading, running)
-let state = `post`;
+let state = `pre`;
 
 // images (background, figure, extracted figure)
 let imgDesierto, imgDel, imgSimon;
