@@ -1,6 +1,7 @@
 "use strict";
 
 // program outline (state, progress, instructions)
+let dynamicCanvas;
 let state = `title`;
 let introFinished = false;
 let buttonedUp = false;
@@ -45,7 +46,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowWidth/2); // GIF dims 500x238
+  dynamicCanvas = new DynamicCanvas(500, 238);
   // set background image
   image(images[0], 0, 0, width, height);
   // display start button
@@ -62,6 +63,7 @@ function setup() {
 
 // main function
 function draw() {
+  dynamicCanvas.update();
   switch (state) {
     case `title`: break;
     case `instruction`: instruction(); break;
