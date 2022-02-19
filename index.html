@@ -8,40 +8,54 @@
   </head>
   <body>
     <header>
-    <h1>CART263</h1>
-    <h2>Creative Computation II</h2>
+    <div class="title">CART263</div>
+    <div class="subtitle">Creative Computation II</div>
     <div class="menu">
       <ul>
-        <li>lectures
+        <li><a href="lectures/lect01_review/">lectures</a>
           <ul>
-            <li> <a href="lectures/lect01_review/">01_Review</a> </li>
-            <li> <a href="lectures/lect02_voices/">02_Voices</a> </li>
-            <li> <a href="lectures/lect03_data/">03_Data</a> </li>
-            <li> <a href="lectures/lect04_AI/">04_AI</a> </li>
+            <li> <a href="lectures/lect01_review/">lecture 1 - Review</a> </li>
+            <li> <a href="lectures/lect02_voices/">lecture 2 - Voices</a> </li>
+            <li> <a href="lectures/lect03_data/">lecture 3 - Data</a> </li>
+            <li> <a href="lectures/lect04_AI/">lecture 4 - AI</a> </li>
+            <li> <a href="lectures/lect05_webpage/">lecture 5 - Webpage</a> </li>
           </ul>
         </li>
-        <li>activities</i></a>
+        <li>activities
         <!-- <li> <a href="r&d.html"> <i class="fa fa-wrench"></i></a> -->
           <ul>
-            <li> <a href="activities/actv01_sausageDog/">01_Where's Sausage Dog?</a></li>
-            <li> <a href="activities/actv02_slamina/">02_Slamina</a></li>
-            <li> <a href="activities/actv03_spies/">03_Spy Profile Generator</a></li>
-            <li> <a href="activities/actv04_bubble/">04_Bubble</a></li>
+            <li> <a href="activities/actv01_sausageDog/">activity 1 - Where's Sausage Dog?</a></li>
+            <li> <a href="activities/actv02_slamina/">activity 2 - Slamina</a></li>
+            <li> <a href="activities/actv03_spies/">activity 3 - Spy Profile Generator</a></li>
+            <li> <a href="activities/actv04_bubble/">activity 4 - Bubble Popper</a></li>
+            <li> <a href="activities/actv05_haiku/">activity 5 - Haiku Generator</a></li>
           </ul>
         </li>
-        <li>exercises</i></a>
+        <li>exercises
         <!-- <li> <a href="r&d.html"> <i class="fa fa-wrench"></i></a> -->
           <ul>
-            <li> <a href="exercises/exer01_sausageDog+/">01_Where's Sausage Dog?+</a></li>
-            <li> <a href="exercises/exer02_slamina+/">02_Slamina+</a></li>
-            <li> <a href="exercises/exer03_spies+/">03_Spy Profile Generator+</a></li>
-            <li> <a href="exercises/exer04_bubble+/">04_Bubble+</a></li>
+            <li> <a href="exercises/exer01_sausageDog+/">exercise 1 - Where's Sausage Dog?+</a></li>
+            <li> <a href="exercises/exer02_slamina+/">exercise 2 - Slamina+</a></li>
+            <li> <a href="exercises/exer03_spies+/">exercise 3 - Spy Profile Generator+</a></li>
+            <li> <a href="exercises/exer04_bubble+/">exercise 4 - Bubble Popper+</a></li>
+            <li> <a href="exercises/exer05_haiku+/">exercise 5 - Haiku Generator+</a></li>
           </ul>
         </li>
-        <li>projects</i></a>
+        <li>projects
         <!-- <li> <a href="r&d.html"> <i class="fa fa-wrench"></i></a> -->
           <ul>
-            <li> <a href="projects/proj01_movieNight/">01_movieNight</a></li>
+            <li> <a id="proj1_link" href="projects/proj01_movieNight/">project 1 - A Night at the Movies</a>
+              <ul>
+                <li> <a href="projects/proj01_movieNight/proj01_clockPirate/">01.1_Clock Pyright</a> </li>
+                <li> <a href="projects/proj01_movieNight/proj01_steelyStylite/">01.2_Steely Stylite</a> </li>
+                <li> <a href="projects/proj01_movieNight/proj01_doigtAndalou/">01.3_Doigt Andalou</a> </li>
+              </ul>
+              <!-- <a href="proj01_clockPirate/"><iframe src="proj01_clockPirate/" alt="https://ylliez.github.io/CART263/projects/proj01_movieNight/proj01_clockPirate/"></iframe></a>
+              <a href="proj01_steelyStylite/"><iframe src="proj01_steelyStylite/" alt="https://ylliez.github.io/CART263/projects/proj01_movieNight/proj01_steelyStylite/"></iframe></a>
+              <a href="proj01_doigtAndalou/"><iframe src="proj01_doigtAndalou/" alt="https://ylliez.github.io/CART263/projects/proj01_movieNight/proj01_doigtAndalou/"></iframe></a> -->
+              </li>
+              <li>project 2 - Anything</li>
+              <!-- <li> <a href="projects/proj02_anything/">project 2 - Anything</a></li> -->
           </ul>
         </li>
         <li>examples</i></a>
@@ -53,6 +67,10 @@
       </ul>
     </div>
   </header>
+  <script type="text/javascript">
+  	let proj1_URLs = ["clockPirate", "steelyStylite", "doigtAndalou"];
+    document.getElementById('proj1_link').href = `projects/proj01_movieNight/proj01_${proj1_URLs[Math.floor(Math.random()*3)]}/`;
+  </script>
 </body>
 <footer>
   <span class="lAlign">
