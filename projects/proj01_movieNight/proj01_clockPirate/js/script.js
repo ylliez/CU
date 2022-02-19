@@ -75,6 +75,7 @@ function checkTime() {
     drawTime();
   }
   else {
+    scene = undefined;
     drawTime();
     decrementTime();
     setTimeout(() => { checkTime(); }, 1000); // change back
