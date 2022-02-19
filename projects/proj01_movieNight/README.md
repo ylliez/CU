@@ -1,8 +1,8 @@
 # Project 1: A Night at the Movies
 
-## Assignment
-Prompt: https://pippinbarr.github.io/cart263/projects/project1/<br>
-Translate linear medium into non-linear and potentially interactive one
+## [Assignment] (https://pippinbarr.github.io/cart263/projects/project1/)
+Prompt: Create a project inspired by a film of your choice.
+Translate linear medium into non-linear and interactive one
 
 ## R&D
 ### Tech-based
