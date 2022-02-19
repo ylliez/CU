@@ -6,7 +6,7 @@
 
 ### Statement
 Reflections on *The Clock* (Christian Marclay, 2010), a looped 24-hour video supercut featuring timepieces the diagetic chronology of which, when the projection is synchronized, correspond with real-world time.<br>
-The piece has given rise to much commentary (e.g. ), a specific aspect of which has drawn more widespread attention.
+The piece has given rise to much commentary (e.g. [Russel, 2013](http://catherinerussell.ca/wp-content/uploads/2013/10/Russell-FW-54-2-Archival-Cinephilia-in-The-Clock.pdf)), of which one specific aspect - intellectual property rights - has drawn more widespread attention and it at the core of this piece.
 While Marclay's video art is zn
 
 ### R&D
