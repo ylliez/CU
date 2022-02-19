@@ -1,10 +1,13 @@
 # Project 1: A Night at the Movies
 
-## OUTCOMES
-
 ## [Assignment](https://pippinbarr.github.io/cart263/projects/project1/)
 Create a project inspired by a film of your choice.<br>
 Translate linear medium into non-linear and interactive one.
+
+## Outcomes
+### [Project 1.1](https://github.com/ylliez/CART263/tree/main/projects/proj01_movieNight/proj01_clockPyright) - [Clock Pyright](https://ylliez.github.io/CART263/projects/proj01_movieNight/proj01_clockPyright/)
+### [Project 1.2](https://github.com/ylliez/CART263/tree/main/projects/proj01_movieNight/proj01_doigtAndalou) - [Doigt Andalou](https://ylliez.github.io/CART263/projects/proj01_movieNight/proj01_doigtAndalou/)
+### [Project 1.3](https://github.com/ylliez/CART263/tree/main/projects/proj01_movieNight/proj01_steelyStylite) - [Steely Stylite](https://ylliez.github.io/CART263/projects/proj01_movieNight/proj01_steelyStylite/)
 
 ## R&D
 ### Tech-based
@@ -45,8 +48,3 @@ Translate linear medium into non-linear and interactive one.
 | Stalker                              | Tarkovsky, 1979  | ART   | ?                          | ?    |
 | Film ist Rhythmus: Rhythmus 21       | Richter, 1921    | ART   | geométrique/son?           | son  |
 | Symphonie Diagonale                  | Eggeling, 1924   | ART   | geométrique/son?           | son  |
-
-## Outcomes
-### [Project 1.1](https://github.com/ylliez/CART263/tree/main/projects/proj01_movieNight/proj01_clockPyright) - [Clock Pyright](https://ylliez.github.io/CART263/projects/proj01_movieNight/proj01_clockPyright/)
-### [Project 1.2](https://github.com/ylliez/CART263/tree/main/projects/proj01_movieNight/proj01_doigtAndalou) - [Doigt Andalou](https://ylliez.github.io/CART263/projects/proj01_movieNight/proj01_doigtAndalou/)
-### [Project 1.3](https://github.com/ylliez/CART263/tree/main/projects/proj01_movieNight/proj01_steelyStylite) - [Steely Stylite](https://ylliez.github.io/CART263/projects/proj01_movieNight/proj01_steelyStylite/)
