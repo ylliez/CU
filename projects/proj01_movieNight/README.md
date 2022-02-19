@@ -47,19 +47,6 @@ Translate linear medium into non-linear and interactive one.
 | Symphonie Diagonale                  | Eggeling, 1924   | ART   | geométrique/son?           | son  |
 
 ## Outcomes
-### Project 1.1 - Clock Pyright
-
-Marclay1
-- rip image and associate time of access with congruent sequence? no access...
-- use of crowdsourced clock variant? dead (but humanclock.com)
-- conceptual meta: associate access time with year and read wiki entry (or bible verse?)
-- Gordon's 24 Hour Psycho
-
-Marclay2 (srced http://clockclock.ars.is/)
-- associate timestamp with text-repo of image descriptions
-- make shift live!
-- stress copyright/pirating more
-
-
-### Project 1.2 - Steely Stylite
-### Project 1.3 - Doigt Andalou
+### [Project 1.1](https://github.com/ylliez/CART263/tree/main/projects/proj01_movieNight/proj01_clockPyright) - [Clock Pyright](https://ylliez.github.io/CART263/projects/proj01_movieNight/proj01_clockPyright/)
+### [Project 1.2](https://github.com/ylliez/CART263/tree/main/projects/proj01_movieNight/proj01_doigtAndalou) - [Doigt Andalou](https://ylliez.github.io/CART263/projects/proj01_movieNight/proj01_doigtAndalou/)
+### [Project 1.3](https://github.com/ylliez/CART263/tree/main/projects/proj01_movieNight/proj01_steelyStylite) - [Steely Stylite](https://ylliez.github.io/CART263/projects/proj01_movieNight/proj01_steelyStylite/)
