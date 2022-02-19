@@ -8,11 +8,3 @@ body {
   overflow: hidden;
   text-align: center;
 }
-
-button {
-  /* display: none; */
-  position: absolute;
-  left: 5px;
-  top: 5px;
-  padding: 5px 5px;
-}
