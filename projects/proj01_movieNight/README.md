@@ -1,8 +1,10 @@
 # Project 1: A Night at the Movies
 
+## OUTCOMES
+
 ## [Assignment](https://pippinbarr.github.io/cart263/projects/project1/)
-Prompt: Create a project inspired by a film of your choice.
-Translate linear medium into non-linear and interactive one
+Create a project inspired by a film of your choice.<br>
+Translate linear medium into non-linear and interactive one.
 
 ## R&D
 ### Tech-based
@@ -45,7 +47,7 @@ Translate linear medium into non-linear and interactive one
 | Symphonie Diagonale                  | Eggeling, 1924   | ART   | geométrique/son?           | son  |
 
 ## Outcomes
-### Project 1.1 - ClockPirate
+### Project 1.1 - Clock Pyright
 
 Marclay1
 - rip image and associate time of access with congruent sequence? no access...
