@@ -4,7 +4,7 @@ let dynamicCanvas;
 
 /* TEXT */
 let now, hour, minute, time;
-
+let nowMinute = 61;
 // object, key and array for timestamp JSON file (times.json)
 let timesObj;
 let timesKey = [];
@@ -19,7 +19,8 @@ let arrayIndex;
 
 /* IMAGE */
 let textHour, textMinute, textTime;
-let angleH, angleM;
+let minuteHandWidth, minuteHandHeight;
+let angleH, angleM, angleMH;
 
 // load JSON files
 function preload() {
@@ -29,8 +30,6 @@ function preload() {
 
 function setup() {
   dynamicCanvas = new DynamicCanvas(1800, 1800);
-  background(0);
-
   // map JSON files to corresponding arrays
   timesKey = Object.keys(timesObj);
   for (let i = 0; i < timesKey.length; i++) {
@@ -38,15 +37,21 @@ function setup() {
     scenes[i] = scenesObj[timesKey[i]];
   }
 
-  // set current time and associated variables
-  now = new Date();
-  hour = now.getHours();
-  minute = now.getMinutes();
-  setTime();
-  console.log(`the time is: ${time}`);
+}
 
-  // check if current timestamp corresponds to an entry
-  checkTime();
+function draw() {
+  dynamicCanvas.update();
+  // get current time and associated variables
+  now = new Date();
+  if (now.getMinutes() !== nowMinute) {
+    nowMinute = now.getMinutes();
+    hour = now.getHours();
+    minute = now.getMinutes();
+    // set time to concatenated string
+    setTime();
+    // check if current timestamp corresponds to an entry
+    checkTime();
+  }
 }
 
 function setTime(){
@@ -56,12 +61,14 @@ function setTime(){
   else { textMinute = `0${minute}`; }
   time = `${textHour}${textMinute}`;
   textTime = `${textHour}:${textMinute}`
-  // debugging placeholder
+  // DEBUG - set and/or print time
   // time = `956`;
+  // console.log(`the time is: ${time}`);
 }
 
 function checkTime() {
-  console.log(`checking: ${time}`);
+  // DEBUG - print time being checked
+  // console.log(`checking ${time}`);
   if (times.includes(time)) {
     scene = scenes[times.indexOf(time)];
     // console.log(scene);
@@ -69,24 +76,33 @@ function checkTime() {
   }
   else {
     drawTime();
-    if (minute === 0) {
-      hour = now.getHours()-1;
-      minute = 59;
-    }
-    else {
-      minute--;
-    }
-
-    setTime();
-    setTimeout(() => { checkTime(); }, 1000);
+    decrementTime();
+    setTimeout(() => { checkTime(); }, 1000); // change back
   }
 }
 
-function drawTime() {
-  background(0);
+function decrementTime() {
+  if (minute === 0) {
+    hour = now.getHours()-1;
+    minute = 59;
+  }
+  else {
+    minute--;
+  }
+  setTime();
+}
 
-  angleH = map(hour,0,12,0,2*PI)-PI/2;
-  angleM = map(minute,0,60,0,2*PI)-PI/2;
+function drawTime() {
+  background(255);
+  push();
+  translate(width/2, height/2);
+  fill(0);
+  ellipse(0, 0, width);
+  pop();
+
+  angleH = map(hour,0,12,-PI/2,3*PI/2);
+  angleM = map(minute,0,60,-PI/2,3*PI/2);
+  angleMH = map(minute,0,60,0,PI/30);
 
   push();
   translate(width/2, height/2);
@@ -97,7 +113,7 @@ function drawTime() {
 
 function drawHourHand() {
   push();
-  rotate(angleH);
+  rotate(angleH+angleMH);
   rectMode(CENTER);
   rect(0, 0, width/10, height/23, 0, 30, 30, 0);
   writeHour();
@@ -115,10 +131,10 @@ function writeHour() {
 function drawMinuteHand() {
   push();
   rotate(angleM);
-
-  rectMode(CENTER);
-  translate(width/3.8, 0);
-  rect(0, 0, width/3, height/23, 0, 30, 30, 0);
+  translate(width/15, 0);
+  minuteHandWidth = width/2.5;
+  minuteHandHeight = height/13;
+  rect(0, -minuteHandHeight/2, minuteHandWidth, minuteHandHeight, 0, 30, 30, 0);
   writeMinute();
   pop();
 }
@@ -126,29 +142,20 @@ function drawMinuteHand() {
 function writeMinute() {
   if (scene) {
     push();
-    let textLength = scene.length;
-    console.log(`textLength is: ${textLength}`);
-    if (textLength < 52) {
-      // textSize()
-      text(scene, 2, 0, 300, 50);
-    }
-    else if (textLength < 104) {
-      text(scene, 2, -16.6, 300, 50);
-    }
-    else {
-      text(scene, 2, -20, 300, 50);
-    }
+    textAlign(LEFT);
+    let textW = textWidth(scene);
+    let textRatio =  minuteHandWidth / textW;
+    // console.log(`ratio: ${textRatio}`);
+    textSize(30*sqrt(textRatio));
+    text(scene, 10, -minuteHandHeight/2.2, minuteHandWidth-10, minuteHandHeight);
     pop();
   }
   else {
     push();
-    textAlign(LEFT,CENTER);
-    textSize(width/20);
-    text("COPYRIGHT", 0, 2);
+    translate(minuteHandWidth/2, 0);
+    textAlign(CENTER,CENTER);
+    textSize(width/15.5);
+    text("COPYRIGHT", 0, 0);
     pop();
   }
-}
-
-function draw() {
-  dynamicCanvas.update();
 }

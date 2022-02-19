@@ -9,6 +9,10 @@ body {
   text-align: center;
 }
 
-p {
-  display: none;
+button {
+  /* display: none; */
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  padding: 5px 5px;
 }

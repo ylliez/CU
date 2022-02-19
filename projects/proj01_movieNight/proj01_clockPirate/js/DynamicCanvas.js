@@ -8,13 +8,13 @@ class DynamicCanvas {
   constructor(explicitWidth, explicitHeight) {
     this.canvas = createCanvas(explicitWidth, explicitHeight);
     this.canvasRatio = height / width;
-    this.windowRatio = windowHeight / windowWidth;
     this.width = undefined;
     this.height = undefined;
     this.update();
   }
 
   update() {
+  this.windowRatio = windowHeight / windowWidth;
     if (this.windowRatio < this.canvasRatio) {
       this.height = windowHeight;
       this.width = windowHeight / this.canvasRatio;
