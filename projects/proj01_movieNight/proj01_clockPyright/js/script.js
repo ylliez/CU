@@ -11,11 +11,10 @@ let scenesObj;
 let scenesKey = [];
 let scenes = [];
 let scene;
-// variable for time information
+// variables for time information
 let now, hour, minute, time;
 let nowMinute = 61;
-
-/* IMAGE */
+// variables for clock display
 let textHour, textMinute, textTime;
 let minuteHandWidth, minuteHandHeight;
 let angleH, angleM, angleMH;
@@ -47,18 +46,21 @@ function draw() {
     nowMinute = now.getMinutes();
     hour = now.getHours();
     minute = now.getMinutes();
-    // set time to concatenated string
+    // set time as concatenated string for standardized JSON file comparison
     setTime();
     // check if current timestamp corresponds to an entry
     checkTime();
   }
 }
 
-function setTime(){
+function setTime() {
+  // prefix hour with a zero if a single digit
   if (hour >= 10) { textHour = `${hour}`; }
   else { textHour = `0${hour}`; }
+  // prefix minute with a zero if a single digit
   if (minute >= 10) { textMinute = `${minute}`; }
   else { textMinute = `0${minute}`; }
+  // concatenate into JSON file comparison string and display string
   time = `${textHour}${textMinute}`;
   textTime = `${textHour}:${textMinute}`
   // DEBUG - set and/or print time
@@ -70,15 +72,18 @@ function checkTime() {
   // DEBUG - print time being checked
   // console.log(`checking ${time}`);
   if (times.includes(time)) {
+    // set scene to
     scene = scenes[times.indexOf(time)];
+    // DEBUG - print current scene to console
     // console.log(scene);
+
     drawTime();
   }
+  // if no match, draw clock face with copyright text and try next closest minute after 1 second delay
   else {
     scene = undefined;
     drawTime();
-    decrementTime();
-    setTimeout(() => { checkTime(); }, 1000); // change back
+    setTimeout(() => { decrementTime(); }, 1000);
   }
 }
 
@@ -91,6 +96,7 @@ function decrementTime() {
     minute--;
   }
   setTime();
+  checkTime();
 }
 
 function drawTime() {
