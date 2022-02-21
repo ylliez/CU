@@ -5,3 +5,6 @@
 ### [Play!](https://ylliez.github.io/CART263/projects/proj01_movieNight/proj01_doigtAndalou/)
 
 Interactive exploration of the opening scene of Luis Buñuel's *Un Chien Andalou*; reenact one of cinema's most iconic scenes using hand-tracking technology.
+
+#### Screenshots
+![Loading Page](https://github.com/ylliez/CART263/blob/main/projects/proj01_movieNight/proj01_doigtAndalou/assets/screenshots/ss_loading.png)
