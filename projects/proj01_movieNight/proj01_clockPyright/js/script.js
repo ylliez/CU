@@ -50,6 +50,9 @@ function draw() {
     nowMinute = now.getMinutes();
     minute = now.getMinutes();
     hour = now.getHours();
+    // DEBUG - manually set time
+    // minute = 9;
+    // hour = 16;
     // set time as concatenated string for standardized JSON file comparison
     setTime();
     // check if current timestamp corresponds to an entry
@@ -126,8 +129,9 @@ function calcHandAngles() {
   angleH = map(hour,0,12,-PI/2,3*PI/2);
   // map 60 minutes to a full revolution, originating at -PI/2 (top of the hour on a clock)
   angleM = map(minute,0,60,-PI/2,3*PI/2);
-  // map 60 minutes to 1/60th of a full revolution, to be added to hour hand angle
-  angleMH = map(minute,0,60,0,PI/30);
+  // map 60 minutes to 1/12th of a full revolution, to be added to hour hand angle
+  angleMH = map(minute,0,60,0,PI/6);
+  // console.log(`H: ${angleH}, ${minute} M: ${angleM}, MH: ${angleMH}`)
 }
 
 function drawHands() {
