@@ -101,18 +101,32 @@ function decrementTime() {
 
 function drawTime() {
   background(255);
+  // translate origin of drawings to the center of the canvas
+  translate(width/2, height/2);
+  // draw background and clock face ellipse
+  drawFace();
+  // determine the angles of the clock hands depending on the time
+  calcHandAngles();
+  // draw the clock hands
+  drawHands();
+}
+
+function drawFace() {
   push();
   translate(width/2, height/2);
   fill(0);
   ellipse(0, 0, width);
   pop();
+}
 
+function calcHandAngles() {
   angleH = map(hour,0,12,-PI/2,3*PI/2);
   angleM = map(minute,0,60,-PI/2,3*PI/2);
   angleMH = map(minute,0,60,0,PI/30);
+}
 
+function drawHands() {
   push();
-  translate(width/2, height/2);
   drawHourHand();
   drawMinuteHand();
   pop();
