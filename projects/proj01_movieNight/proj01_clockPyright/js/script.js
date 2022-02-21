@@ -101,9 +101,9 @@ function decrementTime() {
 
 function drawTime() {
   background(255);
-  // translate origin of drawings to the center of the canvas
+  // translate origin of all subsequent drawings to the center of the canvas
   translate(width/2, height/2);
-  // draw background and clock face ellipse
+  // draw clock face ellipse
   drawFace();
   // determine the angles of the clock hands depending on the time
   calcHandAngles();
@@ -119,8 +119,11 @@ function drawFace() {
 }
 
 function calcHandAngles() {
+  // map 24 hours to two full revolutions, originating at -PI/2 (noon/midnight on a clock)
   angleH = map(hour,0,12,-PI/2,3*PI/2);
+  // map 60 minutes to a full revolution, originating at -PI/2 (top of the hour on a clock)
   angleM = map(minute,0,60,-PI/2,3*PI/2);
+  // map 60 minutes to 1/60th of a full revolution, to be added to hour hand angle
   angleMH = map(minute,0,60,0,PI/30);
 }
 
