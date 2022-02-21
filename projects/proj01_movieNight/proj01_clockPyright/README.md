@@ -1,4 +1,4 @@
-# Project 1: A Night at the Movies
+# Project 1: [A Night at the Movies](https://github.com/ylliez/CART263/tree/main/projects/proj01_movieNight)
 
 ## Project 1.1: Clock Pyright
 
