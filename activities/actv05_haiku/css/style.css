@@ -4,3 +4,15 @@ Here is a description of any special CSS used.
 By default that's nothing.
 
 **********************************************/
+
+body {
+  background-color: #f0f;
+  margin: 30% 0%;
+}
+
+#haiku {
+  font-family: cursive;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
