@@ -43,9 +43,13 @@ function draw() {
   // get current time and associated variables
   now = new Date();
   if (now.getMinutes() !== nowMinute) {
+    // refresh display of schematic clock face
+    background(255);
+    drawFace();
+    // get current time parameters
     nowMinute = now.getMinutes();
-    hour = now.getHours();
     minute = now.getMinutes();
+    hour = now.getHours();
     // set time as concatenated string for standardized JSON file comparison
     setTime();
     // check if current timestamp corresponds to an entry
@@ -79,7 +83,7 @@ function checkTime() {
 
     drawTime();
   }
-  // if no match, draw clock face with copyright text and try next closest minute after 1 second delay
+  // if no match, draw clock hands with copyright text and try next closest minute after 1 second delay
   else {
     scene = undefined;
     drawTime();
@@ -100,11 +104,9 @@ function decrementTime() {
 }
 
 function drawTime() {
-  background(255);
-  // translate origin of all subsequent drawings to the center of the canvas
+  // background(255);
+  // translate origin of clock hand drawings to the center of the canvas
   translate(width/2, height/2);
-  // draw clock face ellipse
-  drawFace();
   // determine the angles of the clock hands depending on the time
   calcHandAngles();
   // draw the clock hands
@@ -113,6 +115,7 @@ function drawTime() {
 
 function drawFace() {
   push();
+  translate(width/2, height/2);
   fill(0);
   ellipse(0, 0, width);
   pop();
