@@ -18,4 +18,4 @@ The data was sourced from the [Fandom.com The Clock wiki](https://theclock.fando
 ~~Consider conceptual meta (e.g. associate access time with other info (e.g. wiki entry or bible verse?)~~ -> über-meh..<br>
 Consider conceptual alternative (e.g. stretched, cf Gordon's 24 Hour Psycho) -> became Doigt Andalou<br>
 Consider technic-conceptual alternative (e.g. [text-repo of The Clock](http://clockclock.ars.is/)) -> Clock Pyright<br>
-Next -> format continually updated crowd-sourced version The Clock wiki's [Timeline] (https://theclock.fandom.com/wiki/Timeline)
+Next -> format continually updated crowd-sourced version The Clock wiki's [Timeline](https://theclock.fandom.com/wiki/Timeline)
