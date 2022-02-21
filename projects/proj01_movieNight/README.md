@@ -1,8 +1,7 @@
 # Project 1: A Night at the Movies
 
 ## [Assignment](https://pippinbarr.github.io/cart263/projects/project1/)
-Create a project inspired by a film of your choice.<br>
-Translate linear medium into non-linear and interactive one.
+Create a project inspired by a film of your choice, translating linear medium into non-linear and interactive one.
 
 ## Outcomes
 ### [Project 1.1](https://github.com/ylliez/CART263/tree/main/projects/proj01_movieNight/proj01_clockPyright) - [Clock Pyright](https://ylliez.github.io/CART263/projects/proj01_movieNight/proj01_clockPyright/)
