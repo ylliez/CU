@@ -1,10 +1,7 @@
 "use strict";
 
+// variable for dynamic canvas object creation
 let dynamicCanvas;
-
-/* TEXT */
-let now, hour, minute, time;
-let nowMinute = 61;
 // object, key and array for timestamp JSON file (times.json)
 let timesObj;
 let timesKey = [];
@@ -14,8 +11,9 @@ let scenesObj;
 let scenesKey = [];
 let scenes = [];
 let scene;
-// index of
-let arrayIndex;
+// variable for time information
+let now, hour, minute, time;
+let nowMinute = 61;
 
 /* IMAGE */
 let textHour, textMinute, textTime;
@@ -29,6 +27,7 @@ function preload() {
 }
 
 function setup() {
+  // create a dynamic canvas object
   dynamicCanvas = new DynamicCanvas(1800, 1800);
   // map JSON files to corresponding arrays
   timesKey = Object.keys(timesObj);
@@ -40,6 +39,7 @@ function setup() {
 }
 
 function draw() {
+  // continually update dynamic canvas
   dynamicCanvas.update();
   // get current time and associated variables
   now = new Date();
