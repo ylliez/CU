@@ -113,7 +113,6 @@ function drawTime() {
 
 function drawFace() {
   push();
-  translate(width/2, height/2);
   fill(0);
   ellipse(0, 0, width);
   pop();
