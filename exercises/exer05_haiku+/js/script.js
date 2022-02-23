@@ -43,15 +43,6 @@ function getHaikuMood() {
     predictionMood[i] = (floor(map(prediction.score, 0, 1, 0, 16)).toString(16));
   }
   predictionColor = `#${predictionMood[0]}${predictionMood[1]}${predictionMood[2]}`;
-  console.log(predictionColor);
-
-  // text = `${lineP[0].innerHTML} ${lineP[1].innerHTML} ${lineP[2].innerHTML}`
-  // console.log(text);
-  // prediction = sentiment.predict(text);
-  // console.log(prediction);
-  // let predictionMood = (floor(map(prediction.score, 0, 1, 0, 16)).toString(16));
-  // console.log(predictionMood);
-  // let predictionColor = `#f${predictionMood}f`;
   // console.log(predictionColor);
   document.body.style[`background-color`] = predictionColor;
 }
