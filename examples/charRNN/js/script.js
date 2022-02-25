@@ -1,3 +1,72 @@
+/*
+LSTM Generator example with p5.js
+Built from ml5.js charRNN examples: https://github.com/ml5js/ml5-data-and-training/tree/master/models/charRNN
+*/
+
+const FilePath = `https://raw.githubusercontent.com/ml5js/ml5-data-and-models/main/models/charRNN`;
+let author = [`hemingway`, `woolf`, `bolano`, `darwin`, `shakespeare`];
+let charRNN;
+let text, textArray;
+let line1, line2, line3;
+let line = [];
+// let line = [];
+// for (let i = 0; i < 3; i++) {
+//   line[i] = [];
+// }
+let haiku;
+
+function setup() {
+  let randomAuthor = random(author);
+  document.getElementById('author').innerHTML = randomAuthor;
+  // Create the LSTM Generator passing it the model directory
+  charRNN = ml5.charRNN(`${FilePath}/${randomAuthor}/`, generate);
+}
+
+function generate() {
+  // necessary data: Seed text, temperature, length to outputs
+  const genData = {
+    seed: `the meaning of life is `,
+    temperature: 0.51,
+    length: 100,
+    line: undefined
+  };
+
+  // generate text with the charRNN
+  charRNN.generate(genData, gotData);
+
+  // When it's done
+  function gotData(err, result) {
+    text = result.sample;
+    insertAuthor();
+    splitText();
+  }
+}
+
+function insertAuthor() {
+}
+
+function splitText() {
+  textArray = text.split(" ");
+  console.log(text);
+  console.log(textArray.length);
+  // line[0] = [];
+  let line1array = [];
+  let line2array = [];
+  let line3array = [];
+  for (var i = 0; i < 5; i++) { line1array[i] = textArray[i]; }
+  for (var i = 0; i < 7; i++) { line2array[i] = textArray[i+5]; }
+  for (var i = 0; i < 5; i++) { line3array[i] = textArray[i+12]; }
+  line1 = line1array.join(' ');
+  line2 = line2array.join(' ');
+  line3 = line3array.join(' ');
+  haiku = `${line1}\n${line2}\n${line3}`;
+  console.log(haiku);
+  line = [line1, line2, line3];
+  for (var i = 0; i < 3; i++) {
+    document.getElementById(`line-${i+1}`).innerHTML = line[i];
+  }
+}
+
 // "use strict";
 //
 // let model = `hemingway`;
@@ -38,83 +107,3 @@
 // function draw() {
 //
 // }
-
-// Copyright (c) 2019 ml5
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
-
-/* ===
-ml5 Example
-LSTM Generator example with p5.js
-This uses a pre-trained model on a corpus of Virginia Woolf
-For more models see: https://github.com/ml5js/ml5-data-and-training/tree/master/models/charRNN
-=== */
-
-let charRNN;
-let textInput;
-let lengthSlider;
-let tempSlider;
-let button;
-let runningInference = false;
-const FilePath = `https://raw.githubusercontent.com/ml5js/ml5-data-and-models/main/models/charRNN`;
-let line1, line2, line3;
-let haiku;
-
-function setup() {
-
-  // Create the LSTM Generator passing it the model directory
-  charRNN = ml5.charRNN(`${FilePath}/woolf/`, generate);
-
-}
-
-
-// Generate new text
-function generate() {
-  // prevent starting inference if we've already started another instance
-  if(!runningInference) {
-    runningInference = true;
-
-    // Grab the original text
-    const original = `The meaning of life \nis `;
-    // Make it to lower case
-    const txt = original.toLowerCase();
-
-    // Check if there's something to send
-    if (txt.length > 0) {
-      // This is what the LSTM generator needs
-      // Seed text, temperature, length to outputs
-      // TODO: What are the defaults?
-      const data7 = {
-        seed: original,
-        temperature: 0.51,
-        length: 200
-      };
-      const data5 = {
-        seed: original,
-        temperature: 0.51,
-        length: 200
-      };
-
-      // Generate text with the charRNN
-      charRNN.generate(data7, gotData7);
-      charRNN.generate(data5, gotData5);
-
-      haiku = `
-${txt}
-${line2}
-${line3}
-`
-console.log(haiku);
-      // When it's done
-      function gotData7(err, result) {
-        line2 = result.sample;
-        console.log(line2);
-      }
-      function gotData5(err, result) {
-        line3 = result.sample;
-        runningInference = false;
-      }
-    }
-  }
-}
