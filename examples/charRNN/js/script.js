@@ -9,10 +9,6 @@ let charRNN;
 let text, textArray;
 let line1, line2, line3;
 let line = [];
-// let line = [];
-// for (let i = 0; i < 3; i++) {
-//   line[i] = [];
-// }
 let haiku;
 
 function setup() {
@@ -66,44 +62,3 @@ function splitText() {
     document.getElementById(`line-${i+1}`).innerHTML = line[i];
   }
 }
-
-// "use strict";
-//
-// let model = `hemingway`;
-//
-// function preload() {
-//
-// }
-//
-//
-// function setup() {
-//   // Create the character level generator with a pre trained model
-//   // const rnn = ml5.charRNN('models/bolaño/', modelLoaded);
-//   const rnn = ml5.charRNN(`https://raw.githubusercontent.com/ml5js/ml5-data-and-models/main/models/charRNN/${model}/`, modelLoaded);
-//
-//   // When the model is loaded
-//   function modelLoaded() {
-//     console.log('Model Loaded!');
-//   }
-//
-//   // Generate content
-//   // rnn.generate({ seed: 'she went to the ', length: 50 }, (err, results) => {
-//   //   console.log(results);
-//   //   console.log(results.sample);
-//   //   text(results.sample, 0, height/2);
-//   // });
-//   rnn.predict({ seed: 'she went to the ', length: 50 }, (err, results) => {
-//     console.log(results);
-//     console.log(results.sample);
-//     text(results.sample, 0, height/2);
-//   });
-//
-// }
-//
-//
-// /**
-// Description of draw()
-// */
-// function draw() {
-//
-// }
