@@ -36,7 +36,10 @@ jQuery methods include:
 - `.text()`: element text content (e.g. ```$(`#example-span`).text($(`#example-span`).text().split(``).reverse().join(``));```)
 - `.html()`: element HTML content (e.g. ```$(`#example-span`).html(`<strong>${$(`#example-span`).html()}</strong>`);```)
 - `.attr()`: element attribute (e.g. ```$(`#main-heading`).attr(`contenteditable`, `true`);``` || ```.attr(`href`)```)
-- `.each()`: iterating through multiple elements (e.g. ```$(`.header`).each(function() { $(this).text($(this).text().split(``).reverse().join(``)); });```)
+- `.each()`: iterating through multiple elements (e.g.
+  ```
+  $(`.header`).each(function() { $(this).text($(this).text().split(``).reverse().join(``)); });
+  ```
 
 ### Creation
 Create an element using the jQuery function with a full tag as an argument, setting its content and inserting it on page
@@ -127,13 +130,12 @@ Same a plain JS, except for the use of `.val()` to access form value
   $(`#range-slider`).on(`change`, function(event) { console.log($(this).val()); });
 </script>
 ```
-
 ## Extras
 ### Dynamic class attribution
 - `.addClass()` (e.g. ```$(`#main-heading`).addClass(`highlight`);```)
 - `.removeClass()` (e.g. ```$(`#main-heading`).on(`click`,function(event) { $(this).removeClass(`highlight`); });```)
 - `.toggleClass()` (e.g. ```$(`#main-heading`).on(`click`,function(event) { $(this).toggleClass(`highlight`); });```)
-- idem, prodecural: (```setInterval(function() { $(`#main-heading`).toggleClass(`highlight`); }, 500);```)
+- idem, prodecural: ```setInterval(function() { $(`#main-heading`).toggleClass(`highlight`); }, 500);```
 ### Display transitions
 #### On/Off
 - `.hide()`: set `display` to `none` (e.g. ```$(`#button`).on(`click`, function(event) { $(`#main-heading`).hide(); });```)
