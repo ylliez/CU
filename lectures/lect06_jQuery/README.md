@@ -50,3 +50,10 @@ Remove elements using the jQuery `.remove()` method (e.g. ```$(`#main-heading`).
 __Only possible through parent elements__
 
 ## Events
+### `.on()`
+For most events, use `.on()`, which takes two argument, event type (e.g. `click`) and callback function.
+```
+$(`#main-heading`).on(`click`, function(event) {
+  $(`#main-heading`).css(`color`,`#ff0000`);
+});
+```
