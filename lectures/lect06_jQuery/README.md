@@ -5,7 +5,7 @@ jQuery is a JavaScript library created to streamline DOM manipulation (e.g. trav
 ## Process
 ### Selection
 Select an element using the jQuery function `$()` which takes a single argument of the CSS selector as a string  
-CSS selector can be id (`#`), class (`.`)
+CSS selector can be id (`#`), class (`.`)  
 !!! if repeatedly using the same selector, store jQuery selection in a variable for efficiency.
 ### Action
 Act on the selected element using jQuery methods (e.g. `.css()`)
@@ -40,5 +40,7 @@ $(`#second-section`).append($newP);
 ```
 )
 ### Deletion
-Remove elements using the jQuery `.remove()` method (e.g. ```$(`#main-heading`).remove();```)
+Remove elements using the jQuery `.remove()` method (e.g. ```$(`#main-heading`).remove();```)  
 !!Only possible through parent elements!!
+
+## Events
