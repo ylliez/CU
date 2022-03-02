@@ -53,7 +53,48 @@ __Only possible through parent elements__
 ### `.on()`
 For most events, use `.on()`, which takes two argument, event type (e.g. `click`) and callback function.
 ```
-$(`#main-heading`).on(`click`, function(event) {
-  $(`#main-heading`).css(`color`,`#ff0000`);
+$(`#main-heading`).on(`click`, (event) => { $(`#main-heading`).css(`color`,`#ff0000`); });
+```
+The callback function automatically receives a parameter containing an object with info about the triggering event  
+```
+$(`#main-heading`).on(`click`, (event) => { console.log(event); });
+```
+One important event property, `event.target` in classic DOM, can be called using `$(this)`
+```
+$(`.header`).on(`click`, function(event) { $(this).remove(); });
+```
+
+### Other
+#### `.one()`
+Similar function to `.on()`, but can only be triggered once
+```
+$(`section`).on(`click`, function(event) { $(this).append(`<p>This will be added every click.</p>`) });  
+$(`section`).one(`click`, function(event) { $(this).append(`<p>This will be added once only.</p>`) });
+```
+#### Mouse
+jQuery supports all the standard DOM events such as `click`, `mouseenter`, `mouseleave`, `contextmenu`, and so on.  
+Also `.hover()`
+```
+$(`#paragraph`).hover(
+  function(event) { $(this).css(`color`, `#ff0000`); },
+  function(event) { $(this).css(`color`, `#000000`); }
+  );
+```
+#### Keyboard
+jQuery supports all the standard DOM events such as `keydown`, `keyup`, and `keypress`. The `.key` and `.keyCode` properties are available on the event parameter to find out which key was interacted with.
+#### Other  events
+`scroll` and `resize`<br>
+`drag` and `drop`<br>
+`cut`, `copy`, and `paste`<br>
+`online` and `offline`
+`focus` and `blur`
+`beforeprint` and `afterprint`
+
+### `.off()`
+Use the `.off()` method to stop listening for an event.
+```
+$(`.header`).on(`click`, function(event) {
+  $(this).css(`color`, `#ff0000`);
+  $(`.header`).off(`click`);
 });
 ```
