@@ -8,11 +8,9 @@ Select an element using the jQuery function `$()` which takes a single argument 
 CSS selector can be id (`#`), class (`.`)
 ### Action
 Act on the selected element using jQuery methods (e.g. `.css()`)  
+`.css('color','#f00');
+.css('background-color','black');
+.css('font-size','3rem');
 `
-.css(`color`,`#f00`);
-.css(`background-color`,`black`);
-.css(`font-size`,`3rem`);
-`
-
 
 !!! if repeatedly using the same selector, store jQuery selection in a variable for efficiency.
