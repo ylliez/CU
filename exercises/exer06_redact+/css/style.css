@@ -6,20 +6,19 @@ By default that's nothing.
 **********************************************/
 
 #secret-document {
-  font-size: 2rem;
-  font-family: Helvetica, sans-serif;
-  margin-left: 100px;
-  margin-right: 100px
+  font-family: Courier, monospace;
+  font-size: 1.2rem;
+  margin: 50px 100px;
 }
 
 .redacted {
   background-color: #000;
-  user-select: none
+  user-select: none;
 }
 
 .revealed {
   color: #f00;
   background-color: #fff;
   user-select: text;
-  text-decoration: underline
+  text-decoration: underline;
 }
