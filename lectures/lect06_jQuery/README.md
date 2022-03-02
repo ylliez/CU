@@ -10,7 +10,7 @@ jQuery is a JavaScript library created to streamline DOM manipulation (e.g. trav
 ## Process
 ### Selection
 Select an element using the jQuery function `$()` which takes a single argument of the CSS selector as a string  
-CSS selector can be id (`#`), class (`.`)  
+CSS selector can be id (`#`), class (`.`) (for more, see [jQuery selectors](https://api.jquery.com/category/selectors/))  
 __If repeatedly using the same selector, store jQuery selection in a variable for efficiency.__
 ### Action
 Act on the selected element using jQuery methods (e.g. `.css()`)  
@@ -36,6 +36,7 @@ jQuery methods include:
 - `.text()`: element text content (e.g. ```$(`#example-span`).text($(`#example-span`).text().split(``).reverse().join(``));```)
 - `.html()`: element HTML content (e.g. ```$(`#example-span`).html(`<strong>${$(`#example-span`).html()}</strong>`);```)
 - `.attr()`: element attribute (e.g. ```$(`#main-heading`).attr(`contenteditable`, `true`);``` || ```.attr(`href`)```)
+- `.each()`: iterating through multiple elements (e.g. ```$(`.header`).each(function() { $(this).text($(this).text().split(``).reverse().join(``)); });```)
 
 ### Creation
 Create an element using the jQuery function with a full tag as an argument, setting its content and inserting it on page
@@ -98,3 +99,124 @@ $(`.header`).on(`click`, function(event) {
   $(`.header`).off(`click`);
 });
 ```
+
+## Forms
+Same a plain JS, except for the use of `.val()` to access form value
+### Buttons
+```
+<input id="example-button" type="button" value="This is a button">
+<script type="text/javascript">
+  $(`#example-button`).on(`click`,function(event) { $(this).hide(); });
+</script>
+```
+### Text
+```
+<input id="example-text-input" type="text">
+<input id="example-button" type="button" value="Click me">
+<script type="text/javascript">
+  $(`#example-button`).on(`click`,function(event) {
+    let input = $(`#example-text-input`).val();
+    alert(input);
+  });
+</script>
+```
+### Slider
+```
+<input id="range-slider" type="range" value="0" min="0" max="100">
+<script type="text/javascript">
+  $(`#range-slider`).on(`change`, function(event) { console.log($(this).val()); });
+</script>
+```
+
+## Extras
+### Dynamic class attribution
+- `.addClass()` (e.g. ```$(`#main-heading`).addClass(`highlight`);```)
+- `.removeClass()` (e.g. ```$(`#main-heading`).on(`click`,function(event) { $(this).removeClass(`highlight`); });```)
+- `.toggleClass()` (e.g. ```$(`#main-heading`).on(`click`,function(event) { $(this).toggleClass(`highlight`); });```)
+- idem, prodecural: (```setInterval(function() { $(`#main-heading`).toggleClass(`highlight`); }, 500);```)
+### Display transitions
+#### On/Off
+- `.hide()`: set `display` to `none` (e.g. ```$(`#button`).on(`click`, function(event) { $(`#main-heading`).hide(); });```)
+- `.show()`: revert `display` to previous value
+```
+$(`#button`).on(`click`, function(event) {
+  $(`#main-heading`).hide();
+  setTimeout(() => { $(`#main-heading`).show(); }, 2000);
+});
+```
+- `.toggle()`: toggle element display
+```
+$(`#button`).on(`click`, function(event) { $(`#main-heading`).toggle(); });
+```
+#### Fading
+- `.fadeOut()` (can specify fade time as argument)
+```$(`#button`).on(`click`, function(event) { $(`#main-heading`).fadeOut(); });
+```
+```$(`#button`).on(`click`, function(event) { $(`#main-heading`).fadeOut(2000); });
+```
+- `.fadeIn()`
+```
+$(`#button`).on(`click`, function(event) {
+  $(`#main-heading`).fadeOut(2000, function() {
+    $(this).fadeIn(2000);
+  });
+});
+```
+- `.fadeToggle()` (e.g. ```$(`#button`).on(`click`, function(event) { $(`#main-heading`).fadeToggle(2000); });```)
+#### Sliding
+- `.slideUp()` (e.g. ```$(`#button`).on(`click`, function(event) { $(`#main-heading`).slideUp(2000); });```)
+- `.slideDown()`
+```
+$(`#button`).on(`click`, function(event) {
+  $(`#main-heading`).slideUp(2000, function() {
+    $(this).slideDown(2000);
+  });
+});
+```
+- `.slideToggle()` (e.g. ```$(`#button`).on(`click`, function(event) { $(`#main-heading`).slideToggle(2000); });```)
+### CSS animations
+Use `.animate()` to dynamically manipulate numerical CSS properties of elements  
+Specify CSS propert(y/ies), destination values & amount of time to animate over (duration)
+```
+$(`#button`).on(`click`, function(event) {
+  $(`#main-heading`).animate({
+    "opacity": 0.5
+  },2000);
+});
+```
+Can animate multiple properties simultaneously
+```
+$(`#button`).on(`click`, function(event) {
+  $(`#main-heading`).animate({
+    "opacity": 0.5,
+    "font-size": `1rem`
+  }, 2000);
+});
+```
+Can add callbacks
+```
+$(`#button`).on(`click`, function(event) {
+  $(`#main-heading`).animate({
+    "opacity": 0.5,
+    "font-size": `1rem`
+  }, 2000, function() {
+    $(this).css(`color`, `#ff0000`);
+  });
+});
+```
+Duration and callback can be included in options object
+```
+$(`#button`).on(`click`, function(event) {
+  $(`#main-heading`).animate({
+    "opacity": 0.5,
+    "font-size": `1rem`
+  }, {
+    duration: 2000,
+    easing: `linear`,
+    complete: function() {
+      $(this).css(`color`, `#ff0000`);
+    }
+  });
+});
+```
+__You can animate pretty much any numeric CSS property, like opacity, height, width, font-size but not everything you might expect will work (e.g. transform property, colors [unless jQuery UI lib])__
