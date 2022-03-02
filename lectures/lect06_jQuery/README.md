@@ -231,4 +231,5 @@ $(`#button`).on(`click`, function(event) {
   });
 });
 ```
-__You can animate pretty much any numeric CSS property, like opacity, height, width, font-size but not everything you might expect will work (e.g. transform property, colors [unless jQuery UI lib])__
+You can animate pretty much any numeric CSS property, like opacity, height, width, font-size.
+__BUT, not everything you might expect will work (e.g. transform property, colors [unless jQuery UI lib])__
