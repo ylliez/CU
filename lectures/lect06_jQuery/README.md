@@ -6,8 +6,9 @@ jQuery is a JavaScript library created to streamline DOM manipulation (e.g. trav
 ### Selection
 Select an element using the jQuery function `$()` which takes a single argument of the CSS selector as a string  
 CSS selector can be id (`#`), class (`.`)
+!!! if repeatedly using the same selector, store jQuery selection in a variable for efficiency.
 ### Action
-Act on the selected element using jQuery methods (e.g. `.css()`, `.text()`, `.html()`)
+Act on the selected element using jQuery methods (e.g. `.css()`)
 A jQuery method can take two arguments, property and value, as strings
 ```
 let $mainHeading = $(`#main-heading`);
@@ -25,5 +26,8 @@ $(`#main-heading`).css({
   "background-color": `#000000`
 });
 ```
-
-!!! if repeatedly using the same selector, store jQuery selection in a variable for efficiency.
+jQuery methods include:
+- `.css()`: element styling
+- `.text()`: element text content
+- `.html()`: element HTML content
+- `.attr()`: element attribute
