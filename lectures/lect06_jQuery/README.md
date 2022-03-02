@@ -165,9 +165,15 @@ $(`#button`).on(`click`, function(event) {
   });
 });
 ```
-- `.fadeToggle()` (e.g. ```$(`#button`).on(`click`, function(event) { $(`#main-heading`).fadeToggle(2000); });```)
+- `.fadeToggle()`
+```
+$(`#button`).on(`click`, function(event) { $(`#main-heading`).fadeToggle(2000); });
+```
 #### Sliding
-- `.slideUp()` (e.g. ```$(`#button`).on(`click`, function(event) { $(`#main-heading`).slideUp(2000); });```)
+- `.slideUp()`
+```
+$(`#button`).on(`click`, function(event) { $(`#main-heading`).slideUp(2000); });
+```
 - `.slideDown()`
 ```
 $(`#button`).on(`click`, function(event) {
@@ -176,7 +182,10 @@ $(`#button`).on(`click`, function(event) {
   });
 });
 ```
-- `.slideToggle()` (e.g. ```$(`#button`).on(`click`, function(event) { $(`#main-heading`).slideToggle(2000); });```)
+- `.slideToggle()`
+```
+$(`#button`).on(`click`, function(event) { $(`#main-heading`).slideToggle(2000); });
+```
 ### CSS animations
 Use `.animate()` to dynamically manipulate numerical CSS properties of elements  
 Specify CSS propert(y/ies), destination values & amount of time to animate over (duration)
