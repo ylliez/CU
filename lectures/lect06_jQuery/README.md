@@ -8,7 +8,7 @@ Select an element using the jQuery function `$()` which takes a single argument 
 CSS selector can be id (`#`), class (`.`)
 ### Action
 Act on the selected element using jQuery methods (e.g. `.css()`)
-A jQuery method can take two arguments, property and value, as strings (e.g.
+A jQuery method can take two arguments, property and value, as strings
 ```
 let $mainHeading = $(`#main-heading`);
 $mainHeading.css(`color`, `#339966`);
@@ -16,7 +16,7 @@ $mainHeading.css(`font-size`, `5rem`);
 $mainHeading.css(`font-family`, `Helvetica, sans-serif`);
 $mainHeading.css(`background-color`, `#000000`);
 ```
-) or a single argument, an object containing property and value (e.g.
+Or a single argument, an object containing property and value (e.g.
 ```
 $(`#main-heading`).css({
   "color": `#339966`,
@@ -25,6 +25,5 @@ $(`#main-heading`).css({
   "background-color": `#000000`
 });
 ```
-)
 
 !!! if repeatedly using the same selector, store jQuery selection in a variable for efficiency.
