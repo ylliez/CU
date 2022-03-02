@@ -28,6 +28,17 @@ $(`#main-heading`).css({
 ```
 jQuery methods include:
 - `.css()`: element styling
-- `.text()`: element text content
-- `.html()`: element HTML content
-- `.attr()`: element attribute
+- `.text()`: element text content (e.g. ```$(`#example-span`).text($(`#example-span`).text().split(``).reverse().join(``));```)
+- `.html()`: element HTML content (e.g. ```$(`#example-span`).html(`<strong>${$(`#example-span`).html()}</strong>`);```)
+- `.attr()`: element attribute (e.g. ```$(`#main-heading`).attr(`contenteditable`, `true`);``` || ```.attr(`href`)```)
+
+### Creation
+Create an element using the jQuery function with a full tag as an argument, setting its content and inserting it on page (e.g. ```
+let $newP = $(`<p></p>`);
+$newP.text(`Hot off the presses!`);
+$(`#second-section`).append($newP);
+```
+)
+### Deletion
+Remove elements using the jQuery `.remove()` method (e.g. ```$(`#main-heading`).remove();```)
+!!Only possible through parent elements!!

@@ -44,7 +44,28 @@
 // // Set the span's text to the reversed version
 // $(`#example-span`).text(reverseSpanText);
 
+// $(`#example-span`).text($(`#example-span`).text().split(``).reverse().join(``));
+
 // // Get the HTML content of the span
 // let spanHTML = $(`#example-span`).html();
 // // Set the HTML content of the span as the original content wrapped in a <strong> tag
 // $(`#example-span`).html(`<strong>${spanHTML}</strong>`);
+
+// $(`#example-span`).html(`<strong>${$(`#example-span`).html()}</strong>`);
+
+// $(`#main-heading`).attr(`contenteditable`, `true`);
+
+// if ($(`#thicc-link`).attr(`href`) === `https://thi.cc`) {
+//   $(`#thicc-link`).text(`thicc, thicc link`);
+// }
+
+// console.log($(`#thicc-link`).attr(`href`));
+
+// // Create a <p> element
+// let $newP = $(`<p></p>`);
+// // Set the text inside the new <p> element so it has something to say!
+// $newP.text(`Hot off the presses!`);
+// // Add it to the second section (selected by id)
+// $(`#second-section`).append($newP);
+
+$(`#main-heading`).remove();
