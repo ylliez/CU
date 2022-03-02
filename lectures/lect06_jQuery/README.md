@@ -154,9 +154,8 @@ $(`#button`).on(`click`, function(event) { $(`#main-heading`).toggle(); });
 - `.fadeOut()` (can specify fade time as argument)
 ```
 $(`#button`).on(`click`, function(event) { $(`#main-heading`).fadeOut(); });
-```
-```
-$(`#button`).on(`click`, function(event) { $(`#main-heading`).fadeOut(2000); });
+// Or with duration as argument
+// $(`#button`).on(`click`, function(event) { $(`#main-heading`).fadeOut(2000); });
 ```
 - `.fadeIn()`
 ```
