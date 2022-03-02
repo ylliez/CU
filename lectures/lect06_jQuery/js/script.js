@@ -1,3 +1,4 @@
+/* PART 1
 "use strict";
 
 // // Get the <h1> element by its id and store it in a variable
@@ -68,4 +69,9 @@
 // // Add it to the second section (selected by id)
 // $(`#second-section`).append($newP);
 
-$(`#main-heading`).remove();
+// $(`#main-heading`).remove();
+*/
+
+$(`#main-heading`).on(`click`, function(event) {
+  $(`#main-heading`).css(`color`,`#ff0000`);
+});
