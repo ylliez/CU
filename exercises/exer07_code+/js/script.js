@@ -30,7 +30,7 @@ $(`#solved-dialog`).dialog({
   buttons: { "I know": function() { $(this).dialog(`close`); }
 }});
 
-/*
+/* https://pippinbarr.github.io/cart263/exercises/code-taker-plus-plus.html
 - Rework the HTML and CSS to make this a more engaging presentation of the idea
 - Change to a different text and secret message to make it your own
 - Add a modal instructions dialog when the page loads that explains to the user what they’re meant to be doing
