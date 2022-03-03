@@ -4,3 +4,13 @@ Here is a description of any special CSS used.
 By default that's nothing.
 
 **********************************************/
+
+#answer {
+  height: 10vh;
+  width: 10vw;
+  background-color: #ccc;
+}
+
+.found {
+  color: #f00;
+}
