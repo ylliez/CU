@@ -14,8 +14,8 @@ let hand;
 // SETUP: initialize canvas, video and model
 function setup() {
   // options for different displays (4:3 || relative) -> adapt createGraphics
-  createCanvas(640, 480);
-  // createCanvas(windowWidth, windowHeight);
+  // createCanvas(640, 480);
+  createCanvas(windowWidth, windowHeight);
   // createCanvas(1280, 960);
   // createCanvas(1920, 1440);
   // Start webcam and hide the resulting HTML element
@@ -67,12 +67,12 @@ function drawIndexTip() {
   trailBlazer.push();
   trailBlazer.stroke(255,0,0);
   trailBlazer.strokeWeight(3);
-  console.log(`${hand.prev.x}, ${hand.prev.y}, ${hand.index.x}, ${hand.index.y}`);
+  // console.log(`${hand.prev.x}, ${hand.prev.y}, ${hand.index.x}, ${hand.index.y}`);
   // adapt graphics to selected canvas AR
   // 640 x 480
-  trailBlazer.line(hand.prev.x, hand.prev.y, hand.index.x, hand.index.y);
+  // trailBlazer.line(hand.prev.x, hand.prev.y, hand.index.x, hand.index.y);
   // width x height
-  // trailBlazer.line(hand.prev.x/640*width, hand.prev.y/480*height, hand.index.x/640*width, hand.index.y/480*height);
+  trailBlazer.line(hand.prev.x/640*width, hand.prev.y/480*height, hand.index.x/640*width, hand.index.y/480*height);
   // 1280 x 960
   // trailBlazer.line(hand.prev.x*2, hand.prev.y*2, hand.index.x*2, hand.index.y*2);
   // 1920 x 1440
