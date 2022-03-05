@@ -15,13 +15,15 @@ let predictions = [];
 let hand;
 
 /* ble */
-const serviceUuid = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
-let teloBLE, teloCharacteristic, writeOn, intensity;
-let connectButton, disconnectButton;
+const TELO_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+let teloBLE, teloCharacteristic, teloIntensity;
+let connectButton = document.getElementById('connectBtn');
+let disconnectButton = document.getElementById('disconnectBtn');
 
 // SETUP: initialize canvas, video and model
 function setup() {
   dynamicCanvas = new DynamicCanvas(640, 480);
+  // connectButton.style.left = "10px"
   // start webcam and hide the resulting HTML element
   video = createCapture(VIDEO);
   video.hide();
@@ -38,8 +40,10 @@ function setup() {
 }
 
 // connect to device by passing the service UUID
-function mousePressed() {
-  teloBLE.connect(serviceUuid, gotCharacteristics);
+function connectToBLE() {
+  teloBLE.connect(TELO_UUID, gotCharacteristics);
+  connectButton.style.display = "none";
+  disconnectButton.style.display = "block";
 }
 
 function gotCharacteristics(error, characteristics) {
@@ -47,6 +51,13 @@ function gotCharacteristics(error, characteristics) {
   console.log('characteristics: ', characteristics);
   // Set the first characteristic as myCharacteristic
   teloCharacteristic = characteristics[0];
+}
+
+function disconnectFromBLE() {
+  teloBLE.write(teloCharacteristic, 0);
+  teloBLE.disconnect();
+  disconnectButton.style.display = "none";
+  connectButton.style.display = "block";
 }
 
 // DRAW: handle program state
@@ -94,9 +105,9 @@ function drawIndexTip() {
 }
 
 function writeToBLE() {
-  if (teloBLE.isConnected()) {
-    intensity = 255 - floor(hand.index.y / height * 255);
-    console.log(intensity);
-    teloBLE.write(teloCharacteristic, intensity);
+  if (teloBLE.isConnected() && teloCharacteristic) {
+    if (predictions.length > 0 && hand.index.y > 50) { teloIntensity = 255 - floor(hand.index.y / height * 255); }
+    else { teloIntensity = 0 }
+    teloBLE.write(teloCharacteristic, teloIntensity);
   }
 }
