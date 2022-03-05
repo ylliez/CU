@@ -3,6 +3,8 @@
 
 // program state (loading, running)
 let state = `loading`;
+// holder for dynamic canvas
+let dynamicCanvas;
 // holders for input video feed and output graphics display
 let video, trailBlazer;
 
@@ -13,9 +15,10 @@ let hand;
 
 // SETUP: initialize canvas, video and model
 function setup() {
+  dynamicCanvas = new DynamicCanvas(640, 480);
   // options for different displays (4:3 || relative) -> adapt createGraphics
   // createCanvas(640, 480);
-  createCanvas(windowWidth, windowHeight);
+  // createCanvas(windowWidth, windowHeight);
   // createCanvas(1280, 960);
   // createCanvas(1920, 1440);
   // Start webcam and hide the resulting HTML element
@@ -33,6 +36,7 @@ function setup() {
 
 // DRAW: handle program state
 function draw() {
+  dynamicCanvas.update();
   if (state === `loading`) { loading(); }
   else if (state === `running`) { running(); }
 }
