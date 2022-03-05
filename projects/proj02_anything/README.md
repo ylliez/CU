@@ -9,7 +9,3 @@ Final project: artist’s statement and the final project.
 ### [Project 2.2](https://github.com/ylliez/CART263/tree/main/projects/proj02_anything/proj02_telomatic) - [Telomatic](https://ylliez.github.io/CART263/projects/proj02_anything/proj02_telomatic/)
 
 ## R&D
-### Tech-based
-
-
-### Movie-based
