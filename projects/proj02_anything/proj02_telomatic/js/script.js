@@ -14,6 +14,11 @@ let handpose;
 let predictions = [];
 let hand;
 
+/* ble */
+const serviceUuid = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+let teloBLE, teloCharacteristic, writeOn, intensity;
+let connectButton, disconnectButton;
+
 // SETUP: initialize canvas, video and model
 function setup() {
   dynamicCanvas = new DynamicCanvas(640, 480);
@@ -28,6 +33,20 @@ function setup() {
   hand = new Hand();
   // instantiate graphics element
   trailBlazer = createGraphics(width, height);
+  // instantiate ble
+  teloBLE = new p5ble();
+}
+
+// connect to device by passing the service UUID
+function mousePressed() {
+  teloBLE.connect(serviceUuid, gotCharacteristics);
+}
+
+function gotCharacteristics(error, characteristics) {
+  if (error) console.log('error: ', error);
+  console.log('characteristics: ', characteristics);
+  // Set the first characteristic as myCharacteristic
+  teloCharacteristic = characteristics[0];
 }
 
 // DRAW: handle program state
@@ -60,6 +79,7 @@ function running() {
     hand.coordinate();
   }
   drawIndexTip();
+  writeToBLE();
 }
 
 // draw path following index finger tip
@@ -71,4 +91,12 @@ function drawIndexTip() {
   trailBlazer.line(hand.prev.x, hand.prev.y, hand.index.x, hand.index.y);
   trailBlazer.pop();
   image(trailBlazer, 0, 0);
+}
+
+function writeToBLE() {
+  if (teloBLE.isConnected()) {
+    intensity = 255 - floor(hand.index.y / height * 255);
+    console.log(intensity);
+    teloBLE.write(teloCharacteristic, intensity);
+  }
 }
