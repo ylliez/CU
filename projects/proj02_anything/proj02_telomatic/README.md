@@ -1,3 +1,7 @@
-# Project 2: Handpose
+# Project 2: Telomatic
 
-Telomatic
+## Project Description
+## Technical Profile
+### Libraries:
+- p5.js
+- ml5.js
