@@ -2,7 +2,11 @@ class Hand {
 
   constructor() {
     this.coordinates = [];
-    this.tip = {
+    this.index = {
+      x: undefined,
+      y: undefined
+    };
+    this.prev = {
       x: undefined,
       y: undefined
     };
@@ -15,21 +19,23 @@ class Hand {
   }
 
   update() {
-    this.getIndexTip();
-    this.displayIndexTip();
+    this.coordinate();
+    this.displayIndexindex();
   }
 
-  getIndexTip() {
-    this.tip = this.coordinates.annotations.indexFinger[3]
-    this.tip.x = this.tip[0];
-    this.tip.y = this.tip[1];
+  coordinate() {
+    this.prev.x = this.index.x;
+    this.prev.y = this.index.y;
+    this.index = this.coordinates.annotations.indexFinger[3]
+    this.index.x = this.index[0];
+    this.index.y = this.index[1];
   }
 
-  displayIndexTip() {
+  displayIndexindex() {
     push();
     fill(this.color.r,this.color.g,this.color.b);
     noStroke();
-    ellipse(this.tip.x, this.tip.y, this.size);
+    ellipse(this.index.x, this.index.y, this.size);
     pop();
   }
 
