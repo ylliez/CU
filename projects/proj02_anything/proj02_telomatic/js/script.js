@@ -4,10 +4,10 @@
 let state = `loading`; //
 // holder for user's webcam
 let video;
-// holder for Handpose object (using the name of the model for clarity)
+// holder for Handpose object, current set of predictions and extracted hand data
 let handpose;
-// The current set of predictions made by Handpose once it's running
 let predictions = [];
+let hand;
 
 // SETUP: initialize canvas, video and model
 function setup() {
@@ -18,7 +18,9 @@ function setup() {
   // initialize model, switch to running state upon load
   handpose = ml5.handpose(video, { flipHorizontal: true }, () => { state = `running`; });
   // start model, store prediction events in array if applicable
-  handpose.on(`predict`, function(results) { predictions = results; });
+  handpose.on(`predict`, (results) => { predictions = results; });
+  // instantiate index finger object
+  hand = new Hand();
 }
 
 // SIM: handle program state
@@ -46,21 +48,13 @@ function running() {
 
   // check if there are currently predictions to display
   if (predictions.length > 0) {
-    let hand = predictions[0];
-    // Highlight it on the canvas
-    displayIndexTip(hand);
+    hand.coordinates = predictions[0];
+    // display index finger tip
+    displayIndexTip();
   }
 }
 
-// provided with a detected hand, displays the tip of the index finger
-function displayIndexTip(hand) {
-  // display a circle at the tip of the index finger
-  let index = hand.annotations.indexFinger[3];
-  let indexX = index[0];
-  let indexY = index[1];
-  push();
-  fill(255, 255, 0);
-  noStroke();
-  ellipse(indexX, indexY, 50);
-  pop();
+// display the tip of the index finger
+function displayIndexTip() {
+  hand.update();
 }
