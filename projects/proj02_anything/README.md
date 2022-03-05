@@ -6,7 +6,7 @@ Final project: artist’s statement and the final project.
 
 ## Outcomes
 ### [Project 2.1](https://github.com/ylliez/CART263/tree/main/projects/proj02_anything/proj02_charRNN) - [charRNN](https://ylliez.github.io/CART263/projects/proj02_anything/proj02_charRNN/)
-### [Project 2.2](https://github.com/ylliez/CART263/tree/main/projects/proj02_anything/proj02_handpose) - [Handpose](https://ylliez.github.io/CART263/projects/proj02_anything/proj02_handpose/)
+### [Project 2.2](https://github.com/ylliez/CART263/tree/main/projects/proj02_anything/proj02_telomatic) - [Telomatic](https://ylliez.github.io/CART263/projects/proj02_anything/proj02_telomatic/)
 
 ## R&D
 ### Tech-based
