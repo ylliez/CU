@@ -114,14 +114,16 @@ function writeToBLE() {
     textStyle(BOLD);
     textAlign(CENTER, CENTER);
     fill(255);
-    text(teloIntensity, width / 4 * 3, height / 2);
+    text(hand.index.y, width / 4 * 3, height / 4);
+    text(height, width / 4 * 3, height / 2);
+    text(teloIntensity, width / 4 * 3, height / 4*3);
     pop();
   }
 }
 
 function keyPressed() {
   // 'f' key toggled fullscreen
-  if (key === 70) {    }
+  if (keyCode === 70) {    }
   // 'c' key toggled connection
   if (keyCode === 67) {
     if (!teloBLE.isConnected()) { connectToBLE(); }
