@@ -106,9 +106,9 @@ function drawIndexTip() {
 
 function writeToBLE() {
   if (teloBLE.isConnected() && teloCharacteristic) {
-    // teloIntensity = 255 - floor(hand.index.y / height * 255);
-    if (predictions.length > 0 && hand.index.y > 50) { teloIntensity = 255 - floor(hand.index.y / height * 255); }
-    else { teloIntensity = 0 }
+    teloIntensity = 255 - floor(hand.index.y / height * 255);
+    // if (predictions.length > 0 && hand.index.y > 50) { teloIntensity = 255 - floor(hand.index.y / height * 255); }
+    // else { teloIntensity = 0 }
     teloBLE.write(teloCharacteristic, teloIntensity);
     push();
     textSize(30);
