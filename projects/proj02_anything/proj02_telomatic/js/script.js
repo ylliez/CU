@@ -124,7 +124,14 @@ function writeToBLE() {
 
 function keyPressed() {
   // 'f' key toggled fullscreen
-  if (keyCode === 70) {    }
+  if (keyCode === 70) {
+    if (!document.fullscreen) {
+      document.body.requestFullscreen()
+    }
+    else {
+      document.body.exitFullscreen();
+    }
+  }
   // 'c' key toggled connection
   if (keyCode === 67) {
     if (!teloBLE.isConnected()) { connectToBLE(); }
