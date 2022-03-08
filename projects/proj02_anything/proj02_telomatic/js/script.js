@@ -105,11 +105,11 @@ function drawIndexTip() {
 }
 
 function writeToBLE() {
-  // if (teloBLE.isConnected() && teloCharacteristic) {
+  if (teloBLE.isConnected() && teloCharacteristic) {
+    teloIntensity = 255 - floor(hand.index.y / height * 255);
   //   if (predictions.length > 0 && hand.index.y > 50) { teloIntensity = 255 - floor(hand.index.y / height * 255); }
   //   else { teloIntensity = 0 }
-  //   teloBLE.write(teloCharacteristic, teloIntensity);
-  teloIntensity = 255 - floor(hand.index.y / height * 255);
+    teloBLE.write(teloCharacteristic, teloIntensity);
     push();
     textSize(30);
     textStyle(BOLD);
@@ -119,7 +119,7 @@ function writeToBLE() {
     text(floor(hand.index.y / height * 255), width / 4 * 3, height / 2);
     text(teloIntensity, width / 4 * 3, height / 4*3);
     pop();
-  // }
+  }
 }
 
 function keyPressed() {
