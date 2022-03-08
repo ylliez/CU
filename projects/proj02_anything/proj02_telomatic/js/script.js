@@ -109,6 +109,11 @@ function writeToBLE() {
     if (predictions.length > 0 && hand.index.y > 50) { teloIntensity = 255 - floor(hand.index.y / height * 255); }
     else { teloIntensity = 0 }
     teloBLE.write(teloCharacteristic, teloIntensity);
-    text(teloIntensity, width / 4 * 3, height / 4);
+    push();
+    textSize(30);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    text(teloIntensity, width / 4 * 3, height / 2);
+    pop();
   }
 }
