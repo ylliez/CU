@@ -27,14 +27,13 @@ function setup() {
   // start webcam and hide the resulting HTML element
   video = createCapture(VIDEO);
   video.hide();
+  
+  /* ml5 */
   // initialize model, switch to running state upon load
   handpose = ml5.handpose(video, { flipHorizontal: true }, () => { state = `running`; });
   // start model, store prediction events in array if applicable
   handpose.on(`predict`, (results) => { predictions = results; });
-  // instantiate index finger object
-  hand = new Hand();
-  // instantiate graphics element
-  trailBlazer = createGraphics(width, height);
+
   // instantiate ble
   teloBLE = new p5ble();
 }
