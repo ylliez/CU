@@ -123,7 +123,7 @@ function keyPressed() {
   // 'f' key toggled fullscreen
   if (key === 70) {    }
   // 'c' key toggled connection
-  if (key === 67) {
+  if (keyCode === 67) {
     if (!teloBLE.isConnected()) { connectToBLE(); }
     else { disconnectFromBLE(); }
   }
