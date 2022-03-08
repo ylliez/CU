@@ -28,10 +28,6 @@ function setup() {
   // start webcam and hide the resulting HTML element
   video = createCapture(VIDEO);
   video.hide();
-  // instantiate index finger object
-  hand = new Hand();
-  // instantiate graphics element
-  trailBlazer = createGraphics(width, height);
 
   /* ml5 */
   // initialize model, switch to running state upon load
@@ -42,6 +38,11 @@ function setup() {
   /* ble */
   // instantiate ble
   teloBLE = new p5ble();
+
+  // instantiate index finger object
+  hand = new Hand();
+  // instantiate graphics element
+  trailBlazer = createGraphics(width, height);
 }
 
 // connect to device by passing the service UUID
