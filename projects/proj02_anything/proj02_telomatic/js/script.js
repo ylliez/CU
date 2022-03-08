@@ -110,15 +110,15 @@ function writeToBLE() {
     if (predictions.length > 0 && hand.index.y > 50) { teloIntensity = 255 - floor(hand.index.y / height * 255); }
     else { teloIntensity = 0 }
     teloBLE.write(teloCharacteristic, teloIntensity);
-    push();
-    textSize(30);
-    textStyle(BOLD);
-    textAlign(CENTER, CENTER);
-    fill(255);
-    text(hand.index.y, width / 4 * 3, height / 4);
-    text(floor(hand.index.y / height * 255), width / 4 * 3, height / 2);
-    text(teloIntensity, width / 4 * 3, height / 4*3);
-    pop();
+    // push();
+    // textSize(30);
+    // textStyle(BOLD);
+    // textAlign(CENTER, CENTER);
+    // fill(255);
+    // text(hand.index.y, width / 4 * 3, height / 4);
+    // text(floor(hand.index.y / height * 255), width / 4 * 3, height / 2);
+    // text(teloIntensity, width / 4 * 3, height / 4*3);
+    // pop();
   }
 }
 
