@@ -27,13 +27,14 @@ function setup() {
   // start webcam and hide the resulting HTML element
   video = createCapture(VIDEO);
   video.hide();
-
-  /* ml5 */
   // initialize model, switch to running state upon load
   handpose = ml5.handpose(video, { flipHorizontal: true }, () => { state = `running`; });
   // start model, store prediction events in array if applicable
   handpose.on(`predict`, (results) => { predictions = results; });
-
+  // instantiate index finger object
+  hand = new Hand();
+  // instantiate graphics element
+  trailBlazer = createGraphics(width, height);
   // instantiate ble
   teloBLE = new p5ble();
 }
@@ -41,6 +42,8 @@ function setup() {
 // connect to device by passing the service UUID
 function connectToBLE() {
   teloBLE.connect(TELO_UUID, gotCharacteristics);
+  connectButton.style.display = "none";
+  disconnectButton.style.display = "block";
 }
 
 function gotCharacteristics(error, characteristics) {
@@ -48,9 +51,6 @@ function gotCharacteristics(error, characteristics) {
   console.log('characteristics: ', characteristics);
   // Set the first characteristic as myCharacteristic
   teloCharacteristic = characteristics[0];
-  // invert conn/disconn button
-  connectButton.style.display = "none";
-  disconnectButton.style.display = "block";
 }
 
 function disconnectFromBLE() {
@@ -109,11 +109,6 @@ function writeToBLE() {
     if (predictions.length > 0 && hand.index.y > 50) { teloIntensity = 255 - floor(hand.index.y / height * 255); }
     else { teloIntensity = 0 }
     teloBLE.write(teloCharacteristic, teloIntensity);
-    push();
-    textSize(32);
-    textStyle(BOLD);
-    textAlign(CENTER, CENTER);
-    text(teloIntensity, 3 * width / 4, height / 4);
-    pop();
+    text(teloIntensity, width / 4 * 3, height / 4);
   }
 }
