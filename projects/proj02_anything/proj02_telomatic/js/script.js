@@ -83,6 +83,7 @@ function loading() {
 function running() {
   // DEBUG - display mirrored video feed
   // image(ml5.flipImage(video), 0, 0, width, height);
+  background(0);
 
   // check for predictions and store in hand object if applicable
   if (predictions.length > 0) {
