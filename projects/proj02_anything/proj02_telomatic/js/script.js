@@ -115,7 +115,7 @@ function writeToBLE() {
     textAlign(CENTER, CENTER);
     fill(255);
     text(hand.index.y, width / 4 * 3, height / 4);
-    text(height, width / 4 * 3, height / 2);
+    text(hand.index.y / height, width / 4 * 3, height / 2);
     text(teloIntensity, width / 4 * 3, height / 4*3);
     pop();
   }
