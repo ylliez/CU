@@ -27,7 +27,7 @@ function setup() {
   // start webcam and hide the resulting HTML element
   video = createCapture(VIDEO);
   video.hide();
-  
+
   /* ml5 */
   // initialize model, switch to running state upon load
   handpose = ml5.handpose(video, { flipHorizontal: true }, () => { state = `running`; });
@@ -41,8 +41,6 @@ function setup() {
 // connect to device by passing the service UUID
 function connectToBLE() {
   teloBLE.connect(TELO_UUID, gotCharacteristics);
-  connectButton.style.display = "none";
-  disconnectButton.style.display = "block";
 }
 
 function gotCharacteristics(error, characteristics) {
@@ -50,6 +48,9 @@ function gotCharacteristics(error, characteristics) {
   console.log('characteristics: ', characteristics);
   // Set the first characteristic as myCharacteristic
   teloCharacteristic = characteristics[0];
+  // invert conn/disconn button
+  connectButton.style.display = "none";
+  disconnectButton.style.display = "block";
 }
 
 function disconnectFromBLE() {
