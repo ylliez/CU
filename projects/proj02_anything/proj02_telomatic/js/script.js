@@ -113,6 +113,7 @@ function writeToBLE() {
     textSize(30);
     textStyle(BOLD);
     textAlign(CENTER, CENTER);
+    fill(255);
     text(teloIntensity, width / 4 * 3, height / 2);
     pop();
   }
