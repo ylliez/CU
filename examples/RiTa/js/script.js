@@ -47,8 +47,8 @@ function preload() {
 
 function setup() {
 
-  createCanvas(500, 500);
-  textFont('helvetica', 16);
+  createCanvas(windowWidth, windowHeight);
+  textFont('helvetica', 18);
   textLeading(21);
   textAlign(LEFT);
 
@@ -67,7 +67,8 @@ function setup() {
 function drawText() {
   background(50, 30, 40);
   fill(220);
-  text(lines.join(' '), x, y, 420, 420);
+  text(lines.join(' '), x, y, width - x, height - y);
+  console.log(width-x);
 }
 
 function mouseClicked() {
