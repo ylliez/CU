@@ -16,6 +16,6 @@ Apophenia, Apophenic Apocrypha The Book of Apophenius, The Book of Apocryphus
 #### Qur'an
 [Al Islam (PDF)](https://www.alislam.org/quran/Holy-Quran-English.pdf)  
 [Archive.org (annotated & numerated txt)](https://archive.org/stream/EnglishTranslationOfTheHolyQuran/trans-quran-web_djvu.txt)  
-[Peace in Mind (annotated & numerated txt)](https://github.com/peace-in-mind/Quran-Truth-Edition/blob/master/English-Quran-plain-text.txt)
+[Peace in Mind (annotated & numerated txt)](https://github.com/peace-in-mind/Quran-Truth-Edition/blob/master/English-Quran-plain-text.txt)  
 [Tanzil (stripped txt ARABIC)](https://tanzil.net/download/)  
 [(stripped txt NONEXISTENT)](http://quran.mursil.com/Web-Print-Publishing-Quran-Text-Graphics-Fonts-and-Downloads/txt-format-unicode-text/translation-text)
