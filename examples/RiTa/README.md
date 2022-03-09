@@ -18,3 +18,7 @@ RiTa.syllables()
 RiTa.phones()  
 RiTa.stresses()  
 RiTa.pluralize() / RiTa.singularize()  
+
+### Markov Generation
+[reference](https://rednoise.org/rita/reference/RiMarkov/generate/index.html)  
+[tutorial](https://observablehq.com/@dhowe/tut-rita-ngrams)
