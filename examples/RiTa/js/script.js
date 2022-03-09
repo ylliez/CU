@@ -1,52 +1,38 @@
-"use strict";
+// from https://rednoise.org/rita/examples/p5/Kafgenstein/ (source: https://rednoise.org/rita/examples/p5/Kafgenstein/#source)
+let lines, markov, data1, data2, x = 160, y = 240;
 
-let sentence = `The elephant took a bite!`
-let input, button;
+function preload() {
+  data1 = loadStrings('assets/data/wittgenstein.txt');
+  data2 = loadStrings('assets/data/kafka.txt');
+}
 
 function setup() {
-  // let analysis = RiTa.analyze(`The elephant took a bite!`);
-  // let rhyming = RiTa.rhymes(`sentence`);
-  // let sentences = RiTa.sentences("banana cake. why not? today!");
-  // let words = RiTa.tokenize(`The elephant took a bite!`);
-  // console.log(rhyming);
-  // // to load a grammar
-  // let grammar = RiTa.grammar(jsonRules);
-  // console.log(grammar.expand());
 
-  // createCanvas(500,500);
-  // background(200);
-  // textSize(20);
-  // noStroke();
-  // for (let i=0; i < words.length; i++) {
-  //   text(words[i], 50, 50 + i*20);
-  // }
+  createCanvas(500, 500);
+  textFont('helvetica', 16);
+  textLeading(21);
+  textAlign(LEFT);
 
-  // input = createInput(`default text.`);
-  // button = createButton(`Submit`);
-  // button.mousePressed( () => {
-  //   let words = RiTa.tokenize(input.value());
-  //   let output = ``;
-  //   for (let i = 0; i < words.length; i++) {
-  //     if (!RiTa.isPunct(words[i])) { output += ` `; }
-  //     output += words[i];
-  //   }
-  //   createP(output);
-  // });
+  lines = ["click to (re)generate"];
 
-  input = createInput(`The elephant took a bite!`);
-  button = createButton(`Submit`);
-  button.mousePressed( () => {
-    let words = RiTa.tokenize(input.value());
-    let output = ``;
-    for (let i = 0; i < words.length; i++) {
-      if (!RiTa.isPunct(words[i])) { output += ` `; }
-      let wordPOS = RiTa.pos(words[i])[0];
-      if (wordPOS === `nn`) { output += RiTa.randomWord( { pos: `nn`} ); }
-      else { output += words[i]; }
-    }
-    createP(output);
-  });
+  // create a markov model w' n=4
+  markov = RiTa.markov(4);
 
+  // load text into the model
+  markov.addText(data1.join(' '));
+  markov.addText(data2.join(' '));
 
+  drawText();
+}
 
+function drawText() {
+  background(50, 30, 40);
+  fill(220);
+  text(lines.join(' '), x, y, 420, 420);
+}
+
+function mouseClicked() {
+  lines = markov.generate(10);
+  x = y = 40;
+  drawText();
 }
