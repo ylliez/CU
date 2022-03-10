@@ -63,7 +63,10 @@ function checkEnd() {
 function gameOver() {
   // $(`#secret-document`).obfuscate();
   // $(`.apocrypha`).css(`cursor`, `none`);
-  alert(`You lose!`);
+  if(confirm(`And all the people saw the thunderings, and the lightnings, and the noise of the trumpet, and the mountain smoking.
+The commandments have been set in stone. Would you like a printed copy to safeguard your soul?`)) {
+      window.print();
+    }
 }
 
 /* https://pippinbarr.github.io/cart263/exercises/raving-redactionist-plus-plus.html
