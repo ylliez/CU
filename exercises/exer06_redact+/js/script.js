@@ -6,8 +6,16 @@ let lines = []
 const NUM_COMMANDS = 10;
 const REVEAL_PROB = 0.1;
 const ATTEMPT_FREQ = 1000;
+// holders for sound effects and info
+let sfx = [];
+const NUM_SOUNDS = 8;
 
-function preload() { json = loadJSON('assets/data/grammar.json'); }
+function preload() {
+  json = loadJSON('assets/data/grammar.json');
+  for (let i = 0; i < NUM_SOUNDS; i++) {
+    sfx[i] = loadSound(`assets/sounds/sfx_holy_${i}.wav`);
+  }
+}
 
 function setup() {
   // set RiTa grammar rules
@@ -24,7 +32,6 @@ function setup() {
 }
 
 function draw() {
-  dynamicCanvas.update();
 }
 
 function revelation() {
@@ -36,6 +43,8 @@ function attemptReveal() {
   if (Math.random() < REVEAL_PROB) {
     $(this).removeClass(`esoteric`);
     $(this).addClass(`revealed`);
+    // random(sfx).play();
+    sfx[0].play();
     checkEnd();
   }
 }
