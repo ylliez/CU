@@ -1,8 +1,5 @@
-// TO ADD
-// Start page
-// selectable redaction?
 // ^\w*\s\d+:\d+\s
-/* image dims: 1792*1008 */
+// image dims: 1792*1008
 
 "use strict";
 let state = `title`;
@@ -61,10 +58,11 @@ function attemptReveal() {
 
 function obfuscate() {
   $(this).animate( { "opacity": 0 }, 1000, function() {
-    $(this)[0].innerHTML = grammar.expand("start");
+    $(this).html(grammar.expand("start"));
+    $(this).animate( { "opacity": 1 }, 1000);
   });
-  $(this).removeClass(`revealed`);
-  $(this).addClass(`esoteric`);
+  // $(this).removeClass(`revealed`);
+  // $(this).addClass(`esoteric`);
 }
 
 function checkEnd() {
