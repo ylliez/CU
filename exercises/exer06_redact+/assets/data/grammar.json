@@ -1,8 +1,8 @@
 {
-  "start": "<span>$subject</span> <span>$auxiliary</span> <span>$negation</span> <span>$verb</span> <span>$object</span>.",
-  "subject": "You",
-  "auxiliary": "shall | should | could | might",
-  "negation": " not |",
-  "verb": "have | make idols of | take | remember | honour | kill | commit adultery with | steal from | bear false witness against | covet ",
-  "object": "other gods | God | the name of the Lord in vain | the sabbath | your father and your mother | others | your neighbour | your neighbour's belongings"
+  "start": "$prp $md $rb $vb $object",
+  "prp": "You",
+  "md": "shall | should | could | might",
+  "rb": "not |",
+  "vb": "have | make idols of | take | remember | honour | kill | commit adultery with | steal from | bear false witness against | covet ",
+  "object": "other gods. | God. | the name of the Lord in vain. | the sabbath. | your father and your mother. | others. | your neighbour. | your neighbour's belongings."
 }
