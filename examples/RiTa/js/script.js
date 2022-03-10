@@ -1,78 +1,36 @@
-// // from https://rednoise.org/rita/examples/p5/Kafgenstein/ (source: https://rednoise.org/rita/examples/p5/Kafgenstein/#source)
-// let lines, markov, data1, data2, x = 160, y = 240;
-//
-// function preload() {
-//   data1 = loadStrings('assets/data/wittgenstein.txt');
-//   data2 = loadStrings('assets/data/kafka.txt');
-// }
-//
-// function setup() {
-//
-//   createCanvas(500, 500);
-//   textFont('helvetica', 16);
-//   textLeading(21);
-//   textAlign(LEFT);
-//
-//   lines = ["click to (re)generate"];
-//
-//   // create a markov model w' n=4
-//   markov = RiTa.markov(4);
-//
-//   // load text into the model
-//   markov.addText(data1.join(' '));
-//   markov.addText(data2.join(' '));
-//
-//   drawText();
-// }
-//
-// function drawText() {
-//   background(50, 30, 40);
-//   fill(220);
-//   text(lines.join(' '), x, y, 420, 420);
-// }
-//
-// function mouseClicked() {
-//   lines = markov.generate(10);
-//   x = y = 40;
-//   drawText();
-// }
-
-// from https://rednoise.org/rita/examples/p5/Kafgenstein/ (source: https://rednoise.org/rita/examples/p5/Kafgenstein/#source)
-let lines, markov, data1, data2, x = 160, y = 240;
+let json, grammar, result;
+let lines = []
+const NUM_COMMANDS = 10;
 
 function preload() {
-  data1 = loadStrings('assets/texts/wittgenstein.txt');
-  data2 = loadStrings('assets/texts/bible.txt');
+  json = loadJSON('assets/data/grammar.json');
 }
 
 function setup() {
 
   createCanvas(windowWidth, windowHeight);
-  textFont('helvetica', 18);
-  textLeading(21);
+  textSize(30);
   textAlign(LEFT);
 
-  lines = ["click to (re)generate"];
-
-  // create a markov model w' n=4
-  markov = RiTa.markov(3);
-
-  // load text into the model
-  markov.addText(data1.join(' '),10);
-  markov.addText(data2.join(' '));
-
-  drawText();
+  grammar = RiTa.grammar(json);
+  // grammar = RiTa.grammar(json);
+  for (let i = 0; i < NUM_COMMANDS; i++) {
+    lines[i] = grammar.expand();
+  }
 }
 
-function drawText() {
-  background(50, 30, 40);
-  fill(220);
-  text(lines.join(' '), x, y, width - x, height - y);
-  console.log(width-x);
+function draw() {
+  background(230, 240, 255);
+  for (let i = 0; i < NUM_COMMANDS; i++) {
+    text(lines[i], 20, (i+5)*40);
+  }
 }
 
-function mouseClicked() {
-  lines = markov.generate(10);
-  x = y = 40;
-  drawText();
+function mouseReleased() {
+
+  let result = grammar.expand();
+  // let haiku = result.split("%");
+  for (let i = 0; i < lines.length; i++) {
+    lines[i] = haiku[i];
+  }
 }
