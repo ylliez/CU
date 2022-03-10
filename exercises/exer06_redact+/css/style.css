@@ -1,24 +1,35 @@
-/*********************************************
+@font-face {
+    font-family: Tanach;
+    src: url("../assets/data/tanach.regular.ttf") format("truetype");
+}
 
-Here is a description of any special CSS used.
-By default that's nothing.
+body {
+  background-color: #000;
+  background-image: url('../assets/images/Rembrandt_tablets.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
 
-**********************************************/
-
-#secret-document {
-  font-family: Courier, monospace;
-  font-size: 1.2rem;
+#commandments {
+  font-family: Tanach, cursive;
+  font-size: 1.5rem;
   margin: 50px 100px;
 }
 
-.redacted {
+h2 {
+  text-align: center;
+  color: #fff;
+}
+
+.hidden {
   background-color: #000;
   user-select: none;
 }
 
 .revealed {
-  color: #f00;
   background-color: #fff;
   user-select: text;
-  text-decoration: underline;
 }
+
+/* image dims: 1792*1008 */
