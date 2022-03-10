@@ -3,7 +3,7 @@ let json, grammar, result;
 let lines = []
 const NUM_COMMANDS = 10;
 const REVEAL_PROB = 0.1;
-const ATTEMPT_FREQ = 500;
+const ATTEMPT_FREQ = 1000;
 
 function preload() {
   json = loadJSON('assets/data/grammar.json');
@@ -17,7 +17,7 @@ function setup() {
 
   setInterval(revelation, ATTEMPT_FREQ);
 
-  $(`.top-secret`).on(`click`,redact);
+  $(`.apocrypha`).on(`click`,redact);
 }
 
 function draw() {
@@ -27,13 +27,13 @@ function draw() {
 }
 
 function revelation() {
-  $(`.redacted`).each(attemptReveal);
-  // $(`.redacted`).each(attemptReveal, checkEnd);
+  $(`.hidden`).each(attemptReveal);
+  // $(`.hidden`).each(attemptReveal, checkEnd);
 }
 
 function attemptReveal() {
   if (Math.random() < REVEAL_PROB) {
-    $(this).removeClass(`redacted`);
+    $(this).removeClass(`hidden`);
     $(this).addClass(`revealed`);
     checkEnd();
   }
@@ -41,11 +41,11 @@ function attemptReveal() {
 
 function redact() {
   $(this).removeClass(`revealed`);
-  $(this).addClass(`redacted`);
+  $(this).addClass(`hidden`);
 }
 
 function checkEnd() {
-  if (!$(`.redacted`).length) {
+  if (!$(`.hidden`).length) {
     gameOver();
     // requestAnimationFrame(gameOver);
   }
@@ -53,7 +53,7 @@ function checkEnd() {
 
 function gameOver() {
   // $(`#secret-document`).hide();
-  // $(`.top-secret`).css(`cursor`, `none`);
+  // $(`.apocrypha`).css(`cursor`, `none`);
   alert(`You lose!`);
 }
 
@@ -63,8 +63,8 @@ function gameOver() {
 - Add audio to the experience (background music? the sound of a boring office? a pen squealing sound when you redact something? a gasp when something is revealed?)
 - Allow the user to redact by clicking and dragging the mouse cursor over a reveal passage rather than clicking
 - Add an ending of some kind to the experience if the user allows all the secrets to be revealed (“YOU LOST THE COLD WAR!!”)
-- Have a computer voice read out revealed secrets and have the user “lose” if the computer finishes reading before they’ve redacted it
+- Have a computer voice read out revealed secrets and have the user “lose” if the computer finishes reading before they’ve hidden it
 - Make the secrets float off the “page” instead of just being revealed, and if they make it off the edge they’re gone forever - clicking them makes them go back to where they started
 - Generate a text for redaction in code instead of having it already in the HTML (you’ll have to generate the redaction spans as well)
-- Use ml5.js’s text features of a library like RiTa to generate the text being redacted
+- Use ml5.js’s text features of a library like RiTa to generate the text being hidden
 */
