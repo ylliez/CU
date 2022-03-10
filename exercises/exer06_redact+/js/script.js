@@ -7,7 +7,7 @@ let state = `title`;
 let grammarJSON, grammar;
 const NUM_COMMANDS = 10;
 const REVEAL_PROB = 0.01;
-const ATTEMPT_FREQ = 50;
+const ATTEMPT_FREQ = 500;
 // holders for sound effects and info
 let sfx = [];
 const NUM_SOUNDS = 8;
