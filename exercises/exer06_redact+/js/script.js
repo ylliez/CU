@@ -11,7 +11,7 @@ const NUM_SOUNDS = 8;
 function preload() {
   json = loadJSON('assets/data/grammar.json');
   for (let i = 0; i < NUM_SOUNDS; i++) {
-    sfx[i] = loadSound(`assets/sounds/sfx_holy_${i}.wav`);
+    sfx[i] = loadSound(`assets/audio/sfx_holy_${i}.wav`);
   }
 }
 
