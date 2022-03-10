@@ -9,27 +9,17 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  color: #D93;
+  text-align: center;
 }
 
 #commandments {
   font-family: Tanach, cursive;
-  font-size: 1.5em;
+  font-size: 2em;
   margin: 50px 100px;
 }
-
-h2 {
-  text-align: center;
-  color: #fff;
-}
-
-.esoteric {
-  background-color: #000;
-  user-select: none;
-}
-
-.revealed {
-  background-color: #fff;
-  user-select: text;
-}
+.apocrypha { opacity: 0; }
+.esoteric { user-select: none; }
+.revealed { user-select: text; }
 
 /* image dims: 1792*1008 */

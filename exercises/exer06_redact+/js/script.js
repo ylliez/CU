@@ -1,11 +1,9 @@
 "use strict";
 // holders for grammar JSON & object
 let json, grammar;
-// holder for grammar generated text lines
-let lines = []
 const NUM_COMMANDS = 10;
-const REVEAL_PROB = 0.1;
-const ATTEMPT_FREQ = 1000;
+const REVEAL_PROB = 0.01;
+const ATTEMPT_FREQ = 50;
 // holders for sound effects and info
 let sfx = [];
 const NUM_SOUNDS = 8;
@@ -22,8 +20,7 @@ function setup() {
   grammar = RiTa.grammar(json);
   // generate 10 lines following the grammar
   for (let i = 0; i < NUM_COMMANDS; i++) {
-    lines[i] = grammar.expand();
-    document.getElementById(`cmd${i}`).innerHTML = lines[i];
+    document.getElementById(`cmd${i}`).innerHTML = grammar.expand();
   }
   // start timer for intervallic line revelation
   setInterval(revelation, ATTEMPT_FREQ);
@@ -35,24 +32,25 @@ function draw() {
 }
 
 function revelation() {
-  $(`.esoteric`).each(attemptReveal);
-  // $(`.esoteric`).each(attemptReveal, checkEnd);
+  // $(`.esoteric`).each(attemptReveal);
+  $(`.esoteric`).each(attemptReveal, checkEnd);
 }
 
 function attemptReveal() {
   if (Math.random() < REVEAL_PROB) {
+    random(sfx).play();
     $(this).removeClass(`esoteric`);
     $(this).addClass(`revealed`);
-    // random(sfx).play();
-    sfx[0].play();
-    checkEnd();
+    $(this).animate( { "opacity": 1 }, 1000, checkEnd);
   }
 }
 
 function obfuscate() {
+  $(this).animate( { "opacity": 0 }, 1000, function() {
+    $(this)[0].innerHTML = grammar.expand();
+  });
   $(this).removeClass(`revealed`);
   $(this).addClass(`esoteric`);
-  $(this)[0].innerHTML = grammar.expand();
 }
 
 function checkEnd() {
@@ -69,13 +67,8 @@ function gameOver() {
 }
 
 /* https://pippinbarr.github.io/cart263/exercises/raving-redactionist-plus-plus.html
-- Improve the visual presentation by working with the CSS and HTML
 - Use a fading effect to fade the redaction effect in and out (this will likely require .animate())
-- Add audio to the experience (background music? the sound of a boring office? a pen squealing sound when you redact something? a gasp when something is revealed?)
 - Allow the user to redact by clicking and dragging the mouse cursor over a reveal passage rather than clicking
 - Add an ending of some kind to the experience if the user allows all the secrets to be revealed (“YOU LOST THE COLD WAR!!”)
 - Have a computer voice read out revealed secrets and have the user “lose” if the computer finishes reading before they’ve esoteric it
-- Make the secrets float off the “page” instead of just being revealed, and if they make it off the edge they’re gone forever - clicking them makes them go back to where they started
-- Generate a text for redaction in code instead of having it already in the HTML (you’ll have to generate the redaction spans as well)
-- Use ml5.js’s text features of a library like RiTa to generate the text being esoteric
 */
