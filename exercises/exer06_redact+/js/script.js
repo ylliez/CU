@@ -7,7 +7,10 @@ const NUM_COMMANDS = 10;
 const REVEAL_PROB = 0.1;
 const ATTEMPT_FREQ = 1000;
 
-function preload() { json = loadJSON('assets/data/grammar.json'); }
+function preload() {
+  img = loadImage(`assets/images/Rembrandt_tablets.jpg`)
+  json = loadJSON('assets/data/grammar.json');
+}
 
 function setup() {
   // set RiTa grammar rules
@@ -24,9 +27,7 @@ function setup() {
 }
 
 function draw() {
-  for (let i = 0; i < NUM_COMMANDS; i++) {
-
-  }
+  dynamicCanvas.update();
 }
 
 function revelation() {

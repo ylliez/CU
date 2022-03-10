@@ -3,13 +3,13 @@
     src: url("../assets/data/tanach.regular.ttf") format("truetype");
 }
 
-body {
+/* body {
   background-color: #000;
   background-image: url('../assets/images/Rembrandt_tablets.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-}
+} */
 
 #commandments {
   font-family: Tanach, cursive;
