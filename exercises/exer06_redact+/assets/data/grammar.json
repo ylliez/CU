@@ -1,5 +1,5 @@
 {
-  "start": "$subject $auxiliary $negation $verb $object.",
+  "start": "<span>$subject</span> <span>$auxiliary</span> <span>$negation</span> <span>$verb</span> <span>$object</span>.",
   "subject": "You",
   "auxiliary": "shall | should | could | might",
   "negation": " not |",

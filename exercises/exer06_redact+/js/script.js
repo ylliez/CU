@@ -15,14 +15,12 @@ const ATTEMPT_FREQ = 50;
 let sfx = [];
 const NUM_SOUNDS = 8;
 // holder for diagetic text elements
-let textIntro;
 const END_TEXT = `
 And all the people saw the thunderings, and the lightnings, and the noise of the trumpet, and the mountain smoking.
 The commandments have been set in stone. Would you like a printed copy to safeguard your soul?`;
 
 function preload() {
   grammarJSON = loadJSON('assets/data/grammar.json');
-  textIntro = loadJSON('assets/data/instructions.json');
   for (let i = 0; i < NUM_SOUNDS; i++) {
     sfx[i] = loadSound(`assets/audio/sfx_holy_${i}.wav`);
   }
@@ -41,23 +39,14 @@ function startSim() {
   $('#startClk').empty();
   // generate 10 lines following the grammar
   for (let i = 0; i < NUM_COMMANDS; i++) {
-    // let id = `#cmd${i}`;
-    // $(id).innerHTML = grammar.expand();
-    document.getElementById(`cmd${i}`).innerHTML = grammar.expand();
+    $(`#cmd${i}`).html(grammar.expand());
   }
   // start timer for intervallic line revelation
   setInterval(revelation, ATTEMPT_FREQ);
   // set query for click action, hides & changes command
-  $(`.apocrypha`).on(`click`, obfuscate);
+  // $(`.apocrypha`).on(`click`, obfuscate);
+  $(`span`).on(`click`, obfuscate);
 }
-
-//
-// function draw() {
-//   switch (state) {
-//     case `title`: title(); break;
-//     case `sim`: sim(); break;
-//   }
-// }
 
 function revelation() { $(`.esoteric`).each(attemptReveal); }
 
@@ -72,14 +61,14 @@ function attemptReveal() {
 
 function obfuscate() {
   $(this).animate( { "opacity": 0 }, 1000, function() {
-    $(this)[0].innerHTML = grammar.expand();
+    $(this)[0].innerHTML = grammar.expand("start");
   });
   $(this).removeClass(`revealed`);
   $(this).addClass(`esoteric`);
 }
 
 function checkEnd() {
-  if (!$(`.esoteric`).length) {
-    if(confirm(END_TEXT)) { window.print(); }
-  }
+  // if (!$(`.esoteric`).length) {
+  //   if(confirm(END_TEXT)) { window.print(); }
+  // }
 }
