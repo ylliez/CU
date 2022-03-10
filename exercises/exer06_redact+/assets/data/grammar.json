@@ -1,6 +1,6 @@
 {
-  "start": "$prp $md $rb $vb $object",
-  "prp": "You",
+  "start": "<span>$prp</span> <span>$md</span> <span>$rb</span> <span>$vb</span> <span>$object</span>",
+  "prp": "You[8] | I | We | They",
   "md": "shall | should | could | might",
   "rb": "not |",
   "vb": "have | make idols of | take | remember | honour | kill | commit adultery with | steal from | bear false witness against | covet ",

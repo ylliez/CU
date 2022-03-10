@@ -37,15 +37,15 @@ function startSim() {
   // generate 10 lines following the grammar
   for (let i = 0; i < NUM_COMMANDS; i++) {
     $(`#cmd${i}`).html(grammar.expand());
-    console.log($(`#cmd${i}`).html());
+    // console.log($(`#cmd${i}`).html());
   }
-  // start timer for intervallic line revelation
+  // start timer for intervallic command revelation
   setInterval(revelation, ATTEMPT_FREQ);
-  // set query for click action, hides & changes command
-  // $(`.apocrypha`).on(`click`, obfuscate);
+  // changes command on click
   $(`span`).on(`click`, obfuscate);
 }
 
+// reveals commands
 function revelation() { $(`.esoteric`).each(attemptReveal); }
 
 function attemptReveal() {
@@ -58,15 +58,13 @@ function attemptReveal() {
 }
 
 function obfuscate() {
-
   $(this).animate( { "opacity": 0 }, 1000, function() {
-    let selectedPOS = RiTa.pos($(this).html());
-    console.log(selectedPOS);
-    if (RiTa.isPunct(selectedPOS[selectedPOS.length-1])) {
+    let selectionPartOfSpeech = RiTa.pos($(this).html());
+    if (RiTa.isPunct(selectionPartOfSpeech[selectionPartOfSpeech.length-1])) {
       $(this).html(grammar.expand("object"));
     }
     else {
-    $(this).html(grammar.expand(selectedPOS[0]));}
+    $(this).html(grammar.expand(selectionPartOfSpeech[0]));}
     $(this).animate( { "opacity": 1 }, 1000);
   });
   // $(this).removeClass(`revealed`);
@@ -74,7 +72,7 @@ function obfuscate() {
 }
 
 function checkEnd() {
-  // if (!$(`.esoteric`).length) {
-  //   if(confirm(END_TEXT)) { window.print(); }
-  // }
+  if (!$(`.esoteric`).length) {
+    if(confirm(END_TEXT)) { window.print(); }
+  }
 }
