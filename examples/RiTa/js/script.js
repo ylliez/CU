@@ -7,13 +7,11 @@ function preload() {
 }
 
 function setup() {
-
   createCanvas(windowWidth, windowHeight);
   textSize(30);
   textAlign(LEFT);
 
   grammar = RiTa.grammar(json);
-  // grammar = RiTa.grammar(json);
   for (let i = 0; i < NUM_COMMANDS; i++) {
     lines[i] = grammar.expand();
   }
@@ -23,14 +21,5 @@ function draw() {
   background(230, 240, 255);
   for (let i = 0; i < NUM_COMMANDS; i++) {
     text(lines[i], 20, (i+5)*40);
-  }
-}
-
-function mouseReleased() {
-
-  let result = grammar.expand();
-  // let haiku = result.split("%");
-  for (let i = 0; i < lines.length; i++) {
-    lines[i] = haiku[i];
   }
 }
