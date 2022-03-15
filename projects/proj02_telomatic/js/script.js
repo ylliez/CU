@@ -1,17 +1,30 @@
 "use strict";
 
+/* general */
 // program state (load, sim)
 let state = `load`;
 // holder for webcam input
 let video;
+// holders for output graphics display
+let trailBlazer;
+
+/* ml5 */
 // holder for Handpose model
 let handpose;
 // holder for Handpose model results
 let predictions = [];
 // holder for hand object to manipulate Handpose data
 let hand;
-// holders for output graphics display
-let trailBlazer;
+
+/* ble */
+// UUID address of actuating microcontroller
+const TELO_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+// holder for BLE object
+let teloBLE
+// holder for BLE characteristic
+let teloCharacteristic
+// holder for value to send to BLE
+let teloIntensity;
 
 // SETUP: initialize canvas, video and model
 function setup() {
@@ -31,8 +44,28 @@ function setup() {
 
   // instantiate graphics element
   trailBlazer = createGraphics(width, height);
+
+  // instantiate ble
+  teloBLE = new p5ble();
 }
 
+// connect to device by passing the service UUID
+function connectToBLE() {
+  teloBLE.connect(TELO_UUID, gotCharacteristics);
+}
+
+function gotCharacteristics(error, characteristics) {
+  // print connection error, if applicable
+  if (error) console.log('error: ', error);
+  console.log('characteristics: ', characteristics);
+  // Set the first characteristic as myCharacteristic
+  teloCharacteristic = characteristics[0];
+}
+
+function disconnectFromBLE() {
+  teloBLE.write(teloCharacteristic, 0);
+  teloBLE.disconnect();
+}
 
 // DRAW: handle program state
 function draw() {
@@ -63,6 +96,7 @@ function sim() {
     hand.coordinate();
   }
   drawIndexTip();
+  writeToBLE();
 }
 
 // draw path following index finger tip
@@ -74,4 +108,19 @@ function drawIndexTip() {
   trailBlazer.line(hand.indexGhost.x, hand.indexGhost.y, hand.index.x, hand.index.y);
   trailBlazer.pop();
   image(trailBlazer, 0, 0);
+}
+
+function writeToBLE() {
+  if (teloBLE.isConnected() && teloCharacteristic) {
+    teloIntensity = hand.index.y;
+    teloBLE.write(teloCharacteristic, teloIntensity);
+  }
+}
+
+function keyPressed() {
+  // 'c' key toggled connection
+  if (keyCode === 67) {
+    if (!teloBLE.isConnected()) { connectToBLE(); }
+    else { disconnectFromBLE(); }
+  }
 }
