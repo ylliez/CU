@@ -49,6 +49,9 @@ function load() {
 }
 
 function sim() {
+  // DEBUG - display mirrored video feed
+  image(ml5.flipImage(video), 0, 0, width, height);
+  
   if (predictions.length > 0) {
     let hand = predictions[0];
     pinHand(hand);
@@ -65,6 +68,4 @@ function pinHand(hand) {
   fill(255, 0, 0);
   circle(tipX, tipY, 10, 10);
   pop();
-}
-
 }
