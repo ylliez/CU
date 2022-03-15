@@ -3,6 +3,8 @@
 /* general */
 // program state (load, sim)
 let state = `load`;
+// holder for dynamic canvas
+let dynamicCanvas;
 // holder for webcam input
 let video;
 // holders for output graphics display
@@ -31,7 +33,7 @@ let disconnectButton = document.getElementById('disconnectBtn');
 
 // SETUP: initialize canvas, video and model
 function setup() {
-  createCanvas(640,480);
+  dynamicCanvas = new DynamicCanvas(640, 480);
 
   // start webcam and hide the resulting HTML element
   video = createCapture(VIDEO);
@@ -76,6 +78,7 @@ function disconnectFromBLE() {
 
 // DRAW: handle program state
 function draw() {
+  dynamicCanvas.update();
   switch (state) {
     case `load`: load(); break;
     case `sim`: sim(); break;
