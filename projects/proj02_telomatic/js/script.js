@@ -8,7 +8,8 @@ let video;
 let handpose;
 // holder for Handpose model results
 let predictions = [];
-let tipX, tipY;
+// holder for hand object to manipulate Handpose data
+let hand;
 
 
 /**
@@ -20,6 +21,9 @@ function setup() {
   // start & hide webcam
   video = createCapture(VIDEO);
   video.hide();
+
+  // instantiate hand object to manipulate Handpose data
+  hand = new Hand();
 
   // start Handpose model and signal when loaded
   handpose = ml5.handpose(video, { flipHorizontal: true }, () => { state = `sim`; } );
@@ -59,19 +63,9 @@ function sim() {
   image(ml5.flipImage(video), 0, 0, width, height);
 
   if (predictions.length > 0) {
-    let hand = predictions[0];
-    displayIndexTip(hand);
+    hand.coordinates = predictions[0];
+    hand.coordinate();
+    // draw ellipse at index finger tip coordinates
+    hand.displayIndexTip();
   }
-}
-
-// draw ellipse at index finger tip coordinates
-function displayIndexTip(hand) {
-  tipX = hand.annotations.indexFinger[3][0];
-  tipY = hand.annotations.indexFinger[3][1];
-
-  push();
-  fill(255);
-  noStroke();
-  ellipse(tipX, tipY, 10, 10);
-  pop();
 }
