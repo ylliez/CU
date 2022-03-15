@@ -25,6 +25,9 @@ let teloBLE
 let teloCharacteristic
 // holder for value to send to BLE
 let teloIntensity;
+// ble connect/disconnect buttons
+let connectButton = document.getElementById('connectBtn');
+let disconnectButton = document.getElementById('disconnectBtn');
 
 // SETUP: initialize canvas, video and model
 function setup() {
@@ -52,6 +55,8 @@ function setup() {
 // connect to device by passing the service UUID
 function connectToBLE() {
   teloBLE.connect(TELO_UUID, gotCharacteristics);
+  connectButton.style.display = "none";
+  disconnectButton.style.display = "block";
 }
 
 function gotCharacteristics(error, characteristics) {
@@ -65,6 +70,8 @@ function gotCharacteristics(error, characteristics) {
 function disconnectFromBLE() {
   teloBLE.write(teloCharacteristic, 0);
   teloBLE.disconnect();
+  disconnectButton.style.display = "none";
+  connectButton.style.display = "block";
 }
 
 // DRAW: handle program state
@@ -88,8 +95,9 @@ function load() {
 
 // SIM: update hand predictions and draw index finger tip to screen
 function sim() {
-  // DEBUG - display mirrored video feed
+  // display mirrored video feed
   image(ml5.flipImage(video), 0, 0, width, height);
+  filter(GRAY);
 
   if (predictions.length > 0) {
     hand.coordinates = predictions[0];
@@ -104,7 +112,6 @@ function drawIndexTip() {
   trailBlazer.push();
   trailBlazer.stroke(255,0,0);
   trailBlazer.strokeWeight(3);
-  // console.log(`${hand.prev.x}, ${hand.prev.y}, ${hand.index.x}, ${hand.index.y}`);
   trailBlazer.line(hand.indexGhost.x, hand.indexGhost.y, hand.index.x, hand.index.y);
   trailBlazer.pop();
   image(trailBlazer, 0, 0);
@@ -112,8 +119,19 @@ function drawIndexTip() {
 
 function writeToBLE() {
   if (teloBLE.isConnected() && teloCharacteristic) {
-    teloIntensity = hand.index.y;
+    teloIntensity = 255 - floor(hand.index.y / height * 255);
+    // if (predictions.length > 0 && hand.index.y > 50) { teloIntensity = 255 - floor(hand.index.y / height * 255); }
+    // else { teloIntensity = 0 }
     teloBLE.write(teloCharacteristic, teloIntensity);
+    // push();
+    // textSize(30);
+    // textStyle(BOLD);
+    // textAlign(CENTER, CENTER);
+    // fill(255);
+    // text(hand.index.y, width / 4 * 3, height / 4);
+    // text(floor(hand.index.y / height * 255), width / 4 * 3, height / 2);
+    // text(teloIntensity, width / 4 * 3, height / 4*3);
+    // pop();
   }
 }
 
