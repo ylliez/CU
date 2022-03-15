@@ -5,7 +5,7 @@
 let state = `load`;
 // holder for dynamic canvas
 let dynamicCanvas;
-// holder for webcam input
+// holder for webcam input feed
 let video;
 // holders for output graphics display
 let trailBlazer;
@@ -151,5 +151,14 @@ function keyPressed() {
   if (keyCode === 67) {
     if (!teloBLE.isConnected()) { connectToBLE(); }
     else { disconnectFromBLE(); }
+  }
+  // 'f' key toggled fullscreen
+  if (keyCode === 70) {
+    if (!document.fullscreen) {
+      document.body.requestFullscreen()
+    }
+    else {
+      document.body.exitFullscreen();
+    }
   }
 }
