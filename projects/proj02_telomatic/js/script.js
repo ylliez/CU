@@ -9,11 +9,6 @@ let dynamicCanvas;
 let video;
 // holders for output graphics display
 let trailBlazer;
-// holder for stroke weight of graphics display
-let trailBlazerWeight = 3;
-let trailBlazerColR = 255;
-let trailBlazerColG = 0;
-let trailBlazerColB = 127;
 
 /* ml5 */
 // holder for Handpose model
@@ -48,38 +43,16 @@ function setup() {
   // instantiate hand object to manipulate Handpose data
   hand = new Hand();
 
-  $( "#sliderSize" ).slider({
-    orientation: "vertical",
-    range: "min",
-    min: 1,
-    max: 20,
-    value: hand.size,
-    slide: function(event, ui) { hand.size = ui.value; }
-  });
-  $( "#sliderColR" ).slider({
+  // initialize jQuery silder elements
+  $("#sliderSize, #sliderColR, #sliderColG, #sliderColB").slider({
     orientation: "vertical",
     range: "min",
     min: 0,
     max: 255,
-    value: hand.color.r,
-    slide: function(event, ui) { hand.color.r = ui.value; }
+    slide: updateTrailValues
   });
-  $( "#sliderColG" ).slider({
-    orientation: "vertical",
-    range: "min",
-    min: 0,
-    max: 255,
-    value: hand.color.g,
-    slide: function(event, ui) { hand.color.g = ui.value; }
-  });
-  $( "#sliderColB" ).slider({
-    orientation: "vertical",
-    range: "min",
-    min: 0,
-    max: 255,
-    value: hand.color.b,
-    slide: function(event, ui) { hand.color.b = ui.value; }
-  });
+  $("#sliderSize").slider({ min: 1, max: 20, });
+  setTrailValues();
 
   // initialize model, switch to simulation state upon load
   handpose = ml5.handpose(video, { flipHorizontal: true }, () => { state = `sim`; } );
@@ -91,6 +64,20 @@ function setup() {
 
   // instantiate ble
   teloBLE = new p5ble();
+}
+
+function setTrailValues() {
+  $("#sliderSize").slider("value",hand.size);
+  $("#sliderColR").slider("value",hand.color.r);
+  $("#sliderColG").slider("value",hand.color.g);
+  $("#sliderColB").slider("value",hand.color.b);
+}
+
+function updateTrailValues() {
+  hand.size = $("#sliderSize").slider("value");
+  hand.color.r = $("#sliderColR").slider("value");
+  hand.color.g = $("#sliderColG").slider("value");
+  hand.color.b = $("#sliderColB").slider("value");
 }
 
 // connect to device by passing the service UUID
@@ -155,7 +142,7 @@ function drawIndexTip() {
   trailBlazer.stroke(hand.color.r, hand.color.g, hand.color.b);
   trailBlazer.strokeWeight(hand.size);
   trailBlazer.line(hand.indexGhost.x, hand.indexGhost.y, hand.index.x, hand.index.y);
-  trailBlazer.pop();f
+  trailBlazer.pop();
   image(trailBlazer, 0, 0);
 }
 
