@@ -11,6 +11,9 @@ let video;
 let trailBlazer;
 // holder for stroke weight of graphics display
 let trailBlazerWeight = 3;
+let trailBlazerColR = 255;
+let trailBlazerColG = 0;
+let trailBlazerColB = 127;
 
 /* ml5 */
 // holder for Handpose model
@@ -42,23 +45,38 @@ function setup() {
   video = createCapture(VIDEO);
   video.hide();
 
-
-  //   $("#sliderSize").slider({
-  //   orientation: "vertical"
-  // });
-
   $( "#sliderSize" ).slider({
-        orientation: "vertical",
-        range: "min",
-        min: 1,
-        max: 20,
-        value: 10,
-        slide: function( event, ui ) {
-
-          trailBlazerWeight = ui.value;
-          console.log(trailBlazerWeight);
-        }
-    });
+    orientation: "vertical",
+    range: "min",
+    min: 1,
+    max: 20,
+    value: 3,
+    slide: function(event, ui) { trailBlazerWeight = ui.value; }
+  });
+  $( "#sliderColR" ).slider({
+    orientation: "vertical",
+    range: "min",
+    min: 0,
+    max: 255,
+    value: trailBlazerColR,
+    slide: function(event, ui) { trailBlazerColR = ui.value; }
+  });
+  $( "#sliderColG" ).slider({
+    orientation: "vertical",
+    range: "min",
+    min: 0,
+    max: 255,
+    value: trailBlazerColG,
+    slide: function(event, ui) { trailBlazerColG = ui.value; }
+  });
+  $( "#sliderColB" ).slider({
+    orientation: "vertical",
+    range: "min",
+    min: 0,
+    max: 255,
+    value: trailBlazerColB,
+    slide: function(event, ui) { trailBlazerColB = ui.value; }
+  });
 
   // instantiate hand object to manipulate Handpose data
   hand = new Hand();
@@ -134,7 +152,7 @@ function sim() {
 // draw path following index finger tip
 function drawIndexTip() {
   trailBlazer.push();
-  trailBlazer.stroke(255,0,0);
+  trailBlazer.stroke(trailBlazerColR, trailBlazerColG, trailBlazerColB);
   trailBlazer.strokeWeight(trailBlazerWeight);
   trailBlazer.line(hand.indexGhost.x, hand.indexGhost.y, hand.index.x, hand.index.y);
   trailBlazer.pop();

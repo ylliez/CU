@@ -24,20 +24,14 @@
 
   <body>
     <!-- HTML -->
-    <div id="buttons">
-      <button id="connectBtn" onclick="connectToBLE()">Connect</button>
-      <button id="disconnectBtn" onclick="disconnectFromBLE()">Disconnect</button>
-    </div>
-    <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
-
-    <div id="sliders">
+    <div id="UI">
+      <button class="button" id="connectBtn" onclick="connectToBLE()">Connect</button>
+      <button class="button" id="disconnectBtn" onclick="disconnectFromBLE()">Disconnect</button>
       <div class="slider" id="sliderSize"></div>
+      <div class="slider" id="sliderColR"></div>
+      <div class="slider" id="sliderColG"></div>
+      <div class="slider" id="sliderColB"></div>
     </div>
-
-    <!-- <div>
-      <input type="color" id="head" name="head" value="#e66465">
-    </div> -->
-    <!-- Local script(s) -->
     <script src="js/DynamicCanvas.js"></script>
     <script src="js/Hand.js"></script>
     <script src="js/script.js"></script>

@@ -8,7 +8,20 @@ body {
   overflow: hidden;
 }
 
-button { position: absolute; }
-.slider { position: absolute; }
-
+.button {
+  position: absolute;
+  margin: 20px;
+}
 #disconnectBtn { display: none; }
+
+.slider { position: absolute; }
+#sliderSize { margin: 100px 50px; }
+#sliderColR { margin: 650px 50px; }
+#sliderColG { margin: 650px 100px; }
+#sliderColB { margin: 650px 150px; }
+#sliderColR .ui-slider-range { background: #ef2929; }
+#sliderColR .ui-slider-handle { border-color: #ef2929; }
+#sliderColG .ui-slider-range { background: #8ae234; }
+#sliderColG .ui-slider-handle { border-color: #8ae234; }
+#sliderColB .ui-slider-range { background: #729fcf; }
+#sliderColB .ui-slider-handle { border-color: #729fcf; }
