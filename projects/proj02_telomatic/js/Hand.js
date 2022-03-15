@@ -10,11 +10,11 @@ class Hand {
       x: undefined,
       y: undefined
     };
-    this.size = 15;
+    this.size = 3;
     this.color = {
       r: 255,
       g: 0,
-      b: 255
+      b: 127
     }
   }
 

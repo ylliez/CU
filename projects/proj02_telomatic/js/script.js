@@ -45,41 +45,41 @@ function setup() {
   video = createCapture(VIDEO);
   video.hide();
 
+  // instantiate hand object to manipulate Handpose data
+  hand = new Hand();
+
   $( "#sliderSize" ).slider({
     orientation: "vertical",
     range: "min",
     min: 1,
     max: 20,
-    value: 3,
-    slide: function(event, ui) { trailBlazerWeight = ui.value; }
+    value: hand.size,
+    slide: function(event, ui) { hand.size = ui.value; }
   });
   $( "#sliderColR" ).slider({
     orientation: "vertical",
     range: "min",
     min: 0,
     max: 255,
-    value: trailBlazerColR,
-    slide: function(event, ui) { trailBlazerColR = ui.value; }
+    value: hand.color.r,
+    slide: function(event, ui) { hand.color.r = ui.value; }
   });
   $( "#sliderColG" ).slider({
     orientation: "vertical",
     range: "min",
     min: 0,
     max: 255,
-    value: trailBlazerColG,
-    slide: function(event, ui) { trailBlazerColG = ui.value; }
+    value: hand.color.g,
+    slide: function(event, ui) { hand.color.g = ui.value; }
   });
   $( "#sliderColB" ).slider({
     orientation: "vertical",
     range: "min",
     min: 0,
     max: 255,
-    value: trailBlazerColB,
-    slide: function(event, ui) { trailBlazerColB = ui.value; }
+    value: hand.color.b,
+    slide: function(event, ui) { hand.color.b = ui.value; }
   });
-
-  // instantiate hand object to manipulate Handpose data
-  hand = new Hand();
 
   // initialize model, switch to simulation state upon load
   handpose = ml5.handpose(video, { flipHorizontal: true }, () => { state = `sim`; } );
@@ -152,10 +152,10 @@ function sim() {
 // draw path following index finger tip
 function drawIndexTip() {
   trailBlazer.push();
-  trailBlazer.stroke(trailBlazerColR, trailBlazerColG, trailBlazerColB);
-  trailBlazer.strokeWeight(trailBlazerWeight);
+  trailBlazer.stroke(hand.color.r, hand.color.g, hand.color.b);
+  trailBlazer.strokeWeight(hand.size);
   trailBlazer.line(hand.indexGhost.x, hand.indexGhost.y, hand.index.x, hand.index.y);
-  trailBlazer.pop();
+  trailBlazer.pop();f
   image(trailBlazer, 0, 0);
 }
 
