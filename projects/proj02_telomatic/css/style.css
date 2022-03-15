@@ -9,5 +9,6 @@ body {
 }
 
 button { position: absolute; }
+.slider { position: absolute; }
 
 #disconnectBtn { display: none; }

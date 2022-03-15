@@ -9,6 +9,8 @@ let dynamicCanvas;
 let video;
 // holders for output graphics display
 let trailBlazer;
+// holder for stroke weight of graphics display
+let trailBlazerWeight;
 
 /* ml5 */
 // holder for Handpose model
@@ -35,9 +37,27 @@ let disconnectButton = document.getElementById('disconnectBtn');
 function setup() {
   dynamicCanvas = new DynamicCanvas(640, 480);
 
+
   // start webcam and hide the resulting HTML element
   video = createCapture(VIDEO);
   video.hide();
+
+
+  //   $("#sliderSize").slider({
+  //   orientation: "vertical"
+  // });
+
+  $( "#sliderSize" ).slider({
+        orientation: "vertical",
+        range: true,
+        min: 1,
+        max: 10,
+        value: 3,
+        slide: function( event, ui ) {
+          trailBlazerWeight = ui.value;
+          console.log(trailBlazerWeight);
+        }
+    });
 
   // instantiate hand object to manipulate Handpose data
   hand = new Hand();
@@ -114,7 +134,7 @@ function sim() {
 function drawIndexTip() {
   trailBlazer.push();
   trailBlazer.stroke(255,0,0);
-  trailBlazer.strokeWeight(3);
+  trailBlazer.strokeWeight(trailBlazerWeight);
   trailBlazer.line(hand.indexGhost.x, hand.indexGhost.y, hand.index.x, hand.index.y);
   trailBlazer.pop();
   image(trailBlazer, 0, 0);
@@ -147,12 +167,12 @@ function writeToBLE() {
 }
 
 function keyPressed() {
-  // 'c' key toggled connection
+  // 'c' key toggles connection
   if (keyCode === 67) {
     if (!teloBLE.isConnected()) { connectToBLE(); }
     else { disconnectFromBLE(); }
   }
-  // 'f' key toggled fullscreen
+  // 'f' key toggles fullscreen
   if (keyCode === 70) {
     if (!document.fullscreen) {
       document.body.requestFullscreen()
