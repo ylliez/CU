@@ -10,7 +10,7 @@ let video;
 // holders for output graphics display
 let trailBlazer;
 // holder for stroke weight of graphics display
-let trailBlazerWeight;
+let trailBlazerWeight = 3;
 
 /* ml5 */
 // holder for Handpose model
@@ -49,11 +49,12 @@ function setup() {
 
   $( "#sliderSize" ).slider({
         orientation: "vertical",
-        range: true,
+        range: "min",
         min: 1,
-        max: 10,
-        value: 3,
+        max: 20,
+        value: 10,
         slide: function( event, ui ) {
+
           trailBlazerWeight = ui.value;
           console.log(trailBlazerWeight);
         }
