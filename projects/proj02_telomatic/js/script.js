@@ -2,7 +2,6 @@ let state = `loading`;
 let video;
 let handpose;
 let predictions = [];
-let bubble;
 let baseX, baseY, tipX, tipY;
 
 
@@ -18,8 +17,6 @@ function setup() {
   handpose = ml5.handpose(video, { flipHorizontal: true }, () => { state = `running`; } );
 
   handpose.on(`predict`, (results) => { predictions = results; } );
-
-  bubble = new Bubble();
 }
 
 
@@ -55,15 +52,7 @@ function sim() {
   if (predictions.length > 0) {
     let hand = predictions[0];
     pinHand(hand);
-    checkPop();
   }
-
-  bubble.update();
-}
-
-function resetBubble() {
-  bubble.x = random(width);
-  bubble.y = height;
 }
 
 function pinHand(hand) {
@@ -73,18 +62,9 @@ function pinHand(hand) {
   tipY = hand.annotations.indexFinger[3][1];
 
   push();
-  line(baseX, baseY, tipX, tipY);
-  pop();
-
-  push();
   fill(255, 0, 0);
-  circle(baseX, baseY, 10, 10);
+  circle(tipX, tipY, 10, 10);
   pop();
 }
 
-function checkPop() {
-  let d = dist(tipX, tipY, bubble.x, bubble.y);
-  if (d < bubble.size / 2) {
-    resetBubble();
-  }
 }
