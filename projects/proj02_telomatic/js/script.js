@@ -10,39 +10,35 @@ let handpose;
 let predictions = [];
 // holder for hand object to manipulate Handpose data
 let hand;
+// holders for output graphics display
+let trailBlazer;
 
-
-/**
-Description of setup
-*/
+// SETUP: initialize canvas, video and model
 function setup() {
   createCanvas(640,480);
 
-  // start & hide webcam
+  // start webcam and hide the resulting HTML element
   video = createCapture(VIDEO);
   video.hide();
 
   // instantiate hand object to manipulate Handpose data
   hand = new Hand();
 
-  // start Handpose model and signal when loaded
+  // initialize model, switch to simulation state upon load
   handpose = ml5.handpose(video, { flipHorizontal: true }, () => { state = `sim`; } );
-  // load Handpose model results into array
+  // start Handpose model, store prediction events in array if applicable
   handpose.on(`predict`, (results) => { predictions = results; } );
+
+  // instantiate graphics element
+  trailBlazer = createGraphics(width, height);
 }
 
 
 // DRAW: handle program state
 function draw() {
   switch (state) {
-    case `load`:
-      load();
-      break;
-    case `sim`:
-      sim();
-      break;
-    default:
-
+    case `load`: load(); break;
+    case `sim`: sim(); break;
   }
 }
 
@@ -65,7 +61,17 @@ function sim() {
   if (predictions.length > 0) {
     hand.coordinates = predictions[0];
     hand.coordinate();
-    // draw ellipse at index finger tip coordinates
-    hand.displayIndexTip();
   }
+  drawIndexTip();
+}
+
+// draw path following index finger tip
+function drawIndexTip() {
+  trailBlazer.push();
+  trailBlazer.stroke(255,0,0);
+  trailBlazer.strokeWeight(3);
+  // console.log(`${hand.prev.x}, ${hand.prev.y}, ${hand.index.x}, ${hand.index.y}`);
+  trailBlazer.line(hand.indexGhost.x, hand.indexGhost.y, hand.index.x, hand.index.y);
+  trailBlazer.pop();
+  image(trailBlazer, 0, 0);
 }
