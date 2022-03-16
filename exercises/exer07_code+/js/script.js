@@ -1,3 +1,5 @@
+/*Gematrie, Kabbalah, Torah code */
+
 "use strict";
 
 const ANIMATION_DURATION = 500;
