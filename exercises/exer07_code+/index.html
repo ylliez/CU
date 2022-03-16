@@ -13,6 +13,8 @@
     <!-- Library script(s) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js" integrity="sha512-NxocnqsXP3zm0Xb42zqVMvjQIktKEpTIbCXXyhBPxqGZHqhcOXHs4pXI/GoZ8lE+2NJONRifuBpi9DxC58L0Lw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
 
   </head>
 
@@ -22,32 +24,16 @@
       <p>The secret letters will appear in red when you have found them.</p>
       <p>Drag them to the box and drop them there to assemble the secret message.</p>
     </div>
-    <div id="poem">
-      <h2><span class="secret">T</span>his Is Just To Say</h2>
-      <p>
-        I <span class="secret">h</span>ave eaten<br />
-        the plums<br />
-        that wer<span class="secret">e</span> in<br />
-        the icebox
-      </p>
-      <p>
-        and which<br />
-        you we<span class="secret">r</span>e probably<br />
-        saving<br />
-        for br<span class="secret">e</span>akfast
-      </p>
-      <p>
-        Forgive <span class="secret">m</span>e<br />
-        they were del<span class="secret">i</span>cious<br />
-        so sweet<br />
-        a<span class="secret">n</span>d so cold
-      </p>
-      <h4>William Carlos Williams</h4>
+
+    <!-- <label for="answer"></label> -->
+    <!-- <div id="answer" title="Drop letters here to assemble secret message."> -->
+    <div id="answer">
+    </div>
+    </br>
+
+    <div id="text">
     </div>
 
-    <label for="answer"></label>
-    <div id="answer" title="Drop letters here to assemble secret message.">
-    </div>
 
     <div id="solved-dialog" title="Da Vinci?!">
       <p>You are soooooo smart!</p>

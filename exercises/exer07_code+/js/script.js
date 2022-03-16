@@ -2,61 +2,110 @@
 
 const ANIMATION_DURATION = 500;
 const SECRET_ANSWER = `Theremin`;
+let text, textChars = [];
+let els, elsChars = [];
+let charFound = false;
+let numCharsFound = 0;
 
-$.getJSON("assets/data/texts/genesis.json", function(json) {
-  console.log("JSON Data: ");
-});
-// text;
+$.getJSON("/assets/data/texts/genesis.json", function(data) { loadText(data) } );
 
-// function preload() {
-  // genesisJSON
-// }
+function loadText(json) {
+ text = (json[0]);
+ // text = (json[Math.floor(Math.random()*json.length)]);
+ console.log(text);
+ $(`#text`).html(`<div data-splitting>${text}</div>`);
+ Splitting()
+ textChars = $(`.char`);
+ // console.log($(`.char`).text());
+ getELS();
+}
 
-// function setup() {
-  // text = random(genesisJSON);
-  // console.log("hi");
-// }
+function getELS() {
+  $.getJSON( "/assets/data/texts/ELS.json", function(data) { loadELS(data) } );
+}
 
-let characterDropCount = 0;
+function loadELS(json) {
+  // els = (json[0]);
+  els = (json[Math.floor(Math.random()*json.length)]);
+  elsChars = Array.from(els)
+  console.log(els);
+  // console.log(elsChars);
+  // Splitting();
+  for (let i = 0; i < elsChars.length; i++) {
+    console.log(elsChars[i]);
+    textChars.each(function() {
+      if($(this).text() === elsChars[i] && !charFound) {
+        console.log($(this));
+        if(!$(this).hasClass("secret")){
+          $(this).addClass("secret");
+          charFound = true;
+          numCharsFound++;
+        }
+      }
+    });
+    charFound = false;
+  }
+  verifyMatch();
+}
 
-$(`#instructions-dialog`).dialog({
-  modal: true,
-  resizable: false,
-  height: "auto",
-  width: 600,
-  buttons: { "Play!": function() { $(this).dialog(`close`); } }
-});
+function verifyMatch() {
+  // console.log(numCharsFound + " " + elsChars.length);
+  if (numCharsFound === elsChars.length) {
+    console.log("ELS loaded");
+    styleSecret();
+  }
+  else {
+    console.log("Failed to load ELS.");
+    textChars.removeClass("secret");
+    numCharsFound = 0;
+    getELS();
+  }
+}
+
+function styleSecret() {
+  $(`.secret`).each(function() {
+    $(this).on(`mouseenter`, function(event) {
+      $(this).addClass(`found`, ANIMATION_DURATION);
+    });
+  });
+
+  $(`.secret`).draggable({
+    helper: `clone`,
+  });
+}
+
+// $(`#instructions-dialog`).dialog({
+//   modal: true,
+//   resizable: false,
+//   height: "auto",
+//   width: 600,
+//   buttons: { "Play!": function() { $(this).dialog(`close`); } }
+// });
 
 $( function() {
     $( document ).tooltip();
   } );
 
-$(`.secret`).each(function() {
-  $(this).on(`mouseenter`, function(event) {
-    $(this).addClass(`found`, ANIMATION_DURATION);
-  });
-});
-
-$(`.secret`).draggable({
-  helper: `clone`,
-});
 
 $(`#answer`).droppable({
   drop: function(event, ui) {
     let freshFromText = ui.draggable[0].className.includes("secret");
     if (freshFromText) {
       let character = ui.draggable;
-      $(this).append(`<span class="message" id="char_${characterDropCount}">${character.text()}</span>`);
-      characterDropCount++;
+      $(this).append(`<span class="message">${character.text()}</span>`);
+      // $(this).append(`<span class="message" id="char_${characterDropCount}">${character.text()}</span>`);
+      // characterDropCount++;
       // character.draggable(`option`,`disable`,true);
       character.draggable(`destroy`);
       character.removeClass(`found`, ANIMATION_DURATION);
       character.off(`mouseenter`);
+
     }
     else {
 
     }
-    if($(this).text() === SECRET_ANSWER) { $(`#solved-dialog`).dialog(`open`); }
+    console.log("answer:" + $(`.message`).each.html() + " / solution: " + els);
+    if($(this).text() === els) { $(`#solved-dialog`).dialog(`open`); }
   }
 });
 

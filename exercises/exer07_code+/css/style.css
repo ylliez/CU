@@ -1,22 +1,25 @@
-
 label {
   display: inline-block;
   width: 5em;
+  z-index: 1;
 }
 
 #answer {
-  height: 10vh;
-  width: 10vw;
+  height: 40px;
+  width: auto;
   background-color: #ccc;
+  font-size: 30px;
+}
+
+#poem {
+  text-align: center;
+  font-size: 20px;
 }
 
 .found { color: #f00; }
 
-.message {
-  color: #f00;
-  font-size: 20px;
-}
-
-.ui-sortable-helper {
+/* .ui-sortable-helper {
   visibility: hidden;
-}
+} */
+
+#hidden{ display: none; }
