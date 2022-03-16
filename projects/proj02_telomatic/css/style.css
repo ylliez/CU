@@ -14,8 +14,27 @@ body {
 }
 #disconnectBtn { display: none; }
 
-.slider { position: absolute; }
-#sliderSize { margin: 100px 50px; }
+.slider {
+  position: absolute;
+  height: 150px;
+}
+
+#sliderSize {
+  margin: 100px 50px;
+  width: 2px;
+  border: none;
+  background: #000;
+}
+#sliderSize .ui-slider-range {
+  background: inherit;
+}
+#sliderSize .ui-slider-handle {
+  background: inherit;
+  border-radius: 100%;
+  width: 15px;
+  height: 15px;
+}
+
 #sliderColR { margin: 650px 50px; }
 #sliderColG { margin: 650px 100px; }
 #sliderColB { margin: 650px 150px; }
