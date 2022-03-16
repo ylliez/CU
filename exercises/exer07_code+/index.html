@@ -1,53 +1,60 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
 
-  <title>Exercise 7 - Code Taker+</title>
+    <title>Exercise 7 - Code Taker+</title>
 
-  <!-- CSS stylesheet(s) -->
-  <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css" />
-  <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <!-- CSS stylesheet(s) -->
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
 
-  <!-- Library script(s) -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
+    <!-- Library script(s) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
 
-</head>
+  </head>
 
-<body>
-  <section id="poem">
-    <h2><span class="secret">T</span>his Is Just To Say</h2>
-    <p>
-      I <span class="secret">h</span>ave eaten<br />
-      the plums<br />
-      that wer<span class="secret">e</span> in<br />
-      the icebox
-    </p>
-    <p>
-      and which<br />
-      you we<span class="secret">r</span>e probably<br />
-      saving<br />
-      for br<span class="secret">e</span>akfast
-    </p>
-    <p>
-      Forgive <span class="secret">m</span>e<br />
-      they were del<span class="secret">i</span>cious<br />
-      so sweet<br />
-      a<span class="secret">n</span>d so cold
-    </p>
-    <h4>William Carlos Williams</h4>
-  </section>
+  <body>
+    <div id="instructions-dialog" title="stegano/graphics">
+      <p>Find the letters that make up the secret message by hovering over the text.</p>
+      <p>The secret letters will appear in red when you have found them.</p>
+      <p>Drag them to the box and drop them there to assemble the secret message.</p>
+    </div>
+    <div id="poem">
+      <h2><span class="secret">T</span>his Is Just To Say</h2>
+      <p>
+        I <span class="secret">h</span>ave eaten<br />
+        the plums<br />
+        that wer<span class="secret">e</span> in<br />
+        the icebox
+      </p>
+      <p>
+        and which<br />
+        you we<span class="secret">r</span>e probably<br />
+        saving<br />
+        for br<span class="secret">e</span>akfast
+      </p>
+      <p>
+        Forgive <span class="secret">m</span>e<br />
+        they were del<span class="secret">i</span>cious<br />
+        so sweet<br />
+        a<span class="secret">n</span>d so cold
+      </p>
+      <h4>William Carlos Williams</h4>
+    </div>
 
-  <section id="answer"></section>
+    <label for="answer"></label>
+    <div id="answer" title="Drop letters here to assemble secret message.">
+    </div>
 
-  <div id="solved-dialog" title="Da Vinci?!">
-    <p>You are soooooo smart!</p>
-  </div>
+    <div id="solved-dialog" title="Da Vinci?!">
+      <p>You are soooooo smart!</p>
+    </div>
 
-  <!-- My script(s) -->
-  <script src="js/script.js"></script>
-</body>
+    <!-- Local script(s) -->
+    <script src="js/script.js"></script>
+  </body>
 
 </html>

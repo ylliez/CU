@@ -1,9 +1,8 @@
-/*********************************************
 
-Here is a description of any special CSS used.
-By default that's nothing.
-
-**********************************************/
+label {
+  display: inline-block;
+  width: 5em;
+}
 
 #answer {
   height: 10vh;
@@ -11,6 +10,13 @@ By default that's nothing.
   background-color: #ccc;
 }
 
-.found {
+.found { color: #f00; }
+
+.message {
   color: #f00;
+  font-size: 20px;
+}
+
+.ui-sortable-helper {
+  visibility: hidden;
 }

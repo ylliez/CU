@@ -3,6 +3,34 @@
 const ANIMATION_DURATION = 500;
 const SECRET_ANSWER = `Theremin`;
 
+$.getJSON("assets/data/texts/genesis.json", function(json) {
+  console.log("JSON Data: ");
+});
+// text;
+
+// function preload() {
+  // genesisJSON
+// }
+
+// function setup() {
+  // text = random(genesisJSON);
+  // console.log("hi");
+// }
+
+let characterDropCount = 0;
+
+$(`#instructions-dialog`).dialog({
+  modal: true,
+  resizable: false,
+  height: "auto",
+  width: 600,
+  buttons: { "Play!": function() { $(this).dialog(`close`); } }
+});
+
+$( function() {
+    $( document ).tooltip();
+  } );
+
 $(`.secret`).each(function() {
   $(this).on(`mouseenter`, function(event) {
     $(this).addClass(`found`, ANIMATION_DURATION);
@@ -15,13 +43,26 @@ $(`.secret`).draggable({
 
 $(`#answer`).droppable({
   drop: function(event, ui) {
-    let character = ui.draggable;
-    $(this).append(character.text());
-    character.draggable(`option`,`disable`,true);
-    character.removeClass(`found`, ANIMATION_DURATION);
-    character.off(`mouseenter`);
+    let freshFromText = ui.draggable[0].className.includes("secret");
+    if (freshFromText) {
+      let character = ui.draggable;
+      $(this).append(`<span class="message" id="char_${characterDropCount}">${character.text()}</span>`);
+      characterDropCount++;
+      // character.draggable(`option`,`disable`,true);
+      character.draggable(`destroy`);
+      character.removeClass(`found`, ANIMATION_DURATION);
+      character.off(`mouseenter`);
+    }
+    else {
+
+    }
     if($(this).text() === SECRET_ANSWER) { $(`#solved-dialog`).dialog(`open`); }
   }
+});
+
+$(`#answer`).sortable({
+  axis: `x`,
+  cursor: "move",
 });
 
 $(`#solved-dialog`).dialog({
