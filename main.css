@@ -23,7 +23,7 @@ header i { color: inherit; }
 .menu ul li ul li:hover { background: #DDD; color: #333; }
 .menu ul li ul li ul { display: none; position: absolute; background-color: #BBB; font-size: 14px; z-index: 0; }
 .menu ul li ul li:hover ul { display: block; }
-.menu ul li ul li ul li { display: none; text-align: left; float: none;  padding: 10px 15px; }
+.menu ul li ul li ul li { display: none; text-align: left; float: rifght;  padding: 10px 15px; }
 .menu ul li ul li:hover ul li { display: block; }
 .menu ul li ul li ul li:hover { background: #DDD; }
 
