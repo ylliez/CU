@@ -10,3 +10,9 @@ Final project: artist’s statement and the final project.
 ## Project Description
 
 ## R&D
+
+## Technical Profile
+### Libraries
+- p5.js
+- ml5.js
+- p5.ble.js
