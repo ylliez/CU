@@ -34,6 +34,7 @@ let disconnectButton = document.getElementById('disconnectBtn');
 // SETUP: initialize canvas, video and model
 function setup() {
   dynamicCanvas = new DynamicCanvas(640, 480);
+  // dynamicCanvas.canvas.parent(`UI`);
 
 
   // start webcam and hide the resulting HTML element
