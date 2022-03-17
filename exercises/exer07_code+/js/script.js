@@ -11,7 +11,7 @@ let numCharsFound = 0;
 let spaceChars = [];
 let spaceFound = false;
 
-$.getJSON("/assets/data/texts/genesis.json", function(data) { getText(data) } );
+$.getJSON("./assets/data/texts/genesis.json", function(data) { getText(data) } );
 
 function getText(json) {
   textJSON = json;
@@ -31,7 +31,7 @@ function loadText() {
 }
 
 function getELS() {
-  $.getJSON( "/assets/data/texts/ELS.json", function(data) { loadELS(data) } );
+  $.getJSON( "./assets/data/texts/ELS.json", function(data) { loadELS(data) } );
 }
 
 function loadELS(json) {
