@@ -9,10 +9,11 @@ label {
 }
 
 #answer {
-  height: 40px;
+  height: 100px;
   width: auto;
   background-color: #ccc;
-  font-size: 30px;
+  font-size: 100px;
+  text-align: center;
 }
 
 #text {
@@ -24,3 +25,8 @@ label {
 .found { background-color: #f00; }
 
 #hidden{ display: none; }
+
+.message {
+  background-color: green;
+  padding-left: 10px;
+}

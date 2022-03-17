@@ -19,11 +19,11 @@ function getText(json) {
 }
 
 function loadText() {
- // text = (json[0]);
+ // text = ("dont&nbsp;do&nbsp;drugs");
  text = (textJSON[Math.floor(Math.random()*textJSON.length)]);
  console.log(text);
  $(`#text`).html(`<div data-splitting>${text}</div>`);
- Splitting()
+ Splitting();
  textChars = $(`.char`);
  spaceChars = $(`.whitespace`);
  // console.log($(`.char`).text());
@@ -92,7 +92,8 @@ function styleSecret() {
   });
 
   $(`.secret`).draggable({
-    helper: `clone`,
+    helper: `original`,
+    revert: true,
   });
 }
 
