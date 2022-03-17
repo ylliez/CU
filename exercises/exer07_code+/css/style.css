@@ -1,3 +1,7 @@
+body {{
+  font-family: cursive;}
+}
+
 label {
   display: inline-block;
   width: 5em;
@@ -11,15 +15,12 @@ label {
   font-size: 30px;
 }
 
-#poem {
+#text {
+  margin: 25px;
   text-align: center;
-  font-size: 20px;
+  font-size: 70px;
 }
 
-.found { color: #f00; }
-
-/* .ui-sortable-helper {
-  visibility: hidden;
-} */
+.found { background-color: #f00; }
 
 #hidden{ display: none; }

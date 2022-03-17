@@ -4,20 +4,28 @@
 
 const ANIMATION_DURATION = 500;
 const SECRET_ANSWER = `Theremin`;
-let text, textChars = [];
+let textJSON, text, textChars = [];
 let els, elsChars = [];
 let charFound = false;
 let numCharsFound = 0;
+let spaceChars = [];
+let spaceFound = false;
 
-$.getJSON("/assets/data/texts/genesis.json", function(data) { loadText(data) } );
+$.getJSON("/assets/data/texts/genesis.json", function(data) { getText(data) } );
 
-function loadText(json) {
- text = (json[0]);
- // text = (json[Math.floor(Math.random()*json.length)]);
+function getText(json) {
+  textJSON = json;
+  loadText();
+}
+
+function loadText() {
+ // text = (json[0]);
+ text = (textJSON[Math.floor(Math.random()*textJSON.length)]);
  console.log(text);
  $(`#text`).html(`<div data-splitting>${text}</div>`);
  Splitting()
  textChars = $(`.char`);
+ spaceChars = $(`.whitespace`);
  // console.log($(`.char`).text());
  getELS();
 }
@@ -32,12 +40,23 @@ function loadELS(json) {
   elsChars = Array.from(els)
   console.log(els);
   // console.log(elsChars);
-  // Splitting();
   for (let i = 0; i < elsChars.length; i++) {
-    console.log(elsChars[i]);
+  console.log(elsChars[i]);
+    spaceChars.each(function() {
+      if(elsChars[i] === $(this).text() && !spaceFound) {
+        // console.log($(this).text());
+        // console.log($(this));
+        if(!$(this).hasClass("secret")){
+          $(this).addClass("secret");
+          spaceFound = true;
+          numCharsFound++;
+        }
+      }
+    });
     textChars.each(function() {
-      if($(this).text() === elsChars[i] && !charFound) {
-        console.log($(this));
+      if(elsChars[i] === $(this).text() && !charFound) {
+        // console.log($(this).text());
+        // console.log($(this));
         if(!$(this).hasClass("secret")){
           $(this).addClass("secret");
           charFound = true;
@@ -46,12 +65,12 @@ function loadELS(json) {
       }
     });
     charFound = false;
+    spaceFound = false;
   }
   verifyMatch();
 }
 
 function verifyMatch() {
-  // console.log(numCharsFound + " " + elsChars.length);
   if (numCharsFound === elsChars.length) {
     console.log("ELS loaded");
     styleSecret();
@@ -60,7 +79,8 @@ function verifyMatch() {
     console.log("Failed to load ELS.");
     textChars.removeClass("secret");
     numCharsFound = 0;
-    getELS();
+    // getELS();
+    loadText();
   }
 }
 
@@ -76,13 +96,13 @@ function styleSecret() {
   });
 }
 
-// $(`#instructions-dialog`).dialog({
-//   modal: true,
-//   resizable: false,
-//   height: "auto",
-//   width: 600,
-//   buttons: { "Play!": function() { $(this).dialog(`close`); } }
-// });
+$(`#instructions-dialog`).dialog({
+  modal: true,
+  resizable: false,
+  height: "auto",
+  width: 600,
+  buttons: { "Play!": function() { $(this).dialog(`close`); } }
+});
 
 $( function() {
     $( document ).tooltip();
@@ -94,26 +114,25 @@ $(`#answer`).droppable({
     let freshFromText = ui.draggable[0].className.includes("secret");
     if (freshFromText) {
       let character = ui.draggable;
-      $(this).append(`<span class="message">${character.text()}</span>`);
-      // $(this).append(`<span class="message" id="char_${characterDropCount}">${character.text()}</span>`);
-      // characterDropCount++;
-      // character.draggable(`option`,`disable`,true);
-      character.draggable(`destroy`);
+      console.log(character);
+      $(this).append(`<span class="message">${character.html()}</span>`);
+      character.draggable(`disable`);
       character.removeClass(`found`, ANIMATION_DURATION);
       character.off(`mouseenter`);
-
+      checkSolution();
     }
-    else {
-
-    }
-    console.log("answer:" + $(`.message`).each.html() + " / solution: " + els);
-    if($(this).text() === els) { $(`#solved-dialog`).dialog(`open`); }
   }
 });
+
+function checkSolution() {
+  console.log("answer:" + $(`.message`).text() + " / solution: " + els);
+  if($(`.message`).text() === els) { $(`#solved-dialog`).dialog(`open`); }
+}
 
 $(`#answer`).sortable({
   axis: `x`,
   cursor: "move",
+  update: checkSolution
 });
 
 $(`#solved-dialog`).dialog({
