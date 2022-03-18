@@ -15,4 +15,4 @@ Final project: artist’s statement and the final project.
 ### Libraries
 - p5.js
 - ml5.js
-- p5.ble.js
+- [p5.ble.js](https://itpnyu.github.io/p5ble-website/) ([GitHub](https://github.com/ITPNYU/p5.ble.js))
