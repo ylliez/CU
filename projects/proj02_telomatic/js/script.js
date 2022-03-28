@@ -8,6 +8,8 @@ let state = `load`;
 const aspectRatio = 16/9;
 // holder for webcam input feed
 let capture;
+// Mac dims: 640 * 480
+// CCTV dims: 768 * 494 pixels (https://www.manualslib.com/manual/118015/Panasonic-Aw-E300.html?page=52#manual)
 const captureWidth = 640;
 const captureHeight = 480;
 // holders for output graphics display
@@ -125,21 +127,21 @@ function writeToBLE() {
   if (teloBLE.isConnected() && teloCharacteristic) {
     let yPos = hand.index.y;
     // console.log(yPos);
-    let yPosConstrained = constrain(yPos, 0, 480);
+    let yPosConstrained = constrain(yPos, 0, height);
     // console.log(yPosConstrained);
     let yPosPercent = yPosConstrained / height;
     // console.log(yPosPercent);
     let yPosByte = yPosPercent * 255;
     // console.log(yPosByte);
-    teloIntensity = 255 - floor(yPosByte);
-    // if (predictions.length > 0 && hand.index.y > 50) { teloIntensity = 255 - floor(yPosByte); }
-    // else { teloIntensity = 0 }
+    // teloIntensity = 255 - floor(yPosByte);
+    if (predictions.length > 0 && yPosByte < 200) { teloIntensity = 255 - floor(yPosByte); }
+    else { teloIntensity = 0 }
     teloBLE.write(teloCharacteristic, teloIntensity);
     push();
     textSize(30);
     textStyle(BOLD);
     textAlign(CENTER, CENTER);
-    fill(255);
+    fill(255,0,255);
     text(yPosByte, width / 4 * 3, height / 4);
     text(floor(yPosPercent * 255), width / 4 * 3, height / 2);
     text(teloIntensity, width / 4 * 3, height / 4*3);
