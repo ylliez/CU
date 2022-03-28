@@ -10,12 +10,6 @@ class Hand {
       x: undefined,
       y: undefined
     };
-    this.size = 3;
-    this.color = {
-      r: 255,
-      g: 0,
-      b: 127
-    }
   }
 
   update() {
@@ -28,8 +22,8 @@ class Hand {
     this.indexGhost.y = this.index.y;
     let index = this.coordinates.annotations.indexFinger;
     let indexTip = index[3];
-    this.index.x = indexTip[0];
-    this.index.y = indexTip[1];
+    this.index.x = indexTip[0]/captureWidth*width;
+    this.index.y = indexTip[1]/captureHeight*height;
   }
 
   displayIndexTip() {
