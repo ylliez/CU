@@ -3,39 +3,22 @@
 /* general */
 // program state (load, sim)
 let state = `load`;
-// // holder for dynamic canvas
-// let dynamicCanvas;
-const aspectRatio = 16/9;
-// holder for webcam input feed
-let capture;
+// video capture input feed and dimensions
+let capture, captureWidth = 640, captureHeight = 480;
 // Mac dims: 640 * 480
 // CCTV dims: 768 * 494 pixels (https://www.manualslib.com/manual/118015/Panasonic-Aw-E300.html?page=52#manual)
-const captureWidth = 640;
-const captureHeight = 480;
-// holders for output graphics display
+// display aspect ratio
+const aspectRatio = 16/9;
+// output graphics display element
 let trailBlazer;
-// holder for touchGUI
-let touchGUI;
-// holders for TouchGUI sliders
-let sliderSize, sliderColR, sliderColG, sliderColB;
-
-/* ml5 */
-// holder for Handpose model
-let handpose;
-// holder for Handpose model results
-let predictions = [];
-// holder for hand object to manipulate Handpose data
-let hand;
-
-/* ble */
-// UUID address of actuating microcontroller
+// p5.touchgui GUI and sliders
+let touchGUI, sliderSize, sliderColR, sliderColG, sliderColB;
+// ml5 Handpose model, results and ad hoc object to manipulate data
+let handpose, predictions = [], hand;
+// BLE UUID address of actuating microcontroller
 const TELO_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
-// holder for BLE object
-let teloBLE;
-// holder for BLE characteristic
-let teloCharacteristic;
-// holder for value to send to BLE
-let teloIntensity;
+// BLE object, characteristic and value to be sent
+let teloBLE, teloCharacteristic, teloIntensity;
 
 // SETUP: initialize canvas, video and model
 function setup() {
@@ -43,38 +26,82 @@ function setup() {
   // createCanvas(1280, 960);
   // createCanvas(640, 480);
   // dynamicCanvas = new DynamicCanvas(640, 480);
+  // instantiate p5.touchgui GUI and sliders
   touchGUI = createGui();
-
   createSliders();
-
   // start webcam and hide the resulting HTML element
   capture = createCapture(VIDEO);
   capture.hide();
-
   // instantiate hand object to manipulate Handpose data
   hand = new Hand();
-
-  // initialize model, switch to simulation state upon load
+  // initialize Handpose model, switch to simulation state upon load
   handpose = ml5.handpose(capture, { flipHorizontal: true }, () => { state = `sim`; } );
   // start Handpose model, store prediction events in array if applicable
   handpose.on(`predict`, (results) => { predictions = results; } );
-
   // instantiate graphics element
   trailBlazer = createGraphics(width, height);
-
   // instantiate ble
   teloBLE = new p5ble();
 }
 
+// create p5.touchgui sliders
 function createSliders() {
-    sliderSize = createSliderV("SliderV", 50, 0.05 * height, 32, 300, 1, 20);
-    sliderSize.val = 6;
-    sliderColR = createSliderV("SliderV", 50, 0.75 * height, 32, 300, 0, 255);
-    sliderColR.val = 255;
-    sliderColG = createSliderV("SliderV", 100, 0.75 * height, 32, 300, 0, 255);
-    sliderColG.val = 0;
-    sliderColB = createSliderV("SliderV", 150, 0.75 * height, 32, 300, 0, 255);
-    sliderColB.val = 127;
+  sliderSize = createSliderV("sliderSize", 50, 0.05 * height, 32, height / 4, 1, 20);
+  sliderSize.val = 6;
+  sliderSize.setStyle({
+    strokeHandle: color("#000"),
+    fillHandle: color("#000"),
+    fillHandleHover: color("#000"),
+    fillHandleActive: color("#000"),
+    fillTrack: color("#000"),
+    fillTrackHover: color("#000"),
+    fillTrackActive: color("#000"),
+    rounding: 100,
+    trackWidth: 1,
+    strokeWeight:1
+  });
+  sliderColR = createSliderV("sliderColR", 50, 0.7 * height, 32, height / 4, 0, 255);
+  sliderColR.val = 255;
+  sliderColR.setStyle({
+    strokeHandle: color("#F00"),
+    fillHandle: color("#F00"),
+    fillHandleHover: color("#F00"),
+    fillHandleActive: color("#F00"),
+    fillTrack: color("#F00"),
+    fillTrackHover: color("#F00"),
+    fillTrackActive: color("#F00"),
+    rounding: 100,
+    trackWidth: 1,
+    strokeWeight:1
+  });
+  sliderColG = createSliderV("sliderColG", 100, 0.7 * height, 32, height / 4, 0, 255);
+  sliderColG.val = 0;
+  sliderColG.setStyle({
+    strokeHandle: color("#0F0"),
+    fillHandle: color("#0F0"),
+    fillHandleHover: color("#0F0"),
+    fillHandleActive: color("#0F0"),
+    fillTrack: color("#0F0"),
+    fillTrackHover: color("#0F0"),
+    fillTrackActive: color("#0F0"),
+    rounding: 100,
+    trackWidth: 1,
+    strokeWeight:1
+  });
+  sliderColB = createSliderV("sliderColB", 150, 0.7 * height, 32, height / 4, 0, 255);
+  sliderColB.val = 127;
+  sliderColB.setStyle({
+    strokeHandle: color("#00F"),
+    fillHandle: color("#00F"),
+    fillHandleHover: color("#00F"),
+    fillHandleActive: color("#00F"),
+    fillTrack: color("#00F"),
+    fillTrackHover: color("#00F"),
+    fillTrackActive: color("#00F"),
+    rounding: 100,
+    trackWidth: 1,
+    strokeWeight:1
+  });
 }
 
 // DRAW: handle program state
@@ -137,15 +164,6 @@ function writeToBLE() {
     if (predictions.length > 0 && yPosByte < 200) { teloIntensity = 255 - floor(yPosByte); }
     else { teloIntensity = 0 }
     teloBLE.write(teloCharacteristic, teloIntensity);
-    push();
-    textSize(30);
-    textStyle(BOLD);
-    textAlign(CENTER, CENTER);
-    fill(255,0,255);
-    text(yPosByte, width / 4 * 3, height / 4);
-    text(floor(yPosPercent * 255), width / 4 * 3, height / 2);
-    text(teloIntensity, width / 4 * 3, height / 4*3);
-    pop();
   }
 }
 
@@ -166,7 +184,6 @@ function keyPressed() {
   }
 }
 
-
 // connect to device by passing the service UUID
 function connectToBLE() {
   teloBLE.connect(TELO_UUID, gotCharacteristics);
@@ -176,7 +193,7 @@ function gotCharacteristics(error, characteristics) {
   // print connection error, if applicable
   if (error) console.log('error: ', error);
   console.log('characteristics: ', characteristics);
-  // Set the first characteristic as myCharacteristic
+  // Set the first characteristic as writing characteristic
   teloCharacteristic = characteristics[0];
 }
 
