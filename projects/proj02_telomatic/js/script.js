@@ -8,7 +8,7 @@ let capture, captureWidth = 640, captureHeight = 480;
 // Mac dims: 640 * 480
 // CCTV dims: 768 * 494 pixels (https://www.manualslib.com/manual/118015/Panasonic-Aw-E300.html?page=52#manual)
 // display aspect ratio
-const aspectRatio = 16/9;
+const aspectRatio = 4/3;
 // output graphics display element
 let trailBlazer;
 // p5.touchgui GUI and sliders
@@ -48,7 +48,7 @@ function setup() {
 
 // create p5.touchgui sliders
 function createSliders() {
-  sliderColWidth = 75;
+  sliderColWidth = 50;
   sliderColHeight = height / 4;
   sliderColYPos = height * 0.1;
   sliderColRXPos = sliderColWidth;
