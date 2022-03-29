@@ -48,7 +48,7 @@ function setup() {
 
 // create p5.touchgui sliders
 function createSliders() {
-  sliderColWidth = 50;
+  sliderColWidth = 30;
   sliderColHeight = height / 4;
   sliderColYPos = height * 0.1;
   sliderColRXPos = sliderColWidth;
