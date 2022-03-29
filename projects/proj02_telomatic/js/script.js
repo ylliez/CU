@@ -13,6 +13,8 @@ const aspectRatio = 16/9;
 let trailBlazer;
 // p5.touchgui GUI and sliders
 let touchGUI, sliderSize, sliderColR, sliderColG, sliderColB;
+let sliderColWidth, sliderColHeight, sliderColYPos, sliderColRXPos, sliderColGXPos, sliderColBXPos;
+let sliderSizeWidth, sliderSizeHeight, sliderSizeYPos, sliderSizeXPos;
 // ml5 Handpose model, results and ad hoc object to manipulate data
 let handpose, predictions = [], hand;
 // BLE UUID address of actuating microcontroller
@@ -46,7 +48,17 @@ function setup() {
 
 // create p5.touchgui sliders
 function createSliders() {
-  sliderSize = createSliderV("sliderSize", 50, 0.05 * height, 32, height / 4, 1, 20);
+  sliderColWidth = 75;
+  sliderColHeight = height / 4;
+  sliderColYPos = height * 0.1;
+  sliderColRXPos = sliderColWidth;
+  sliderColGXPos = sliderColRXPos + 2 * sliderColWidth;
+  sliderColBXPos = sliderColGXPos + 2 * sliderColWidth;
+  sliderSizeWidth = sliderColBXPos + sliderColWidth - sliderColRXPos;
+  sliderSizeHeight = sliderColWidth;
+  sliderSizeYPos = sliderColYPos + sliderColHeight + sliderSizeHeight;
+  sliderSizeXPos = sliderColRXPos;
+  sliderSize = createSlider("sliderSize", sliderSizeXPos, sliderSizeYPos, sliderSizeWidth, sliderSizeHeight, 1, 30);
   sliderSize.val = 6;
   sliderSize.setStyle({
     strokeHandle: color("#000"),
@@ -60,7 +72,7 @@ function createSliders() {
     trackWidth: 1,
     strokeWeight:1
   });
-  sliderColR = createSliderV("sliderColR", 50, 0.7 * height, 32, height / 4, 0, 255);
+  sliderColR = createSliderV("sliderColR", sliderColRXPos, sliderColYPos, sliderColWidth, sliderColHeight, 0, 255);
   sliderColR.val = 255;
   sliderColR.setStyle({
     strokeHandle: color("#F00"),
@@ -74,7 +86,7 @@ function createSliders() {
     trackWidth: 1,
     strokeWeight:1
   });
-  sliderColG = createSliderV("sliderColG", 100, 0.7 * height, 32, height / 4, 0, 255);
+  sliderColG = createSliderV("sliderColG", sliderColGXPos, sliderColYPos, sliderColWidth, sliderColHeight, 0, 255);
   sliderColG.val = 0;
   sliderColG.setStyle({
     strokeHandle: color("#0F0"),
@@ -88,7 +100,7 @@ function createSliders() {
     trackWidth: 1,
     strokeWeight:1
   });
-  sliderColB = createSliderV("sliderColB", 150, 0.7 * height, 32, height / 4, 0, 255);
+  sliderColB = createSliderV("sliderColB", sliderColBXPos, sliderColYPos, sliderColWidth, sliderColHeight, 0, 255);
   sliderColB.val = 127;
   sliderColB.setStyle({
     strokeHandle: color("#00F"),
@@ -135,9 +147,29 @@ function sim() {
   if (predictions.length > 0) {
     hand.coordinates = predictions[0];
     hand.coordinate();
+    checkUI();
   }
   drawIndexTip();
   writeToBLE();
+}
+
+function checkUI() {
+  if (hand.index.y > sliderColYPos && hand.index.y < sliderColYPos + sliderColHeight) {
+    if (hand.index.x > sliderColRXPos && hand.index.x < sliderColRXPos + sliderColWidth) {
+      sliderColR.val = map(hand.index.y, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
+    }
+    if (hand.index.x > sliderColGXPos && hand.index.x < sliderColGXPos + sliderColWidth) {
+      sliderColG.val = map(hand.index.y, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
+    }
+    if (hand.index.x > sliderColBXPos && hand.index.x < sliderColBXPos + sliderColWidth) {
+      sliderColB.val = map(hand.index.y, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
+    }
+  }
+  if (hand.index.y > sliderSizeYPos && hand.index.y < sliderSizeYPos + sliderSizeHeight) {
+    if (hand.index.x > sliderSizeXPos && hand.index.x < sliderSizeXPos + sliderSizeWidth) {
+      sliderSize.val = map(hand.index.x, sliderSizeXPos, sliderSizeXPos + sliderSizeWidth, 1, 30);
+    }
+  }
 }
 
 // draw path following index finger tip
