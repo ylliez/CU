@@ -83,7 +83,7 @@ async function handposeDetectionStart() {
   console.log(capture.loadedmetadata);
   console.log(image);
   // ERROR HERE!
-  const hands = await detector.estimateHands(image);
+  const hands = await detector.estimateHands(video);
   state = `sim`;
 }
 
