@@ -5,6 +5,8 @@
 let state = `load`;
 // video capture input feed and dimensions
 let capture, captureWidth = 640, captureHeight = 480;
+let videoElement = document.getElementById('webcam');
+let webcam;
 // Mac dims: 640 * 480
 // CCTV dims: 768 * 494 pixels (https://www.manualslib.com/manual/118015/Panasonic-Aw-E300.html?page=52#manual)
 // display aspect ratio
@@ -22,29 +24,59 @@ const TELO_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
 // BLE object, characteristic and value to be sent
 let teloBLE, teloCharacteristic, teloIntensity;
 
+let rIndexTipX, rIndexTipY;
+
+const hands = new Hands({
+  locateFile: (file) => {
+    return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+  }
+});
+
+hands.setOptions({
+  selfieMode: true,
+  maxNumHands: 2,
+  modelComplexity: 1,
+  minDetectionConfidence: 0.5,
+  minTrackingConfidence: 0.5
+});
+
+hands.onResults((results) => {
+  state = `sim`;
+  predictions = results;
+});
+
+const camera = new Camera(videoElement, {
+  onFrame: async () => {
+    await hands.send({
+      image: videoElement,
+    });
+  },
+  width: 1280,
+  height: 720
+});
+
+camera.start();
+
 // SETUP: initialize canvas, video and model
 function setup() {
-  createCanvas(windowWidth, windowWidth / aspectRatio);
+  createCanvas(1280, 720);
+  // createCanvas(windowWidth, windowWidth / aspectRatio);
   // createCanvas(1280, 960);
   // createCanvas(640, 480);
-  // dynamicCanvas = new DynamicCanvas(640, 480);
   // instantiate p5.touchgui GUI and sliders
   touchGUI = createGui();
   createSliders();
-  // start webcam and hide the resulting HTML element
-  capture = createCapture(VIDEO);
-  capture.hide();
+
+  webcam = select(`#webcam`);
   // instantiate hand object to manipulate Handpose data
-  hand = new Hand();
-  // initialize Handpose model, switch to simulation state upon load
-  handpose = ml5.handpose(capture, { flipHorizontal: true }, () => { state = `sim`; } );
-  // start Handpose model, store prediction events in array if applicable
-  handpose.on(`predict`, (results) => { predictions = results; } );
+  // hand = new Hand();
+
   // instantiate graphics element
   trailBlazer = createGraphics(width, height);
   // instantiate ble
   teloBLE = new p5ble();
 }
+
 
 // create p5.touchgui sliders
 function createSliders() {
@@ -118,7 +150,6 @@ function createSliders() {
 
 // DRAW: handle program state
 function draw() {
-  // dynamicCanvas.update();
   switch (state) {
     case `load`: load(); break;
     case `sim`: sim(); break;
@@ -139,46 +170,93 @@ function load() {
 // SIM: update hand predictions and draw index finger tip to screen
 function sim() {
   // display mirrored video feed
-  image(ml5.flipImage(capture), 0, 0, width, height);
+  push();
+  translate(width,0);
+  scale(-1, 1);
+  image(webcam, 0, 0);
+  pop();
   filter(GRAY);
 
   drawGui();
 
-  if (predictions.length > 0) {
-    hand.coordinates = predictions[0];
-    hand.coordinate();
-    checkUI();
+  let numberHands = predictions.multiHandedness.length;
+
+  if (numberHands > 0) {
+    for (var i = 0; i < numberHands; i++) {
+      let indexTip = predictions.multiHandLandmarks[i][8];
+      let chirality = predictions.multiHandedness[i].label;
+      // console.log(chirality);
+      if (chirality === `Right`) {
+        let rIndexGhostX = rIndexTipX;
+        let rIndexGhostY = rIndexTipY;
+        rIndexTipX = indexTip.x * width;
+        rIndexTipY = indexTip.y * height;
+
+        trailBlazer.push();
+        trailBlazer.stroke(sliderColR.val, sliderColG.val, sliderColB.val);
+        trailBlazer.strokeWeight(sliderSize.val);
+        trailBlazer.line(rIndexGhostX, rIndexGhostY, rIndexTipX, rIndexTipY);
+        trailBlazer.pop();
+      }
+
+      else if (chirality === `Left`) {
+        let lIndexTipX = indexTip.x * width;
+        let lIndexTipY = indexTip.y * height;
+        ellipse(lIndexTipX, lIndexTipY, 15);
+        if (lIndexTipY > sliderColYPos && lIndexTipY < sliderColYPos + sliderColHeight) {
+          if (lIndexTipX > sliderColRXPos && lIndexTipX < sliderColRXPos + sliderColWidth) {
+            sliderColR.val = map(lIndexTipY, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
+          }
+          if (lIndexTipX > sliderColGXPos && lIndexTipX < sliderColGXPos + sliderColWidth) {
+            sliderColG.val = map(lIndexTipY, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
+          }
+          if (lIndexTipX > sliderColBXPos && lIndexTipX < sliderColBXPos + sliderColWidth) {
+            sliderColB.val = map(lIndexTipY, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
+          }
+        }
+        if (lIndexTipY > sliderSizeYPos && lIndexTipY < sliderSizeYPos + sliderSizeHeight) {
+          if (lIndexTipX > sliderSizeXPos && lIndexTipX < sliderSizeXPos + sliderSizeWidth) {
+            sliderSize.val = map(lIndexTipX, sliderSizeXPos, sliderSizeXPos + sliderSizeWidth, 1, 30);
+          }
+        }
+      }
+    }
+    // hand.predictions = predictions;
+    // hand.coordinate();
+  //   checkUI();
   }
+
+  // displayHands();
   drawIndexTip();
   writeToBLE();
 }
-
-function checkUI() {
-  if (hand.index.y > sliderColYPos && hand.index.y < sliderColYPos + sliderColHeight) {
-    if (hand.index.x > sliderColRXPos && hand.index.x < sliderColRXPos + sliderColWidth) {
-      sliderColR.val = map(hand.index.y, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
-    }
-    if (hand.index.x > sliderColGXPos && hand.index.x < sliderColGXPos + sliderColWidth) {
-      sliderColG.val = map(hand.index.y, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
-    }
-    if (hand.index.x > sliderColBXPos && hand.index.x < sliderColBXPos + sliderColWidth) {
-      sliderColB.val = map(hand.index.y, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
-    }
-  }
-  if (hand.index.y > sliderSizeYPos && hand.index.y < sliderSizeYPos + sliderSizeHeight) {
-    if (hand.index.x > sliderSizeXPos && hand.index.x < sliderSizeXPos + sliderSizeWidth) {
-      sliderSize.val = map(hand.index.x, sliderSizeXPos, sliderSizeXPos + sliderSizeWidth, 1, 30);
-    }
-  }
-}
+//
+// function checkUI() {
+//   if (hand.index.y > sliderColYPos && hand.index.y < sliderColYPos + sliderColHeight) {
+//     if (hand.index.x > sliderColRXPos && hand.index.x < sliderColRXPos + sliderColWidth) {
+//       sliderColR.val = map(hand.index.y, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
+//     }
+//     if (hand.index.x > sliderColGXPos && hand.index.x < sliderColGXPos + sliderColWidth) {
+//       sliderColG.val = map(hand.index.y, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
+//     }
+//     if (hand.index.x > sliderColBXPos && hand.index.x < sliderColBXPos + sliderColWidth) {
+//       sliderColB.val = map(hand.index.y, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
+//     }
+//   }
+//   if (hand.index.y > sliderSizeYPos && hand.index.y < sliderSizeYPos + sliderSizeHeight) {
+//     if (hand.index.x > sliderSizeXPos && hand.index.x < sliderSizeXPos + sliderSizeWidth) {
+//       sliderSize.val = map(hand.index.x, sliderSizeXPos, sliderSizeXPos + sliderSizeWidth, 1, 30);
+//     }
+//   }
+// }
 
 // draw path following index finger tip
 function drawIndexTip() {
-  trailBlazer.push();
-  trailBlazer.stroke(sliderColR.val, sliderColG.val, sliderColB.val);
-  trailBlazer.strokeWeight(sliderSize.val);
-  trailBlazer.line(hand.indexGhost.x, hand.indexGhost.y, hand.index.x, hand.index.y);
-  trailBlazer.pop();
+  // trailBlazer.push();
+  // trailBlazer.stroke(sliderColR.val, sliderColG.val, sliderColB.val);
+  // trailBlazer.strokeWeight(sliderSize.val);
+  // trailBlazer.line(hand.indexGhost.x, hand.indexGhost.y, hand.index.x, hand.index.y);
+  // trailBlazer.pop();
   image(trailBlazer, 0, 0);
 }
 
