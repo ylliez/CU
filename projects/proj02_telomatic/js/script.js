@@ -203,6 +203,58 @@ function keyPressed() {
       document.body.exitFullscreen();
     }
   }
+  // 'p' key screenprints
+  if (keyCode === 80) {
+    // possible to silent print (i.e. without passing by print dialog box?)
+    // window.print();
+    // OR USING screenshot and upload to link (accessible via QR code? - localStorage)
+    // save(`telomatic_${year()}.${month()}.${day()}-${hour()}.${minute()}.${second()}.png`);
+    // return false;
+    // OR USING toDataURL
+    // let canvas  = document.getElementById("defaultCanvas0");
+    // console.log(canvas);
+    // let image_data = canvas.toDataURL("image/jpeg", 0.0001);
+    // console.log(image_data);
+    // OR USING toBlob()
+    // var canvas = document.getElementById('canvas');
+    // canvas.toBlob(function(blob) {
+    //   var newImg = document.createElement('img'),
+    //   url = URL.createObjectURL(blob);
+    //   newImg.onload = function() {
+    //     // no longer need to read the blob so it's revoked
+    //     URL.revokeObjectURL(url);
+    //   };
+    //   newImg.src = url;
+    //   document.body.appendChild(newImg);
+    // });
+    // OR SAVING graphics element
+    console.log(trailBlazer);
+    // console.log(p5.Graphics);
+    // save(trailBlazer, 'telomatic.jpg');
+    let graphicsElement = document.getElementsByTagName("canvas")[1];
+    console.log(graphicsElement);
+    let image_data = graphicsElement.toDataURL("image/jpeg", 0.001);
+    console.log(image_data);
+    // USING QR CODE? (https://editor.p5js.org/tigoe/sketches/-BEzcjfMF)
+    let tagDiv = createDiv();
+    tagDiv.position(30, 30);
+    let qr = qrcode(0, 'L');
+    qr.addData(image_data);
+    qr.make();
+    let qrImg = qr.createImgTag(5, 20, "qr code");
+    tagDiv.html(qrImg);
+    // ATTEMPT 2 (https://github.com/davidshimjs/qrcodejs)
+    // let qrcode = new QRCode(document.getElementById("qrcode"), {
+    // 	width: 200,
+    // 	height: 200,
+    // 	colorDark : "#000000",
+    // 	colorLight : "#ffffff",
+    // 	correctLevel : QRCode.CorrectLevel.H,
+    //   // text: "data:text/plain;charset=utf-8;base64,ZGVtbw=="
+    //   text: "data:text/plain;charset=utf-8;base64,ZGVtbw=="
+    // });
+
+  }
   // 'x' key clears graphics elements
   if (keyCode === 88) {
     trailBlazer.clear();
