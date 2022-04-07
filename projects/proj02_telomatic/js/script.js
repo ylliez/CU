@@ -203,6 +203,10 @@ function keyPressed() {
       document.body.exitFullscreen();
     }
   }
+  // 'x' key clears graphics elements
+  if (keyCode === 88) {
+    trailBlazer.clear();
+  }
 }
 
 // connect to device by passing the service UUID
