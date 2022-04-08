@@ -7,9 +7,9 @@ let state = `load`;
 const captureElement = document.getElementById('capture');
 // let capture, captureWidth = 1280, captureHeight = 720;
 // Mac dims: 640 * 480
-// let capture, captureWidth = 640, captureHeight = 480;
+let capture, captureWidth = 640, captureHeight = 480;
 // CCTV dims: 768 * 494 pixels (https://www.manualslib.com/manual/118015/Panasonic-Aw-E300.html?page=52#manual)
-let capture, captureWidth = 768, captureHeight = 494;
+// let capture, captureWidth = 768, captureHeight = 494;
 // display aspect ratio
 const aspectRatio = captureWidth / captureHeight;
 // output graphics display element
