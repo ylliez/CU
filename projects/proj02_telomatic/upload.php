@@ -9,7 +9,8 @@ $img = str_replace(' ', '+', $img);
 // decode URI
 $data = base64_decode($img);
 // create file for data and save data to file
-$file = $upload_dir.mktime().".png";
+// $file = $upload_dir.mktime().".png";
+$file = $upload_dir.date("ymd-His-").mktime().".png";
 $success = file_put_contents($file, $data);
 // return file URL
 echo($file);
