@@ -169,7 +169,7 @@ function keyPressed() {
     $.ajax({
       type: "POST",
       enctype: 'multipart/form-data',
-      url: "https://hybrid.concordia.ca/i_planch/CART263/proj02_telomatic/upload.php",
+      url: "upload.php",
       data: data,
       processData: false, //prevents from converting into a query string
       contentType: false,
