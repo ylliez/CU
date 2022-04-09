@@ -20,9 +20,10 @@ class Hand {
   }
 
   coordinate() {
-    this.numberHands = this.predictions.multiHandedness.length
+    this.numberHands = this.predictions.multiHandedness.length;
     if (this.numberHands > 0) {
       for (var i = 0; i < this.numberHands; i++) {
+        console.log(this.predictions.multiHandLandmarks[i][8].z);
         let indexTip = this.predictions.multiHandLandmarks[i][8];
         let chirality = predictions.multiHandedness[i].label;
         if (chirality === `Right`) {
@@ -45,29 +46,21 @@ class Hand {
           let lIndexTipX = indexTip.x * width;
           let lIndexTipY = indexTip.y * height;
           this.displayLeftIndexTip(lIndexTipX, lIndexTipY);
-          this.checkUI(lIndexTipX, lIndexTipY);
+          this.checkGUI(lIndexTipX, lIndexTipY);
         }
       }
     }
-    // this.indexGhost.x = this.index.x;
-    // this.indexGhost.y = this.index.y;
-    // // let index = this.coordinates.annotations.indexFinger;
-    // let indexTip = this.predictions.multiHandLandmarks[i][8];
-    // this.indexTip.x = indexTip[0]/captureWidth*width;
-    // this.indexTip.y = indexTip[1]/captureHeight*height;
   }
 
   displayLeftIndexTip(x, y) {
     push();
-    // fill(this.color.r,this.color.g,this.color.b);
     fill(255, 255, 255);
     noStroke();
     ellipse(x, y, 15);
-    // ellipse(this.index.x, this.index.y, this.size);
     pop();
   }
 
-  checkUI(x, y) {
+  checkGUI(x, y) {
     if (y > sliderColYPos && y < sliderColYPos + sliderColHeight) {
       if (x > sliderColRXPos && x < sliderColRXPos + sliderColWidth) {
         sliderColR.val = map(y, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);

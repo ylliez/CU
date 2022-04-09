@@ -1,6 +1,7 @@
 <?php
 // set upload directory in same root folder
-$upload_dir = "upload/";
+// $upload_dir = "upload/";
+$upload_dir = "http://hybrid.concordia.ca/i_planch/CART263/proj02_telomatic/upload/";
 // receive URI from ajax POST using key
 $img = $_POST['canvasImage'];
 // format received URI (replace leader and spaces)
