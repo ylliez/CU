@@ -213,8 +213,7 @@ function keyPressed() {
     // return false;
     // OR USING toDataURL
     // let canvas  = document.getElementById("defaultCanvas0");
-    // console.log(canvas);
-    // let image_data = canvas.toDataURL("image/jpeg", 0.0001);
+    // let image_data = canvas.toDataURL("image/png", 1);
     // console.log(image_data);
     // OR USING toBlob()
     // var canvas = document.getElementById('canvas');
@@ -228,22 +227,22 @@ function keyPressed() {
     //   newImg.src = url;
     //   document.body.appendChild(newImg);
     // });
-    // OR SAVING graphics element
-    console.log(trailBlazer);
-    // console.log(p5.Graphics);
-    // save(trailBlazer, 'telomatic.jpg');
-    let graphicsElement = document.getElementsByTagName("canvas")[1];
-    console.log(graphicsElement);
-    let image_data = graphicsElement.toDataURL("image/jpeg", 0.001);
-    console.log(image_data);
-    // USING QR CODE? (https://editor.p5js.org/tigoe/sketches/-BEzcjfMF)
-    let tagDiv = createDiv();
-    tagDiv.position(30, 30);
-    let qr = qrcode(0, 'L');
-    qr.addData(image_data);
-    qr.make();
-    let qrImg = qr.createImgTag(5, 20, "qr code");
-    tagDiv.html(qrImg);
+    // // OR SAVING graphics element
+    // console.log(trailBlazer);
+    // // console.log(p5.Graphics);
+    // // save(trailBlazer, 'telomatic.jpg');
+    // let graphicsElement = document.getElementsByTagName("canvas")[1];
+    // console.log(graphicsElement);
+    // let image_data = graphicsElement.toDataURL("image/jpeg", 0.001);
+    // console.log(image_data);
+    // // USING QR CODE? (https://editor.p5js.org/tigoe/sketches/-BEzcjfMF)
+    // let tagDiv = createDiv();
+    // tagDiv.position(30, 30);
+    // let qr = qrcode(0, 'L');
+    // qr.addData(image_data);
+    // qr.make();
+    // let qrImg = qr.createImgTag(5, 20, "qr code");
+    // tagDiv.html(qrImg);
     // ATTEMPT 2 (https://github.com/davidshimjs/qrcodejs)
     // let qrcode = new QRCode(document.getElementById("qrcode"), {
     // 	width: 200,
@@ -254,7 +253,40 @@ function keyPressed() {
     //   // text: "data:text/plain;charset=utf-8;base64,ZGVtbw=="
     //   text: "data:text/plain;charset=utf-8;base64,ZGVtbw=="
     // });
+    // CART lab
+    let canvas  = document.getElementById("defaultCanvas0");
+    // console.log(canvas);
+    let imageURL = canvas.toDataURL("image/png", 1);
+    let data = new FormData();
+    data.append("p5CanvasImage", imageURL);
+    $.ajax({
+               type: "POST",
+               enctype: 'multipart/form-data',
+               url: "upload.php",
+               data: data,
+               processData: false,//prevents from converting into a query string
+               contentType: false,
+               cache: false,
+               timeout: 600000,
+               success: function (response) {
+               //reponse is a STRING (not a JavaScript object -> so we need to convert)
+               console.log("we had success!");
+               console.log(response);
+               let newImgurl = `http://hybrid.concordia.ca/i_planch/CART263/proj02_telomatic/${response}`;
+               let qrcode = new QRCode("qrcodeDiv", {
+                text: newImgurl,
+                width: 128,
+                height: 128,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+              },
+              error:function(){
+             console.log("error occurred");
 
+           }
+         });
   }
   // 'x' key clears graphics elements
   if (keyCode === 88) {
