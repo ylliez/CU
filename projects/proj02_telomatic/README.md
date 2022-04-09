@@ -21,4 +21,4 @@ Final project: artist’s statement and the final project.
 
 ## Versions
 ### [V1] pre-MediaPipe (ble+ml5)
-### [V2] pre-QR (ble+mp)
+### [V2] pre-PHP/server (ble+MP+QR[unstable])
