@@ -115,21 +115,18 @@ function sim() {
   image(capture, 0, 0, width, height);
   pop();
   filter(GRAY);
-
+  // display touchgui elements
   drawGui();
 
   // check if at least one hand is present, also assess number of hands
   hand.predictions = predictions;
   hand.update();
-  drawIndexTip();
+  // display graphic element (not conditional on hand being present)
+  image(trailBlazer, 0, 0);
+  // send y index position to
   writeToBLE();
 
   //or drawGUI here to float over drawing
-}
-
-// draw path following index finger tip
-function drawIndexTip() {
-  image(trailBlazer, 0, 0);
 }
 
 function writeToBLE() {
@@ -172,7 +169,7 @@ function keyPressed() {
     $.ajax({
       type: "POST",
       enctype: 'multipart/form-data',
-      url: "upload.php",
+      url: "http://hybrid.concordia.ca/i_planch/CART263/proj02_telomatic/upload.php",
       data: data,
       processData: false, //prevents from converting into a query string
       contentType: false,
