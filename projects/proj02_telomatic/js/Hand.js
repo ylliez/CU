@@ -3,50 +3,44 @@ class Hand {
   constructor() {
     this.predictions = [];
     this.numberHands = undefined;
-    this.chirality = undefined;
-    this.indexTip = {
-      x: undefined,
-      y: undefined
-    };
-    this.indexGhost = {
-      x: undefined,
-      y: undefined
-    };
+    this.hands = [];
+    this.indexTip = [];
+    this.indexTipX = [];
+    this.indexTipY = [];
+    this.indexGhostX = [];
+    this.indexGhostY = [];
+    this.rightHandsZ = [];
+    this.bleVal = 0;
   }
 
   update() {
-    this.coordinate();
-    // this.displayIndexTip();
-  }
-
-  coordinate() {
     this.numberHands = this.predictions.multiHandedness.length;
     if (this.numberHands > 0) {
       for (var i = 0; i < this.numberHands; i++) {
-        console.log(this.predictions.multiHandLandmarks[i][8].z);
-        let indexTip = this.predictions.multiHandLandmarks[i][8];
-        let chirality = predictions.multiHandedness[i].label;
-        if (chirality === `Right`) {
-          let rIndexGhostX = rIndexTipX;
-          let rIndexGhostY = rIndexTipY;
-          rIndexTipX = indexTip.x * width;
-          rIndexTipY = indexTip.y * height;
-
+        this.indexTip[i] = this.predictions.multiHandLandmarks[i][8];
+        if (this.predictions.multiHandedness[i].label === `Right`) {
+          this.indexGhostX[i] = this.indexTipX[i];
+          this.indexGhostY[i] = this.indexTipY[i];
+          this.indexTipX[i] = this.indexTip[i].x * width;
+          this.indexTipY[i] = this.indexTip[i].y * height;
           trailBlazer.push();
           trailBlazer.stroke(sliderColR.val, sliderColG.val, sliderColB.val);
           trailBlazer.strokeWeight(sliderSize.val);
           // set maximum distance between previous and current index tip position to preclude jumping
-          if (abs(rIndexGhostX - rIndexTipX) < 100 && abs(rIndexGhostY - rIndexTipY) < 100) {
-            trailBlazer.line(rIndexGhostX, rIndexGhostY, rIndexTipX, rIndexTipY);
+          if (abs(this.indexGhostX[i] - this.indexTipX[i]) < 100 && abs(this.indexGhostY[i] - this.indexTipY[i]) < 100) {
+            trailBlazer.line(this.indexGhostX[i], this.indexGhostY[i], this.indexTipX[i], this.indexTipY[i]);
           }
           trailBlazer.pop();
+          // // how to get single value for BLE in multihand context?
+          // this.rightHandsZ[i] = this.predictions.multiHandLandmarks[i][0].z;
+          // console.log(this.rightHandsZ);
         }
 
-        else if (chirality === `Left`) {
-          let lIndexTipX = indexTip.x * width;
-          let lIndexTipY = indexTip.y * height;
-          this.displayLeftIndexTip(lIndexTipX, lIndexTipY);
-          this.checkGUI(lIndexTipX, lIndexTipY);
+        else if (this.predictions.multiHandedness[i].label === `Left`) {
+          this.indexTipX[i] = this.indexTip[i].x * width;
+          this.indexTipY[i] = this.indexTip[i].y * height;
+          this.displayLeftIndexTip(this.indexTipX[i], this.indexTipY[i]);
+          this.checkGUI(this.indexTipX[i], this.indexTipY[i]);
         }
       }
     }
