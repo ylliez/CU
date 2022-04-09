@@ -17,3 +17,8 @@ Final project: artist’s statement and the final project.
 - ml5.js
 - [p5.ble.js](https://itpnyu.github.io/p5ble-website/) ([GitHub](https://github.com/ITPNYU/p5.ble.js))
 - [p5.touchgui](https://github.com/L05/p5.touchgui)
+- [qrcodejs](https://github.com/davidshimjs/qrcodejs)
+
+## Versions
+### [V1] pre-MediaPipe (ble+ml5)
+### [V2] pre-QR (ble+mp)
