@@ -34,7 +34,10 @@ class Hand {
           trailBlazer.push();
           trailBlazer.stroke(sliderColR.val, sliderColG.val, sliderColB.val);
           trailBlazer.strokeWeight(sliderSize.val);
-          trailBlazer.line(rIndexGhostX, rIndexGhostY, rIndexTipX, rIndexTipY);
+          // set maximum distance between previous and current index tip position to preclude jumping
+          if (abs(rIndexGhostX - rIndexTipX) < 100 && abs(rIndexGhostY - rIndexTipY) < 100) {
+            trailBlazer.line(rIndexGhostX, rIndexGhostY, rIndexTipX, rIndexTipY);
+          }
           trailBlazer.pop();
         }
 
@@ -42,25 +45,9 @@ class Hand {
           let lIndexTipX = indexTip.x * width;
           let lIndexTipY = indexTip.y * height;
           this.displayLeftIndexTip(lIndexTipX, lIndexTipY);
-          if (lIndexTipY > sliderColYPos && lIndexTipY < sliderColYPos + sliderColHeight) {
-            if (lIndexTipX > sliderColRXPos && lIndexTipX < sliderColRXPos + sliderColWidth) {
-              sliderColR.val = map(lIndexTipY, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
-            }
-            if (lIndexTipX > sliderColGXPos && lIndexTipX < sliderColGXPos + sliderColWidth) {
-              sliderColG.val = map(lIndexTipY, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
-            }
-            if (lIndexTipX > sliderColBXPos && lIndexTipX < sliderColBXPos + sliderColWidth) {
-              sliderColB.val = map(lIndexTipY, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
-            }
-          }
-          if (lIndexTipY > sliderSizeYPos && lIndexTipY < sliderSizeYPos + sliderSizeHeight) {
-            if (lIndexTipX > sliderSizeXPos && lIndexTipX < sliderSizeXPos + sliderSizeWidth) {
-              sliderSize.val = map(lIndexTipX, sliderSizeXPos, sliderSizeXPos + sliderSizeWidth, 1, 30);
-            }
-          }
+          this.checkUI(lIndexTipX, lIndexTipY);
         }
       }
-    //   checkUI();
     }
     // this.indexGhost.x = this.index.x;
     // this.indexGhost.y = this.index.y;
@@ -78,6 +65,25 @@ class Hand {
     ellipse(x, y, 15);
     // ellipse(this.index.x, this.index.y, this.size);
     pop();
+  }
+
+  checkUI(x, y) {
+    if (y > sliderColYPos && y < sliderColYPos + sliderColHeight) {
+      if (x > sliderColRXPos && x < sliderColRXPos + sliderColWidth) {
+        sliderColR.val = map(y, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
+      }
+      if (x > sliderColGXPos && x < sliderColGXPos + sliderColWidth) {
+        sliderColG.val = map(y, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
+      }
+      if (x > sliderColBXPos && x < sliderColBXPos + sliderColWidth) {
+        sliderColB.val = map(y, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
+      }
+    }
+    if (y > sliderSizeYPos && y < sliderSizeYPos + sliderSizeHeight) {
+      if (x > sliderSizeXPos && x < sliderSizeXPos + sliderSizeWidth) {
+        sliderSize.val = map(x, sliderSizeXPos, sliderSizeXPos + sliderSizeWidth, 1, 30);
+      }
+    }
   }
 
 }
