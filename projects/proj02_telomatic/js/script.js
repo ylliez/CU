@@ -27,6 +27,8 @@ let teloBLE, teloCharacteristic, teloIntensity;
 
 let rIndexTipX, rIndexTipY;
 
+let qrDiv;
+
 
 
 // SETUP: initialize canvas, video and model
@@ -40,7 +42,7 @@ function setup() {
   // instantiate p5.touchgui GUI and sliders
   touchGUI = createGui();
   createSliders();
-
+  // get DOM element of video
   capture = select(`#capture`);
   // instantiate hand object to manipulate Handpose data
   // hand = new Hand();
@@ -48,6 +50,15 @@ function setup() {
   trailBlazer = createGraphics(width, height);
   // instantiate ble
   teloBLE = new p5ble();
+  // get DOM element of QR code
+  // qrDiv = select(`#qrCodeDiv`);
+  // console.log(qrDiv);
+  qrDiv = document.getElementById("qrCodeDiv");
+  qrDiv.style.height = `${height/2}px`;
+  qrDiv.style.width = qrDiv.style.height;
+  qrDiv.style.left = `${width/2-height/4}px`;
+  qrDiv.style.top = `${height/2-height/4}px`;
+  // console.log(qrDiv);
 }
 
 function handposeSetup() {
@@ -202,6 +213,8 @@ function keyPressed() {
   }
   // 'p' key screenprints
   if (keyCode === 80) {
+    // clear contents of QR code div; if a code has already been generated, removes it
+    qrDiv.innerHTML = ""; 
     let canvas  = document.getElementById("defaultCanvas0");
 
     let canvasURL = canvas.toDataURL("image/png", 1);
@@ -218,17 +231,18 @@ function keyPressed() {
       timeout: 600000,
       success: function (response) {
         //reponse is a STRING (not a JavaScript object -> so we need to convert)
-        console.log(`uploaded!`);
         let imageURL = `http://hybrid.concordia.ca/i_planch/CART263/proj02_telomatic/${response}`;
         console.log(imageURL);
-        let qrcode = new QRCode("qrcodeDiv", {
+        let qrcode = new QRCode("qrCodeDiv", {
           text: imageURL,
-          width: 128,
-          height: 128,
+          width: height/2,
+          height: height/2,
           colorDark: "#000000",
           colorLight: "#ffffff",
           correctLevel: QRCode.CorrectLevel.H
         });
+        qrDiv.style.display = "block";
+        setTimeout( () => { qrDiv.style.display = "none"; }, 5000);
       },
       error: function() { console.log("error occurred"); }
     });
