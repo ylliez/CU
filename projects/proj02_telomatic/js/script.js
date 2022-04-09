@@ -33,8 +33,8 @@ let qrDiv;
 
 // SETUP: initialize canvas, video and model
 function setup() {
-  // createCanvas(1280, 720);
   createCanvas(windowWidth, windowWidth / aspectRatio);
+  // createCanvas(1280, 720);
   // createCanvas(1280, 960);
   // createCanvas(640, 480);
   // setup MediaPipe model
@@ -45,20 +45,17 @@ function setup() {
   // get DOM element of video
   capture = select(`#capture`);
   // instantiate hand object to manipulate Handpose data
-  // hand = new Hand();
+  hand = new Hand();
   // instantiate graphics element
   trailBlazer = createGraphics(width, height);
   // instantiate ble
   teloBLE = new p5ble();
-  // get DOM element of QR code
-  // qrDiv = select(`#qrCodeDiv`);
-  // console.log(qrDiv);
+  // style QR code div
   qrDiv = document.getElementById("qrCodeDiv");
   qrDiv.style.height = `${height/2}px`;
   qrDiv.style.width = qrDiv.style.height;
   qrDiv.style.left = `${width/2-height/4}px`;
   qrDiv.style.top = `${height/2-height/4}px`;
-  // console.log(qrDiv);
 }
 
 function handposeSetup() {
@@ -67,7 +64,6 @@ function handposeSetup() {
       return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
     }
   });
-
   hands.setOptions({
     selfieMode: true,
     maxNumHands: 2,
@@ -75,12 +71,10 @@ function handposeSetup() {
     minDetectionConfidence: 0.5,
     minTrackingConfidence: 0.5
   });
-
   hands.onResults((results) => {
     state = `sim`;
     predictions = results;
   });
-
   const camera = new Camera(captureElement, {
     onFrame: async () => {
       await hands.send({
@@ -90,7 +84,6 @@ function handposeSetup() {
     width: captureWidth,
     height: captureHeight
   });
-
   camera.start();
 }
 
@@ -125,53 +118,9 @@ function sim() {
 
   drawGui();
 
-  let numberHands = predictions.multiHandedness.length;
-
-  if (numberHands > 0) {
-    for (var i = 0; i < numberHands; i++) {
-      let indexTip = predictions.multiHandLandmarks[i][8];
-      let chirality = predictions.multiHandedness[i].label;
-      // console.log(chirality);
-      if (chirality === `Right`) {
-        let rIndexGhostX = rIndexTipX;
-        let rIndexGhostY = rIndexTipY;
-        rIndexTipX = indexTip.x * width;
-        rIndexTipY = indexTip.y * height;
-
-        trailBlazer.push();
-        trailBlazer.stroke(sliderColR.val, sliderColG.val, sliderColB.val);
-        trailBlazer.strokeWeight(sliderSize.val);
-        trailBlazer.line(rIndexGhostX, rIndexGhostY, rIndexTipX, rIndexTipY);
-        trailBlazer.pop();
-      }
-
-      else if (chirality === `Left`) {
-        let lIndexTipX = indexTip.x * width;
-        let lIndexTipY = indexTip.y * height;
-        ellipse(lIndexTipX, lIndexTipY, 15);
-        if (lIndexTipY > sliderColYPos && lIndexTipY < sliderColYPos + sliderColHeight) {
-          if (lIndexTipX > sliderColRXPos && lIndexTipX < sliderColRXPos + sliderColWidth) {
-            sliderColR.val = map(lIndexTipY, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
-          }
-          if (lIndexTipX > sliderColGXPos && lIndexTipX < sliderColGXPos + sliderColWidth) {
-            sliderColG.val = map(lIndexTipY, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
-          }
-          if (lIndexTipX > sliderColBXPos && lIndexTipX < sliderColBXPos + sliderColWidth) {
-            sliderColB.val = map(lIndexTipY, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
-          }
-        }
-        if (lIndexTipY > sliderSizeYPos && lIndexTipY < sliderSizeYPos + sliderSizeHeight) {
-          if (lIndexTipX > sliderSizeXPos && lIndexTipX < sliderSizeXPos + sliderSizeWidth) {
-            sliderSize.val = map(lIndexTipX, sliderSizeXPos, sliderSizeXPos + sliderSizeWidth, 1, 30);
-          }
-        }
-      }
-    }
-    // hand.predictions = predictions;
-    // hand.coordinate();
-  //   checkUI();
-  }
-  // displayHands();
+  // check if at least one hand is present, also assess number of hands
+  hand.predictions = predictions;
+  hand.update();
   drawIndexTip();
   writeToBLE();
 
@@ -214,9 +163,9 @@ function keyPressed() {
   // 'p' key screenprints
   if (keyCode === 80) {
     // clear contents of QR code div; if a code has already been generated, removes it
-    qrDiv.innerHTML = ""; 
+    qrDiv.innerHTML = "";
     let canvas  = document.getElementById("defaultCanvas0");
-
+    //
     let canvasURL = canvas.toDataURL("image/png", 1);
     let data = new FormData();
     data.append("canvasImage", canvasURL);
