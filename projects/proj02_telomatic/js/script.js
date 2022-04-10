@@ -28,9 +28,10 @@ let teloBLE, teloCharacteristic, teloIntensity;
 
 let rIndexTipX, rIndexTipY;
 
-let qrDiv;
+// HTML divs
+let qrDiv, cdDiv, flashDiv;
 
-let photoboothCountdown, resetGUI;
+let resetGUI;
 
 
 
@@ -53,7 +54,21 @@ function setup() {
   trailBlazer = createGraphics(width, height);
   // instantiate ble
   teloBLE = new p5ble();
-  // style QR code div
+  // style countdown & QR code div
+  styleDivs();
+}
+
+function styleDivs() {
+  // obtain jQuery element of countdown div
+  cdDiv = $("#countdownDiv");
+  // // & style? -> Now in CSS
+  // cdDiv = document.getElementById("countdownDiv");
+  // cdDiv.style.left = `${width/2}px`;
+  // cdDiv.style.top = `${height/2}px`;
+  // cdDiv.style.fontSize = `${height/5}px`;
+  // obtain jQuery element of flash effect div
+  flashDiv = $('#flashDiv');
+  // obtain DOM element of QR code div & style
   qrDiv = document.getElementById("qrCodeDiv");
   // qrDiv.style.height = `${height/2}px`;
   // qrDiv.style.width = qrDiv.style.height;
@@ -184,25 +199,39 @@ function hideGUIElements() {
 
 function photoboothEffect() {
   let seconds = 3;
-  photoboothCountdown = setInterval( () => {
+  let photoboothCountdown = setInterval( () => {
     if (seconds <= 0){
       clearInterval(photoboothCountdown);
       generateQRcode();
+      flashEffect();
     }
-    push();
-    fill(255, 0, 0);
-    textSize(width / 5);
-    textStyle(BOLD);
-    textAlign(CENTER, CENTER);
-    text(seconds, height / 2, width / 2);
-    pop();
-    console.log(seconds);
+    else {
+      // // ATTEMPT 1: p5 text but couldnt get it to supersede graphics element
+      // push();
+      // fill(255, 0, 0);
+      // textSize(width / 5);
+      // textStyle(BOLD);
+      // textAlign(CENTER, CENTER);
+      // text(seconds, height / 2, width / 2);
+      // pop();
+      // // ATTEMPT 2: css animations
+      // cdDiv.style.display = "block";
+      // setTimeout( () => { cdDiv.style.display = "none"; }, 500);
+      // ATTEMPT 3: jquery animations
+      cdDiv.html(seconds);
+      cdDiv.fadeTo(400, 1);
+      cdDiv.fadeOut(400);
+    }
     seconds -= 1;
   }, 1000);
 }
 
+function flashEffect() {
+  flashDiv.fadeTo(100, 1);
+  flashDiv.fadeOut(100);
+}
+
 function generateQRcode() {
-  console.log("received");
   // clear contents of QR code div; if a code has already been generated, removes it
   qrDiv.innerHTML = "";
   // get p5 canvas element
@@ -210,7 +239,6 @@ function generateQRcode() {
   let canvasURL = canvas.toDataURL("image/png", 1);
   let data = new FormData();
   data.append("canvasImage", canvasURL);
-  console.log("sending");
   $.ajax({
     type: "POST",
     enctype: 'multipart/form-data',

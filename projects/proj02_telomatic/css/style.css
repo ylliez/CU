@@ -8,11 +8,33 @@ body {
   overflow: hidden;
 }
 
-#qrCodeDiv {
+#countdownDiv {
   position: fixed;
-  padding: 10px;
-  background-color: #bbf;
-  z-index: 999;
-  display: none;
+  left: 45vw;
+  top: 45vh;
+  z-index: 997;
+  opacity: 0;
+  background-color: transparent;
   color: #f00;
+  font-size: 20vw;
+  font-family: sans-serif;
 }
+
+#flashDiv {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 998;
+  opacity: 0;
+  background-color: #fff;
+ }
+
+ #qrCodeDiv {
+   position: fixed;
+   padding: 10px;
+   background-color: #bbf;
+   z-index: 999;
+   display: none;
+ }
