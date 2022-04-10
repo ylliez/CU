@@ -10,11 +10,13 @@ class Hand {
     this.indexGhostX = [];
     this.indexGhostY = [];
     this.rightHandsZ = [];
+    this.bleControlled = false;
     this.bleVal = 0;
   }
 
   update() {
     this.numberHands = this.predictions.multiHandedness.length;
+    let bleAttributed = false;
     if (this.numberHands > 0) {
       for (var i = 0; i < this.numberHands; i++) {
         this.indexTip[i] = this.predictions.multiHandLandmarks[i][8];
@@ -34,6 +36,10 @@ class Hand {
           // // how to get single value for BLE in multihand context?
           // this.rightHandsZ[i] = this.predictions.multiHandLandmarks[i][0].z;
           // console.log(this.rightHandsZ);
+          if (!bleAttributed) {
+            writeToBLE(this.indexTipY[i]);
+            bleAttributed = true;
+          }
         }
 
         else if (this.predictions.multiHandedness[i].label === `Left`) {
@@ -87,8 +93,6 @@ class Hand {
       // check overlap with QR button horizontal position
       if (x > buttonQRXPos && x < buttonQRXPos + buttonWidth & buttonQR.enabled) {
         hideGUIElements();
-        // console.log("touched");
-        // generateQRcode();
       }
     }
   }

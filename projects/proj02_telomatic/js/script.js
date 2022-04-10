@@ -147,9 +147,9 @@ function sim() {
   //or drawGUI here to float over drawing
 }
 
-function writeToBLE() {
+function writeToBLE(y) {
   if (teloBLE.isConnected() && teloCharacteristic) {
-    let yPos = rIndexTipY;
+    let yPos = y;
     // console.log(yPos);
     let yPosConstrained = constrain(yPos, 0, height);
     // console.log(yPosConstrained);
