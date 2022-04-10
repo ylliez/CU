@@ -54,21 +54,41 @@ class Hand {
     pop();
   }
 
+  // check left index finger tip position overlap with GUI elements
   checkGUI(x, y) {
-    if (y > sliderColYPos && y < sliderColYPos + sliderColHeight) {
+    // check overlap with color sliders vertical position
+    if (y > sliderColYPos && y < sliderColYPos + sliderColHeight && buttonQR.enabled) {
+      // check overlap with red slider horizontal position
       if (x > sliderColRXPos && x < sliderColRXPos + sliderColWidth) {
         sliderColR.val = map(y, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
       }
+      // check overlap with green slider horizontal position
       if (x > sliderColGXPos && x < sliderColGXPos + sliderColWidth) {
         sliderColG.val = map(y, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
       }
+      // check overlap with blue slider horizontal position
       if (x > sliderColBXPos && x < sliderColBXPos + sliderColWidth) {
         sliderColB.val = map(y, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
       }
     }
-    if (y > sliderSizeYPos && y < sliderSizeYPos + sliderSizeHeight) {
+    // check overlap with size slider vertical position
+    if (y > sliderSizeYPos && y < sliderSizeYPos + sliderSizeHeight && buttonQR.enabled) {
+      // check overlap with size slider horizontal position
       if (x > sliderSizeXPos && x < sliderSizeXPos + sliderSizeWidth) {
         sliderSize.val = map(x, sliderSizeXPos, sliderSizeXPos + sliderSizeWidth, 1, 30);
+      }
+    }
+    // check overlap with buttons vertical position
+    if (y > buttonClearYPos && y < buttonClearYPos + buttonHeight && buttonQR.enabled) {
+      // check overlap with clear button horizontal position
+      if (x > buttonClearXPos && x < buttonClearXPos + buttonWidth) {
+        trailBlazer.clear();
+      }
+      // check overlap with QR button horizontal position
+      if (x > buttonQRXPos && x < buttonQRXPos + buttonWidth & buttonQR.enabled) {
+        hideGUIElements();
+        // console.log("touched");
+        // generateQRcode();
       }
     }
   }
