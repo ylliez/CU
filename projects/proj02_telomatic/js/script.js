@@ -4,12 +4,12 @@
 // program state (load, sim)
 let state = `load`;
 // video capture element, input feed and dimensions
-let video = document.getElementById('video');
-// let captureWidth = 1280, captureHeight = 720;
+const captureElement = document.getElementById('capture');
+// let capture, captureWidth = 1280, captureHeight = 720;
 // Mac dims: 640 * 480
-let captureWidth = 640, captureHeight = 480;
+let capture, captureWidth = 640, captureHeight = 480;
 // CCTV dims: 768 * 494 pixels (https://www.manualslib.com/manual/118015/Panasonic-Aw-E300.html?page=52#manual)
-// let captureWidth = 768, captureHeight = 494;
+// let capture, captureWidth = 768, captureHeight = 494;
 // display aspect ratio
 const aspectRatio = captureWidth / captureHeight;
 // output graphics display element
@@ -19,23 +19,14 @@ let touchGUI, sliderSize, sliderColR, sliderColG, sliderColB, buttonClear, butto
 let sliderColWidth, sliderColHeight, sliderColYPos, sliderColRXPos, sliderColGXPos, sliderColBXPos;
 let sliderSizeWidth, sliderSizeHeight, sliderSizeYPos, sliderSizeXPos;
 let buttonWidth, buttonHeight, buttonClearXPos, buttonClearYPos, buttonQRXPos, buttonQRYPos;
-// MediaPipe handpose recognition model, configuration, results and ad hoc object to manipulate data
-const model = handPoseDetection.SupportedModels.MediaPipeHands;
-const detectorConfig = {
-  runtime: 'tfjs',
-  maxHands: 1,
-  modelType:'full'
-};
-let handPoseDetector, hands = null;
+// MediaPipe handpose recognition model, results and ad hoc object to manipulate data
+let hands, predictions = [], hand;
 // BLE UUID address of actuating microcontroller
 const TELO_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
 // BLE object, characteristic and value to be sent
 let teloBLE, teloCharacteristic, teloIntensity;
 
-let indexTipX = [];
-let indexTipY = [];
-let indexGhostX = [];
-let indexGhostY = [];
+let rIndexTipX, rIndexTipY;
 
 // HTML divs
 let qrDiv, cdDiv, flashDiv;
@@ -50,19 +41,15 @@ function setup() {
   // createCanvas(1280, 720);
   // createCanvas(1280, 960);
   // createCanvas(640, 480);
-  // get DOM element of video
-  video = createCapture(VIDEO, 640, 480);
-  video.hide();
   // setup MediaPipe model
-  handPoseDetection.createDetector(model, detectorConfig).then((detector) => {
-    handPoseDetector = detector;
-    state = "sim";
-  });
+  handposeSetup();
   // instantiate p5.touchgui GUI and sliders
   touchGUI = createGui();
   createGUIElements();
+  // get DOM element of video
+  capture = select(`#capture`);
   // instantiate hand object to manipulate Handpose data
-  // hand = new Hand();
+  hand = new Hand();
   // instantiate graphics element
   trailBlazer = createGraphics(width, height);
   // instantiate ble
@@ -143,7 +130,7 @@ function sim() {
   push();
   translate(width,0);
   scale(-1, 1);
-  image(video, 0, 0, width, height);
+  image(capture, 0, 0, width, height);
   pop();
   filter(GRAY);
   // display touchgui elements
@@ -151,35 +138,13 @@ function sim() {
   // display graphic element (not conditional on hand being present)
   image(trailBlazer, 0, 0);
   // check if at least one hand is present, also assess number of hands
-  // hand.predictions = predictions;
-  // hand.update();
-  if (video.loadedmetadata) { check(video.elt, {flipHorizontal: true}, handPoseDetector); }
+  hand.predictions = predictions;
+  hand.update();
+
   // send y index position to
   writeToBLE();
 
   //or drawGUI here to float over drawing
-}
-
-async function check(image, estimationConfig,handPoseDetector){
-  let hands = await handPoseDetector.estimateHands(image, estimationConfig);
-  if(hands.length != 0){
-    let indexTip = hands[0].keypoints;
-    indexGhostX[0] = indexTipX[0];
-    indexGhostY[0] = indexTipY[0];
-    indexTipX[0] =((indexTip[8].x)/640)*width;
-    indexTipY[0] = ((indexTip[8].y)/480)*height;
-    drawLine();
-  }
-}
-
-function drawLine(){
-  trailBlazer.push();
-  trailBlazer.stroke(255,0,0);
-  if (abs(indexGhostX[0] - indexTipX[0]) < 100 && abs(indexGhostY[0] - indexTipY[0]) < 100) {
-    trailBlazer.line(indexGhostX[0], indexGhostY[0], indexTipX[0], indexTipY[0]);
-  }
-  trailBlazer.pop();
- // }
 }
 
 function writeToBLE(y) {
