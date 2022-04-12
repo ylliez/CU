@@ -251,7 +251,7 @@ function generateQRcode() {
     success: function (response) {
       console.log("receiving");
       //reponse is a STRING (not a JavaScript object -> so we need to convert)
-      let imageURL = `http://hybrid.concordia.ca/i_planch/CART263/proj02_telomatic/${response}`;
+      let imageURL = `http://hybrid.concordia.ca/i_planch/telomatic/${response}`;
       console.log(imageURL);
       let qrcode = new QRCode("qrCodeDiv", {
         text: imageURL,
