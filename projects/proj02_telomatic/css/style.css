@@ -8,6 +8,14 @@ body {
   overflow: hidden;
 }
 
+canvas {
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+
+video { visibility: hidden; }
+
 #countdownDiv {
   position: fixed;
   left: 45vw;
