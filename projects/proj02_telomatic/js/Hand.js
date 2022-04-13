@@ -37,7 +37,7 @@ class Hand {
           // this.rightHandsZ[i] = this.predictions.multiHandLandmarks[i][0].z;
           // console.log(this.rightHandsZ);
           if (!bleAttributed) {
-            writeToBLE(this.indexTipY[i]);
+            this.bleVal = this.indexTipY[i];
             bleAttributed = true;
           }
         }
