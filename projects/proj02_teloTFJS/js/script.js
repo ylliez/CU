@@ -24,7 +24,7 @@ const model = handPoseDetection.SupportedModels.MediaPipeHands;
 const detectorConfig = {
   runtime: 'tfjs',
   maxHands: 1,
-  modelType:'full'
+  //modelType:'full'
 };
 let handPoseDetector, hands = null;
 // BLE UUID address of actuating microcontroller
