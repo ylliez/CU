@@ -147,9 +147,9 @@ function sim() {
   //or drawGUI here to float over drawing
 }
 
-function writeToBLE(y) {
+function writeToBLE() {
   if (teloBLE.isConnected() && teloCharacteristic) {
-    let yPos = y;
+    let yPos = hand.bleVal;
     // console.log(yPos);
     let yPosConstrained = constrain(yPos, 0, height);
     // console.log(yPosConstrained);
@@ -159,7 +159,7 @@ function writeToBLE(y) {
     // console.log(yPosByte);
     // teloIntensity = 255 - floor(yPosByte);
     if (predictions.multiHandedness.length > 0 && yPosByte < 200) { teloIntensity = 255 - floor(yPosByte); }
-    else { teloIntensity = 0 }
+    else { teloIntensity = 0; }
     teloBLE.write(teloCharacteristic, teloIntensity);
   }
 }
@@ -227,7 +227,7 @@ function photoboothEffect() {
 }
 
 function flashEffect() {
-  flashDiv.fadeTo(100, 1);
+  flashDiv.fadeTo(100, 0.7);
   flashDiv.fadeOut(100);
 }
 
