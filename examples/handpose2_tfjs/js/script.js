@@ -24,12 +24,17 @@ let teloBLE, teloCharacteristic, teloIntensity;
 
 let detector;
 let video;
-let image, imageHand;
+let hands;
 
+const model = handPoseDetection.SupportedModels.MediaPipeHands;
+const detectorConfig = {
+  runtime: 'tfjs',
+  maxHands: 1
+  // modelType: 'full'
+};
 
 // SETUP: initialize canvas, video and model
 function setup() {
-  image = loadImage("handy.png");
   createCanvas(windowWidth, windowWidth / aspectRatio);
   // createCanvas(1280, 960);
   // createCanvas(640, 480);
@@ -57,23 +62,11 @@ async function handposeDetectionSetup() {
 
   // video = document.getElementsByTagName('video')[0];
   video = capture.elt;
-  imageHand = image;
   // checkVideo();
 
-  const model = handPoseDetection.SupportedModels.MediaPipeHands;
-  const detectorConfig = {
-    runtime: 'tfjs',
-    modelType: 'full'
-  };
+
   detector = await handPoseDetection.createDetector(model, detectorConfig);
-  // const model = handPoseDetection.SupportedModels.MediaPipeHands;
-  // const detectorConfig = {
-  //   runtime: 'mediapipe',
-  //   solutionPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/hands'
-  // };
-  // const detector = await handPoseDetection.createDetector(model, detectorConfig);
-  console.log(imageHand);
-  handposeDetectionStart();
+  state = "sim";
 }
 
 function checkVideo() {
@@ -82,9 +75,9 @@ function checkVideo() {
   console.log('video instanceof HTMLVideoElement', video instanceof HTMLVideoElement);
 }
 
-async function handposeDetectionStart() {
+async function check() {
   // ERROR HERE!
-  const hands = await detector.estimateHands(video);
+  hands = await detector.estimateHands(video);
   // state = `sim`;
 }
 
@@ -115,6 +108,8 @@ function sim() {
   filter(GRAY);
 
   drawGui();
+
+  check();
 
   console.log(hands);
   if (predictions.length > 0) {
