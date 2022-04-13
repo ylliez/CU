@@ -51,7 +51,7 @@ function setup() {
   // createCanvas(1280, 960);
   // createCanvas(640, 480);
   // get DOM element of video
-  video = createCapture(VIDEO, 640, 480);
+  video = createCapture(VIDEO, captureWidth, captureHeight);
   video.hide();
   // setup MediaPipe model
   handPoseDetection.createDetector(model, detectorConfig).then((detector) => {
@@ -87,35 +87,6 @@ function styleDivs() {
   // qrDiv.style.width = qrDiv.style.height;
   qrDiv.style.left = `${width/2-height/4}px`;
   qrDiv.style.top = `${height/2-height/4}px`;
-}
-
-function handposeSetup() {
-  hands = new Hands({
-    locateFile: (file) => {
-      return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
-    }
-  });
-  hands.setOptions({
-    selfieMode: true,
-    maxNumHands: 2,
-    modelComplexity: 1,
-    minDetectionConfidence: 0.5,
-    minTrackingConfidence: 0.5
-  });
-  hands.onResults((results) => {
-    state = `sim`;
-    predictions = results;
-  });
-  const camera = new Camera(captureElement, {
-    onFrame: async () => {
-      await hands.send({
-        image: captureElement,
-      });
-    },
-    width: captureWidth,
-    height: captureHeight
-  });
-  camera.start();
 }
 
 // DRAW: handle program state
@@ -154,8 +125,6 @@ function sim() {
   // hand.predictions = predictions;
   // hand.update();
   if (video.loadedmetadata) { check(video.elt, {flipHorizontal: true}, handPoseDetector); }
-  // send y index position to
-  writeToBLE();
 
   //or drawGUI here to float over drawing
 }
@@ -163,11 +132,14 @@ function sim() {
 async function check(image, estimationConfig,handPoseDetector){
   let hands = await handPoseDetector.estimateHands(image, estimationConfig);
   if(hands.length != 0){
-    let indexTip = hands[0].keypoints;
+    console.log(hands[0]);
+    console.log(hands[0].handedness);
+    let indexTip = hands[0].keypoints[8];
+    console.log(indexTip.name);
     indexGhostX[0] = indexTipX[0];
     indexGhostY[0] = indexTipY[0];
-    indexTipX[0] =((indexTip[8].x)/640)*width;
-    indexTipY[0] = ((indexTip[8].y)/480)*height;
+    indexTipX[0] =((indexTip.x)/640)*width;
+    indexTipY[0] = ((indexTip.y)/480)*height;
     drawLine();
   }
 }
