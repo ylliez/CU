@@ -28,7 +28,7 @@ function setup()
   trailBlazer = createGraphics(width, height);
   video = createCapture(VIDEO, 640,480);
   video.hide();
- 
+
   //the promise I (to make something synchronous seeemingly synchronous)
  handPoseDetection.createDetector(model, detectorConfig).then((detector) => {
 //assign ...
@@ -41,7 +41,7 @@ function setup()
 
 async function check(image, estimationConfig,handPoseDetector){
   let hands = await handPoseDetector.estimateHands(image, estimationConfig);
-  
+
   if(hands.length!=0){
     //doing oNLY one hand :)
          // console.log(hands[0]);
@@ -67,17 +67,17 @@ function draw(){
     if(state ==='go'){
       showVideo();
       image(trailBlazer, 0, 0);
-     
-       
+
+
       if (video.loadedmetadata) {
         //calling to check :0
         check(video.elt, {flipHorizontal: true}, handPoseDetector);
       }
 
-     
-    
+
+
 } //if in go state
- 
+
 }//draw
 
 function showVideo(){
@@ -97,4 +97,3 @@ function displayLeftIndexTip(x, y) {
   ellipse(x, y, 15);
   pop();
 }
-
