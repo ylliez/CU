@@ -23,4 +23,6 @@ Final project: artist’s statement and the final project.
 ### [V1] pre-MediaPipe (ble+ml5)
 ### [V2] pre-PHP/server (ble+MP+QR[unstable])
 ### [V3] pre-buttons (ble+MP+QR)
-### [V4] pre-? (ble+MP+QR+jQuery)
+### [V4] pre-gallery (ble+MP+QR+jQuery)
+### [V5] pre-BLE debugging
+### [V6] pre-cleanup
