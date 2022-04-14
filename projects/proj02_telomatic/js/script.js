@@ -84,7 +84,7 @@ function handposeSetup() {
   });
   hands.setOptions({
     selfieMode: true,
-    maxNumHands: 2,
+    maxNumHands: 6,
     modelComplexity: 1,
     minDetectionConfidence: 0.5,
     minTrackingConfidence: 0.5
