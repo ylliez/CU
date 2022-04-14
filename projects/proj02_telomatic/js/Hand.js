@@ -13,7 +13,7 @@ class Hand {
     this.atLeastOneRightHand;
     this.lowestZ;
     this.bleVal = height;
-
+    this.bleKillRetry = 0;
   }
 
   update() {
@@ -57,10 +57,12 @@ class Hand {
       }
     }
     if (this.atLeastOneRightHand) {
+      this.bleKillRetry = 0;
       writeToBLE(this.bleVal);
-    } else if (this.bleVal != height) {
+    } else if (this.bleVal != height || this.bleKillRetry < 2) {
       this.bleVal = height;
       writeToBLE(this.bleVal);
+      this.bleKillRetry++;
     }
   }
 

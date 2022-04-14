@@ -149,8 +149,6 @@ function sim() {
 
 function writeToBLE(yPos) {
   if (teloBLE.isConnected() && teloCharacteristic) {
-    // let yPos = hand.bleVal;
-    // console.log(yPos);
     let yPosConstrained = constrain(yPos, 0, height);
     // console.log(yPosConstrained);
     let yPosPercent = yPosConstrained / height;
@@ -159,7 +157,7 @@ function writeToBLE(yPos) {
     // console.log(yPosByte);
     // teloIntensity = 255 - floor(yPosByte);
     // if (predictions.multiHandedness.length > 0 && yPosByte < 200) { teloIntensity = 255 - floor(yPosByte); }
-    if (yPosByte < 200) { teloIntensity = 255 - floor(yPosByte); }
+    if (hand.numberHands > 0 && yPosByte < 200) { teloIntensity = 255 - floor(yPosByte); }
     else { teloIntensity = 0; }
     console.log(teloIntensity);
     teloBLE.write(teloCharacteristic, teloIntensity);
