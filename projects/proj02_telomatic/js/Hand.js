@@ -10,17 +10,22 @@ class Hand {
     this.indexGhostX = [];
     this.indexGhostY = [];
     this.rightHandsZ = [];
-    this.bleControlled = false;
-    this.bleVal = 0;
+    this.atLeastOneRightHand;
+    this.lowestZ;
+    this.bleVal = height;
+
   }
 
   update() {
     this.numberHands = this.predictions.multiHandedness.length;
-    let bleAttributed = false;
+    this.atLeastOneRightHand = false;
+    this.lowestZ = 999;
+    this.closestRightIndex = undefined;
     if (this.numberHands > 0) {
       for (var i = 0; i < this.numberHands; i++) {
         this.indexTip[i] = this.predictions.multiHandLandmarks[i][8];
         if (this.predictions.multiHandedness[i].label === `Right`) {
+          this.atLeastOneRightHand = true;
           this.indexGhostX[i] = this.indexTipX[i];
           this.indexGhostY[i] = this.indexTipY[i];
           this.indexTipX[i] = this.indexTip[i].x * width;
@@ -36,9 +41,10 @@ class Hand {
           // // how to get single value for BLE in multihand context?
           // this.rightHandsZ[i] = this.predictions.multiHandLandmarks[i][0].z;
           // console.log(this.rightHandsZ);
-          if (!bleAttributed) {
+          // console.log(this.predictions.multiHandLandmarks[i][0].z);
+          if (this.predictions.multiHandLandmarks[i][0].z < this.lowestZ) {
+            this.lowestZ = this.predictions.multiHandLandmarks[i][0].z;
             this.bleVal = this.indexTipY[i];
-            bleAttributed = true;
           }
         }
 
@@ -50,7 +56,15 @@ class Hand {
         }
       }
     }
+    if (this.atLeastOneRightHand) {
+      writeToBLE(this.bleVal);
+    } else if (this.bleVal != height) {
+      this.bleVal = height;
+      writeToBLE(this.bleVal);
+    }
   }
+
+
 
   displayLeftIndexTip(x, y) {
     push();
