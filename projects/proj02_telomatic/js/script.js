@@ -1,12 +1,13 @@
 "use strict";
 
-/* general */
+/* GENERAL */
 // program state (load, sim)
 let state = `load`;
 // video capture element, input feed and dimensions
 const captureElement = document.getElementById('capture');
+// 16:9 -> 1280 * 720
 // let capture, captureWidth = 1280, captureHeight = 720;
-// Mac dims: 640 * 480
+// 4:3 -> 640 * 480
 let capture, captureWidth = 640, captureHeight = 480;
 // CCTV dims: 768 * 494 pixels (https://www.manualslib.com/manual/118015/Panasonic-Aw-E300.html?page=52#manual)
 // let capture, captureWidth = 768, captureHeight = 494;
@@ -25,25 +26,18 @@ let hands, predictions = [], hand;
 const TELO_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
 // BLE object, characteristic and value to be sent
 let teloBLE, teloCharacteristic, teloIntensity;
-
-let rIndexTipX, rIndexTipY;
-
 // HTML divs
 let qrDiv, cdDiv, flashDiv;
-
+// holder for GUI reset timer
 let resetGUI;
 
 
-
-// SETUP: initialize canvas, video and model
+/* SETUP: initialize canvas, video and model */
 function setup() {
   createCanvas(windowWidth, windowWidth / aspectRatio);
-  // createCanvas(1280, 720);
-  // createCanvas(1280, 960);
-  // createCanvas(640, 480);
   // setup MediaPipe model
   handposeSetup();
-  // instantiate p5.touchgui GUI and sliders
+  // instantiate p5.touchgui GUI and elements
   touchGUI = createGui();
   createGUIElements();
   // get DOM element of video
@@ -58,30 +52,13 @@ function setup() {
   styleDivs();
 }
 
-function styleDivs() {
-  // obtain jQuery element of countdown div
-  cdDiv = $("#countdownDiv");
-  // // & style? -> Now in CSS
-  // cdDiv = document.getElementById("countdownDiv");
-  // cdDiv.style.left = `${width/2}px`;
-  // cdDiv.style.top = `${height/2}px`;
-  // cdDiv.style.fontSize = `${height/5}px`;
-  // obtain jQuery element of flash effect div
-  flashDiv = $('#flashDiv');
-  // obtain DOM element of QR code div & style
-  qrDiv = document.getElementById("qrCodeDiv");
-  // qrDiv.style.height = `${height/2}px`;
-  // qrDiv.style.width = qrDiv.style.height;
-  qrDiv.style.left = `${width/2-height/4}px`;
-  qrDiv.style.top = `${height/2-height/4}px`;
-}
-
 function handposeSetup() {
   hands = new Hands({
     locateFile: (file) => {
       return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
     }
   });
+  // set options of handpose model (horizontally flipped image, maximum number of hands detected, detection confidence)
   hands.setOptions({
     selfieMode: true,
     maxNumHands: 6,
@@ -89,6 +66,7 @@ function handposeSetup() {
     minDetectionConfidence: 0.5,
     minTrackingConfidence: 0.5
   });
+  // return and store handpose detection results
   hands.onResults((results) => {
     state = `sim`;
     predictions = results;
@@ -105,7 +83,18 @@ function handposeSetup() {
   camera.start();
 }
 
-// DRAW: handle program state
+function styleDivs() {
+  // obtain jQuery element of countdown & flash effect divs
+  cdDiv = $("#countdownDiv");
+  flashDiv = $('#flashDiv');
+  // obtain DOM element of QR code div & style
+  qrDiv = document.getElementById("qrCodeDiv");
+  qrDiv.style.left = `${width/2-height/4}px`;
+  qrDiv.style.top = `${height/2-height/4}px`;
+}
+
+
+/* DRAW: handle program state */
 function draw() {
   switch (state) {
     case `load`: load(); break;
@@ -117,49 +106,53 @@ function draw() {
 function load() {
   background(255);
   push();
-  textSize(32);
+  textSize(50);
   textStyle(BOLD);
   textAlign(CENTER, CENTER);
-  text(`LOADING...`, height / 2, width / 2);
+  text(`LOADING...`, width / 2, height / 2);
   pop();
 }
 
-// SIM: update hand predictions and draw index finger tip to screen
+// display video feed, GUI and graphic element, store & update hand predictions
 function sim() {
   // display mirrored video feed
-  push();
-  translate(width,0);
-  scale(-1, 1);
-  image(capture, 0, 0, width, height);
-  pop();
-  filter(GRAY);
+  displayVideo();
   // display touchgui elements
   drawGui();
   // display graphic element (not conditional on hand being present)
   image(trailBlazer, 0, 0);
-  // check if at least one hand is present, also assess number of hands
+  // send handpose model results to hand object & update
   hand.predictions = predictions;
   hand.update();
+  // OR drawGUI here to float over drawing
+}
 
-  // send y index position to
-  // writeToBLE();
-
-  //or drawGUI here to float over drawing
+function displayVideo() {
+  push();
+  // mirror display
+  translate(width,0);
+  scale(-1, 1);
+  image(capture, 0, 0, width, height);
+  pop();
+  // apply grayscale image filter
+  filter(GRAY);
 }
 
 function writeToBLE(yPos) {
+  // check if BLE is connected and characteristic is communicating
   if (teloBLE.isConnected() && teloCharacteristic) {
+    // constrain received value to range of window height to avoid rollover
     let yPosConstrained = constrain(yPos, 0, height);
-    // console.log(yPosConstrained);
+    // divide constrained value by height to get percentage relative to total height
     let yPosPercent = yPosConstrained / height;
-    // console.log(yPosPercent);
+    // multiply by 255 to remap y position relative to window height to byte range for microcontroller
     let yPosByte = yPosPercent * 255;
-    // console.log(yPosByte);
-    // teloIntensity = 255 - floor(yPosByte);
-    // if (predictions.multiHandedness.length > 0 && yPosByte < 200) { teloIntensity = 255 - floor(yPosByte); }
+    // if y position below threshold vertical position (and last hand present garde-fou check, set inverse value
+    // otherwise set value as 0
     if (hand.numberHands > 0 && yPosByte < 200) { teloIntensity = 255 - floor(yPosByte); }
     else { teloIntensity = 0; }
-    console.log(teloIntensity);
+    // console.log(teloIntensity);
+    // write constrained relative percentage mapped inverted value (or 0) to BLE
     teloBLE.write(teloCharacteristic, teloIntensity);
   }
 }
@@ -175,18 +168,14 @@ function keyPressed() {
     if (!document.fullscreen) { document.body.requestFullscreen(); }
     else { document.body.exitFullscreen(); }
   }
-  // 'p' key screenprints
-  if (keyCode === 80) {
-    hideGUIElements();
-  }
-  // 'x' key clears graphics elements
-  if (keyCode === 88) {
-    trailBlazer.clear();
-  }
+  // DEBUGGING: 'p' key screenprints
+  if (keyCode === 80) { triggerQR(); }
+  // DEBUGGING: 'x' key clears graphics elements
+  if (keyCode === 88) { trailBlazer.clear(); }
 }
 
-function hideGUIElements() {
-  // beginning of attempt to remove GUI elements before screenshot
+// hide GUI elements and trigger screenshot and QR code generation process
+function triggerQR() {
   sliderSize.visible = false;
   sliderColR.visible = false;
   sliderColG.visible = false;
@@ -194,34 +183,29 @@ function hideGUIElements() {
   buttonClear.visible = false;
   buttonQR.visible = false;
   buttonQR.enabled = false;
+  // trigger countdown and screenshot
   photoboothEffect();
 }
 
 function photoboothEffect() {
+  // set countdown duration to three seconds
   let seconds = 3;
+  // create interval to iterate through GUI countdown
   let photoboothCountdown = setInterval( () => {
+    // when countdown over, clear the interval & take screenshot
     if (seconds <= 0){
       clearInterval(photoboothCountdown);
       generateQRcode();
+      // flash effect using opacity fading
       flashEffect();
     }
     else {
-      // // ATTEMPT 1: p5 text but couldnt get it to supersede graphics element
-      // push();
-      // fill(255, 0, 0);
-      // textSize(width / 5);
-      // textStyle(BOLD);
-      // textAlign(CENTER, CENTER);
-      // text(seconds, height / 2, width / 2);
-      // pop();
-      // // ATTEMPT 2: css animations
-      // cdDiv.style.display = "block";
-      // setTimeout( () => { cdDiv.style.display = "none"; }, 500);
-      // ATTEMPT 3: jquery animations
+      // write countdown to displayed div with fade in & out effect
       cdDiv.html(seconds);
       cdDiv.fadeTo(400, 1);
       cdDiv.fadeOut(400);
     }
+    // count down
     seconds -= 1;
   }, 1000);
 }
@@ -234,25 +218,28 @@ function flashEffect() {
 function generateQRcode() {
   // clear contents of QR code div; if a code has already been generated, removes it
   qrDiv.innerHTML = "";
-  // get p5 canvas element
+  // get p5 canvas element, screenshot it, convert to URI and tag with key for PHP retrieval
   let canvas  = document.getElementById("defaultCanvas0");
   let canvasURL = canvas.toDataURL("image/png", 1);
   let data = new FormData();
   data.append("canvasImage", canvasURL);
+  // send canvas screenshot URI to server using upload PHP script
   $.ajax({
     type: "POST",
     enctype: 'multipart/form-data',
     url: "upload.php",
     data: data,
-    processData: false, //prevents from converting into a query string
+    processData: false,
     contentType: false,
     cache: false,
     timeout: 600000,
+    // upon upload, generate QR code with image URL
     success: function (response) {
-      console.log("receiving");
-      //reponse is a STRING (not a JavaScript object -> so we need to convert)
+      // append header to returned image URL
       let imageURL = `http://hybrid.concordia.ca/i_planch/telomatic/${response}`;
+      // DEBUGGING: output headed image URL to console
       console.log(imageURL);
+      // make styled QR code with headed image URL
       let qrcode = new QRCode("qrCodeDiv", {
         text: imageURL,
         width: height/2,
@@ -261,14 +248,18 @@ function generateQRcode() {
         colorLight: "#ffffff",
         correctLevel: QRCode.CorrectLevel.H
       });
+      // display div QR code is appended to
       qrDiv.style.display = "block";
-      resetGUI = setTimeout( () => { showGUIElements(); }, 10000);
+      // create 10s timeout for QR display and GUI hiding
+      resetGUI = setTimeout( () => { resetGUIElements(); }, 10000);
     },
+    // helper function
     error: function() { console.log("error occurred"); }
   });
 }
 
-function showGUIElements() {
+// hide QR code div and re-display GUI elements
+function resetGUIElements() {
   qrDiv.style.display = "none";
   sliderSize.visible = true;
   sliderColR.visible = true;
@@ -292,6 +283,7 @@ function gotCharacteristics(error, characteristics) {
   teloCharacteristic = characteristics[0];
 }
 
+// disconnect from BLE, sending preemptive kill value
 function disconnectFromBLE() {
   teloBLE.write(teloCharacteristic, 0);
   teloBLE.disconnect();
