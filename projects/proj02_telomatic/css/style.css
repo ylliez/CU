@@ -108,7 +108,7 @@ i {
  #qrCodeDiv {
    position: fixed;
    padding: 10px;
-   background-color: #bbf;
+   background-color: #bbb;
    z-index: 999;
    display: none;
  }
