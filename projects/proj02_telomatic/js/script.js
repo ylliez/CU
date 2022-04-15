@@ -8,7 +8,8 @@ const captureElement = document.getElementById('capture');
 // 16:9 -> 1280 * 720
 // let capture, captureWidth = 1280, captureHeight = 720;
 // 4:3 -> 640 * 480
-let capture, captureWidth = 640, captureHeight = 480;
+// let capture, captureWidth = 640, captureHeight = 480;
+let capture, captureWidth = window.Width, captureHeight = window.Height;
 // CCTV dims: 768 * 494 pixels (https://www.manualslib.com/manual/118015/Panasonic-Aw-E300.html?page=52#manual)
 // let capture, captureWidth = 768, captureHeight = 494;
 // display aspect ratio
@@ -40,7 +41,8 @@ let teloBLE, teloCharacteristic, teloIntensity;
 
 /* SETUP: initialize canvas, video and model */
 function setup() {
-  createCanvas(windowWidth, windowWidth / aspectRatio);
+  // createCanvas(windowWidth, windowWidth / aspectRatio);
+  createCanvas(windowWidth, windowHeight);
   // setup MediaPipe model
   handposeSetup();
   // instantiate hand object to manipulate Handpose data
