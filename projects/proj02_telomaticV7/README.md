@@ -26,4 +26,3 @@ Final project: artist’s statement and the final project.
 ### [V4] pre-gallery (ble+MP+QR+jQuery)
 ### [V5] pre-BLE debugging
 ### [V6] pre-cleanup
-### [V7] pre-GUI overhaul
