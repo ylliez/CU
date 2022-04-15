@@ -82,7 +82,7 @@ class Hand {
   // check left index finger tip position overlap with GUI elements
   checkGUI(x, y) {
     // check overlap with color sliders vertical position
-    if (y > sliderColYPos && y < sliderColYPos + sliderColHeight && buttonQR.enabled) {
+    if (y > sliderColYPos && y < sliderColYPos + sliderColHeight && !qrTrig) {
       // check overlap with red slider horizontal position
       if (x > sliderColRXPos && x < sliderColRXPos + sliderColWidth) {
         sliderColR.val = map(y, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
@@ -97,20 +97,20 @@ class Hand {
       }
     }
     // check overlap with size slider vertical position
-    if (y > sliderSizeYPos && y < sliderSizeYPos + sliderSizeHeight && buttonQR.enabled) {
+    if (y > sliderSizeYPos && y < sliderSizeYPos + sliderSizeHeight && !qrTrig) {
       // check overlap with size slider horizontal position
       if (x > sliderSizeXPos && x < sliderSizeXPos + sliderSizeWidth) {
         sliderSize.val = map(x, sliderSizeXPos, sliderSizeXPos + sliderSizeWidth, 1, 30);
       }
     }
     // check overlap with buttons vertical position
-    if (y > buttonClearYPos && y < buttonClearYPos + buttonHeight && buttonQR.enabled) {
+    if (y > buttonClearYPos && y < buttonClearYPos + buttonClearHeight && !qrTrig) {
       // check overlap with clear button horizontal position
-      if (x > buttonClearXPos && x < buttonClearXPos + buttonWidth) {
+      if (x > buttonClearXPos && x < buttonClearXPos + buttonClearWidth) {
         trailBlazer.clear();
       }
       // check overlap with QR button horizontal position
-      if (x > buttonQRXPos && x < buttonQRXPos + buttonWidth & buttonQR.enabled) {
+      if (x > buttonQRXPos && x < buttonQRXPos + buttonQRWidth) {
         triggerQR();
       }
     }

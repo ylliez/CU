@@ -8,6 +8,23 @@ body {
   overflow: hidden;
 }
 
+#clearDiv, #photoDiv {
+  position: fixed;
+  border-radius: 15px;
+  top: 5vh;
+  z-index: 2;
+  font-size: 8vw;
+}
+#clearDiv { left: 88vw; }
+#photoDiv { left: 5vw; }
+
+i {
+  padding: 5px;
+  border-radius: 15px;
+  background: #ccc;
+  opacity: 70%;
+}
+
 #countdownDiv {
   position: fixed;
   left: 45vw;

@@ -19,7 +19,8 @@ let trailBlazer;
 let touchGUI, sliderSize, sliderColR, sliderColG, sliderColB, buttonClear, buttonQR;
 let sliderColWidth, sliderColHeight, sliderColYPos, sliderColRXPos, sliderColGXPos, sliderColBXPos;
 let sliderSizeWidth, sliderSizeHeight, sliderSizeYPos, sliderSizeXPos;
-let buttonWidth, buttonHeight, buttonClearXPos, buttonClearYPos, buttonQRXPos, buttonQRYPos;
+let buttonClearXPos, buttonClearYPos, buttonClearWidth, buttonClearHeight;
+let buttonQRXPos, buttonQRYPos, buttonQRWidth, buttonQRHeight;
 // MediaPipe handpose recognition model, results and ad hoc object to manipulate data
 let hands, predictions = [], hand;
 // BLE UUID address of actuating microcontroller
@@ -27,8 +28,10 @@ const TELO_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
 // BLE object, characteristic and value to be sent
 let teloBLE, teloCharacteristic, teloIntensity;
 // HTML divs
-let qrDiv, cdDiv, flashDiv;
-// holder for GUI reset timer
+let clearDiv, photoDiv, qrDiv, cdDiv, flashDiv;
+// QR trigger boolean
+let qrTrig = false;
+// GUI reset timer
 let resetGUI;
 
 
@@ -49,7 +52,7 @@ function setup() {
   // instantiate ble
   teloBLE = new p5ble();
   // style countdown & QR code div
-  styleDivs();
+  getDivs();
 }
 
 function handposeSetup() {
@@ -83,7 +86,18 @@ function handposeSetup() {
   camera.start();
 }
 
-function styleDivs() {
+function getDivs() {
+  // obtain jQuery element & style of clear & screenshot divs
+  clearDiv = $("#clearDiv");
+  photoDiv = $("#photoDiv");
+  buttonClearYPos = parseInt(clearDiv.css("top"));
+  buttonClearXPos = parseInt(clearDiv.css("left"));
+  buttonClearHeight = parseInt(clearDiv.css("height"));
+  buttonClearWidth = parseInt(clearDiv.css("width"));
+  buttonQRXPos = parseInt(photoDiv.css("left"));
+  buttonQRYPos = parseInt(photoDiv.css("top"));
+  buttonQRHeight = parseInt(photoDiv.css("height"));
+  buttonQRWidth = parseInt(photoDiv.css("width"));
   // obtain jQuery element of countdown & flash effect divs
   cdDiv = $("#countdownDiv");
   flashDiv = $('#flashDiv');
@@ -176,13 +190,13 @@ function keyPressed() {
 
 // hide GUI elements and trigger screenshot and QR code generation process
 function triggerQR() {
+  qrTrig = true;
   sliderSize.visible = false;
   sliderColR.visible = false;
   sliderColG.visible = false;
   sliderColB.visible = false;
-  buttonClear.visible = false;
-  buttonQR.visible = false;
-  buttonQR.enabled = false;
+  clearDiv.css("display", "none");
+  photoDiv.css("display", "none");
   // trigger countdown and screenshot
   photoboothEffect();
 }
@@ -265,9 +279,9 @@ function resetGUIElements() {
   sliderColR.visible = true;
   sliderColG.visible = true;
   sliderColB.visible = true;
-  buttonClear.visible = true;
-  buttonQR.visible = true;
-  buttonQR.enabled = true;
+  clearDiv.css("display", "block");
+  photoDiv.css("display", "block");
+  qrTrig = false;
 }
 
 // connect to device by passing the service UUID
@@ -357,12 +371,5 @@ function createGUIElements() {
     trackWidth: 1,
     strokeWeight:1
   });
-  buttonWidth = width / 10;
-  buttonHeight = height / 20;
-  buttonClearXPos = width * 0.6;
-  buttonClearYPos = height * 0.1;
-  buttonQRXPos = width * 0.8;
-  buttonQRYPos = height * 0.1;
-  buttonClear = createButton("CLEAR", buttonClearXPos, buttonClearYPos, buttonWidth, buttonHeight);
-  buttonQR = createButton("QR Code", buttonQRXPos, buttonQRYPos, buttonWidth, buttonHeight);
+
 }
