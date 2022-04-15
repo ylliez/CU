@@ -13,7 +13,7 @@ body {
   border-radius: 15px;
   top: 5vh;
   z-index: 2;
-  font-size: 8vw;
+  font-size: 6vw;
 }
 #clearDiv { left: 88vw; }
 #photoDiv { left: 5vw; }

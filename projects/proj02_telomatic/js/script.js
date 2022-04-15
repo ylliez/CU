@@ -307,7 +307,7 @@ function disconnectFromBLE() {
 function createGUIElements() {
   sliderColWidth = 30;
   sliderColHeight = height / 4;
-  sliderColYPos = height * 0.1;
+  sliderColYPos = height * 0.2;
   sliderColRXPos = sliderColWidth;
   sliderColGXPos = sliderColRXPos + 2 * sliderColWidth;
   sliderColBXPos = sliderColGXPos + 2 * sliderColWidth;
