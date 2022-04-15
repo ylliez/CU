@@ -13,26 +13,29 @@ let capture, captureWidth = 640, captureHeight = 480;
 // let capture, captureWidth = 768, captureHeight = 494;
 // display aspect ratio
 const aspectRatio = captureWidth / captureHeight;
+// GUI and elements
+let guiDiv
+// sliders
+let sliderColR, sliderColG, sliderColB, sliderColWidth, sliderColHeight, sliderColYPos, sliderColRXPos, sliderColGXPos, sliderColBXPos;
+let sliderSize, sliderSizeBox, sliderSizeRad, sliderSizeHeight, sliderSizeYPos, sliderSizeXPos, sliderSizeHandle;
+// buttons
+let buttonClear, buttonClearXPos, buttonClearYPos, buttonClearWidth, buttonClearHeight;
+let buttonQR, buttonQRXPos, buttonQRYPos, buttonQRWidth, buttonQRHeight;
+// photobooth
+let qrDiv, cdDiv, flashDiv;
+// QR trigger boolean
+let qrTrig = false;
+// GUI reset timer
+let resetGUI;
 // output graphics display element
 let trailBlazer;
-// p5.touchgui GUI and elements
-let touchGUI, sliderSize, sliderColR, sliderColG, sliderColB, buttonClear, buttonQR;
-let sliderColWidth, sliderColHeight, sliderColYPos, sliderColRXPos, sliderColGXPos, sliderColBXPos;
-let sliderSizeWidth, sliderSizeHeight, sliderSizeYPos, sliderSizeXPos;
-let buttonClearXPos, buttonClearYPos, buttonClearWidth, buttonClearHeight;
-let buttonQRXPos, buttonQRYPos, buttonQRWidth, buttonQRHeight;
 // MediaPipe handpose recognition model, results and ad hoc object to manipulate data
 let hands, predictions = [], hand;
 // BLE UUID address of actuating microcontroller
 const TELO_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
 // BLE object, characteristic and value to be sent
 let teloBLE, teloCharacteristic, teloIntensity;
-// HTML divs
-let clearDiv, photoDiv, qrDiv, cdDiv, flashDiv;
-// QR trigger boolean
-let qrTrig = false;
-// GUI reset timer
-let resetGUI;
+
 
 
 /* SETUP: initialize canvas, video and model */
@@ -40,19 +43,16 @@ function setup() {
   createCanvas(windowWidth, windowWidth / aspectRatio);
   // setup MediaPipe model
   handposeSetup();
-  // instantiate p5.touchgui GUI and elements
-  touchGUI = createGui();
-  createGUIElements();
-  // get DOM element of video
-  capture = select(`#capture`);
   // instantiate hand object to manipulate Handpose data
   hand = new Hand();
+  // get DOM element of video
+  capture = select(`#capture`);
   // instantiate graphics element
   trailBlazer = createGraphics(width, height);
   // instantiate ble
   teloBLE = new p5ble();
-  // style countdown & QR code div
-  getDivs();
+  // create and style GUI elements
+  setupGuiElements();
 }
 
 function handposeSetup() {
@@ -86,27 +86,76 @@ function handposeSetup() {
   camera.start();
 }
 
-function getDivs() {
-  // obtain jQuery element & style of clear & screenshot divs
-  clearDiv = $("#clearDiv");
-  photoDiv = $("#photoDiv");
-  buttonClearYPos = parseInt(clearDiv.css("top"));
-  buttonClearXPos = parseInt(clearDiv.css("left"));
-  buttonClearHeight = parseInt(clearDiv.css("height"));
-  buttonClearWidth = parseInt(clearDiv.css("width"));
-  buttonQRXPos = parseInt(photoDiv.css("left"));
-  buttonQRYPos = parseInt(photoDiv.css("top"));
-  buttonQRHeight = parseInt(photoDiv.css("height"));
-  buttonQRWidth = parseInt(photoDiv.css("width"));
-  // obtain jQuery element of countdown & flash effect divs
-  cdDiv = $("#countdownDiv");
-  flashDiv = $('#flashDiv');
-  // obtain DOM element of QR code div & style
-  qrDiv = document.getElementById("qrCodeDiv");
-  qrDiv.style.left = `${width/2-height/4}px`;
-  qrDiv.style.top = `${height/2-height/4}px`;
+function setupGuiElements() {
+  setupSliders();
+  setupIcons();
+  setupPhotobooth();
+  guiDiv = $("#GUI");
 }
 
+function setupSliders() {
+  // create jQuery sliders
+  $("#sliderColR, #sliderColG, #sliderColB").slider({
+    orientation: "horizontal",
+    range: "min",
+    min: 0,
+    max: 255
+  });
+  $("#sliderSize").slider({
+    orientation: "vertical",
+    range: "min",
+    min: 1,
+    max: 30
+  });
+  // force jQueryUI sliders into fixed position
+  $(".ui-slider").css("position", "fixed");
+  // obtain slider elements
+  sliderColR = $("#sliderColR");
+  sliderColG = $("#sliderColG");
+  sliderColB = $("#sliderColB");
+  sliderSize = $("#sliderSize");
+  sliderSizeBox = $("#sliderSizeBox");
+  sliderSizeHandle = document.getElementsByClassName('ui-slider-handle')[0];
+  // obtain slider style
+  sliderColHeight = parseInt(sliderColR.css("height"));
+  sliderColYPos = parseInt(sliderColR.css("top"));
+  sliderColWidth = parseInt(sliderColR.css("width"));
+  sliderColRXPos = parseInt(sliderColR.css("left"));
+  sliderColGXPos = parseInt(sliderColG.css("left"));
+  sliderColBXPos = parseInt(sliderColB.css("left"));
+  sliderSizeYPos = parseInt(sliderSize.css("top"));
+  sliderSizeHeight = parseInt(sliderSize.css("height"));
+  sliderSizeXPos = parseInt(sliderSize.css("left"));
+  sliderSizeRad = parseInt(sliderSizeBox.css("border-left-width"));
+  // set initial slider values
+  sliderColR.slider("value", hand.color.r);
+  sliderColG.slider("value", hand.color.g);
+  sliderColB.slider("value", hand.color.b);
+  sliderSize.slider("value", hand.size);
+}
+
+function setupIcons() {
+  // obtain jQuery element & style of clear & screenshot icons
+  buttonClear = $("#clearDiv");
+  buttonQR = $("#photoDiv");
+  buttonClearYPos = parseInt(buttonClear.css("top"));
+  buttonClearXPos = parseInt(buttonClear.css("left"));
+  buttonClearHeight = parseInt(buttonClear.css("height"));
+  buttonClearWidth = parseInt(buttonClear.css("width"));
+  buttonQRXPos = parseInt(buttonQR.css("left"));
+  buttonQRYPos = parseInt(buttonQR.css("top"));
+  buttonQRHeight = parseInt(buttonQR.css("height"));
+  buttonQRWidth = parseInt(buttonQR.css("width"));
+}
+
+function setupPhotobooth() {
+  // obtain jQuery elements of countdown, flash effect & QR code divs, style latter
+  cdDiv = $("#countdownDiv");
+  flashDiv = $('#flashDiv');
+  qrDiv = $("#qrCodeDiv");
+  qrDiv.css("left", `${width/2-height/4}px`);
+  qrDiv.css("left", `${height/2-height/4}px`);
+}
 
 /* DRAW: handle program state */
 function draw() {
@@ -131,14 +180,13 @@ function load() {
 function sim() {
   // display mirrored video feed
   displayVideo();
-  // display touchgui elements
-  drawGui();
   // display graphic element (not conditional on hand being present)
   image(trailBlazer, 0, 0);
+  // update GUI slider values
+  updateGuiValues();
   // send handpose model results to hand object & update
   hand.predictions = predictions;
   hand.update();
-  // OR drawGUI here to float over drawing
 }
 
 function displayVideo() {
@@ -150,6 +198,14 @@ function displayVideo() {
   pop();
   // apply grayscale image filter
   filter(GRAY);
+}
+
+function updateGuiValues() {
+  hand.color.r = sliderColR.slider("value");
+  hand.color.g = sliderColG.slider("value");
+  hand.color.b = sliderColB.slider("value");
+  hand.size = sliderSize.slider("value");
+
 }
 
 function writeToBLE(yPos) {
@@ -191,12 +247,7 @@ function keyPressed() {
 // hide GUI elements and trigger screenshot and QR code generation process
 function triggerQR() {
   qrTrig = true;
-  sliderSize.visible = false;
-  sliderColR.visible = false;
-  sliderColG.visible = false;
-  sliderColB.visible = false;
-  clearDiv.css("display", "none");
-  photoDiv.css("display", "none");
+  guiDiv.css("display", "none");
   // trigger countdown and screenshot
   photoboothEffect();
 }
@@ -263,7 +314,7 @@ function generateQRcode() {
         correctLevel: QRCode.CorrectLevel.H
       });
       // display div QR code is appended to
-      qrDiv.style.display = "block";
+        qrDiv.css("display", "block");
       // create 10s timeout for QR display and GUI hiding
       resetGUI = setTimeout( () => { resetGUIElements(); }, 10000);
     },
@@ -274,13 +325,8 @@ function generateQRcode() {
 
 // hide QR code div and re-display GUI elements
 function resetGUIElements() {
-  qrDiv.style.display = "none";
-  sliderSize.visible = true;
-  sliderColR.visible = true;
-  sliderColG.visible = true;
-  sliderColB.visible = true;
-  clearDiv.css("display", "block");
-  photoDiv.css("display", "block");
+  qrDiv.css("display", "none");
+  guiDiv.css("display", "block");
   qrTrig = false;
 }
 
@@ -301,75 +347,4 @@ function gotCharacteristics(error, characteristics) {
 function disconnectFromBLE() {
   teloBLE.write(teloCharacteristic, 0);
   teloBLE.disconnect();
-}
-
-// create p5.touchgui sliders and buttons
-function createGUIElements() {
-  sliderColWidth = 30;
-  sliderColHeight = height / 4;
-  sliderColYPos = height * 0.2;
-  sliderColRXPos = sliderColWidth;
-  sliderColGXPos = sliderColRXPos + 2 * sliderColWidth;
-  sliderColBXPos = sliderColGXPos + 2 * sliderColWidth;
-  sliderSizeWidth = sliderColBXPos + sliderColWidth - sliderColRXPos;
-  sliderSizeHeight = sliderColWidth;
-  sliderSizeYPos = sliderColYPos + sliderColHeight + sliderSizeHeight;
-  sliderSizeXPos = sliderColRXPos;
-  sliderSize = createSlider("sliderSize", sliderSizeXPos, sliderSizeYPos, sliderSizeWidth, sliderSizeHeight, 1, 30);
-  sliderSize.val = 6;
-  sliderSize.setStyle({
-    strokeHandle: color("#000"),
-    fillHandle: color("#000"),
-    fillHandleHover: color("#000"),
-    fillHandleActive: color("#000"),
-    fillTrack: color("#000"),
-    fillTrackHover: color("#000"),
-    fillTrackActive: color("#000"),
-    rounding: 100,
-    trackWidth: 1,
-    strokeWeight:1
-  });
-  sliderColR = createSliderV("sliderColR", sliderColRXPos, sliderColYPos, sliderColWidth, sliderColHeight, 0, 255);
-  sliderColR.val = 255;
-  sliderColR.setStyle({
-    strokeHandle: color("#F00"),
-    fillHandle: color("#F00"),
-    fillHandleHover: color("#F00"),
-    fillHandleActive: color("#F00"),
-    fillTrack: color("#F00"),
-    fillTrackHover: color("#F00"),
-    fillTrackActive: color("#F00"),
-    rounding: 100,
-    trackWidth: 1,
-    strokeWeight:1
-  });
-  sliderColG = createSliderV("sliderColG", sliderColGXPos, sliderColYPos, sliderColWidth, sliderColHeight, 0, 255);
-  sliderColG.val = 0;
-  sliderColG.setStyle({
-    strokeHandle: color("#0F0"),
-    fillHandle: color("#0F0"),
-    fillHandleHover: color("#0F0"),
-    fillHandleActive: color("#0F0"),
-    fillTrack: color("#0F0"),
-    fillTrackHover: color("#0F0"),
-    fillTrackActive: color("#0F0"),
-    rounding: 100,
-    trackWidth: 1,
-    strokeWeight:1
-  });
-  sliderColB = createSliderV("sliderColB", sliderColBXPos, sliderColYPos, sliderColWidth, sliderColHeight, 0, 255);
-  sliderColB.val = 127;
-  sliderColB.setStyle({
-    strokeHandle: color("#00F"),
-    fillHandle: color("#00F"),
-    fillHandleHover: color("#00F"),
-    fillHandleActive: color("#00F"),
-    fillTrack: color("#00F"),
-    fillTrackHover: color("#00F"),
-    fillTrackActive: color("#00F"),
-    rounding: 100,
-    trackWidth: 1,
-    strokeWeight:1
-  });
-
 }

@@ -14,6 +14,12 @@ class Hand {
     this.lowestZ;
     this.bleVal = height;
     this.bleKillRetry = 0;
+    this.size = 10;
+    this.color = {
+      r: 255,
+      g: 0,
+      b: 127
+    }
   }
 
   update() {
@@ -40,8 +46,8 @@ class Hand {
           // draw line between previous and current index tip position if within threshold distance of each other
           trailBlazer.push();
           // set RGB values of line to draw based on slider position
-          trailBlazer.stroke(sliderColR.val, sliderColG.val, sliderColB.val);
-          trailBlazer.strokeWeight(sliderSize.val);
+          trailBlazer.stroke(hand.color.r, hand.color.g, hand.color.b);
+          trailBlazer.strokeWeight(hand.size);
           // set maximum distance between previous and current index tip position to prevent jumping between multiple hands
           if (abs(this.indexGhostX[i] - this.indexTipX[i]) < 100 && abs(this.indexGhostY[i] - this.indexTipY[i]) < 100) {
             trailBlazer.line(this.indexGhostX[i], this.indexGhostY[i], this.indexTipX[i], this.indexTipY[i]);
@@ -85,22 +91,26 @@ class Hand {
     if (y > sliderColYPos && y < sliderColYPos + sliderColHeight && !qrTrig) {
       // check overlap with red slider horizontal position
       if (x > sliderColRXPos && x < sliderColRXPos + sliderColWidth) {
-        sliderColR.val = map(y, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
+        sliderColR.slider("value", map(x, sliderColRXPos, sliderColRXPos + sliderColWidth, 0, 255));
       }
       // check overlap with green slider horizontal position
       if (x > sliderColGXPos && x < sliderColGXPos + sliderColWidth) {
-        sliderColG.val = map(y, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
+        sliderColG.slider("value", map(x, sliderColGXPos, sliderColGXPos + sliderColWidth, 0, 255));
       }
       // check overlap with blue slider horizontal position
       if (x > sliderColBXPos && x < sliderColBXPos + sliderColWidth) {
-        sliderColB.val = map(y, sliderColYPos + sliderColHeight, sliderColYPos, 0, 255);
+        sliderColB.slider("value", map(x, sliderColBXPos, sliderColBXPos + sliderColWidth, 0, 255));
       }
     }
     // check overlap with size slider vertical position
     if (y > sliderSizeYPos && y < sliderSizeYPos + sliderSizeHeight && !qrTrig) {
       // check overlap with size slider horizontal position
-      if (x > sliderSizeXPos && x < sliderSizeXPos + sliderSizeWidth) {
-        sliderSize.val = map(x, sliderSizeXPos, sliderSizeXPos + sliderSizeWidth, 1, 30);
+      if (x > sliderSizeXPos - sliderSizeRad && x < sliderSizeXPos + sliderSizeRad) {
+        let sliderSizeDims = map(y, sliderSizeYPos, sliderSizeYPos + sliderSizeHeight, 30, 1);
+        sliderSize.slider("value", sliderSizeDims);
+        sliderSizeHandle.style.width = `${sliderSizeDims}px`;
+        sliderSizeHandle.style.height = `${sliderSizeDims}px`;
+        sliderSizeHandle.style.left = `-${sliderSizeDims/2}px`;
       }
     }
     // check overlap with buttons vertical position
