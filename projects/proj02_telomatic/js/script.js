@@ -154,7 +154,7 @@ function setupPhotobooth() {
   flashDiv = $('#flashDiv');
   qrDiv = $("#qrCodeDiv");
   qrDiv.css("left", `${width/2-height/4}px`);
-  qrDiv.css("left", `${height/2-height/4}px`);
+  qrDiv.css("top", `${height/2-height/4}px`);
 }
 
 /* DRAW: handle program state */
@@ -282,7 +282,7 @@ function flashEffect() {
 
 function generateQRcode() {
   // clear contents of QR code div; if a code has already been generated, removes it
-  qrDiv.innerHTML = "";
+  qrDiv.html("");
   // get p5 canvas element, screenshot it, convert to URI and tag with key for PHP retrieval
   let canvas  = document.getElementById("defaultCanvas0");
   let canvasURL = canvas.toDataURL("image/png", 1);
