@@ -8,35 +8,27 @@ body {
   overflow: hidden;
 }
 
-
-/* sliders */
-
-.slider {
-  position: fixed;
-  z-index: 2;
+/* GUI */
+#GUI {
+  position: relative;
   opacity: 70%;
 }
 
-#sliderColR, #sliderColG, #sliderColB {
-  width: 15vw;
-  height: 5vh;
-  top: 5vh;
+/* sliders */
+.slider {
+  position: absolute;
+  z-index: 2;
 }
 
-#sliderColR .ui-slider-handle, #sliderColG .ui-slider-handle, #sliderColB .ui-slider-handle { height: 6vh; }
-
-#sliderColR { left: 20vw; }
-#sliderColG { left: 42vw; }
-#sliderColB { left: 64vw; }
+.sliderCol {
+  width: 15%;
+}
 #sliderColR .ui-slider-range, #sliderColR .ui-slider-handle { background: #ef2929; }
 #sliderColG .ui-slider-range, #sliderColG .ui-slider-handle { background: #8ae234; }
 #sliderColB .ui-slider-range, #sliderColB .ui-slider-handle { background: #729fcf; }
 
 #sliderSize {
-  left: 92.5vw;
-  top: 30vh;
   width: 0;
-  height: 50vh;
   border: none;
   background: #000
 }
@@ -45,32 +37,19 @@ body {
   background: inherit;
   border: none;
   border-radius: 100%;
-  height: 10px;
-  width: 10px;
-  left: -5px;
 }
 #sliderSizeBox {
   position: absolute;
   width: 0;
 	height: 0;
-	border-left: 2.5vw solid transparent;
-	border-right: 2.5vw solid transparent;
-	border-top: 50vh solid #ccc;
-  left: -2.5vw;
 }
-
 
 /* icons */
-
-#clearDiv, #photoDiv {
-  position: fixed;
+#qrIcon, #xIcon {
+  position: absolute;
   border-radius: 15px;
-  top: 5vh;
   z-index: 2;
-  font-size: 6vw;
 }
-#clearDiv { left: 88vw; }
-#photoDiv { left: 5vw; }
 
 i {
   padding: 5px;
@@ -79,23 +58,24 @@ i {
   opacity: 70%;
 }
 
-
 /* photobooth */
+#photobooth {
+  position: relative;
+  justify-content: center;
+  align-content: center;
+}
 
 #countdownDiv {
-  position: fixed;
-  left: 45vw;
-  top: 45vh;
+  position: absolute;
   z-index: 997;
   opacity: 0;
   background-color: transparent;
   color: #f00;
-  font-size: 20vw;
   font-family: sans-serif;
 }
 
 #flashDiv {
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 0;
   width: 100%;
@@ -106,7 +86,7 @@ i {
  }
 
  #qrCodeDiv {
-   position: fixed;
+   position: absolute;
    padding: 10px;
    background-color: #bbb;
    z-index: 999;

@@ -27,23 +27,28 @@
     <div class="videoDiv">
       <video id="capture" style="display: none"></video>
     </div>
+    <!-- GUI container -->
     <div id="GUI">
+      <!-- sliders -->
       <div class="slider" id="sliderSize">
         <div id="sliderSizeBox"></div>
       </div>
-      <div class="slider" id="sliderColR"></div>
-      <div class="slider" id="sliderColG"></div>
-      <div class="slider" id="sliderColB"></div>
-      <div id="clearDiv">
-        <i class="fa fa-times"></i>
-      </div>
-      <div id="photoDiv">
+      <div class="slider sliderCol" id="sliderColR"></div>
+      <div class="slider sliderCol" id="sliderColG"></div>
+      <div class="slider sliderCol" id="sliderColB"></div>
+      <!-- icons -->
+      <div id="qrIcon">
         <i class="fa fa-camera"></i>
       </div>
-  </div>
-    <div id="countdownDiv"></div>
-    <div id="flashDiv"></div>
-    <div id="qrCodeDiv"></div>
+      <div id="xIcon">
+        <i class="fa fa-times"></i>
+      </div>
+    </div>
+    <div id="photobooth">
+      <div id="countdownDiv"></div>
+      <div id="flashDiv"></div>
+      <div id="qrCodeDiv"></div>
+    </div>
 
     <!-- Local script(s) -->
     <script src="js/Hand.js"></script>

@@ -8,22 +8,26 @@ const captureElement = document.getElementById('capture');
 // 16:9 -> 1280 * 720
 // let capture, captureWidth = 1280, captureHeight = 720;
 // 4:3 -> 640 * 480
-// let capture, captureWidth = 640, captureHeight = 480;
-let capture, captureWidth = window.Width, captureHeight = window.Height;
+let capture, captureWidth = 640, captureHeight = 480;
 // CCTV dims: 768 * 494 pixels (https://www.manualslib.com/manual/118015/Panasonic-Aw-E300.html?page=52#manual)
 // let capture, captureWidth = 768, captureHeight = 494;
+// dynamic -> window width & height
+// let capture, captureWidth = window.Width, captureHeight = window.Height;
 // display aspect ratio
 const aspectRatio = captureWidth / captureHeight;
+// dynamic canvas dimensions
+let canvasWidth, canvasHeight;
 // GUI and elements
-let guiDiv
+let guiDiv, sliders, icons;
 // sliders
-let sliderColR, sliderColG, sliderColB, sliderColWidth, sliderColHeight, sliderColYPos, sliderColRXPos, sliderColGXPos, sliderColBXPos;
+let sliderCol, sliderColWidth, sliderColHeight, sliderColYPos, sliderColHandle;
+let sliderColR, sliderColG, sliderColB, sliderColRXPos, sliderColGXPos, sliderColBXPos;
 let sliderSize, sliderSizeBox, sliderSizeRad, sliderSizeHeight, sliderSizeYPos, sliderSizeXPos, sliderSizeHandle;
 // buttons
 let buttonClear, buttonClearXPos, buttonClearYPos, buttonClearWidth, buttonClearHeight;
 let buttonQR, buttonQRXPos, buttonQRYPos, buttonQRWidth, buttonQRHeight;
 // photobooth
-let qrDiv, cdDiv, flashDiv;
+let photoboothDiv, qrDiv, cdDiv, flashDiv;
 // QR trigger boolean
 let qrTrig = false;
 // GUI reset timer
@@ -37,12 +41,14 @@ const TELO_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
 // BLE object, characteristic and value to be sent
 let teloBLE, teloCharacteristic, teloIntensity;
 
-
-
 /* SETUP: initialize canvas, video and model */
 function setup() {
-  // createCanvas(windowWidth, windowWidth / aspectRatio);
-  createCanvas(windowWidth, windowHeight);
+  // setup canvas relative to window dimension ratio
+  if (windowWidth < windowHeight * aspectRatio) {
+    createCanvas(windowWidth, windowWidth / aspectRatio);
+  } else {
+    createCanvas(windowHeight * aspectRatio, windowHeight);
+  }
   // setup MediaPipe model
   handposeSetup();
   // instantiate hand object to manipulate Handpose data
@@ -89,10 +95,33 @@ function handposeSetup() {
 }
 
 function setupGuiElements() {
+  canvas = $("#defaultCanvas0");
+  canvasWidth = parseInt(canvas.css("width"));
+  canvasHeight = parseInt(canvas.css("height"));
+  guiDiv = $("#GUI");
+  guiDiv.css("width", canvasWidth);
+  photoboothDiv = $("#photobooth");
+  photoboothDiv.css("width", canvasWidth);
+
+  // guDiv = $("<div/>", { id: "guDiv" } ).appendTo(canvas);
+  // let guIMG = $("<img/>", { src: "../upload/220410-201929-1649636369.png" } ).appendTo(canvas);
+  // newSlider = $("<div/>", { class: "slider", id: "sliderNew" } ).appendTo(guDiv);
+  // $("#sliderNew").slider({
+  //   orientation: "horizontal",
+  //   range: "min",
+  //   min: 0,
+  //   max: 255
+  // });
+  // // guDiv =
+  // guDiv = document.createElement("div");
+  // guDiv.setAttribute('id', "guDiv");
+  // canvas.append(guDiv);
+  // let guIMG = createElement('img');
+  // console.log(guIMG.el);
+
   setupSliders();
   setupIcons();
   setupPhotobooth();
-  guiDiv = $("#GUI");
 }
 
 function setupSliders() {
@@ -109,15 +138,38 @@ function setupSliders() {
     min: 1,
     max: 30
   });
-  // force jQueryUI sliders into fixed position
-  $(".ui-slider").css("position", "fixed");
   // obtain slider elements
+  sliderCol = $(".sliderCol");
   sliderColR = $("#sliderColR");
   sliderColG = $("#sliderColG");
   sliderColB = $("#sliderColB");
+  sliderColHandle = $(".ui-slider-handle");
   sliderSize = $("#sliderSize");
   sliderSizeBox = $("#sliderSizeBox");
   sliderSizeHandle = document.getElementsByClassName('ui-slider-handle')[0];
+  // force jQueryUI sliders into absolute position
+  $(".ui-slider").css("position", "absolute");
+  // style slider elements
+  sliderCol.css("top", canvasHeight / 100 * 5);
+  sliderCol.css("height", canvasHeight / 100 * 5);
+  sliderColHandle.css("height", canvasHeight / 100 * 6);
+  sliderColR.css("left", canvasWidth / 100 * 20);
+  sliderColG.css("left", canvasWidth / 100 * 43);
+  sliderColB.css("left", canvasWidth / 100 * 65);
+  sliderSize.css("top", canvasHeight / 100 * 30);
+  sliderSize.css("height", canvasHeight / 100 * 50);
+  sliderSize.css("left", canvasWidth / 100 * 92.5);
+  sliderSizeHandle.style.height = `${hand.size}px`;
+  sliderSizeHandle.style.width = `${hand.size}px`;
+  sliderSizeBox.css("border-top", `${canvasHeight / 100 * 50}px solid #ccc`);
+  sliderSizeBox.css("border-left", `${canvasWidth / 100 * 2}px solid transparent`);
+  sliderSizeBox.css("border-right", `${canvasWidth / 100 * 2}px solid transparent`);
+  sliderSizeBox.css("left", `-${canvasWidth / 100 * 2}px`);
+  // set slider initial values
+  sliderColR.slider("value", hand.color.r);
+  sliderColG.slider("value", hand.color.g);
+  sliderColB.slider("value", hand.color.b);
+  sliderSize.slider("value", hand.size);
   // obtain slider style
   sliderColHeight = parseInt(sliderColR.css("height"));
   sliderColYPos = parseInt(sliderColR.css("top"));
@@ -129,17 +181,20 @@ function setupSliders() {
   sliderSizeHeight = parseInt(sliderSize.css("height"));
   sliderSizeXPos = parseInt(sliderSize.css("left"));
   sliderSizeRad = parseInt(sliderSizeBox.css("border-left-width"));
-  // set initial slider values
-  sliderColR.slider("value", hand.color.r);
-  sliderColG.slider("value", hand.color.g);
-  sliderColB.slider("value", hand.color.b);
-  sliderSize.slider("value", hand.size);
 }
 
 function setupIcons() {
-  // obtain jQuery element & style of clear & screenshot icons
-  buttonClear = $("#clearDiv");
-  buttonQR = $("#photoDiv");
+  // obtain clear & screenshot icon elements
+  buttonQR = $("#qrIcon");
+  buttonClear = $("#xIcon");
+  // style icon elements
+  buttonQR.css("top", canvasHeight / 100 * 5);
+  buttonQR.css("left", canvasWidth / 100 * 5);
+  buttonQR.css("font-size", canvasWidth / 100 * 6);
+  buttonClear.css("top", canvasHeight / 100 * 5);
+  buttonClear.css("left", canvasWidth / 100 * 88);
+  buttonClear.css("font-size", canvasWidth / 100 * 6);
+  // store icon parameters
   buttonClearYPos = parseInt(buttonClear.css("top"));
   buttonClearXPos = parseInt(buttonClear.css("left"));
   buttonClearHeight = parseInt(buttonClear.css("height"));
@@ -153,10 +208,13 @@ function setupIcons() {
 function setupPhotobooth() {
   // obtain jQuery elements of countdown, flash effect & QR code divs, style latter
   cdDiv = $("#countdownDiv");
+  cdDiv.css("left", canvasWidth / 100 * 45);
+  cdDiv.css("top", canvasHeight / 100 * 35);
+  cdDiv.css("font-size", canvasWidth / 5);
   flashDiv = $('#flashDiv');
   qrDiv = $("#qrCodeDiv");
-  qrDiv.css("left", `${width/2-height/4}px`);
-  qrDiv.css("top", `${height/2-height/4}px`);
+  qrDiv.css("left", canvasWidth / 2 - canvasHeight / 4);
+  qrDiv.css("top", canvasHeight / 2 - canvasHeight / 4);
 }
 
 /* DRAW: handle program state */
@@ -171,10 +229,10 @@ function draw() {
 function load() {
   background(255);
   push();
-  textSize(50);
+  textSize(canvasWidth / 15);
   textStyle(BOLD);
   textAlign(CENTER, CENTER);
-  text(`LOADING...`, width / 2, height / 2);
+  text(`LOADING...`, canvasWidth / 2, canvasHeight / 2);
   pop();
 }
 
