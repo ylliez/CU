@@ -1,3 +1,10 @@
+/* script.js
+main script
+populates HTML page, creates canvas, implements libraries, displays output, affords server interactions
+creates video feed, p5.js canvas, GUI elements (sliders & buttons) and graphics element
+sets up hand position detection and BLE communication
+*/
+
 "use strict";
 
 /* GENERAL */
@@ -63,6 +70,7 @@ function setup() {
   setupGuiElements();
 }
 
+// MediaPipe hand position model setup (from https://google.github.io/mediapipe/solutions/hands.html#javascript-solution-api)
 function handposeSetup() {
   hands = new Hands({
     locateFile: (file) => {
@@ -82,6 +90,7 @@ function handposeSetup() {
     state = `sim`;
     predictions = results;
   });
+  // create and launch camera for model detection
   const camera = new Camera(captureElement, {
     onFrame: async () => {
       await hands.send({
@@ -95,35 +104,22 @@ function handposeSetup() {
 }
 
 function setupGuiElements() {
+  // obtain canvas element and style for GUI formatting
   canvas = $("#defaultCanvas0");
   canvasWidth = parseInt(canvas.css("width"));
   canvasHeight = parseInt(canvas.css("height"));
+  // obtain and style GUI and photobooth divs
   guiDiv = $("#GUI");
   guiDiv.css("width", canvasWidth);
   photoboothDiv = $("#photobooth");
   photoboothDiv.css("width", canvasWidth);
-
-  // guDiv = $("<div/>", { id: "guDiv" } ).appendTo(canvas);
-  // let guIMG = $("<img/>", { src: "../upload/220410-201929-1649636369.png" } ).appendTo(canvas);
-  // newSlider = $("<div/>", { class: "slider", id: "sliderNew" } ).appendTo(guDiv);
-  // $("#sliderNew").slider({
-  //   orientation: "horizontal",
-  //   range: "min",
-  //   min: 0,
-  //   max: 255
-  // });
-  // // guDiv =
-  // guDiv = document.createElement("div");
-  // guDiv.setAttribute('id', "guDiv");
-  // canvas.append(guDiv);
-  // let guIMG = createElement('img');
-  // console.log(guIMG.el);
-
+  // create and style sliders, buttons and photobooth
   setupSliders();
   setupIcons();
   setupPhotobooth();
 }
 
+// create and style graphics trail color and size sliders
 function setupSliders() {
   // create jQuery sliders
   $("#sliderColR, #sliderColG, #sliderColB").slider({
@@ -183,18 +179,19 @@ function setupSliders() {
   sliderSizeRad = parseInt(sliderSizeBox.css("border-left-width"));
 }
 
+// create and style graphics clearing and screenshotting buttons
 function setupIcons() {
-  // obtain clear & screenshot icon elements
+  // obtain clear & screenshot button elements
   buttonQR = $("#qrIcon");
   buttonClear = $("#xIcon");
-  // style icon elements
+  // style button elements
   buttonQR.css("top", canvasHeight / 100 * 5);
   buttonQR.css("left", canvasWidth / 100 * 5);
   buttonQR.css("font-size", canvasWidth / 100 * 6);
   buttonClear.css("top", canvasHeight / 100 * 5);
   buttonClear.css("left", canvasWidth / 100 * 88);
   buttonClear.css("font-size", canvasWidth / 100 * 6);
-  // store icon parameters
+  // store button parameters
   buttonClearYPos = parseInt(buttonClear.css("top"));
   buttonClearXPos = parseInt(buttonClear.css("left"));
   buttonClearHeight = parseInt(buttonClear.css("height"));
@@ -205,8 +202,9 @@ function setupIcons() {
   buttonQRWidth = parseInt(buttonQR.css("width"));
 }
 
+// create and style photobooth (countdown, flash effect & QR code display)
 function setupPhotobooth() {
-  // obtain jQuery elements of countdown, flash effect & QR code divs, style latter
+  // obtain and style jQuery elements of photobooth
   cdDiv = $("#countdownDiv");
   cdDiv.css("left", canvasWidth / 100 * 45);
   cdDiv.css("top", canvasHeight / 100 * 35);
@@ -225,7 +223,7 @@ function draw() {
   }
 }
 
-// Display loading screen
+// display loading screen
 function load() {
   background(255);
   push();
@@ -249,17 +247,20 @@ function sim() {
   hand.update();
 }
 
+// display mirrored grayscale video feed
 function displayVideo() {
   push();
-  // mirror display
+  // mirror video feed
   translate(width,0);
   scale(-1, 1);
+  // display video feed
   image(capture, 0, 0, width, height);
   pop();
   // apply grayscale image filter
   filter(GRAY);
 }
 
+// update trail styling based on slider values
 function updateGuiValues() {
   hand.color.r = sliderColR.slider("value");
   hand.color.g = sliderColG.slider("value");
@@ -268,6 +269,7 @@ function updateGuiValues() {
 
 }
 
+// send value to BLE receiver if connected and above threshold
 function writeToBLE(yPos) {
   // check if BLE is connected and characteristic is communicating
   if (teloBLE.isConnected() && teloCharacteristic) {
@@ -287,6 +289,7 @@ function writeToBLE(yPos) {
   }
 }
 
+// keyboard controls for BLE connection and functionality debugging
 function keyPressed() {
   // 'c' key toggles connection
   if (keyCode === 67) {
@@ -312,6 +315,7 @@ function triggerQR() {
   photoboothEffect();
 }
 
+// create photobooth effect with countdown and flash
 function photoboothEffect() {
   // set countdown duration to three seconds
   let seconds = 3;
@@ -319,9 +323,11 @@ function photoboothEffect() {
   let photoboothCountdown = setInterval( () => {
     // when countdown over, clear the interval & take screenshot
     if (seconds <= 0){
+      // clear countdown interval
       clearInterval(photoboothCountdown);
+      // generate QR Code
       generateQRcode();
-      // flash effect using opacity fading
+      // flash effect
       flashEffect();
     }
     else {
@@ -335,11 +341,13 @@ function photoboothEffect() {
   }, 1000);
 }
 
+// flash effect using opacity fading
 function flashEffect() {
   flashDiv.fadeTo(100, 0.7);
   flashDiv.fadeOut(100);
 }
 
+// take screenshot, send to server and generate QR code with echoed URL
 function generateQRcode() {
   // clear contents of QR code div; if a code has already been generated, removes it
   qrDiv.html("");
@@ -395,6 +403,7 @@ function connectToBLE() {
   teloBLE.connect(TELO_UUID, gotCharacteristics);
 }
 
+// set BLE write characteristic
 function gotCharacteristics(error, characteristics) {
   // print connection error, if applicable
   if (error) console.log('error: ', error);
