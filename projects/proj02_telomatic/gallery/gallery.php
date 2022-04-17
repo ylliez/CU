@@ -1,4 +1,10 @@
-<?php
+<!-- gallery/gallery.php
+gallery PHP script
+checks for AJAX GET request, scans directory and echoes JSON encoded image array
+adapted from formulation by Sabine Rosenberg
+ -->
+
+ <?php
 // generic check for GET request
 if ($_SERVER['REQUEST_METHOD'] === 'GET'){
   // scan upload directory for files, sort in descending order, cull unwanted incidental files by array substraction
