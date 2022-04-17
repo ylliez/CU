@@ -1,19 +1,35 @@
+/* Hand.js
+hand class script
+defines parameters and function for hand object which manipulates data received from MediaPipe Hands model
+creates trail of right index finger tip position and sets value to send to BLE receiver (if multihand use, closest hand is selected)
+displays left index finger tip and checks for interactions with GUI elements to modulate drawing parameters and trigger events
+*/
+
 class Hand {
 
   constructor() {
+    // holder for hand detection results
     this.predictions = [];
+    // number of hands detected
     this.numberHands = undefined;
+    // data from detected hands
     this.hands = [];
+    // index finger tip data
     this.indexTip = [];
     this.indexTipX = [];
     this.indexTipY = [];
     this.indexGhostX = [];
     this.indexGhostY = [];
+    // depth of detected right hands and resulting closest right hand
     this.rightHandsZ = [];
-    this.atLeastOneRightHand;
     this.lowestZ;
+    // boolean to check if at least one right hand is onscreen
+    this.atLeastOneRightHand;
+    // value to send to BLE receiver, y-position of closest right index finger tip
     this.bleVal = height;
+    // counter for debugging BLE connection send retries
     this.bleKillRetry = 0;
+    // size and color of trail drawn by right index finger tips
     this.size = 10;
     this.color = {
       r: 255,
@@ -25,10 +41,9 @@ class Hand {
   update() {
     // get number of hands captured by handpose model
     this.numberHands = this.predictions.multiHandedness.length;
-    // reset right hand presence verification values (for BLE only)
+    // reset right hand presence verification and depth values (for BLE only)
     this.atLeastOneRightHand = false;
     this.lowestZ = 999;
-    this.closestRightIndex = undefined;
     if (this.numberHands > 0) {
       // iterate through hands arrays captured by handpose model
       for (var i = 0; i < this.numberHands; i++) {
@@ -53,12 +68,13 @@ class Hand {
             trailBlazer.line(this.indexGhostX[i], this.indexGhostY[i], this.indexTipX[i], this.indexTipY[i]);
           }
           trailBlazer.pop();
+          // determine closest hand and set its index finger tip y-position as BLE send value
           if (this.predictions.multiHandLandmarks[i][0].z < this.lowestZ) {
             this.lowestZ = this.predictions.multiHandLandmarks[i][0].z;
             this.bleVal = this.indexTipY[i];
           }
         }
-
+        // if a left hand, display index finger tip and check for interaction with GUI elements
         else if (this.predictions.multiHandedness[i].label === `Left`) {
           this.indexTipX[i] = this.indexTip[i].x * width;
           this.indexTipY[i] = this.indexTip[i].y * height;
@@ -67,6 +83,7 @@ class Hand {
         }
       }
     }
+    // if at least on right hand is onscreen, send selected y-position to BLE receiver
     if (this.atLeastOneRightHand) {
       this.bleKillRetry = 0;
       writeToBLE(this.bleVal);
@@ -77,6 +94,7 @@ class Hand {
     }
   }
 
+  // display left index finger tip position
   displayLeftIndexTip(x, y) {
     push();
     fill(255, 255, 255);
@@ -91,14 +109,17 @@ class Hand {
     if (y > sliderColYPos && y < sliderColYPos + sliderColHeight && !qrTrig) {
       // check overlap with red slider horizontal position
       if (x > sliderColRXPos && x < sliderColRXPos + sliderColWidth) {
+        // adjust red slider value according to index finger tip position
         sliderColR.slider("value", map(x, sliderColRXPos, sliderColRXPos + sliderColWidth, 0, 255));
       }
       // check overlap with green slider horizontal position
       if (x > sliderColGXPos && x < sliderColGXPos + sliderColWidth) {
+        // adjust green slider value according to index finger tip position
         sliderColG.slider("value", map(x, sliderColGXPos, sliderColGXPos + sliderColWidth, 0, 255));
       }
       // check overlap with blue slider horizontal position
       if (x > sliderColBXPos && x < sliderColBXPos + sliderColWidth) {
+        // adjust blue slider value according to index finger tip position
         sliderColB.slider("value", map(x, sliderColBXPos, sliderColBXPos + sliderColWidth, 0, 255));
       }
     }
@@ -106,6 +127,7 @@ class Hand {
     if (y > sliderSizeYPos && y < sliderSizeYPos + sliderSizeHeight && !qrTrig) {
       // check overlap with size slider horizontal position
       if (x > sliderSizeXPos - sliderSizeRad && x < sliderSizeXPos + sliderSizeRad) {
+        // adjust size slider value and slider handle size according to index finger tip position
         let sliderSizeDims = map(y, sliderSizeYPos, sliderSizeYPos + sliderSizeHeight, 30, 1);
         sliderSize.slider("value", sliderSizeDims);
         sliderSizeHandle.style.width = `${sliderSizeDims}px`;
@@ -117,10 +139,12 @@ class Hand {
     if (y > buttonClearYPos && y < buttonClearYPos + buttonClearHeight && !qrTrig) {
       // check overlap with clear button horizontal position
       if (x > buttonClearXPos && x < buttonClearXPos + buttonClearWidth) {
+        // clear graphics element
         trailBlazer.clear();
       }
       // check overlap with QR button horizontal position
       if (x > buttonQRXPos && x < buttonQRXPos + buttonQRWidth) {
+        // trigger screenshot and QR code generation
         triggerQR();
       }
     }
