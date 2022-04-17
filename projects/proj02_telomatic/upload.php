@@ -1,10 +1,9 @@
-<!-- upload.php
-upload PHP script
-receives AJAX POST request, extracts image from posted URI and files it, echoes files URL
-adapted from formulation by Sabine Rosenberg
- -->
+<?php
+// upload.php
+// upload PHP script
+// receives AJAX POST request, extracts image from posted URI and files it, echoes files URL
+// adapted from formulation by Sabine Rosenberg
 
- <?php
 // set upload directory in same root folder
 $upload_dir = "upload/";
 // receive URI from ajax POST using key
