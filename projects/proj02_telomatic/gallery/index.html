@@ -1,10 +1,3 @@
-<!-- gallery/index.html
-gallery html
-creates div for uploaded image display
-includes style for formatting image display and script for requesting images from server
-jQuery GET request adapted from formulation by Sabine Rosenberg
- -->
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,7 +29,7 @@ jQuery GET request adapted from formulation by Sabine Rosenberg
   <div id="imageGallery"></div>
 
   <script>
-    // on window load, run jQuery get to obtain images in upload folder
+    // on window load, run jQuery get to obtain images in upload folder (adapted from formulation by Sabine Rosenberg)
     window.onload = function() {
       $.get("gallery.php", function(data, status){
         // parse JSON data with image URLs into array
