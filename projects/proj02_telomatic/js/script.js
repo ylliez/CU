@@ -338,7 +338,7 @@ function generateQRcode() {
     // upon upload, generate QR code with image URL
     success: function (response) {
       // append header to returned image URL
-      let imageURL = `http://hybrid.concordia.ca/i_planch/telomatic/${response}`;
+      let imageURL = `http://hybrid.concordia.ca/i_planch/CART263/proj02_telomatic/${response}`;
       // DEBUGGING: output headed image URL to console
       console.log(imageURL);
       // make styled QR code with headed image URL
