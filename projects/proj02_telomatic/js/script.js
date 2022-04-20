@@ -2,7 +2,7 @@
 main script
 populates HTML page, creates canvas, implements libraries, displays output, affords server interactions
 creates video feed, p5.js canvas, GUI elements (sliders & buttons) and graphics element
-sets up hand position detection and BLE communication
+sets up hand position detection
 */
 
 "use strict";
@@ -43,10 +43,6 @@ let resetGUI;
 let trailBlazer;
 // MediaPipe handpose recognition model, results and ad hoc object to manipulate data
 let hands, predictions = [], hand;
-// BLE UUID address of actuating microcontroller
-const TELO_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
-// BLE object, characteristic and value to be sent
-let teloBLE, teloCharacteristic, teloIntensity;
 
 /* SETUP: initialize canvas, video and model */
 function setup() {
@@ -64,8 +60,6 @@ function setup() {
   capture = select(`#capture`);
   // instantiate graphics element
   trailBlazer = createGraphics(width, height);
-  // instantiate ble
-  teloBLE = new p5ble();
   // create and style GUI elements
   setupGuiElements();
 }
@@ -269,33 +263,8 @@ function updateGuiValues() {
 
 }
 
-// send value to BLE receiver if connected and above threshold
-function writeToBLE(yPos) {
-  // check if BLE is connected and characteristic is communicating
-  if (teloBLE.isConnected() && teloCharacteristic) {
-    // constrain received value to range of window height to avoid rollover
-    let yPosConstrained = constrain(yPos, 0, height);
-    // divide constrained value by height to get percentage relative to total height
-    let yPosPercent = yPosConstrained / height;
-    // multiply by 255 to remap y position relative to window height to byte range for microcontroller
-    let yPosByte = yPosPercent * 255;
-    // if y position below threshold vertical position (and last hand present garde-fou check, set inverse value
-    // otherwise set value as 0
-    if (hand.numberHands > 0 && yPosByte < 200) { teloIntensity = 255 - floor(yPosByte); }
-    else { teloIntensity = 0; }
-    // console.log(teloIntensity);
-    // write constrained relative percentage mapped inverted value (or 0) to BLE
-    teloBLE.write(teloCharacteristic, teloIntensity);
-  }
-}
-
 // keyboard controls for BLE connection and functionality debugging
 function keyPressed() {
-  // 'c' key toggles connection
-  if (keyCode === 67) {
-    if (!teloBLE.isConnected()) { connectToBLE(); }
-    else { disconnectFromBLE(); }
-  }
   // 'f' key toggles fullscreen
   if (keyCode === 70) {
     if (!document.fullscreen) { document.body.requestFullscreen(); }
@@ -396,24 +365,4 @@ function resetGUIElements() {
   qrDiv.css("display", "none");
   guiDiv.css("display", "block");
   qrTrig = false;
-}
-
-// connect to device by passing the service UUID
-function connectToBLE() {
-  teloBLE.connect(TELO_UUID, gotCharacteristics);
-}
-
-// set BLE write characteristic
-function gotCharacteristics(error, characteristics) {
-  // print connection error, if applicable
-  if (error) console.log('error: ', error);
-  console.log('characteristics: ', characteristics);
-  // Set the first characteristic as writing characteristic
-  teloCharacteristic = characteristics[0];
-}
-
-// disconnect from BLE, sending preemptive kill value
-function disconnectFromBLE() {
-  teloBLE.write(teloCharacteristic, 0);
-  teloBLE.disconnect();
 }

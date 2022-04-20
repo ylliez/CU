@@ -20,16 +20,6 @@ class Hand {
     this.indexTipY = [];
     this.indexGhostX = [];
     this.indexGhostY = [];
-    // depth of detected right hands and resulting closest right hand
-    this.rightHandsZ = [];
-    this.lowestZ;
-    // boolean to check if at least one right hand is onscreen
-    this.atLeastOneRightHand;
-    // value to send to BLE receiver, y-position of closest right index finger tip
-    this.bleVal = height;
-    // counter for debugging BLE connection send retries
-    this.bleKillRetry = 0;
-    // size and color of trail drawn by right index finger tips
     this.size = 10;
     this.color = {
       r: 255,
@@ -41,9 +31,6 @@ class Hand {
   update() {
     // get number of hands captured by handpose model
     this.numberHands = this.predictions.multiHandedness.length;
-    // reset right hand presence verification and depth values (for BLE only)
-    this.atLeastOneRightHand = false;
-    this.lowestZ = 999;
     if (this.numberHands > 0) {
       // iterate through hands arrays captured by handpose model
       for (var i = 0; i < this.numberHands; i++) {
@@ -51,8 +38,6 @@ class Hand {
         this.indexTip[i] = this.predictions.multiHandLandmarks[i][8];
         // if a right hand, use index finger tip to draw on screen
         if (this.predictions.multiHandedness[i].label === `Right`) {
-          // validate presence of at least one right hand
-          this.atLeastOneRightHand = true;
           // save previous index tip position and update current position (relative to window size)
           this.indexGhostX[i] = this.indexTipX[i];
           this.indexGhostY[i] = this.indexTipY[i];
@@ -68,11 +53,6 @@ class Hand {
             trailBlazer.line(this.indexGhostX[i], this.indexGhostY[i], this.indexTipX[i], this.indexTipY[i]);
           }
           trailBlazer.pop();
-          // determine closest hand and set its index finger tip y-position as BLE send value
-          if (this.predictions.multiHandLandmarks[i][0].z < this.lowestZ) {
-            this.lowestZ = this.predictions.multiHandLandmarks[i][0].z;
-            this.bleVal = this.indexTipY[i];
-          }
         }
         // if a left hand, display index finger tip and check for interaction with GUI elements
         else if (this.predictions.multiHandedness[i].label === `Left`) {
@@ -82,15 +62,6 @@ class Hand {
           this.checkGUI(this.indexTipX[i], this.indexTipY[i]);
         }
       }
-    }
-    // if at least on right hand is onscreen, send selected y-position to BLE receiver
-    if (this.atLeastOneRightHand) {
-      this.bleKillRetry = 0;
-      writeToBLE(this.bleVal);
-    } else if (this.bleVal != height || this.bleKillRetry < 2) {
-      this.bleVal = height;
-      writeToBLE(this.bleVal);
-      this.bleKillRetry++;
     }
   }
 
