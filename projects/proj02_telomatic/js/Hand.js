@@ -119,6 +119,16 @@ class Hand {
         triggerQR();
       }
     }
+    // check overlap with galler button vertical position
+    if (y > buttonGalleryYPos && y < buttonGalleryYPos + buttonGalleryHeight && !qrTrig) {
+      // check overlap with clear button horizontal position
+      if (x > buttonGalleryXPos && x < buttonGalleryXPos + buttonGalleryWidth) {
+        // generate QR code for gallery
+        qrTrig = true;
+        guiDiv.css("display", "none");
+        generateQRCode(`http://hybrid.concordia.ca/i_planch/CART263/proj02_telomatic/gallery/`);
+      }
+    }
   }
 
 }

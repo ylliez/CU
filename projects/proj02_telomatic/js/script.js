@@ -9,7 +9,7 @@ sets up hand position detection
 
 /* GENERAL */
 // program state (load, sim)
-let state = `load`;
+let state = `title0`;
 // video capture element, input feed and dimensions
 const captureElement = document.getElementById('capture');
 // 16:9 -> 1280 * 720
@@ -25,14 +25,18 @@ const aspectRatio = captureWidth / captureHeight;
 // dynamic canvas dimensions
 let canvasWidth, canvasHeight;
 // GUI and elements
-let guiDiv, sliders, icons;
+let guiDiv, sliders;
 // sliders
 let sliderCol, sliderColWidth, sliderColHeight, sliderColYPos, sliderColHandle;
 let sliderColR, sliderColG, sliderColB, sliderColRXPos, sliderColGXPos, sliderColBXPos;
 let sliderSize, sliderSizeBox, sliderSizeRad, sliderSizeHeight, sliderSizeYPos, sliderSizeXPos, sliderSizeHandle;
 // buttons
-let buttonClear, buttonClearXPos, buttonClearYPos, buttonClearWidth, buttonClearHeight;
+let buttonStart, buttonStartXPos, buttonStartYPos, buttonStartWidth, buttonStartHeight;
+let buttonDraw, buttonDrawXPos, buttonDrawYPos, buttonDrawWidth, buttonDrawHeight;
 let buttonQR, buttonQRXPos, buttonQRYPos, buttonQRWidth, buttonQRHeight;
+let buttonClear, buttonClearXPos, buttonClearYPos, buttonClearWidth, buttonClearHeight;
+let buttonGallery, buttonGalleryXPos, buttonGalleryYPos, buttonGalleryWidth, buttonGalleryHeight;
+
 // photobooth
 let photoboothDiv, qrDiv, cdDiv, flashDiv;
 // QR trigger boolean
@@ -44,6 +48,11 @@ let trailBlazer;
 // MediaPipe handpose recognition model, results and ad hoc object to manipulate data
 let hands, predictions = [], hand;
 
+let titleFont;
+function preload() {
+  titleFont = loadFont('css/hensa.otf');
+}
+
 /* SETUP: initialize canvas, video and model */
 function setup() {
   // setup canvas relative to window dimension ratio
@@ -52,8 +61,7 @@ function setup() {
   } else {
     createCanvas(windowHeight * aspectRatio, windowHeight);
   }
-  // setup MediaPipe model
-  handposeSetup();
+
   // instantiate hand object to manipulate Handpose data
   hand = new Hand();
   // get DOM element of video
@@ -108,9 +116,28 @@ function setupGuiElements() {
   photoboothDiv = $("#photobooth");
   photoboothDiv.css("width", canvasWidth);
   // create and style sliders, buttons and photobooth
+  setupStart();
   setupSliders();
   setupIcons();
   setupPhotobooth();
+  guiDiv.hide();
+}
+
+// create and style graphics trail color and size sliders
+function setupStart() {
+  buttonStart = $("#startButton");
+  buttonStart.css("font-size", canvasWidth / 30);
+  buttonStart.css("padding", canvasWidth / 100);
+  buttonStart.css("border-radius", canvasWidth / 10);
+  buttonStart.css("left", canvasWidth / 2 + ((windowWidth - canvasWidth) / 2));
+  buttonStart.css("top", 2 * canvasHeight / 3);
+  buttonDraw = $("#drawButton");
+  buttonDraw.css("font-size", canvasWidth / 30);
+  buttonDraw.css("padding", canvasWidth / 100);
+  buttonDraw.css("border-radius", canvasWidth / 10);
+  buttonDraw.css("left", canvasWidth / 2 + ((windowWidth - canvasWidth) / 2));
+  buttonDraw.css("top", 2 * canvasHeight / 3);
+  buttonDraw.hide();
 }
 
 // create and style graphics trail color and size sliders
@@ -146,7 +173,7 @@ function setupSliders() {
   sliderColR.css("left", canvasWidth / 100 * 20);
   sliderColG.css("left", canvasWidth / 100 * 43);
   sliderColB.css("left", canvasWidth / 100 * 65);
-  sliderSize.css("top", canvasHeight / 100 * 30);
+  sliderSize.css("top", canvasHeight / 100 * 25);
   sliderSize.css("height", canvasHeight / 100 * 50);
   sliderSize.css("left", canvasWidth / 100 * 92.5);
   sliderSizeHandle.style.height = `${hand.size}px`;
@@ -178,6 +205,7 @@ function setupIcons() {
   // obtain clear & screenshot button elements
   buttonQR = $("#qrIcon");
   buttonClear = $("#xIcon");
+  buttonGallery = $("#gallIcon");
   // style button elements
   buttonQR.css("top", canvasHeight / 100 * 5);
   buttonQR.css("left", canvasWidth / 100 * 5);
@@ -185,15 +213,22 @@ function setupIcons() {
   buttonClear.css("top", canvasHeight / 100 * 5);
   buttonClear.css("left", canvasWidth / 100 * 88);
   buttonClear.css("font-size", canvasWidth / 100 * 6);
+  buttonGallery.css("top", canvasHeight / 100 * 85);
+  buttonGallery.css("left", canvasWidth / 100 * 88);
+  buttonGallery.css("font-size", canvasWidth / 100 * 6);
   // store button parameters
-  buttonClearYPos = parseInt(buttonClear.css("top"));
-  buttonClearXPos = parseInt(buttonClear.css("left"));
-  buttonClearHeight = parseInt(buttonClear.css("height"));
-  buttonClearWidth = parseInt(buttonClear.css("width"));
   buttonQRXPos = parseInt(buttonQR.css("left"));
   buttonQRYPos = parseInt(buttonQR.css("top"));
   buttonQRHeight = parseInt(buttonQR.css("height"));
   buttonQRWidth = parseInt(buttonQR.css("width"));
+  buttonClearYPos = parseInt(buttonClear.css("top"));
+  buttonClearXPos = parseInt(buttonClear.css("left"));
+  buttonClearHeight = parseInt(buttonClear.css("height"));
+  buttonClearWidth = parseInt(buttonClear.css("width"));
+  buttonGalleryXPos = parseInt(buttonGallery.css("left"));
+  buttonGalleryYPos = parseInt(buttonGallery.css("top"));
+  buttonGalleryHeight = parseInt(buttonGallery.css("height"));
+  buttonGalleryWidth = parseInt(buttonGallery.css("width"));
 }
 
 // create and style photobooth (countdown, flash effect & QR code display)
@@ -212,17 +247,76 @@ function setupPhotobooth() {
 /* DRAW: handle program state */
 function draw() {
   switch (state) {
+    case `title0`: title0(); break;
+    case `title1`: title1(); break;
     case `load`: load(); break;
     case `sim`: sim(); break;
   }
 }
 
 // display loading screen
+function title0() {
+  background(255);
+  push();
+  textAlign(CENTER, CENTER);
+  textSize(canvasWidth / 4);
+  textFont(titleFont);
+  fill(200, 100, 200);
+  stroke(0);
+  strokeWeight(2);
+  text(`DigiPaint`, canvasWidth / 2, canvasHeight/3);
+  pop();
+}
+
+function title1() {
+  background(255);
+  push();
+  textAlign(CENTER, CENTER);
+  textFont(titleFont);
+  textSize(canvasWidth / 20);
+  stroke(0);
+  strokeWeight(2);
+  fill(200, 100, 200);
+  text(`Paint with your right hand.
+  Control settings with your left hand.`, canvasWidth / 2, canvasHeight / 2);
+  pop();
+  push();
+  textAlign(CENTER, TOP);
+  textSize(canvasWidth / 30);
+  textFont(titleFont);
+  fill(0);
+  text(`take a picture!
+  (makes QR code)`, canvasWidth / 8, canvasHeight / 6);
+  text(`colour sliders`, canvasWidth / 2, canvasHeight / 7);
+  text(`clear canvas`, canvasWidth / 1.1, canvasHeight / 6);
+  push();
+  translate(canvasWidth / 100 * 99, canvasHeight / 100 * 50);
+  rotate(PI/2);
+  text(`size slider`, 0 ,0);
+  pop();
+  text(`photo gallery`, canvasWidth / 100 * 90, canvasHeight / 100 * 79);
+  pop();
+}
+
+function startClick() {
+  buttonStart.hide();
+  buttonDraw.show();
+  state = 'title1';
+  guiDiv.show();
+}
+
+function drawClick() {
+  buttonDraw.hide();
+  state = 'load';
+  // setup MediaPipe model
+  handposeSetup();
+}
+
 function load() {
   background(255);
   push();
-  textSize(canvasWidth / 15);
-  textStyle(BOLD);
+  textSize(canvasWidth / 8);
+  textFont(titleFont);
   textAlign(CENTER, CENTER);
   text(`LOADING...`, canvasWidth / 2, canvasHeight / 2);
   pop();
@@ -294,8 +388,8 @@ function photoboothEffect() {
     if (seconds <= 0){
       // clear countdown interval
       clearInterval(photoboothCountdown);
-      // generate QR Code
-      generateQRcode();
+      // take screenshot and upload to server
+      uploadToServer();
       // flash effect
       flashEffect();
     }
@@ -317,9 +411,7 @@ function flashEffect() {
 }
 
 // take screenshot, send to server and generate QR code with echoed URL
-function generateQRcode() {
-  // clear contents of QR code div; if a code has already been generated, removes it
-  qrDiv.html("");
+function uploadToServer() {
   // get p5 canvas element, screenshot it, convert to URI and tag with key for PHP retrieval
   let canvas  = document.getElementById("defaultCanvas0");
   let canvasURL = canvas.toDataURL("image/png", 1);
@@ -339,25 +431,32 @@ function generateQRcode() {
     success: function (response) {
       // append header to returned image URL
       let imageURL = `http://hybrid.concordia.ca/i_planch/CART263/proj02_telomatic/${response}`;
-      // DEBUGGING: output headed image URL to console
-      console.log(imageURL);
-      // make styled QR code with headed image URL
-      let qrcode = new QRCode("qrCodeDiv", {
-        text: imageURL,
-        width: height/2,
-        height: height/2,
-        colorDark: "#000000",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.H
-      });
-      // display div QR code is appended to
-        qrDiv.css("display", "block");
-      // create 10s timeout for QR display and GUI hiding
-      resetGUI = setTimeout( () => { resetGUIElements(); }, 10000);
+      // generate QR code from image URL
+      generateQRCode(imageURL);
     },
     // helper function
     error: function() { console.log("error occurred"); }
   });
+}
+
+function generateQRCode(url) {
+  // clear contents of QR code div; if a code has already been generated, removes it
+  qrDiv.html("");
+  // DEBUGGING: output headed image URL to console
+  console.log(url);
+  // make styled QR code with headed image URL
+  let qrcode = new QRCode("qrCodeDiv", {
+    text: url,
+    width: height/2,
+    height: height/2,
+    colorDark: "#000000",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.H
+  });
+  // display div QR code is appended to
+    qrDiv.css("display", "block");
+  // create 10s timeout for QR display and GUI hiding
+  resetGUI = setTimeout( () => { resetGUIElements(); }, 10000);
 }
 
 // hide QR code div and re-display GUI elements

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
 
-    <title>Telomatic</title>
+    <title>DigiPaint</title>
 
     <!-- CSS stylesheet(s) -->
     <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -27,6 +27,9 @@
     <div class="videoDiv">
       <video id="capture" style="display: none"></video>
     </div>
+    <!-- start button -->
+    <button id="startButton" onclick="startClick()">START</button>
+    <button id="drawButton" onclick="drawClick()">DRAW!</button>
     <!-- GUI container -->
     <div id="GUI">
       <!-- sliders -->
@@ -42,6 +45,9 @@
       </div>
       <div id="xIcon">
         <i class="fa fa-times"></i>
+      </div>
+      <div id="gallIcon">
+        <i class="fa fa-picture-o"></i>
       </div>
     </div>
     <div id="photobooth">
