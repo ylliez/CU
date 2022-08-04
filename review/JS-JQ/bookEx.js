@@ -3,8 +3,8 @@ let bookGlobalVar =
     Title: "One Flew Over the Cuckoo's Nest",
     Author: "Ken Kesey",
     Genre: "Psychological Fiction",
-    Edition_Years: [1983, "1998", "2008", "2014"], //nums and strings
-    Book_Image: "Kesey_1963_Cuckoo.jpeg",
+    Edition_Years: ["1983", "1998", "2008", "2014"], //nums and strings
+    Book_Image: "assets/Kesey_1963_Cuckoo.jpeg",
     Detail: {
         Publisher: "Berkley; Reprint edition",
         Publication_Year: 1963,
