@@ -6,5 +6,9 @@
     <body>
         <h1>CART451-PHP</h1>
         <p>I'm the CART451-PHP index page.</p>
+        <?php 
+            echo "Hello World!";  
+            echo phpinfo();
+        ?>
     </body>
 </html>

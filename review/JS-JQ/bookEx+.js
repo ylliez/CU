@@ -1,32 +1,50 @@
-let bookGlobalVar =
-{
-    Title: "One Flew Over the Cuckoo's Nest",
-    Author: "Ken Kesey",
-    Genre: "Psychological Fiction",
-    Edition_Years: ["1983", "1998", "2008", "2014"], //nums and strings
-    Book_Image: "Kesey_1963_Cuckoo.jpeg",
-    Detail: {
-        Publisher: "Berkley; Reprint edition",
-        Publication_Year: 1963,
-        ISBN: "0451163966",
-        Language: "English",
-        Pages: 272
+let books = [
+    {
+        Title: "One Flew Over the Cuckoo's Nest",
+        Author: "Ken Kesey",
+        Genre: "Psychological Fiction",
+        Edition_Years: ["1983", "1998", "2008", "2014"],
+        Book_Image: "Kesey_1963_Cuckoo.jpeg",
+        Detail: {
+            Publisher: "Berkley; Reprint edition",
+            Publication_Year: 1963,
+            ISBN: "0451163966",
+            Language: "English",
+            Pages: 272
+        },
     },
-}
+    {
+        Title: "A Clockwork Orange",
+        Author: "Anthony Burgess",
+        Genre: "Psychological Fiction",
+        Edition_Years: ["2008", "2014"], //nums and strings
+        Book_Image: "Burgess_1962_Clockwork.png",
+        Detail: {
+            Publisher: "Penguin Modern Classics; Later Printing Edition",
+            Publication_Year: 2000,
+            ISBN: "0141182601",
+            Language: "English",
+            Pages: 176
+        }
+    },
+    {
+        Title: "Eloquent JavaScript",
+        Author: "Marijn Haverbeke",
+        Genre: "Programming Languages",
+        Book_Image: "banana.jpg"
+    }
+]
+
 
 $(document).ready(function () {
     console.log("loaded");
     let resultContainer = $("#result-container");
-    displaySingle(bookGlobalVar, resultContainer);
+    for(let i = 0; i< books.length;i++ ){
+        displaySingle(books[i],resultContainer);
+      }
 });
 
 function displaySingle(book, parentContainer) {
-
-    // //A: access ALL top level properties
-    // //1: get all keys as an array :
-    // let keys = Object.keys(book);
-    // console.log("*** Object KEYS ***")
-    // console.log(Object.keys(book));
 
     //equivalent jquery function:
     console.log("JQUERY")
@@ -67,6 +85,6 @@ function displaySingle(book, parentContainer) {
         }
     });
 
-} //displaySingle
+}
 
 
