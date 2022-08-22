@@ -21,7 +21,6 @@
                  $('#resultDiv').load('loadFiles/result.txt');
               });
            });
-       
         </script> -->
     <!-- <script>
             $(document).ready(function() {
@@ -46,7 +45,7 @@
                });
            
             </script> -->
-    <script>
+    <!-- <script>
         $(document).ready(function () {
             $("#getData").click(function (event) {
                 //can we just load a json object? Of course but it will not be converted from
@@ -58,7 +57,82 @@
                 console.log("data was loaded");
             }
         });
+    </script> -->
+    <script>
+        $.getJSON('loadFiles/books.json',function(data) {
+        //success
+          //step 1: console.log the result
+          console.log(data);
+          //set boolean to true
+          loaded=true;
+        })
+        //fail
+        .fail(function() {
+          console.log( "error" );
+        });
 
+        function populateHeader(data){
+      let sampleHeader = $("<h1>");
+      $(sampleHeader).text(data.Label);
+      $(sampleHeader).appendTo(header);
+ 
+    }
+ 
+    function showBooks(data){
+      let resultContainer = $("#result-container");
+      for(let i = 0; i< data.BookItems.length;i++ ){
+      displaySingle(data.BookItems[i],resultContainer);
+    }
+ 
+    }
+/** remember this??? */
+    function displaySingle(book,parentContainer){
+ 
+         //make the book container and append to parent
+         let singleBookContainer = $("<article>").addClass("single-book").appendTo(parentContainer);
+       $.each(book, function( index, value ) {
+ 
+ 
+         if(index ==="Detail"){
+ 
+           //console.log(value)
+           let detailContainer = $("<div>").addClass("detail-container").appendTo(singleBookContainer);
+ 
+           $.each(value, function( indexDetail, valueDetail ) {
+           //  console.log(indexDetail);
+             //console.log(valueDetail);
+             let detailProperty = $("<p>").addClass("detail-prop"); // creating an element  ** NOT accessing
+ 
+             detailProperty.html(`${indexDetail} : ${valueDetail}`);
+             $(detailProperty).appendTo(detailContainer);
+ 
+         });
+       }//if Detail
+ 
+       else if(index ==="Edition_Years"){
+         //is an array we would need to iterate at do its thing..
+         let editionYearsPara =  $("<p>").addClass("single-book-para").appendTo(singleBookContainer);
+         let label =  $("<span>").addClass("single-year-test").appendTo(editionYearsPara);
+         label.text("Editions: ");
+         theContentArray = value;
+ 
+         for(let i = 0; i<theContentArray.length; i++){
+           let singleYear =  $("<span>").addClass("single-year-test").appendTo(editionYearsPara);
+           singleYear.text(`*${theContentArray[i]}*-`);
+         }
+       }
+       else if(index ==="Book_Image"){
+         //show the image ...
+           let detailImage = $("<img>").addClass("single-book-image").appendTo(singleBookContainer);
+           $(detailImage).attr("src",value)
+       }
+       //default
+       else{
+         let bookPropertyPara = $("<p>").addClass("single-book-para").appendTo(singleBookContainer); // creating an element  ** NOT accessing
+         bookPropertyPara.html(`${index} : ${value}`);
+       }
+     });
+    } //display single
     </script>
 </body>
 

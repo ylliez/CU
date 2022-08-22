@@ -235,6 +235,7 @@
             // REQUIRE
             // require('header.php');
             // echo('<p style = "color:red;"> echo content here after the error</p>');
+            // W/ ERROR
             // require('headers.php');
             // echo('<p style = "color:red;"> echo content here after the error</p>');
             // DIFF in error handling -> recommended to use require(), because scripts should not continue executing if files are missing or misnamed…
@@ -242,3 +243,10 @@
         
     </body>
 </html>
+
+
+<!-- Variable Naming Conventions:
+PHP variables must start with a letter or underscore “_”.
+PHP variables may only be comprised of alpha-numeric characters and underscores. a-z, A-Z, 0-9, or _ .
+Variables with more than one word should be separated with underscores. $my_variable
+Variables with more than one word can also be distinguished with capitalization. $myVariable -->
