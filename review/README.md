@@ -1,5 +1,56 @@
 # REVIEW
 
+## CART351 - Networks & Navigation - Week 1 notes
+
+### Data Transmission
+When a request is made for data, that data is broken up into many tiny chunks called packets, tagged with a unique header (includes sender/receiver port info) & an IP header which includes the sender/receiver IP addresses. The packet is then transmitted through an ethernet, WiFi or Cellular network. Once the packets reach the destination, they are reassembled again and delivered as one piece.
+
+**Transmission Control Protocol/Internet Protocol** (TCP/IP): suite of communication protocols used to interconnect network devices and transmit data.
+
+- **Transmission Control Protocol** (TCP) is responsible for breaking the data into packets, routing packets to the correct application on the destination computer, resending the packets if they get lost on the way, reassembling the packets in the correct order once they’ve reached the other end.
+
+- **Internet Protocol** (IP) is responsible for sending and routing packets to other connected devices using the IP headers (i.e. the IP addresses) on each packet
+
+**Host**: device connected to a network (e.g. computer, client, server, printer, router)
+
+**IP address**: unique numerical identifier for a device on a TCP/IP network, used to identify and communicate with other devices.
+IP addresses have a logical address, 4 sets of numbers separated by decimal points (e.g. 127.0. 0.1, local host), that is converted to a physical address (i.e. hardware MAC address) by TCP/IP software
+
+**Domain Name**: string used to identify 1+ IP addresses, employed by users to access a website on the internet
+
+**Domain Name System** (DNS): distributed database keeping track of all domain names of connected devices and corresponding IP addresses
+
+**Client**: application (i.e. browser, e.g. Chrome, Firefox) running on device (e.g. computer, phone) & connected to internet.
+Primary function: take user input, translate into request & send to web server (remote computer) &/|| receive response from web server, translate and display result to user.
+
+**Server**: machine connected to internet which waits for and responds to client requests (e.g. web servers, database servers, file servers, application servers).
+Primary function: store, process and deliver web pages to clients.
+A server also has an IP address but also specific server software enabling it to respond to incoming client requests
+
+**Internet Service Provider** (ISP): link b/w client and server (usu. commercial)
+Primary function: do a Domain Name System (DNS) lookup to find IP address of website user is requesting via browser.
+
+**Port Number** 16-but int IDing a specific port on a server; it is associated with a  specific IP address and refers to a specific process. HTTP defaults to port 80 & HTTPS to port 443.
+
+**Hyper-text Transfer Protocol** (HTTP): protocol running on top of TCP/IP used by browsers and servers communicate over the Internet
+
+**Uniform Resource Locator** (URL) universal identifier of a particular web resource, specifying:
+1. protocol (e.g. https://)
+2. host name (e.g. github.com)
+3. file/path name (e.g. /ylliez/CART451/)
+
+Standard URL formats include:
+- web (http://)
+- FTP (ftp://)
+- e-mail (Mailto:)
+- Usenet (news://)
+- Telnet (telnet://) SSH: (ssh://) & file (file://)
+
+[Ted Nelson, Douglas Engelbart & Tim Berners-Lee]
+
+**Browser rendering engine**: responsible for displaying the content. receives the content of the resources (images, text, css files…) in small chunks, reads using HTML parsing algorithm, generates **Document Object Model** (DOM) and **CSS Object Model** (CSSOM) trees, combines them into render tree then applies layout (coordinates) and paints (renders pixels)
+
+
 ## [JavaScript & JQuery, JSON, AJAX](https://clab.concordia.ca/cart-351-json-web-services/) 
 (pw: cart351issofun)
 
