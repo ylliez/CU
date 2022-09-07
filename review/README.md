@@ -1,6 +1,6 @@
 # REVIEW
 
-## CART351 - Networks & Navigation - Week 1 notes
+## CART351 - Networks & Navigation
 
 ### Data Transmission
 When a request is made for data, that data is broken up into many tiny chunks called packets, tagged with a unique header (includes sender/receiver port info) & an IP header which includes the sender/receiver IP addresses. The packet is then transmitted through an ethernet, WiFi or Cellular network. Once the packets reach the destination, they are reassembled again and delivered as one piece.
