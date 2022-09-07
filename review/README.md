@@ -137,3 +137,30 @@ php code is contained within a specific tag:
 <?php //all php code goes in here…?>
 ```
 PHP code can be placed/called within a normal html page but when you have php code inserted within your html file you must save the file with a .php extension. The extension tells the server how to interpret the file so that the php code gets sent to the php processor on the web server.
+
+Variable Naming Conventions:
+- PHP variables must start with a letter or underscore “_”.
+- PHP variables may only be comprised of alpha-numeric characters and underscores. a-z, A-Z, 0-9, or _ .
+- Variables with more than one word should be separated with underscores, or camelCased (e.g. $my_variable || $myVariable)
+
+### Arrays & Associative Arrays
+Arrays are a list of any kind of data type (numbers, text-strings …), able to store multiple values in one single variable.
+
+The most conventional method for getting data from the user is via an HTML form.
+In order to send data to the server, an HTTP request is made. We then have two different HTTP methods for packaging the data that we want sent as part of the HTTP request: POST and GET :
+The POST method is used to send data to a server to create/update a resource; The data sent to the server with POST is stored in the request body of the HTTP request 
+GET is used to request data from a specified resource and is one of the most common HTTP methods.
+GET passes parameters (i.e. query data) in the URL of the GET request i.e: ```/test/demo_form.php?name1=value1&name2=value2```
+
+### [Node.js](https://nodejs.org/en/)
+
+Node.js is an open source server environment using JS.
+Node.js is  a JS runtime built on Chrome's V8 JS engine (C++)
+Employed to build powerful, fast and scalable web applications using an event-driven, non-blocking IO asynchronous model, unlike PHP & Apache which involve single threads that take up memory
+
+Node.js is accessed through the terminal by typing the command node
+Individual JS files can also be executed using node by navigating to parent folder (`cd`) then calling
+```node [file_name].js```
+
+### NPM
+NPM stands for **N**ode.js **P**ackage **M**anager and is used to install node programs/modules (in the node_modules folder)
