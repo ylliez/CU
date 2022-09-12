@@ -4,7 +4,7 @@
     <meta charset=“UTF-8”>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CART451 - Weekly Responses</title>
-  <link rel="icon" type="image/svg" href="assets/icon_network2.svg">
+  <link rel="icon" type="image/svg" href="assets/icon_network_fw.svg">
   <link rel="stylesheet" href="style.css">
   
   <style>
@@ -13,8 +13,8 @@
   .collapsible { background-color: #777; color: #fff; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: center; outline: none; font-size: 17px; opacity: 80%; }
   .active, .collapsible:hover { background-color: #555; opacity: 95%; }
   .content { background-color: #f1f1f1; padding: 0 15px; text-align: left; max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out; opacity: 70%; margin-bottom: 10px; }
-  .collapsible:after { content: url('faviconw.ico'); float: right; transform: rotate(90deg); }
-  .active:after { content: url('faviconw.ico'); float: right; transform: rotate(180deg); }
+  .collapsible:after { content: url('assets/telo.ico'); float: right; transform: rotate(90deg); }
+  .active:after { content: url(<i class="fa fa-list-ol"></i>); float: right; transform: rotate(180deg); }
   h4 { font-size: 18px; text-align: left; margin-left: 5%; }
   </style>
 </head>

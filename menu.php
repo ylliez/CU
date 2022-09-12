@@ -31,3 +31,9 @@
       </ul>
     </div>
   </header>
+  <footer>
+  <span>illiez, 2022   .</span>
+  <a href="https://www.youtube.com/channel/UC7iSss5svNGAQXHGDte47LA" target="_blank"><i class="fa fa-youtube-play"></i></a>
+  <a href="https://www.instagram.com/illeyai/" target="_blank"><i class="fa fa-instagram"></i></a>
+  <a href="https://www.facebook.com/illiez" target="_blank"><i class="fa fa-facebook"></i></a>
+</footer>
