@@ -1,4 +1,4 @@
 # CART451
-## [Class Notes](notes.php)
-## [Weekly Responses](rr.php)
-## [Preparatory Review](review)
+## [Class Notes](https://hybrid.concordia.ca/i_planch/CART451/notes.php)
+## [Weekly Responses](https://hybrid.concordia.ca/i_planch/CART451/rr.php)
+## [Preparatory Review](https://hybrid.concordia.ca/i_planch/CART451/review)
