@@ -1,0 +1,101 @@
+<!-- Rather: I would like each one of you to provide a short bio. Recall where to put this.... 
+- your github repo for the cart 451 class - which I will require you to send me the link)
+- inside should be an html file called weekly responses and this is where you append all the responses.
+So: the bio - need not be only/just text - it can be an image, animation, audio  ....  it could also be rather abstract i.e. you discuss something, an experience, a place ... that you feels represents you.
+You choose how you want to be interpreted. -->
+
+<!DOCTYPE html>
+<head lang="en">
+    <meta charset=“UTF-8”>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CART451 - Weekly Responses</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg" href="assets/icon_network2.svg">
+  
+  <style>
+  body { color: #000; background-image: url('assets/bkgd_island.jpg'); }
+  header { margin-bottom: 20px; }
+  .collapsible { background-color: #777; color: #fff; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: center; outline: none; font-size: 17px; opacity: 80%; }
+  .active, .collapsible:hover { background-color: #555; opacity: 95%; }
+  .content { background-color: #f1f1f1; padding: 0 15px; text-align: left; max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out; opacity: 70%; margin-bottom: 10px; }
+  .collapsible:after { content: url('faviconw.ico'); float: right; transform: rotate(90deg); }
+  .active:after { content: url('faviconw.ico'); float: right; transform: rotate(180deg); }
+  h4 { font-size: 18px; text-align: left; margin-left: 5%; }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>CART451</h1>
+    <h2>Weekly Responses</h2>
+    <div class="menu">
+      <ul>
+        <li> <a href="."><i class="fa fa-home"></i></a></li>
+        <li> <a href="resources.html"><i class="fa fa-wrench"></i></a>
+        <ul>
+          <li> <a href="https://moodle.concordia.ca/moodle/course/view.php?id=147835">Moodle</a></li>
+          <li> <a href="https://moodle.concordia.ca/moodle/mod/page/view.php?id=3168348">Syllabus</a></li>
+          <li> <a href="https://moodle.concordia.ca/moodle/mod/page/view.php?id=3171739">Readings</a></li>
+          <li> <a href="https://moodle.concordia.ca/moodle/mod/page/view.php?id=3181876">Presentations</a></li>
+          <li> <a href="https://discord.com/channels/752977423804661832/1016499743318356028">Discord</a></li>
+        </ul>
+      </li>
+        <li> <a href="notes.html"><i class="fa fa-list-ol"></i></a>
+          <ul>
+            <li> <a href="notes.html#0906">Collective Intelligence</a></li>
+            <li> <a href="notes.html#0913">Node.js</a></li>
+            <!-- <li> <a href="notes.html#0920">???</a></li> -->
+          </ul>
+        </li>
+        <!-- <li> <a href="responses.html"><i class="fa fa-download"></i></a> -->
+        <li> <a href="responses.html"><i class="fa fa-question"></i></a>
+          <ul>
+            <li> <a href="rr.html#0913_bio">09/13 - Bio</a></li>
+            <li> <a href="rr.html#0920_???">09/20 - ???</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <button type="button" class="collapsible" id="0913_bio">09/13 - Short Bio</button>
+  <div class="content">
+    <h4>PAST</h4>
+    <p></p>
+    <h4>PRESENT</h4>
+    <p></p>
+    <h4>FUTURE</h4>
+    <p></p>
+  </div>
+
+  <button type="button" class="collapsible" id="0920_???">09/20 - ???</button>
+  <div class="content">
+    <h4></h4>
+    <p></p>
+    <h4></h4>
+    <p></p>
+    <h4></h4>
+    <p></p>
+  </div>
+
+  <script>
+  var coll = document.getElementsByClassName("collapsible");
+  for (var i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      // if (content.style.display === "block") { content.style.display = "none"; }
+      // else { content.style.display = "block"; }
+      if (content.style.maxHeight){ content.style.maxHeight = null; }
+      else { content.style.maxHeight = content.scrollHeight + "px"; }
+    });
+  }
+  if(self.location.hash=="#0913_bio") { document.getElementById("0913_bio").click(); history.pushState("", document.title, window.location.pathname + window.location.search); }
+  if(self.location.hash=="#Description") { document.getElementById("Description").click(); history.pushState("", document.title, window.location.pathname + window.location.search); }
+  if(self.location.hash=="#ArtistBio") { document.getElementById("ArtistBio").click(); history.pushState("", document.title, window.location.pathname + window.location.search); }
+  </script>
+
+</body>
+
+</html>
