@@ -58,6 +58,25 @@
     <p></p>
     </div>
 
+    <button type="button" class="collapsible" id="notes_0920">09/20</button>
+    <div class="content">
+    <h4>Viewing - Onuoha, 2007</h4>
+    <p>
+    Machine learning is a subfield of artificial intelligence (AI) concerned with algorithms that allow computers to learn. 
+    An algorithm is given a set of data and infers information about the properties of the data, allowing it to make predictions about other datasets. 
+    This is possible because almost all nonrandom data contains patterns, and these patterns allow the machine to generalize. 
+    In order to generalize, it trains a model with what it determines are the important aspects of the data. <br>
+    Transparent (e.g. decision trees) vs. black box (neural networks)
+    </p>
+    <p>
+    Examples: Netflix, Google, HSX, eHarmony. <br>
+    Also biotechnology (e.g. DNA), financial fraud detection (e.g. credit card companies), machine vision (e.g. independent component analysis), product marketing (e.g. fashion trends), supply chain optimization, stock market analysis, national security
+    </p>
+    <p>DNA eHarmony, chromatic trends; newer forms of data?</p>
+    <h4></h4>
+    <p></p>
+    </div>
+
     <script>
         var coll = document.getElementsByClassName("collapsible");
         for (var i = 0; i < coll.length; i++) {
