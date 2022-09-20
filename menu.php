@@ -23,8 +23,8 @@
         </li>
         <li> <a href="responses.php"><i class="fa fa-question"> </i> </a>
           <ul>
-            <li> <a href="responses.php#responses_0913">09/13 - Bio</a> </li>
-            <!-- <li> <a href="responses.php#responses_0920">09/20 - ???</a> </li> -->
+            <li> <a href="responses.php#responses_0913">09/13 - Short Bio</a> </li>
+            <li> <a href="responses.php#responses_0920">09/20 - Crowdsourcing</a> </li>
           </ul>
         </li>
       </ul>
