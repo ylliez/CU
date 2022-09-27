@@ -1,0 +1,43 @@
+[
+  {
+    "score": 6,
+    "comparative": 1,
+    "calculation": [
+      {
+        "jerk": -3
+      },
+      {
+        "happy": 3
+      },
+      {
+        "beautiful": 3
+      },
+      {
+        "nice": 3
+      }
+    ],
+    "tokens": [
+      "hello",
+      "there",
+      "nice",
+      "beautiful",
+      "happy",
+      "jerk"
+    ],
+    "words": [
+      "jerk",
+      "happy",
+      "beautiful",
+      "nice"
+    ],
+    "positive": [
+      "happy",
+      "beautiful",
+      "nice"
+    ],
+    "negative": [
+      "jerk"
+    ],
+    "clientSentence": "hello there nice beautiful happy jerk"
+  }
+]
