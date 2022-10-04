@@ -85,6 +85,12 @@
       <p>A striking example of this phenomenon resolved within an artistic piece, elegant in its simplicity, can be found in Blake Fall-Conroy's <a href="https://www.blakefallconroy.com/minimum-wage-machine.html">Minimum Wage Machine</a>, in which a mechanical sculpture serves as a hand-cranked penny dispenser, providing financial retribution at a minimum wage rate as long as the user activates the piece. In his description, Fall-Conroy explicitly addresses the consumer-producer ambiguity, stating that “the minimum wage machine allows anybody to work for minimum wage.” The piece is co-created and consumed through proletarian labor, the epitome of production. </p>
     </div>
 
+<button type="button" class="collapsible" id="responses_1004">10/04 - Mongoose</button>
+<div class="content">
+  <h4>Mongoose Queries</h4>
+  <p><a href="/i_planch/CART451/prototypes/dbArbres/README.md">Click Me<a>
+</div>
+
     <script>
     var coll = document.getElementsByClassName("collapsible");
     for (var i = 0; i < coll.length; i++) {
@@ -99,7 +105,8 @@
     }
     if(self.location.hash=="#responses_0913") { document.getElementById("responses_0913").click(); history.pushState("", document.title, window.location.pathname + window.location.search); }
     if(self.location.hash=="#responses_0920") { document.getElementById("responses_0920").click(); history.pushState("", document.title, window.location.pathname + window.location.search); }
-    
+    if(self.location.hash=="#responses_1004") { document.getElementById("responses_1004").click(); history.pushState("", document.title, window.location.pathname + window.location.search); }
+
     var mallgrab = document.getElementById("mallgrab")
     function mallgrabPlay() { mallgrab.play(); }
     </script>

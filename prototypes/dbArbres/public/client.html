@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8" />
+  <title>DATA AND MONGO</title>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/cs-style.css" />
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="js/client.js"></script>
+</head>
+
+<body>
+  <h2>SEARCH FORM</h2>
+  <div id="parentContainer">
+    <div class="searchDiv">
+      <form>
+        <select name="arrond_nom" id="arrond_nom">
+          <option value="Ahuntsic - Cartierville">Ahuntsic - Cartierville</option>
+          <option value="Anjou">Anjou</option>
+          <option value="Côte-des-Neiges - Notre-Dame-de-Grâce">Côte-des-Neiges - Notre-Dame-de-Grâce</option>
+          <option value="LaSalle">LaSalle</option>
+          <option value="Le Plateau-Mont-Royal">Le Plateau-Mont-Royal</option>
+          <option value="Le Sud-Ouest">Le Sud-Ouest</option>
+          <option value="Mercier - Hochelaga-Maisonneuve">Mercier - Hochelaga-Maisonneuve</option>
+          <option value="Montréal-Est">Montréal-Est</option>
+          <option value="Pierrefonds - Roxboro">Pierrefonds - Roxboro</option>
+          <option value="Rivière-des-Prairies - Pointe-aux-Trembles">Rivière-des-Prairies - Pointe-aux-Trembles</option>
+          <option value="Rosemont - La Petite-Patrie">Rosemont - La Petite-Patrie</option>
+          <option value="Saint-Laurent">Saint-Laurent</option>
+          <option value="Saint-Léonard">Saint-Léonard</option>
+          <option value="Verdun">Verdun</option>
+          <option value="Ville-Marie">Ville-Marie</option>
+          <option value="Villeray-Saint-Michel - Parc-Extension">Villeray-Saint-Michel - Parc-Extension</option>
+        </select>
+      </form>
+      <input type="button" value="SEARCH" id="findData" />
+    </div>
+    <div id="response" class='searchDiv'> the response </div>
+  </div>
+  <h2>SAMPLE ADDIN FORM</h2>
+  <div id="parentContainer">
+    <div class="addIn">
+      <input type="text" id="host_name" value="type in host name " />
+      <input type="text" id="neighbour_hood_group" value=" type in neighbourhood group " />
+      <input type="button" value="Send Data!" id="sendData" />
+    </div>
+  </div>
+
+</body>
+
+</html>
