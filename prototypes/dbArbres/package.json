@@ -11,15 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.0",
-<<<<<<< HEAD:prototypes/dbArbres/package.json
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
-    "mongoose": "^6.6.3",
-=======
-    "dotenv": "^16.0.2",
-    "express": "^4.18.1",
-    "mongoose": "^6.6.2",
->>>>>>> 7d47657ec091f22d25a851de1b368e0f80f1520c:sandbox/7_mongoose/package.json
-    "node-static": "^0.7.11"
+    "mongoose": "^6.6.3"
   }
 }
