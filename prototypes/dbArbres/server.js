@@ -225,6 +225,16 @@ db.once("open", async function () {
   // abattModel.find({ ARH_EMP_NO: 86842 }).then((result) => {
   //   console.log(result);
   // });
+
+  quartModel.find({}).then(result => {
+    result.forEach(function (res) {
+      // now for each entry you need to update according to the unique id … 
+      // for my sake I use the name field (is unique in my collection)
+      quartModel.updateMany({ id: res.id }, { loc: [res.Arrondissement, res.Abreviation] }, function (err) { console.log("now") })
+
+
+    })
+  })
 })
 
 // make server listen for incoming messages

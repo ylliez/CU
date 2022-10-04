@@ -6,7 +6,9 @@ const Schema = new mongoose.Schema(
         Arrondissement: String,
         Abreviation: String,
         nbr_RUI: Number,
-        Table: String
+        Table: String,
+        newItemArray: Array,
+        loc: Array
     });
 const mtlQuartiers = mongoose.model("QUARTENTRY", Schema, "mtlQuartiers");
 module.exports = mtlQuartiers;
