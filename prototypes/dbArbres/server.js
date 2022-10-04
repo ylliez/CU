@@ -222,9 +222,9 @@ db.once("open", async function () {
   //     console.log(result);
   //   });
 
-  // abattModel.find({ ARH_EMP_NO: 86842 }).then((result) => {
-  //   console.log(result);
-  // });
+  abattModel.find({ ARH_EMP_NO: 86842 }).then((result) => {
+    console.log(result);
+  });
 })
 
 // make server listen for incoming messages
