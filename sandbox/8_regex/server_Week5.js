@@ -7,7 +7,7 @@ const server = require("http").createServer(app);
 let bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-app.use('/varsToMongo',handleGetVars);
+app.use('/varsToMongo', handleGetVars);
 
 //2A
 //https://www.npmjs.com/package/mongoose
@@ -20,14 +20,14 @@ require("dotenv").config();
 const url = process.env.MONGODB_URI;
 
 //you must connect to yyour generated mongoose model
-const AirBNBCustomEntry= require("./db_config/customAirBNBEntry.js");
+const AirBNBCustomEntry = require("./db_config/customAirBNBEntry.js");
 
 const jsonData = require('./files/firstTwoHundered.json');
 
 
 
 //NEW 
-const WordCount =  require ('./wordCount');
+const WordCount = require('./wordCount');
 let wc = new WordCount();
 
 
@@ -39,20 +39,26 @@ let db = mongoose.connection;
 
 //2C
 db.once("open", async function () {
-//STEP 1::: DO THIS ONCE :) 
-    //read the json ... 
-//console.log(jsonData);
-// for(let i = 0; i< jsonData.length; i++){
-//     const newE = new AirBNBCustomEntry(jsonData[i]);
-//     await newE.save();
-//     console.log(i);
-// }
+  //STEP 1::: DO THIS ONCE :) 
+  //read the json ... 
+  //console.log(jsonData);
+  // for (let i = 0; i < jsonData.length; i++) {
+  //   const newE = new AirBNBCustomEntry(jsonData[i]);
+  //   await newE.save();
+  //   console.log(i);
+  // }
 
-//1 find (>1)
-AirBNBCustomEntry.find({ host_name: "santiago" }).then((result) => {
-   console.log(result)
+  // 1 find(> 1)
+  // AirBNBCustomEntry.find({ host_name: "Madaline" }).then((result) => { console.log(result) })
 
-  })
+  // let regexMichelle = /Michelle/;
+  // AirBNBCustomEntry.find({ host_name: regexMichelle }).then((result) => { console.log(result) })
+
+  // let regexChoice = /(Emma|Michelle|Miranda)/;
+  // AirBNBCustomEntry.findOne({ host_name: regexChoice }).then((result) => { console.log(result) })
+
+  let regexChoice = /\bp(\w)+/i;
+  AirBNBCustomEntry.findOne({ host_name: regexChoice }).then((result) => { console.log(result) })
 
 })
 
@@ -74,17 +80,17 @@ function clientRoute(req, res, next) {
 }
 
 /// use this VERB for getting posted data... 9
-app.post('/postForm',handlePost);
- 
+app.post('/postForm', handlePost);
+
 // the callback
-function handlePost(request,response){
+function handlePost(request, response) {
   console.log(request.body);
   //now we want to save the data in the db
 
-  const entry  = new AirBNBCustomEntry({
-    host_name:request.body.host_name,
-    neighbourhood_group:request.body.nbgn_grp,
-     house_rules:request.body.house_rules
+  const entry = new AirBNBCustomEntry({
+    host_name: request.body.host_name,
+    neighbourhood_group: request.body.nbgn_grp,
+    house_rules: request.body.house_rules
   });
   //save to db
   entry.save().then((result) => {
@@ -94,11 +100,11 @@ function handlePost(request,response){
 }
 
 //EXAMPLE of  user making a query ... 10
-async function  handleGetVars  (request,response,next){
+async function handleGetVars(request, response, next) {
   console.log(request.url);
   console.log(request.query.paramOne);
   //let results = await AirBNBCustomEntry.find({host_name: request.query.paramOne});
   //console.log(results [0]);
- // response.send(results);
+  // response.send(results);
 }
 
