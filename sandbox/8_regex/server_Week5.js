@@ -57,9 +57,27 @@ db.once("open", async function () {
   // let regexChoice = /(Emma|Michelle|Miranda)/;
   // AirBNBCustomEntry.findOne({ host_name: regexChoice }).then((result) => { console.log(result) })
 
-  let regexChoice = /\bp(\w)+/i;
-  AirBNBCustomEntry.findOne({ host_name: regexChoice }).then((result) => { console.log(result) })
+  // let regexChoice = /\bp(\w)+/i;
+  // AirBNBCustomEntry.findOne({ host_name: regexChoice }).then((result) => { console.log(result) })
 
+  // let regexChoice = /(Emma|Michelle|Miranda)/;
+  // AirBNBCustomEntry.findOne({ host_name: regexChoice }).then((result) => {
+  //   console.log(result);
+  //   wc.process(result.house_rules);
+  //   wc.logTheDict();
+  // })
+
+  let regexChoice = /(Emma|Michelle|Miranda)/;
+  AirBNBCustomEntry.find({ host_name: regexChoice }).then((result) => {
+    console.log(result);
+    result.forEach((res) => {
+      if (res.house_rules !== null) {
+        wc.process(res.house_rules);
+      }
+    })
+    wc.logTheDict();
+  })
+  // single word, but can extend to bigrams and trigrams and phrases --> statistically more useful than sentences
 })
 
 
