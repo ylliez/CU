@@ -17,6 +17,7 @@ console.log(url);
 const arbresModel = require("./db_config/mtlArbresEntry.js");
 const abattModel = require("./db_config/mtlAbattagesEntry.js");
 const quartModel = require("./db_config/mtlQuartiersEntry.js");
+const geoTestModel = require("./db_config/mtlArbresGeoTest.js");
 
 mongoose.connect(url);
 let db = mongoose.connection;
@@ -226,13 +227,21 @@ db.once("open", async function () {
   //   console.log(result);
   // });
 
-  quartModel.find({}).then(result => {
+  // quartModel.find({}).then(result => {
+  //   result.forEach(function (res) {
+  //     // now for each entry you need to update according to the unique id … 
+  //     // for my sake I use the name field (is unique in my collection)
+  //     quartModel.updateMany({ id: res.id }, { loc: [res.Arrondissement, res.Abreviation] }, function (err) { console.log("now") })
+
+
+  //   })
+  // })
+
+  geoTestModel.find({}).then(result => {
     result.forEach(function (res) {
       // now for each entry you need to update according to the unique id … 
       // for my sake I use the name field (is unique in my collection)
-      quartModel.updateMany({ id: res.id }, { loc: [res.Arrondissement, res.Abreviation] }, function (err) { console.log("now") })
-
-
+      geoTestModel.updateMany({ _id: res._id }, { locTest1: [res.Arrondissement, res.Abreviation] }, function (err) { console.log("now") })
     })
   })
 })
