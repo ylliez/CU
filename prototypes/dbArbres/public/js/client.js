@@ -1,54 +1,44 @@
 window.onload = function () {
   console.log("we are loaded");
 
-  //GET
-  document.querySelector("#findData").addEventListener('click', function (event) {
+  // // USER QUERY BY NEIGHBOURHOOD
+  // document.querySelector("#findData").addEventListener('click', function (event) {
+  //   let arrondNom = document.getElementById("arrond_nom").value;
+  //   $.get(
+  //     "/varsToMongo",
+  //     { paramArrondNom: arrondNom },
+  //     // if we get a response from the server .... 
+  //     function (response) {
+  //       console.table(response);
+  //     })
+  // });
 
-    let arrondNom = document.getElementById("arrond_nom").value;
+  // USER QUERY BY COORDINATES
+  document.querySelector("#geoSearch").addEventListener('click', function (event) {
+    let geoResponseDiv = document.getElementById("geoResponse");
+    geoResponseDiv.replaceChildren();
+    let longitude = document.getElementById("longitude").value;
+    let latitude = document.getElementById("latitude").value;
+    let distance = document.getElementById("distance").value;
     $.get(
-      "/varsToMongo",
-      { paramArrondNom: arrondNom },
+      "/geoVarsToMongo",
+      { paramLong: longitude, paramLati: latitude, paramDist: distance },
       // if we get a response from the server .... 
       function (response) {
-        console.table(response);
+        // console.log(response);
+        for (let i = 0; i < response.length; i++) {
+          let essence = response[i].ESSENCE_ANG;
+          let number = response[i].No_civique;
+          let street = response[i].Rue;
+          let resLong = response[i].Longitude;
+          let resLati = response[i].Latitude;
+          console.log(essence + " at " + number + " " + street + " (coordinates: " + resLati + " " + resLong + ")");
+          let para = document.createElement("p");
+          let node = document.createTextNode(essence + " at " + number + " " + street + " (coordinates: " + resLati + " " + resLong + ")");
+          para.appendChild(node);
+          geoResponseDiv.appendChild(para);
+        }
       })
   });
 
-  //POST NOTE this is specific for airbnb data set - you change according to your wishes!
-  document.querySelector("#sendData").addEventListener('click',
-    function (event) {
-      event.preventDefault();
-      console.log("clicked");
-      let mData = {
-        host_name: document.querySelector("#host_name").value,
-        nbgn_grp: document.querySelector("#neighbour_hood_group").value
-
-      };
-      console.log(mData);
-
-
-      /*** request ***/
-      $.ajax({
-        type: "POST",
-        data: JSON.stringify(mData),
-        url: '/postForm',
-        processData: false,
-        contentType: "application/json",
-        cache: false,
-        timeout: 600000,
-        success: function (response) {
-          //reponse is a STRING
-          console.log("we had success!");
-          console.log(response);
-
-        },
-        error: function (e) {
-          console.log(e);
-          console.log("error occurred");
-
-        }
-      });
-
-
-    });//click
 };

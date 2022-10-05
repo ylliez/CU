@@ -8,6 +8,7 @@ let bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/varsToMongo', handleGetVars);
+app.use('/geoVarsToMongo', handleGetVarsGeo);
 
 require("dotenv").config();
 const mongoose = require("mongoose");
@@ -227,23 +228,52 @@ db.once("open", async function () {
   //   console.log(result);
   // });
 
-  // quartModel.find({}).then(result => {
+  /* GeoJSON QUERIES */
+  // ColorGroups.find({ }).then(resultFromDB =>{
+  //   resultFromDB.forEach(function (res) {
+  //     // now for each entry you need to update according to the unique id … 
+  //     // for my sake I use the name field (is unique in my collection)
+  //     ColorGroups.update({ name: res.name }, { newItemArray: [res.name, res.name] }, function (err) { console.log("here") })
+  //   })
+  // })
+
+  // quartModel.find({ }).then(result => {
   //   result.forEach(function (res) {
   //     // now for each entry you need to update according to the unique id … 
   //     // for my sake I use the name field (is unique in my collection)
   //     quartModel.updateMany({ id: res.id }, { loc: [res.Arrondissement, res.Abreviation] }, function (err) { console.log("now") })
-
-
   //   })
   // })
 
-  geoTestModel.find({}).then(result => {
-    result.forEach(function (res) {
-      // now for each entry you need to update according to the unique id … 
-      // for my sake I use the name field (is unique in my collection)
-      geoTestModel.updateMany({ _id: res._id }, { locTest1: [res.Arrondissement, res.Abreviation] }, function (err) { console.log("now") })
-    })
-  })
+  // geoTestModel.find({}).then(result => {
+  //   result.forEach(function (res) {
+  //     // now for each entry you need to update according to the unique id … 
+  //     // for my sake I use the name field (is unique in my collection)
+  //     geoTestModel.update({ _id: res._id }, {
+  //       geometry: {
+  //         type: "Point",
+  //         coordinates: [res.Longitude, res.Latitude]
+  //       }
+  //     }
+  //       , function (err) { console.log("now") })
+  //   })
+  // })
+
+  //   geoTestModel.find({
+  //     geometry: {
+  //       $near: {
+  //         $geometry: {
+  //           type: "Point",
+  //           coordinates: [-73.573655, 45.514520]
+  //         },
+  //         $maxDistance: 10
+  //       }
+  //     }
+  //   }).then(results => {
+  //     // console.log(JSON.stringify(results, 0, 2));
+  //     console.log(results);
+  //     console.log(results[0].ESSENCE_ANG);
+  //   });
 })
 
 // make server listen for incoming messages
@@ -262,11 +292,30 @@ function clientRoute(req, res, next) {
   res.sendFile(__dirname + "/public/client.html");
 }
 
-// user query
+// user arrond query
 async function handleGetVars(request, response, next) {
-  console.log(request.url);
-  console.log(request.query.paramArrondNom);
+  console.log("Request URL: " + request.url);
+  console.log("Arrondissement: " + request.query.paramArrondNom);
   let results = await arbresModel.find({ ARROND_NOM: request.query.paramArrondNom }, 'Rue COTE No_civique ESSENCE_ANG Date_plantation Longitude Latitude').limit(10).sort({ Date_plantation: -1 });
+}
+
+// user geo query
+async function handleGetVarsGeo(request, response, next) {
+  console.log("Request URL: " + request.url);
+  console.log("Longitude: " + request.query.paramLong + " / Latitude: " + request.query.paramLati + " / Distance: " + request.query.paramDist);
+  let results = await geoTestModel.find({
+    geometry: {
+      $near: {
+        $geometry: {
+          type: "Point",
+          coordinates: [request.query.paramLong, request.query.paramLati]
+        },
+        $maxDistance: request.query.paramDist
+      }
+    }
+  }).limit(10);
   console.log(results);
+  // console.log(JSON.stringify(results));
+  // console.log(results[0].ESSENCE_ANG);
   response.send(results);
 }

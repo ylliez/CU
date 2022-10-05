@@ -23,7 +23,12 @@ const Schema = new mongoose.Schema(
         NOM_PARC: String,
         Longitude: Number,
         Latitude: Number,
-        locTest1: Array
+        locTest1: Array,
+        geometry: {
+            type: { type: String },
+            coordinates: []
+        }
     });
+Schema.index({ geometry: "2dsphere" });
 const GeoTestEntry = mongoose.model("GEOTESTENTRY", Schema, "mtlArbresGeoTest");
 module.exports = GeoTestEntry;

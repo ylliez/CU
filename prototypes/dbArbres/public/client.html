@@ -15,7 +15,7 @@
 </head>
 
 <body>
-  <h2>SEARCH FORM</h2>
+  <!-- <h2>SEARCH BY NEIGHBOURHOOD</h2>
   <div id="parentContainer">
     <div class="searchDiv">
       <form>
@@ -41,13 +41,19 @@
       <input type="button" value="SEARCH" id="findData" />
     </div>
     <div id="response" class='searchDiv'> the response </div>
-  </div>
-  <h2>SAMPLE ADDIN FORM</h2>
+  </div> -->
+  <h2>SEARCH BY COORDINATES & DISTANCE</h2>
   <div id="parentContainer">
-    <div class="addIn">
-      <input type="text" id="host_name" value="type in host name " />
-      <input type="text" id="neighbour_hood_group" value=" type in neighbourhood group " />
-      <input type="button" value="Send Data!" id="sendData" />
+    <div class="searchDiv">
+      <label for="latitude">Latitude (decimal degrees)</label>
+      <input type="text" id="latitude" name="latitude" value="45.514520" />
+      <label for="longitude">Longitude (decimal degrees)</label>
+      <input type="text" id="longitude" name="longitude" value="-73.573655" />
+      <label for="distance">Distance (metres)</label>
+      <input type="text" id="distance" name="type distance in metres (default 10)" value="10" />
+      <input type="button" value="SEARCH CLOSEST TREES (max 10)" id="geoSearch" />
+    </div>
+    <div id="geoResponse" class='searchDiv'>
     </div>
   </div>
 
