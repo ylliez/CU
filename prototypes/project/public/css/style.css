@@ -1,0 +1,42 @@
+body {
+    width: 100vw;
+    margin: 0;
+    background: #bb9cc8;
+}
+
+h1 {
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    color: #e2d9ea;
+    background: #6a0e92;
+}
+
+h2 {
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    color: #e2d9ea;
+    background: #a83ad6;
+}
+
+#container {
+    background: #775f93;
+    width: 50%;
+    margin: 5%;
+    border: solid #a360f0;
+    padding: 2%;
+}
+
+label {
+    display: inline-block;
+    width: 30%;
+}
+
+input {
+    background: #d3b4e0;
+}
+
+.profileItems {
+    font-weight: bold;
+}

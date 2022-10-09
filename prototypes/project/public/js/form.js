@@ -1,19 +1,23 @@
-window.onload = function () {
-    // get the myFavs element and add an event listener (click) to it:
-    document.getElementById("myFavs").addEventListener("click", function () {
-        // get the values of the two input fields
-        let favFruit = document.getElementById("fruit").value;
-        let favVeg = document.getElementById("veg").value;
-        console.log(favFruit);
-        console.log(favVeg);
-        // use the JQUERY ajax (not covering here) GET function to make a get request ... 
-        // the endpoint and the vars we are passing...
-        $.get(
-            "/passingTheVars",
-            { paramOne: favFruit, paramTwo: favVeg },
-            // if we get a response from the server .... 
-            function (response) {
-                console.log('page content: ' + response);
-            }); //get
-    })//click function
-}
+// window.onload = function () {
+//     $("#form").submit((event) => {
+//         event.preventDefault();
+//         let form = document.getElementById('form');
+//         let formData = new FormData(form);
+//         // for (let pair of formData.entries()) {
+//         //     console.log(pair[0] + ', ' + pair[1]);
+//         // }
+//         $.ajax({
+//             type: "POST",
+//             enctype: 'multipart/form-data',
+//             url: "/submitForm",
+//             data: formData,
+//             processData: false,
+//             contentType: false,
+//             cache: false,
+//             timeout: 600000,
+//             // success: (response) => { console.log(response); },
+//             success: (response) => { window.location.href = response; },
+//             error: () => { console.log("error occurred"); }
+//         });
+//     })
+// }
