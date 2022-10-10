@@ -14,6 +14,7 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         cb(null, file.originalname)
+        // cb(null, temporaryIDHandler)
     }
 })
 const fileFilter = (req, file, cb) => {
@@ -26,7 +27,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
     storage: storage,
     limits: {
-        fileSize: 1024 * 1024 * 5
+        fileSize: 1024 * 1024 * 6
     },
     fileFilter: fileFilter
 });
@@ -79,6 +80,7 @@ app.post('/submitForm', upload.none(), (req, res) => {
         Gender: req.body.gender,
         Nationality: req.body.country,
         Telephone: req.body.number,
+        Address: req.body.address,
         Cohabitants: req.body.cohabitants,
         Professional: req.body.professional,
         Marital: req.body.marital,
@@ -151,41 +153,57 @@ function handleFoto(req, res) {
 
 app.post('/uploadFoto', upload.single('posture'), (req, res) => {
 
-    let img = fs.readFileSync(req.file.path);
-    let encode_img = img.toString('base64');
-    // let final_img = new Buffer(encode_img, 'base64');
-    // let final_img = {
-    //     contentType: req.file.mimetype,
-    //     image: new Buffer(encode_img, 'base64')
-    // };
-    formModel
-        .updateOne({ ID: temporaryIDHandler }, {
-            // contentType: req.file.mimetype,
-            // Photo: final_img
-            Photo: {
-                mimeType: req.file.mimetype,
-                encodedImg: encode_img
-            }
-        }, (err) => {
-            console.log("Photo uploaded");
-            // console.log(img);
-            // console.log(encode_img);
-            res.redirect("/profile?ID=" + temporaryIDHandler);
-        })
+    // let img = fs.readFileSync(req.file.path);
+    // let encode_img = img.toString('base64');
+    // // let final_img = new Buffer(encode_img, 'base64');
+    // // let final_img = {
+    // //     contentType: req.file.mimetype,
+    // //     image: new Buffer(encode_img, 'base64')
+    // // };
+    // formModel
+    //     .updateOne({ ID: temporaryIDHandler }, {
+    //         // contentType: req.file.mimetype,
+    //         // Photo: final_img
+    //         Photo: {
+    //             mimeType: req.file.mimetype,
+    //             encodedImg: encode_img
+    //         }
+    //     }, (err) => {
+    //         console.log("Photo uploaded");
+    //         // console.log(img);
+    //         // console.log(encode_img);
+    //         res.redirect("/profile?ID=" + temporaryIDHandler);
+    //     })
+
+    console.log("Photo uploaded");
+    res.redirect("/profile?ID=" + temporaryIDHandler);
 })
 
 app.use('/profile', (req, res, next) => {
-    // console.log(req.url);
-    // console.log(req.query);
+    let queryID = req.query.ID;
+
+    if (queryID != undefined) {
+        console.log("if: " + queryID);
+        res.sendFile(__dirname + '/public/profile.html');
+        // res.sendFile(__dirname + '/public/profile.html?ID=' + queryID);
+        // res.redirect("/profile");
+    }
+    else { console.log("else: " + queryID); }
+    // res.sendFile(__dirname + '/public/profile.html');
     // formModel
-    //     .find(req.query).then((result) => { console.log(result[0].Name); });
-    res.sendFile(__dirname + '/public/profile.html');
+    //     .find({ ID: req.query.ID }).then((result) => { console.log(result[0].Name); });
+    // res.sendFile(__dirname + '/public/profile.html');
 });
 
 app.use('/profileQuery', (req, res, next) => {
-    console.log(req.query.queryID);
+    // console.log(req.query.queryID);
     formModel.find({ ID: req.query.queryID }).then((result) => {
         // console.log(result[0].Name);
         res.send(result[0]);
+        // next();
     })
 })
+
+// app.use('/profileQuery', (req, res) => {
+//     res.redirect("/profile");
+// })

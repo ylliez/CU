@@ -22,7 +22,7 @@ h2 {
 
 #container {
     background: #775f93;
-    width: 50%;
+    width: 80%;
     margin: 5%;
     border: solid #a360f0;
     padding: 2%;
@@ -37,6 +37,19 @@ input {
     background: #d3b4e0;
 }
 
+.profileDiv {
+    display: inline-block;
+    background: #775f93;
+    width: 40%;
+    margin: 2%;
+    border: solid #a360f0;
+    padding: 2%;
+}
+
 .profileItems {
     font-weight: bold;
+}
+
+img {
+    width: 100%;
 }

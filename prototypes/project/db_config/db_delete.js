@@ -7,7 +7,5 @@ let db = mongoose.connection;
 
 db.once("open", async function () {
     console.log("db connected");
-    formModel.deleteMany({}).then((result) => { console.dir(result.deletedCount) });
-    // const deleteManyResult = await formModel.deleteMany({});
-    // console.dir(deleteManyResult.deletedCount);
+    formModel.deleteMany({}).then((result) => { console.dir('deleted ' + result.deletedCount + ' entries') });
 })

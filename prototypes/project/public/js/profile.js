@@ -17,5 +17,6 @@ window.onload = function () {
             document.getElementById("marital").innerHTML = response.Marital;
             document.getElementById("belief").innerHTML = response.Belief;
             document.getElementById("profilePhoto").src = 'data:' + response.Photo.mimeType + ';base64,' + response.Photo.encodedImg;
+            // document.getElementById("profilePhoto").src = 'data:' + response.Photo.mimeType + ';base64,' + response.Photo.encodedImg;
         })
 }

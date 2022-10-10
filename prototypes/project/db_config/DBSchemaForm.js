@@ -12,7 +12,6 @@ const formSchema = new mongoose.Schema(
         Professional: String,
         Marital: String,
         Belief: String,
-        contentType: String,
         Photo: Object
     });
 const FORM = mongoose.model("FORMENTRY", formSchema, "projectTest");
