@@ -44,3 +44,22 @@ npm install express-fileupload --save
 
 npm install body-parser --save
 npm install multer --save
+
+
+
+## AWS
+- Install AWS node library: `npm install aws-sdk`
+- Load AWS SDK: `const AWS = require('aws-sdk');`
+- Set AWS Region: `AWS.config.update({ region: 'us-east-1' });`
+- Make AWS access credentials
+- Install [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+Get AWS access credentials: 
+// "npm install uuid"
+// 
+AWS.config.getCredentials(function (err) {
+    if (err) console.log(err.stack);
+    // credentials not loaded
+    else {
+        console.log("Access key:", AWS.config.credentials.accessKeyId);
+    }
+});
