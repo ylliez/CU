@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORM</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/form.js"></script>
+</head>
+
+<body>
+    <h1>ARTIFICIAL INSANITY</h1>
+    <h2>QUESTIONNAIRE</h2>
+    <div id="container">
+        <form action="/submitForm" method="post" enctype="multipart/form-data">
+            <p><label>Name:</label> <input name="name" id="name" type="text" /></p>
+            <p><label>Age:</label> <input name="age" id="age" type="text" /></p>
+            <p><label>Gender:</label> <input name="gender" id="gender" type="text" /></p>
+            <p><label>Nationality:</label> <input name="country" id="country" type="text" /></p>
+            <p><label>Telephone Number:</label> <input name="number" id="number" type="text" /></p>
+            <p><label>Address:</label> <input name="address" id="address" type="text" /></p>
+            <p><label>Number of cohabitants:</label>
+                <select name="cohabitants" id="cohabitants">
+                    <option value="default"></option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2-3">2-3</option>
+                    <option value="4+">4+</option>
+                    <option value="Complicated">Complicated</option>
+                </select>
+            </p>
+            <p><label>Professional status:</label>
+                <select name="professional" id="professional">
+                    <option value="default"></option>
+                    <option value="Employed">Employed</option>
+                    <option value="Freelance">Freelance</option>
+                    <option value="Unemployed">Unemployed</option>
+                    <option value="Complicated">Complicated</option>
+                </select>
+            </p>
+            <p><label>Marital status:</label>
+                <select name="marital" id="marital">
+                    <option value="default"></option>
+                    <option value="Single">Single</option>
+                    <option value="Common-law">Common-law</option>
+                    <option value="Married">Married</option>
+                    <option value="Divorced">Divorced</option>
+                    <option value="Widowed">Widowed</option>
+                    <option value="Complicated">Complicated</option>
+                </select>
+            </p>
+            <p><label>Belief system:</label>
+                <select name="belief" id="belief">
+                    <option value="default"></option>
+                    <option value="Christianity">Christianity</option>
+                    <option value="Islam">Islam</option>
+                    <option value="Buddhism">Buddhism</option>
+                    <option value="Jainism">Jainism</option>
+                    <option value="Complicated">Complicated</option>
+                </select>
+            </p>
+            <p><input id="submit" type="submit" value="SUBMIT" />
+        </form>
+    </div>
+</body>
+
+</html>
