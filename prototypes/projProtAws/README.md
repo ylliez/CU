@@ -64,4 +64,44 @@ AWS.config.getCredentials(function (err) {
     }
 });
 
-alt: load credentials from local JSON file (https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-json-file.html): `AWS.config.loadFromPath('db_config/aws_config.json');`
+[Loading AWS credentials from local JSON file](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-json-file.html): `AWS.config.loadFromPath('db_config/aws_config.json');`
+
+[Creating & using AWS S3 buckets](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/s3-example-creating-buckets.html)
+[Read, Write and Delete files from S3 Bucket via NodeJS](https://rajputankit22.medium.com/read-write-and-delete-file-from-s3-bucket-via-nodejs-2e17047d2178)
+- Listing AWS S3 buckets:
+```
+s3.listBuckets((err, data) => {
+    if (err) {
+        console.log("Error", err);
+    } else {
+        console.log("Success", data.Buckets);
+    }
+});
+```
+- List objects in named AWS S3 bucket:
+```
+s3.listObjects({ Bucket: 'BUCKET_NAME' }, (err, data) => {
+    if (err) {
+        console.log("Error", err);
+    } else {
+        console.log("Success", data);
+    }
+});
+```
+- Upload file to named AWS S3 bucket:
+```
+const path = require('path');
+let uploadParams = { Bucket: 'BUCKET_NAME', Key: '', Body: '' };
+let file = "FILE_PATH";
+let fileStream = fs.createReadStream(file);
+fileStream.on('error', (err) => { console.log('File Error', err); });
+uploadParams.Body = fileStream;
+uploadParams.Key = path.basename(file);
+s3.upload(uploadParams, function (err, data) {
+    if (err) {
+        console.log("Error", err);
+    } if (data) {
+        console.log("Upload Success", data.Location);
+    }
+});
+```
