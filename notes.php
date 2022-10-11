@@ -36,7 +36,7 @@
     Crowdsourcing (coined by Jeff Howe) : gathering data from people
     </p>
     <h4>Practice - Node.js</h4>
-    <p> <a href="https://github.com/ylliez/CART451/blob/main/sandbox/0906/node.md">Node.js - Part 1</a> </p>
+    <p> <a href="https://github.com/ylliez/CART451/tree/main/sandbox/1_node">Node.js - Part 1</a> </p>
     </div>
 
     <button type="button" class="collapsible" id="notes_0913">09/13</button>
@@ -60,21 +60,23 @@
 
     <button type="button" class="collapsible" id="notes_0920">09/20</button>
     <div class="content">
-    <h4>Viewing - Onuoha, 2007</h4>
-    <p>
-    Machine learning is a subfield of artificial intelligence (AI) concerned with algorithms that allow computers to learn. 
-    An algorithm is given a set of data and infers information about the properties of the data, allowing it to make predictions about other datasets. 
-    This is possible because almost all nonrandom data contains patterns, and these patterns allow the machine to generalize. 
-    In order to generalize, it trains a model with what it determines are the important aspects of the data. <br>
-    Transparent (e.g. decision trees) vs. black box (neural networks)
-    </p>
-    <p>
-    Examples: Netflix, Google, HSX, eHarmony. <br>
-    Also biotechnology (e.g. DNA), financial fraud detection (e.g. credit card companies), machine vision (e.g. independent component analysis), product marketing (e.g. fashion trends), supply chain optimization, stock market analysis, national security
-    </p>
-    <p>DNA eHarmony, chromatic trends; newer forms of data?</p>
-    <h4></h4>
+    <h4><a href="https://github.com/ylliez/CART451/tree/main/sandbox/2_sockets">Sockets</a></h4>
+    <h4><a href="https://github.com/ylliez/CART451/tree/main/sandbox/3_modules">Modules</a></h4>
+    <h4><a href="https://github.com/ylliez/CART451/tree/main/sandbox/4_io">I/O</a></h4>
+    <h4><a href="https://github.com/ylliez/CART451/tree/main/sandbox/5_sentiment">Sentiment</a></h4>
     <p></p>
+    </div>
+
+    <button type="button" class="collapsible" id="notes_0927">09/27</button>
+    <div class="content">
+    <h4><a href="https://github.com/ylliez/CART451/tree/main/sandbox/6_promises">Promises</a></h4>
+    <h4><a href="https://github.com/ylliez/CART451/tree/main/sandbox/7_mongoose">Mongoose</a></h4>
+    <p></p>
+    </div>
+
+    <button type="button" class="collapsible" id="notes_1004">10/04</button>
+    <div class="content">
+    <h4><a href="https://github.com/ylliez/CART451/tree/main/sandbox/8_regex">Regex</a></h4>
     </div>
 
     <script>
@@ -91,6 +93,9 @@
         }
         if(self.location.hash=="#notes_0906") { document.getElementById("notes_0906").click(); history.pushState("", document.title, window.location.pathname + window.location.search); }
         if(self.location.hash=="#notes_0913") { document.getElementById("notes_0913").click(); history.pushState("", document.title, window.location.pathname + window.location.search); }
+        if(self.location.hash=="#notes_0920") { document.getElementById("notes_0920").click(); history.pushState("", document.title, window.location.pathname + window.location.search); }
+        if(self.location.hash=="#notes_0927") { document.getElementById("notes_0927").click(); history.pushState("", document.title, window.location.pathname + window.location.search); }
+        if(self.location.hash=="#notes_1004") { document.getElementById("notes_1004").click(); history.pushState("", document.title, window.location.pathname + window.location.search); }
         </script>
 
   </body>

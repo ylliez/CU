@@ -16,16 +16,19 @@
       </li>
         <li> <a href="notes.php"><i class="fa fa-list-ol"> </i> </a>
           <ul>
-            <li> <a href="notes.php#notes_0906">09/06</a> </li>
-            <li> <a href="notes.php#notes_0913">09/13</a> </li>
-            <!-- <li> <a href="notes.php#0920">???</a> </li> -->
+            <li> <a href="notes.php#notes_0906">09/06 - Node</a> </li>
+            <li> <a href="notes.php#notes_0913">09/13 - Node (again)</a> </li>
+            <li> <a href="notes.php#notes_0920">09/20 - Sockets, Modules, I/O</a> </li>
+            <li> <a href="notes.php#notes_0920">09/27 - Promises, Mongoose</a> </li>
+            <li> <a href="notes.php#notes_0920">10/04 - Regex</a> </li>
           </ul>
         </li>
         <li> <a href="responses.php"><i class="fa fa-question"> </i> </a>
           <ul>
             <li> <a href="responses.php#responses_0913">09/13 - Short Bio</a> </li>
             <li> <a href="responses.php#responses_0920">09/20 - Crowdsourcing</a> </li>
-            <li> <a href="responses.php#responses_1004">10/04 - Mongoose</a> </li>
+            <li> <a href="responses.php#responses_0927">09/27 - Proposal</a> </li>
+            <li> <a href="responses.php#responses_1004">10/04 - Queries</a> </li>
           </ul>
         </li>
       </ul>
