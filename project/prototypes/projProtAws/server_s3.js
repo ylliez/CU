@@ -5,14 +5,16 @@ const server = require("http").createServer(app);
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const path = require('path');
+require("dotenv").config();
 // uninstall for multer
 // const fileupload = require("express-fileupload");
 // load AWS SDK (prior install "npm install aws-sdk")
 const AWS = require('aws-sdk');
-// load AWS credentials from local JSON file
-AWS.config.loadFromPath('db_config/aws_config.json');
+AWS.config.update({ region: 'us-east-1' });
+// // load AWS credentials from local JSON file
+// AWS.config.loadFromPath('db_config/aws_config.json');
 // create AWS S3 service object
-s3 = new AWS.S3();
+s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 // define project specific bucket
 const s3Bucket = 'cart451p';
 
@@ -38,7 +40,6 @@ const upload = multer({
 
 // initialize mongoose
 const mongoose = require("mongoose");
-require("dotenv").config();
 const dbURI = process.env.MONGODB_URI;
 const formModel = require("./db_config/DBSchemaForm.js");
 mongoose.connect(dbURI);
