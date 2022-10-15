@@ -10,9 +10,6 @@ require("dotenv").config();
 // const fileupload = require("express-fileupload");
 // load AWS SDK (prior install "npm install aws-sdk")
 const AWS = require('aws-sdk');
-AWS.config.update({ region: 'us-east-1' });
-// // load AWS credentials from local JSON file
-// AWS.config.loadFromPath('db_config/aws_config.json');
 // create AWS S3 service object
 s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 // define project specific bucket
