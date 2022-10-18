@@ -95,11 +95,12 @@
   <h4><a href="https://github.com/ylliez/CART451/tree/main/sandbox/7.1_dbArbres/dbArbres">Mongoose Queries</a></h4>
 </div>
 
-<!-- <button type="button" class="collapsible" id="responses_1018">10/18 - ?</button>
+<button type="button" class="collapsible" id="responses_1018">10/18 - Visualization</button>
 <div class="content">
-  <h4>?</h4>
-  <p></p>
-</div> -->
+  <h4>Experiential Data Visualization</h4>
+  <p>In <i><a href="http://www.wefeelfine.org/wefeelfine.pdf">We Feel Fine and Searching the Emotional Web</a></i>, Sepandar Kamvar and Jonathan Harris describe their eponymous project, a techno-artistic exploration of alternative data visualization epistemologies. The authors specifically propose a class of data visualizations called Experiential Data Visualization, which focus on non-verbal illustration of data-based insights targeting viewer affect through more immediate and immersive interaction with data.</p>
+  <p>This categorization of data visualizations brought to mind a project from the Center for Spatial Research at Columbia University described by Juan Francisco Saldarriaga, Laura Kurgan and Dare Brawley in <a href="https://c4sr.columbia.edu/sites/default/files/publication_pdfs/SaldarriagaKurganBrawley_VisualizingConflict_2017_UrbanPlanningVol2.pdf">Visualizing Conflict: Possibilities for Urban Research</a>. In this article, the authors investigate conflict urbanism, a term they use to describe "conflict as a structuring principle of cities intrinsically, as a way of inhabiting and creating urban space." Their methodology in doing so hews closely to Kamvar and Harris' understanding of Experiential Data Visualization, inasmuch as it provides statistical macro but also emotionally-salient micro visual frameworks for experiencing data associated with examples of conflict urbanism.</p>
+</div>
 
     <script>
     var coll = document.getElementsByClassName("collapsible");
@@ -117,6 +118,7 @@
     if(self.location.hash=="#responses_0920") { document.getElementById("responses_0920").click(); history.pushState("", document.title, window.location.pathname + window.location.search); }
     if(self.location.hash=="#responses_0927") { document.getElementById("responses_0927").click(); history.pushState("", document.title, window.location.pathname + window.location.search); }
     if(self.location.hash=="#responses_1004") { document.getElementById("responses_1004").click(); history.pushState("", document.title, window.location.pathname + window.location.search); }
+    if(self.location.hash=="#responses_1018") { document.getElementById("responses_1018").click(); history.pushState("", document.title, window.location.pathname + window.location.search); }
 
     var mallgrab = document.getElementById("mallgrab")
     function mallgrabPlay() { mallgrab.play(); }
