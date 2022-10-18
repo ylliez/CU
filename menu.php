@@ -29,6 +29,7 @@
             <li> <a href="responses.php#responses_0920">09/20 - Crowdsourcing</a> </li>
             <li> <a href="responses.php#responses_0927">09/27 - Proposal</a> </li>
             <li> <a href="responses.php#responses_1004">10/04 - Queries</a> </li>
+            <li> <a href="responses.php#responses_1018">10/18 - Visualization</a> </li>
           </ul>
         </li>
       </ul>
