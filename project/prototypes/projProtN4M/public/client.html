@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>N4M Synth</title>
+  <!-- <link rel='stylesheet' href='/css/style.css' /> -->
+</head>
+
+<body>
+  <form>
+    <input type="range" id="osc1Freq" oninput="modUI(this.id, this.value)"></input>
+    <input type="range" id="osc1Amp" oninput="modUI(this.id, this.value)"></input>
+  </form>
+  <h1><b>N4M Synth</b></h1>
+  <table style="width:500px">
+    <tr>
+      <th>OSC</th>
+      <th>OSC1</th>
+      <th>OSC2</th>
+    </tr>
+    <tr>
+      <th scope="row"><b>Frequency</b></td>
+      <td id="k1">0.00</td>
+      <td id="k2">0.00</td>
+    </tr>
+    <tr>
+      <th scope="row"><b>Waveform</b></td>
+      <td id="k3">0.00</td>
+      <td id="k4">0.00</td>
+    </tr>
+    <tr>
+      <th scope="row"><b>Amplitude</b></td>
+      <td id="k5">0.00</td>
+      <td id="k6">0.00</td>
+    </tr>
+    <!-- <td id="status_3"><img src="/img/sl-green.png"></td> -->
+  </table>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js'></script>
+  <script src="./client.js"></script>
+</body>
+
+</html>
