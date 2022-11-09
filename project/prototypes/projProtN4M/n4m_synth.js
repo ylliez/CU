@@ -16,13 +16,16 @@ const port = 4200;
 // const WebSocket = require("ws");
 // const wss = new WebSocket.Server({ server });
 
+// const fs = require('fs');
+// const static = require('node-static');
+
 // const cookieParser = require("cookie-parser");
 // const bodyParser = require("body-parser");
 
 // serve pages from public dir
 app.use(express.static(__dirname + '/public'));
 app.use("/client", clientRoute);
-app.use("/passFrequency", handleFrequency)
+app.use("/passVals", handleFrequency)
 
 function clientRoute(req, res, next) {
   res.sendFile(__dirname + '/public/client.html');
@@ -30,7 +33,7 @@ function clientRoute(req, res, next) {
 
 function handleFrequency(req, res, next) {
   res.send(req.query);
-  Max.outlet(req.query.id, parseInt(req.query.val));
+  Max.outlet(req.query.id, parseFloat(req.query.val));
 }
 
 server.listen(port, () => { console.log('listening on port: ' + port); })

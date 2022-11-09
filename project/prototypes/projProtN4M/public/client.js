@@ -2,7 +2,7 @@ function modUI(id, val) {
     console.log(id);
     console.log(val);
     $.get(
-        "/passFrequency",
+        "/passVals",
         { id, val },
         (response) => {
             console.log(response);
