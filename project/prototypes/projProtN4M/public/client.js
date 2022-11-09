@@ -1,11 +1,30 @@
-function modUI(id, val) {
-    console.log(id);
-    console.log(val);
+function inputNum(cat, id, val) {
     $.get(
-        "/passVals",
-        { id, val },
+        "/passInputNum",
+        { cat, id, val },
         (response) => {
             console.log(response);
         }
     );
 }
+
+function inputStr(cat, id, val) {
+    $.get(
+        "/passInputStr",
+        { cat, id, val },
+        (response) => {
+            console.log(response);
+        }
+    );
+}
+
+function clientInput(cat, id, val) {
+    $.get(
+        "/passClientInput",
+        { cat, id, val },
+        (response) => {
+            console.log(response);
+        }
+    );
+}
+

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>N4M Synth</title>
+  <!-- <link rel='stylesheet' href='/css/style.css' /> -->
+</head>
+
+<body>
+  <h1><b>N4M Synth - Delay</b></h1>
+  <table style="width:500px">
+    <tr>
+      <th>DELAY</th>
+      <th>Amount</th>
+      <th>Level</th>
+      <th>Time</th>
+    </tr>
+    <tr>
+      <td><input type="checkbox" class="del" alt="del" id="delIO"></input></td>
+      <td><input type="range" class="del" alt="del" id="delAmt" value="0"></input></td>
+      <td><input type="range" class="del" alt="del" id="delLvl" value="50"></input></td>
+      <td><input type="range" class="del" alt="del" id="delTime" min="0" max="1000" value="250"></input>
+      </td>
+    </tr>
+  </table>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js'></script>
+  <script src="./ws.js"></script>
+</body>
+
+</html>

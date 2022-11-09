@@ -11,28 +11,50 @@
   <table style="width:500px">
     <tr>
       <th>OSC</th>
-      <th>OSC1</th>
-      <th>OSC2</th>
-      <th>OSC3</th>
-      <th>OSC4</th>
+      <th>I/O</th>
+      <th>Frequency</th>
+      <th>Duration</th>
+      <th>Hold</th>
     </tr>
     <tr>
-      <th scope="row"><b>I/O</b></th>
-      <td><input type="checkbox" id="osc1IO" value="0" oninput="modUI(this.id, this.value)"></input></td>
-      <td><input type="checkbox" id="osc2IO" value="0" oninput="modUI(this.id, this.value)"></input></td>
-      <td><input type="checkbox" id="osc3IO" value="0" oninput="modUI(this.id, this.value)"></input></td>
-      <td><input type="checkbox" id="osc4IO" value="0" oninput="modUI(this.id, this.value)"></input></td>
+      <th scope="row"><b>OSC1</b></th>
+      <td><input type="button" alt="osc1" id="osc1IO" onclick="inputNum(this.alt, this.id, 1)"></input></td>
+      <td><input type="range" alt="osc1" id="osc1Freq" min="20" max="12600" value="440"
+          oninput="inputNum(this.alt, this.id, this.value)"></input></td>
+      <td><input type="range" alt="osc1" id="osc1Dur" min="0" max="2000" value="500"
+          oninput="inputNum(this.alt, this.id, this.value)"></input>
+      <td><input type="checkbox" alt="osc1" id="osc1Hold" oninput="inputStr(this.alt, this.id, this.checked)"></input>
+      </td>
     </tr>
     <tr>
-      <th scope="row"><b>Frequency</b></th>
-      <td><input type="range" id="osc1Freq" min="20" max="20000" value="440"
-          oninput="modUI(this.id, this.value)"></input></td>
-      <td><input type="range" id="osc2Freq" min="20" max="20000" value="880"
-          oninput="modUI(this.id, this.value)"></input></td>
-      <td><input type="range" id="osc3Freq" min="20" max="20000" value="1320"
-          oninput="modUI(this.id, this.value)"></input></td>
-      <td><input type="range" id="osc4Freq" min="20" max="20000" value="1760"
-          oninput="modUI(this.id, this.value)"></input></td>
+      <th scope="row"><b>OSC2</b></th>
+      <td><input type="button" alt="osc2" id="osc2IO" onclick="inputNum(this.alt, this.id, 1)"></input></td>
+      <td><input type="range" alt="osc2" id="osc2Freq" min="20" max="12600" value="880"
+          oninput="inputNum(this.alt, this.id, this.value)"></input></td>
+      <td><input type="range" alt="osc2" id="osc2Dur" min="0" max="2000" value="500"
+          oninput="inputNum(this.alt, this.id, this.value)"></input>
+      <td><input type="checkbox" alt="osc2" id="osc2Hold" oninput="inputStr(this.alt, this.id, this.checked)"></input>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row"><b>OSC3</b></th>
+      <td><input type="button" alt="osc3" id="osc3IO" onclick="inputNum(this.alt, this.id, 1)"></input></td>
+      <td><input type="range" alt="osc3" id="osc3Freq" min="20" max="12600" value="1320"
+          oninput="inputNum(this.alt, this.id, this.value)"></input></td>
+      <td><input type="range" alt="osc3" id="osc3Dur" min="0" max="2000" value="500"
+          oninput="inputNum(this.alt, this.id, this.value)"></input>
+      <td><input type="checkbox" alt="osc3" id="osc3Hold" oninput="inputStr(this.alt, this.id, this.checked)"></input>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row"><b>OSC4</b></th>
+      <td><input type="button" alt="osc4" id="osc4IO" onclick="inputNum(this.alt, this.id, 1)"></input></td>
+      <td><input type="range" alt="osc4" id="osc4Freq" min="20" max="12600" value="1780"
+          oninput="inputNum(this.alt, this.id, this.value)"></input></td>
+      <td><input type="range" alt="osc4" id="osc4Dur" min="0" max="2000" value="500"
+          oninput="inputNum(this.alt, this.id, this.value)"></input>
+      <td><input type="checkbox" alt="osc4" id="osc4Hold" oninput="inputStr(this.alt, this.id, this.checked)"></input>
+      </td>
     </tr>
     <tr height=20px></tr>
     <tr>
@@ -43,12 +65,32 @@
       <th>Square</th>
     </tr>
     <tr>
-      <td><input type="range" id="waveform" min="0.0" max="3.0" step="0.01" value="0.0"
-          oninput="modUI(this.id, this.value)"></input></td>
-      <td><input type="radio" name="wave" id="waveSn" oninput="modUI(this.id, this.value)"></input></td>
-      <td><input type="radio" name="wave" id="waveSq" oninput="modUI(this.id, this.value)"></input></td>
-      <td><input type="radio" name="wave" id="waveSw" oninput="modUI(this.id, this.value)"></input></td>
-      <td><input type="radio" name="wave" id="waveTr" oninput="modUI(this.id, this.value)"></input></td>
+      <td><input type="range" alt="wave" id="waveform" min="0.0" max="3.0" step="0.01" value="0.0"
+          oninput="inputNum(this.alt, this.id, this.value)"></input></td>
+      <td><input type="radio" name="wave" id="waveSn" oninput="inputNum(this.name, this.id, 0)"></input></td>
+      <td><input type="radio" name="wave" id="waveTr" oninput="inputNum(this.name, this.id, 1)"></input></td>
+      <td><input type="radio" name="wave" id="waveSw" oninput="inputNum(this.name, this.id, 2)"></input></td>
+      <td><input type="radio" name="wave" id="waveSq" oninput="inputNum(this.name, this.id, 3)"></input></td>
+    </tr>
+    <tr height=20px></tr>
+    <tr>
+      <th>ENVELOPE</th>
+      <th>Attack</th>
+      <th>Decay</th>
+      <th>Sustain</th>
+      <th>Release</th>
+    </tr>
+    <tr>
+      <td></td>
+      <td><input type="range" alt="env" id="envA" min="0" max="1000" value="10"
+          oninput="inputNum(this.alt, this.id, this.value)"></input></td>
+      <td><input type="range" alt="env" id="envD" min="0" max="1000" value="100"
+          oninput="inputNum(this.alt, this.id, this.value)"></input></td>
+      <td><input type="range" alt="env" id="envS" min="0" max="1" step="0.01" value="0.8"
+          oninput="inputNum(this.alt, this.id, this.value)"></input></td>
+      <td><input type="range" alt="env" id="envR" min="0" max="1000" value="500"
+          oninput="inputNum(this.alt, this.id, this.value)"></input></td>
+      </td>
     </tr>
     <tr height=20px></tr>
     <tr>
@@ -57,9 +99,12 @@
       <th>Colour</th>
     </tr>
     <tr>
-      <td><input type="checkbox" id="noiseIO" oninput="modUI(this.id, this.value)"></input></td>
-      <td><input type="range" id="noiseAmt" value="0" oninput="modUI(this.id, this.value)"></input></td>
-      <td><input type="range" id="noiseCol" value="0" oninput="modUI(this.id, this.value)"></input></td>
+      <td><input type="checkbox" alt="noise" id="noiseIO" oninput="inputStr(this.alt, this.id, this.checked)"></input>
+      </td>
+      <td><input type="range" alt="noise" id="noiseAmt" value="0"
+          oninput="inputNum(this.alt, this.id, this.value)"></input></td>
+      <td><input type="range" alt="noise" id="noiseCol" value="0"
+          oninput="inputNum(this.alt, this.id, this.value)"></input></td>
     </tr>
     <tr height=20px></tr>
     <tr>
@@ -69,10 +114,14 @@
       <th>Time</th>
     </tr>
     <tr>
-      <td><input type="checkbox" id="delIO" oninput="modUI(this.id, this.value)"></input></td>
-      <td><input type="range" id="delAmt" value="0" oninput="modUI(this.id, this.value)"></input></td>
-      <td><input type="range" id="delLvl" value="0" oninput="modUI(this.id, this.value)"></input></td>
-      <td><input type="range" id="delTime" value="0" oninput="modUI(this.id, this.value)"></input></td>
+      <td><input type="checkbox" alt="del" id="delIO" oninput="inputStr(this.alt, this.id, this.checked)"></input></td>
+      <td><input type="range" alt="del" id="delAmt" value="0" oninput="inputNum(this.alt, this.id, this.value)"></input>
+      </td>
+      <td><input type="range" alt="del" id="delLvl" value="50"
+          oninput="inputNum(this.alt, this.id, this.value)"></input></td>
+      <td><input type="range" alt="del" id="delTime" min="0" max="1000" value="250"
+          oninput="inputNum(this.alt, this.id, this.value)"></input>
+      </td>
     </tr>
     <tr height=20px></tr>
     <tr>
@@ -83,11 +132,15 @@
       <th>Diffusion</th>
     </tr>
     <tr>
-      <td><input type="checkbox" id="revIO" oninput="modUI(this.id, this.value)"></input></td>
-      <td><input type="range" id="revAmt" value="0" oninput="modUI(this.id, this.value)"></input></td>
-      <td><input type="range" id="revDec" value="0" oninput="modUI(this.id, this.value)"></input></td>
-      <td><input type="range" id="revDamp" value="0" oninput="modUI(this.id, this.value)"></input></td>
-      <td><input type="range" id="revDiff" value="0" oninput="modUI(this.id, this.value)"></input></td>
+      <td><input type="checkbox" alt="rev" id="revIO" oninput="inputStr(this.alt, this.id, this.checked)"></input></td>
+      <td><input type="range" alt="rev" id="revAmt" value="0" oninput="inputNum(this.alt, this.id, this.value)"></input>
+      </td>
+      <td><input type="range" alt="rev" id="revDec" value="50"
+          oninput="inputNum(this.alt, this.id, this.value)"></input></td>
+      <td><input type="range" alt="rev" id="revDamp" value="50"
+          oninput="inputNum(this.alt, this.id, this.value)"></input></td>
+      <td><input type="range" alt="rev" id="revDiff" value="50"
+          oninput="inputNum(this.alt, this.id, this.value)"></input></td>
     </tr>
     <tr height=20px></tr>
     <tr>
@@ -97,33 +150,36 @@
       <th>Octaves</th>
     </tr>
     <tr>
-      <td><input type="checkbox" id="arpIO" oninput="modUI(this.id, this.value)"></input></td>
-      <td><input type="range" id="arpRate" value="200" oninput="modUI(this.id, this.value)"></input></td>
-      <td><input list="arpDir" oninput="modUI(this.id, this.value)">
-        <datalist id="arpDir">
-          <option value="AS IS">
-          <option value="UP">
-          <option value="DOWN">
-          <option value="PAL">
-          <option value="RAND">
-        </datalist>
+      <td><input type="checkbox" alt="arp" id="arpIO" oninput="inputStr(this.alt, this.id, this.checked)"></input></td>
+      <td>
+        <input type="range" alt="arp" id="arpRate" value="200"
+          oninput="inputNum(this.alt, this.id, this.value)"></input>
       </td>
-      <td><input list="arpOct" id="arpOct" oninput="modUI(this.id, this.value)">
-        <datalist>
-          <option value="1">
-          <option value="2">
-          <option value="3">
-          <option value="4">
-          <option value="5">
-        </datalist>
+      <td>
+        <select name="arp" id="arpDir" onchange="inputNum(this.name, this.id, this.value)">
+          <option value="0">AS IS</option>
+          <option value="1">UP</option>
+          <option value="2">DOWN</option>
+          <option value="3">PAL</option>
+          <option value="4">RAND</option>
+        </select>
+      </td>
+      <td>
+        <select name="arp" id="arpOct" onchange="inputNum(this.name, this.id, this.value)">
+          <option value="0">1</option>
+          <option value="1">2</option>
+          <option value="2">3</option>
+          <!-- <option value="3">PAL</option>
+          <option value="4">RAND</option> -->
+        </select>
       </td>
     </tr>
     <tr height=20px></tr>
-    <tr>
+    <!-- <tr>
       <th scope="row"><b>Amplitude</b></td>
       <td id="k5">0.00</td>
       <td id="k6">0.00</td>
-    </tr>
+    </tr> -->
     <!-- <td id="status_3"><img src="/img/sl-green.png"></td> -->
   </table>
 
