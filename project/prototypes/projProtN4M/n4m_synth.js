@@ -1,20 +1,23 @@
-// import Max/MSP library
-const Max = require('max-api');
-// Max.post("Max/MSP API loaded");
 // import Express library & make instance
 const express = require("express");
 let app = express();
-// import HTTP library & create server
+// import HTTP module, set port number & create server
 const http = require('http')
-let server = http.createServer(app);
-// set server port number
 const port = 4200;
+let server = http.createServer(app);
+server.listen(port, () => { Max.post('server listening on port ' + port); })
 
+// const fs = require('fs');
 // const path = require("path");
+// const static = require('node-static');
 
 // import WebSocket library & make instance
 const WebSocket = require("ws");
 const wss = new WebSocket.Server({ server });
+
+// import Max/MSP library
+const Max = require('max-api');
+Max.post("Max/MSP API loaded");
 
 // const readline = require("readline")
 // const rl = readline.createInterface({
@@ -26,11 +29,10 @@ const wss = new WebSocket.Server({ server });
 //   await console.log(line)
 // })
 
-// const fs = require('fs');
-// const static = require('node-static');
-
 // const cookieParser = require("cookie-parser");
 // const bodyParser = require("body-parser");
+
+
 
 // serve pages from public dir
 app.use(express.static(__dirname + '/public'));
@@ -97,7 +99,7 @@ function handleInputNum(req, res, next) {
   Max.outlet(req.query.cat, req.query.id, parseFloat(req.query.val));
 }
 
-server.listen(port, () => { console.log('listening on port: ' + port); })
+
 
 
 // // IMPLEMENT THE BROADCAST FUNCTION TO ALL --> outside of wss

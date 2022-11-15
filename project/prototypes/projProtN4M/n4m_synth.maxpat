@@ -40,13 +40,26 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-22",
+					"linecount" : 2,
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 736.082432985305786, 694.845321893692017, 50.0, 35.0 ],
+					"text" : "waveform 1.67"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-70",
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 596.706947055127785, 679.180555085377364, 50.0, 22.0 ],
-					"text" : "del"
+					"text" : "wave"
 				}
 
 			}
@@ -65,13 +78,12 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-67",
-					"linecount" : 3,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 366.875009973843817, 621.523408532215171, 50.0, 49.0 ],
-					"text" : "del delAmt 26"
+					"patching_rect" : [ 366.875009973843817, 621.523408532215171, 50.0, 22.0 ],
+					"text" : "wave"
 				}
 
 			}
@@ -96,8 +108,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 314.875009973843817, 570.523408532215171, 50.0, 49.0 ],
-					"presentation_linecount" : 3,
-					"text" : "\"del delAmt 26\""
+					"text" : "wave waveform 1.67"
 				}
 
 			}
@@ -110,7 +121,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 536.263762474060059, 663.7362961769104, 50.0, 49.0 ],
-					"text" : "del delAmt 26"
+					"text" : "wave waveform 1.67"
 				}
 
 			}
@@ -121,8 +132,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 831.724070593162196, 493.948768079244701, 71.0, 22.0 ],
-					"text" : "fromsymbol"
+					"patching_rect" : [ 882.239531680389064, 506.319901406728832, 71.0, 22.0 ]
 				}
 
 			}
@@ -3296,6 +3306,8 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 0,
 						"defer" : 0,
+						"node_bin_path" : "",
+						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
@@ -6792,13 +6804,6 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-151", 0 ],
-					"source" : [ "obj-15", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-6", 0 ],
 					"source" : [ "obj-151", 0 ]
 				}
@@ -6827,7 +6832,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-55", 0 ],
+					"destination" : [ "obj-34", 0 ],
 					"order" : 0,
 					"source" : [ "obj-156", 0 ]
 				}
@@ -6835,7 +6840,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-61", 1 ],
+					"destination" : [ "obj-60", 1 ],
 					"order" : 2,
 					"source" : [ "obj-156", 0 ]
 				}
@@ -6843,7 +6848,23 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-61", 1 ],
+					"order" : 4,
+					"source" : [ "obj-156", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-62", 0 ],
+					"order" : 3,
+					"source" : [ "obj-156", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-73", 0 ],
 					"order" : 1,
 					"source" : [ "obj-156", 0 ]
 				}
@@ -6980,6 +7001,14 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-22", 1 ],
+					"order" : 1,
+					"source" : [ "obj-34", 4 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-28", 0 ],
 					"source" : [ "obj-34", 3 ]
 				}
@@ -7002,6 +7031,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-35", 0 ],
+					"order" : 0,
 					"source" : [ "obj-34", 4 ]
 				}
 
@@ -7116,7 +7146,7 @@
 				"patchline" : 				{
 					"destination" : [ "obj-12", 0 ],
 					"midpoints" : [ 15.0, 173.562499940395355, 833.5, 173.562499940395355 ],
-					"order" : 1,
+					"order" : 2,
 					"source" : [ "obj-46", 0 ]
 				}
 
@@ -7133,7 +7163,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-47", 0 ],
-					"order" : 2,
+					"order" : 1,
 					"source" : [ "obj-46", 0 ]
 				}
 
@@ -7171,30 +7201,6 @@
 				"patchline" : 				{
 					"destination" : [ "obj-156", 0 ],
 					"source" : [ "obj-51", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-34", 0 ],
-					"order" : 0,
-					"source" : [ "obj-55", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-60", 1 ],
-					"order" : 2,
-					"source" : [ "obj-55", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-73", 0 ],
-					"order" : 1,
-					"source" : [ "obj-55", 0 ]
 				}
 
 			}
@@ -7506,28 +7512,28 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "PanGt2.maxpat",
-				"bootpath" : "~/Downloads/CART451_N4M/n4m_zoomchestra",
+				"bootpath" : "~/Documents/GitHub/CU/CART451/project/prototypes/projProtN4M",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "PanSw2.maxpat",
-				"bootpath" : "~/Downloads/CART451_N4M/n4m_zoomchestra",
+				"bootpath" : "~/Documents/GitHub/CU/CART451/project/prototypes/projProtN4M",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "ReverbPlate.maxpat",
-				"bootpath" : "~/Downloads/CART451_N4M/n4m_zoomchestra",
+				"bootpath" : "~/Documents/GitHub/CU/CART451/project/prototypes/projProtN4M",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "Zoomchestra_ARP.maxpat",
-				"bootpath" : "~/Downloads/CART451_N4M/n4m_zoomchestra",
+				"bootpath" : "~/Documents/GitHub/CU/CART451/project/prototypes/projProtN4M",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
@@ -7546,21 +7552,21 @@
 			}
 , 			{
 				"name" : "n4m_synth.js",
-				"bootpath" : "~/Downloads/CART451_N4M/n4m_zoomchestra",
+				"bootpath" : "~/Documents/GitHub/CU/CART451/project/prototypes/projProtN4M",
 				"patcherrelativepath" : ".",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "n4m_synth_poly.maxpat",
-				"bootpath" : "~/Downloads/CART451_N4M/n4m_zoomchestra",
+				"bootpath" : "~/Documents/GitHub/CU/CART451/project/prototypes/projProtN4M",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "n4m_synth_voice.maxpat",
-				"bootpath" : "~/Downloads/CART451_N4M/n4m_zoomchestra",
+				"bootpath" : "~/Documents/GitHub/CU/CART451/project/prototypes/projProtN4M",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
