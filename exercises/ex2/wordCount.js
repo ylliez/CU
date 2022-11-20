@@ -67,30 +67,29 @@ class WordCount {
   }
 
   logTheDict() {
-    //console.log(this.dict);
-    //this.sortByCount();
+    // console.log(this.dict);
     for (let i = 0; i < this.keys.length; i++) {
       console.log(this.keys[i] + ': ' + this.dict[this.keys[i]]);
     }
   }
 
-  //Sort array of keys by counts
-  sortByCount() {
-    // A fancy way to sort each element
-    // Compare the counts
-    // For this function to work for sorting, we
-    // to store a reference to this so the context is not lost!
+  //Sort array of keys by counts - descending
+  sortByCountDown() {
     let wordFreq = this;
-
     this.keys.sort(
       function (a, b) {
-        //diff..
         return (wordFreq.getCount(b) - wordFreq.getCount(a));
       });
   }
 
-
-
+  // Sort array of keys by counts - ascending
+  sortByCountUp() {
+    let wordFreq = this;
+    this.keys.sort(
+      function (a, b) {
+        return (wordFreq.getCount(a) - wordFreq.getCount(b));
+      });
+  }
 
 }
 
