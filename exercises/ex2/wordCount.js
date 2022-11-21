@@ -1,8 +1,25 @@
 class WordCount {
   constructor() {
     //going to keep track of which words were found and how many
+    this.tokens = [];
     this.dict = {};
     this.keys = [];
+  }
+
+  // Process new text
+  process(data, extArray) {
+    this.tokens = this.split(data);
+    // For every token
+    for (let i = 0; i < this.tokens.length; i++) {
+      // Lowercase everything to ignore case
+      let token = this.tokens[i].toLowerCase();
+      //is it a valid word?
+      if (this.validate(token) === true) {
+        //add token to the dictionary if not already
+        //if it is then increment the dict count
+        this.addToDict(token);
+      }
+    }
   }
 
   //split the text:
@@ -19,28 +36,6 @@ class WordCount {
   validate(token) {
     //is it a word of 2 or more chars
     return /\w{2,}/.test(token);
-  }
-
-  // Process new text
-  process(data, extArray) {
-    let tokens = this.split(data);
-    // console.log(`total tokens: ${tokens.length}`);
-    // console.log(tokens);
-    // For every token
-    for (let i = 0; i < tokens.length; i++) {
-      extArray[i] = tokens[i];
-      // Lowercase everything to ignore case
-      let token = tokens[i].toLowerCase();
-      //is it a valid word?
-      if (this.validate(token) === true) {
-        //add token to the dictionary if not already
-        //if it is then increment the dict count
-        this.addToDict(token);
-      }
-    }
-    // console.log(`total distinct words of 2+ chars: ${this.keys.length}`);
-    // console.log(Object.keys(this.dict).length);
-    // console.log(this.keys);
   }
 
   // An array of keys
@@ -67,9 +62,9 @@ class WordCount {
   }
 
   logTheDict() {
-    // for (let i = 0; i < this.keys.length; i++) {
-    //   console.log(this.keys[i] + ': ' + this.dict[this.keys[i]]);
-    // }
+    for (let i = 0; i < this.keys.length; i++) {
+      console.log(this.keys[i] + ': ' + this.dict[this.keys[i]]);
+    }
   }
 
   //Sort array of keys by counts - descending

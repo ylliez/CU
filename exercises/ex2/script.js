@@ -9,14 +9,17 @@ const natural = require('natural');
 let fs = require('fs');
 
 let fileCat = fs.readFileSync('assets/cat.txt', 'utf8');
-let fileBib = fs.readFileSync('assets/bible.txt', 'utf8');
-let fileQur = fs.readFileSync('assets/quran.txt', 'utf8');
+let fileBible = fs.readFileSync('assets/bible.txt', 'utf8');
+let fileQuran = fs.readFileSync('assets/quran.txt', 'utf8');
+let fileBagGit = fs.readFileSync('assets/bhagavadGita.txt', 'utf8');
+let fileVedas = fs.readFileSync('assets/vedas.txt', 'utf8');
 // console.log(fileCat);
 // console.log(fileBib);
 // console.log(fileQur);
 
+
 // 1. TOKENIZE
-console.log(`================= TOKEN =================`);
+// console.log(`================= TOKEN =================`);
 // // 1.1 DIY
 // console.log(`-----------------  DIY  -----------------`);
 // let wordCount = new WordCount();
@@ -64,25 +67,79 @@ console.log(`================= TOKEN =================`);
 // console.log(`total tokens in Bible: ${tokensBibDIY.length}`);
 // console.log(`total tokens in Qur'an: ${tokensQurDIY.length}`);
 // // 1.2 natural
-// console.log(`-----------------  NAT  -----------------`);
-let tokenizer = new natural.WordTokenizer();
-// let tokens = tokenizer.tokenize("The lazy dog jumped over the high fence.");
-let tokensCat = tokenizer.tokenize(fileCat)
-let tokensBib = tokenizer.tokenize(fileBib)
-let tokensQur = tokenizer.tokenize(fileQur)
-console.log(`total tokens in Cat: ${tokensCat.length}`);
-console.log(`total tokens in Bible: ${tokensBib.length}`);
-console.log(`total tokens in Qur'an: ${tokensQur.length}`);
-
-// WORD FREQUENCIES
-console.log(`================= WORD FREQUENCIES =================`);
+// // console.log(`-----------------  NAT  -----------------`);
+// let tokenizer = new natural.WordTokenizer();
+// // let tokens = tokenizer.tokenize("The lazy dog jumped over the high fence.");
+// let tokensCat = tokenizer.tokenize(fileCat)
+// let tokensBib = tokenizer.tokenize(fileBib)
+// let tokensQur = tokenizer.tokenize(fileQur)
+// console.log(`total tokens in Cat: ${tokensCat.length}`);
+// console.log(`total tokens in Bible: ${tokensBib.length}`);
+// console.log(`total tokens in Qur'an: ${tokensQur.length}`);
 
 
-// // TF-IDF
+// // 2. WORD FREQUENCIES
+// console.log(`================= WORD FREQUENCIES =================`);
+// // Cat Wiki
+// console.log(`-----------------  CAT  -----------------`);
+// let catCount = new WordCount();
+// catCount.process(fileCat);
+// console.log(`total tokens in Cat: ${catCount.tokens.length}`);
+// // console.log(catCount.tokens);
+// console.log(`total distinct words of 2+ chars in Cat: ${catCount.keys.length}`);
+// // console.log(catCount.keys);
+// // console.log(Object.keys(catCount.dict).length);
+// // catCount.sortByCountUp();
+// // catCount.logTheDict();
+// // console.log(`total times "cat" appears in Cat: ${catCount.getCount("cat")}`);
+// // Bible
+// console.log(`-----------------  BIBLE  -----------------`);
+// let bibCount = new WordCount();
+// bibCount.process(fileBible);
+// console.log(`total tokens in Bible: ${bibCount.tokens.length}`);
+// // console.log(bibCount.tokens);
+// console.log(`total distinct words of 2+ chars in Bible: ${bibCount.keys.length}`);
+// // console.log(bibCount.keys);
+// // console.log(Object.keys(bibCount.dict).length);
+// // bibCount.sortByCountUp();
+// // bibCount.logTheDict();
+// // console.log(`total times "god" appears in Bible: ${bibCount.getCount("god")}`);
+// // console.log(`total times "pain" appears in Bible: ${bibCount.getCount("pain")}`);
+// console.log(`-----------------  QUR'AN  -----------------`);
+// let qurCount = new WordCount();
+// qurCount.process(fileQuran);
+// console.log(`total tokens in Qur'an: ${qurCount.tokens.length}`);
+// // console.log(qurCount.tokens);
+// console.log(`total distinct words of 2+ chars in Qur'an: ${qurCount.keys.length}`);
+// // console.log(qurCount.keys);
+// // console.log(Object.keys(qurCount.dict).length);
+// // qurCount.sortByCountUp();
+// // qurCount.logTheDict();
+// // console.log(`total times "god" appears in Qur'an: ${qurCount.getCount("god")}`);
+// // console.log(`total times "pain" appears in Qur'an: ${qurCount.getCount("pain")}`);
+// // console.log(`total times "happy" appears in Qur'an: ${qurCount.getCount("happy")}`);
+// // console.log(`total times "sad" appears in Qur'an: ${qurCount.getCount("sad")}`);
+// console.log(`-----------------  Baghavad Gita  -----------------`);
+// let bagCount = new WordCount();
+// bagCount.process(fileBagGit);
+// // console.log(`total tokens in Baghavad Gita: ${bagCount.tokens.length}`);
+// // console.log(bagCount.tokens);
+// console.log(`total distinct words of 2+ chars in Baghavad Gita: ${bagCount.keys.length}`);
+// // console.log(bagCount.keys);
+// // console.log(Object.keys(bagCount.dict).length);
+// // bagCount.sortByCountUp();
+// // bagCount.logTheDict();
+// // console.log(`total times "god" appears in Baghavad Gita: ${bagCount.getCount("god")}`);
+// // console.log(`total times "pain" appears in Baghavad Gita: ${bagCount.getCount("pain")}`);
+// // console.log(`total times "happy" appears in Baghavad Gita: ${bagCount.getCount("happy")}`);
+// // console.log(`total times "sad" appears in Baghavad Gita: ${bagCount.getCount("sad")}`);
+
+
+// // 3. TF-IDF
 // let tfIDF = new TFIDF();
 // loadSamples();
 // function loadSamples() {
-//     let filenames = ['bible_1M.txt', 'cat.txt'];
+//     let filenames = ['cat.txt', 'bible.txt', 'quran.txt', 'bhagavadGita.txt', 'vedas.txt'];
 //     for (let i = 0; i < filenames.length; i++) { getTermFreq(filenames[i]); }
 //     for (let i = 0; i < filenames.length; i++) { getDocFreq(filenames[i]); }
 //     tfIDF.finish(filenames.length);
@@ -100,34 +157,37 @@ console.log(`================= WORD FREQUENCIES =================`);
 
 // -------
 
-
-
-// // // get word frequency
-// let frequency = new natural.FrequencyDistribution(tokens);
-// console.log(frequency);
-
-
-// // 2. get word count
-// console.log(frequency.getCount(tokens[3]));
-
 // // natural tf-idf on tokenized words
 // let tfidf = new natural.TfIdf();
-// tfidf.addFileSync('assets/bible_1M.txt');
-// tfidf.addFileSync(`assets/qur'an.txt`);
 // tfidf.addFileSync('assets/cat.txt');
-// // console.log('God-----------');
-// // tfidf.tfidfs('God', function (i, measure) {
-// //     console.log('document #' + i + ' is ' + measure);
-// // }
-// // );
-// // console.log('cat-----------');
-// // tfidf.tfidfs('cat', function (i, measure) {
-// //     console.log('document #' + i + ' is ' + measure);
-// // }
-// // );
-// tfidf.listTerms(2 /*document index*/).forEach(function (item) {
+// tfidf.addFileSync('assets/bible.txt');
+// tfidf.addFileSync(`assets/quran.txt`);
+// tfidf.addFileSync(`assets/bhagavadGita.txt`);
+// tfidf.addFileSync(`assets/vedas.txt`);
+// // console.log('kingdom-----------');
+// // tfidf.tfidfs('kingdom', function (i, measure) { console.log('document #' + i + ' is ' + measure); });
+// // console.log('pain-----------');
+// // tfidf.tfidfs('pain', function (i, measure) { console.log('document #' + i + ' is ' + measure) });
+// tfidf.listTerms(0).forEach(function (item) {
 //     console.log(item.term + ': ' + item.tfidf);
 // });
+
+let tokenizer = new natural.WordTokenizer();
+// let tokens = tokenizer.tokenize("The lazy dog jumped over the high fence.");
+let tokensCat = tokenizer.tokenize(fileCat)
+let tokensBib = tokenizer.tokenize(fileBible)
+let tokensQur = tokenizer.tokenize(fileQuran)
+let tokensBag = tokenizer.tokenize(fileBagGit)
+let tokensVed = tokenizer.tokenize(fileVedas)
+
+var Analyzer = require('natural').SentimentAnalyzer;
+var stemmer = require('natural').PorterStemmer;
+var analyzer = new Analyzer("English", stemmer, "afinn");
+console.log(analyzer.getSentiment(tokensCat));
+console.log(analyzer.getSentiment(tokensBib));
+console.log(analyzer.getSentiment(tokensQur));
+console.log(analyzer.getSentiment(tokensBag));
+console.log(analyzer.getSentiment(tokensVed));
 
 
 // //  get word stem
