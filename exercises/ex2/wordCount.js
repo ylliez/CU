@@ -21,13 +21,14 @@ class WordCount {
     return /\w{2,}/.test(token);
   }
 
-
   // Process new text
-  process(data) {
+  process(data, extArray) {
     let tokens = this.split(data);
+    // console.log(`total tokens: ${tokens.length}`);
     // console.log(tokens);
     // For every token
     for (let i = 0; i < tokens.length; i++) {
+      extArray[i] = tokens[i];
       // Lowercase everything to ignore case
       let token = tokens[i].toLowerCase();
       //is it a valid word?
@@ -36,12 +37,11 @@ class WordCount {
         //if it is then increment the dict count
         this.addToDict(token);
       }
-
-
-
     }
+    // console.log(`total distinct words of 2+ chars: ${this.keys.length}`);
+    // console.log(Object.keys(this.dict).length);
+    // console.log(this.keys);
   }
-
 
   // An array of keys
   getKeys() {
@@ -67,10 +67,9 @@ class WordCount {
   }
 
   logTheDict() {
-    // console.log(this.dict);
-    for (let i = 0; i < this.keys.length; i++) {
-      console.log(this.keys[i] + ': ' + this.dict[this.keys[i]]);
-    }
+    // for (let i = 0; i < this.keys.length; i++) {
+    //   console.log(this.keys[i] + ': ' + this.dict[this.keys[i]]);
+    // }
   }
 
   //Sort array of keys by counts - descending
