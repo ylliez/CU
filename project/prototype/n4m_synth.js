@@ -1,4 +1,4 @@
-// import Express library & make instance
+// import Express module & make instance
 const express = require("express");
 let app = express();
 // import HTTP module, set port number & create server
@@ -45,8 +45,6 @@ app.use("/reverb", reverbRoute);
 
 app.use("/passVal", handleVal)
 app.use("/passClientInput", handleClientVal)
-app.use("/passValNum", handleValNum)
-app.use("/passValStr", handleValStr)
 app.use("/passInputStr", handleInputStr)
 app.use("/passInputNum", handleInputNum)
 
@@ -77,16 +75,6 @@ function handleClientVal(req, res, next) {
 function handleVal(req, res, next) {
   res.send(req.query);
   Max.outlet(req.query.id, parseFloat(req.query.val));
-}
-
-function handleValNum(req, res, next) {
-  res.send(req.query);
-  Max.outlet(req.query.cat, req.query.id, parseFloat(req.query.val));
-}
-
-function handleValStr(req, res, next) {
-  res.send(req.query);
-  Max.outlet(req.query.id, req.query.val);
 }
 
 function handleInputStr(req, res, next) {
