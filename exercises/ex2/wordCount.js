@@ -38,15 +38,6 @@ class WordCount {
     return /\w{2,}/.test(token);
   }
 
-  // An array of keys
-  getKeys() {
-    return this.keys;
-  }
-
-  // Get the count for a word
-  getCount(word) {
-    return this.dict[word];
-  }
 
   // Increment the count for a word
   addToDict(word) {
@@ -85,6 +76,24 @@ class WordCount {
       });
   }
 
+  // An array of keys
+  getKeys() {
+    return this.keys;
+  }
+
+  // Get the count for a word
+  getCount(word) {
+    return this.dict[word];
+  }
+
+
+  fillCloudArray(array) {
+    for (let i = 0; i < this.keys.length; i++) {
+      array.push(this.dict[this.keys[i]] + ' ' + this.keys[i]);
+    }
+    console.log(array);
+    // return array;
+  }
 }
 
 module.exports = WordCount;

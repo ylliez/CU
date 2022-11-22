@@ -96,13 +96,23 @@ class TFIDF {
     return this.dict[word];
   }
 
-  // Sort by TFIDF score
-  sortByScore() {
+  // Sort by TFIDF score, descending
+  sortByScoreDes() {
     // A fancy way to sort each element
     // Compare the counts
     let tfidf = this;
     this.keys.sort(function (a, b) {
       return (tfidf.getScore(b) - tfidf.getScore(a));
+    });
+  }
+
+  // Sort by TFIDF score, ascending
+  sortByScoreAsc() {
+    // A fancy way to sort each element
+    // Compare the counts
+    let tfidf = this;
+    this.keys.sort(function (a, b) {
+      return (tfidf.getScore(a) - tfidf.getScore(b));
     });
   }
 
@@ -168,9 +178,6 @@ class TFIDF {
 
     }
   }
-
-
-
 
 }
 
