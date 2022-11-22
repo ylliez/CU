@@ -6,7 +6,7 @@
 const WordCount = require('./wordCount');
 const TFIDF = require('./TFIDF');
 const natural = require('natural');
-let fs = require('fs');
+const fs = require('fs');
 
 let fileCat = fs.readFileSync('assets/cat.txt', 'utf8');
 let fileBible = fs.readFileSync('assets/bible.txt', 'utf8');
@@ -135,25 +135,25 @@ let fileVedas = fs.readFileSync('assets/vedas.txt', 'utf8');
 // // console.log(`total times "sad" appears in Baghavad Gita: ${bagCount.getCount("sad")}`);
 
 
-// // 3. TF-IDF
-// let tfIDF = new TFIDF();
-// loadSamples();
-// function loadSamples() {
-//     let filenames = ['cat.txt', 'bible.txt', 'quran.txt', 'bhagavadGita.txt', 'vedas.txt'];
-//     for (let i = 0; i < filenames.length; i++) { getTermFreq(filenames[i]); }
-//     for (let i = 0; i < filenames.length; i++) { getDocFreq(filenames[i]); }
-//     tfIDF.finish(filenames.length);
-//     tfIDF.sortByScore();
-//     tfIDF.logTheDict();
-// }
-// function getDocFreq(filename) {
-//     let data = fs.readFileSync('assets/' + filename, 'utf8');
-//     tfIDF.docFreq(data);
-// }
-// function getTermFreq(filename) {
-//     let data = fs.readFileSync('assets/' + filename, 'utf8');
-//     tfIDF.termFreq(data);
-// }
+// 3. TF-IDF
+let tfIDF = new TFIDF();
+loadSamples();
+function loadSamples() {
+    let filenames = ['cat.txt', 'bible.txt', 'quran.txt', 'bhagavadGita.txt', 'vedas.txt'];
+    for (let i = 0; i < filenames.length; i++) { getTermFreq(filenames[i]); }
+    for (let i = 0; i < filenames.length; i++) { getDocFreq(filenames[i]); }
+    tfIDF.finish(filenames.length);
+    tfIDF.sortByScore();
+    tfIDF.logTheDict();
+}
+function getDocFreq(filename) {
+    let data = fs.readFileSync('assets/' + filename, 'utf8');
+    tfIDF.docFreq(data);
+}
+function getTermFreq(filename) {
+    let data = fs.readFileSync('assets/' + filename, 'utf8');
+    tfIDF.termFreq(data);
+}
 
 // -------
 
