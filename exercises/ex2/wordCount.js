@@ -7,7 +7,7 @@ class WordCount {
   }
 
   // Process new text
-  process(data, extArray) {
+  process(data) {
     this.tokens = this.split(data);
     // For every token
     for (let i = 0; i < this.tokens.length; i++) {
@@ -15,46 +15,34 @@ class WordCount {
       let token = this.tokens[i].toLowerCase();
       //is it a valid word?
       if (this.validate(token) === true) {
-        //add token to the dictionary if not already
-        //if it is then increment the dict count
+        // if new add token to  dictionary, else increment the dict count
         this.addToDict(token);
       }
     }
   }
 
-  //split the text:
   // Splitting up the text
   split(text) {
-    //console.log("in splitter")
-    // Split into array of tokens
-    //\W	A nonalphanumeric character
+    // Split into array of tokens (\W	= nonalphanumeric character)
     return text.split(/\W+/);
   }
 
-  // A function to validate a token
-  //don't want single letter words
+  // Validate a token (i.e. remove single letter words)
   validate(token) {
     //is it a word of 2 or more chars
     return /\w{2,}/.test(token);
   }
 
-
-  // Increment the count for a word
+  // Add word to dictionary or increment the count for a word
   addToDict(word) {
     // Is this a new word?
     if (!this.dict[word]) {
       this.dict[word] = 1;
-      //keeing track of the keys...
+      // keeing track of the keys...
       this.keys.push(word);
       // Otherwise just increment its count
     } else {
       this.dict[word]++;
-    }
-  }
-
-  logTheDict() {
-    for (let i = 0; i < this.keys.length; i++) {
-      console.log(this.keys[i] + ': ' + this.dict[this.keys[i]]);
     }
   }
 
@@ -76,6 +64,12 @@ class WordCount {
       });
   }
 
+  logTheDict() {
+    for (let i = 0; i < this.keys.length; i++) {
+      console.log(this.keys[i] + ': ' + this.dict[this.keys[i]]);
+    }
+  }
+
   // An array of keys
   getKeys() {
     return this.keys;
@@ -85,7 +79,6 @@ class WordCount {
   getCount(word) {
     return this.dict[word];
   }
-
 
   fillCloudArray() {
     for (let i = 0; i < this.keys.length; i++) {

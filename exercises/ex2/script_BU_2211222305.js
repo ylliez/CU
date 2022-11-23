@@ -18,87 +18,83 @@ app.get('/passCloudList', handleCloudList);
 const WordCount = require('./wordCount');
 const fs = require('fs');
 
-let text = ['bible', 'quran', 'bgita', 'vedas'];
-let textFile = ['bible.txt', 'quran.txt', 'bgita.txt', 'vedas.txt'];
-let textRead = [];
-let textWordCount = [];
-// total word count
-let textTotalWords = [];
-// unique word count
-let textUniqueWords = [];
-// search words
-let searchTerm = [`pain`, `slave`];
-// let searchTerm = [`god`, `love`, `hate`, `happy`, `sad`, `conquer`, `slave`];
-let textTermCount = [];
-let TF = [];
+let texts = ['bible.txt', 'quran.txt', 'bhagavadGita.txt', 'vedas.txt', 'test.txt'];
+let textFiles = [];
 
-// WORDCOUNT
-for (let i = 0; i < text.length; i++) {
-    // read files
-    textRead[i] = fs.readFileSync('assets/' + textFile[i], 'utf8');
-    // make WordCount object
-    textWordCount[i] = new WordCount();
-    // process text
-    textWordCount[i].process(textRead[i]);
-    // get word total
-    textTotalWords[i] = textWordCount[i].tokens.length;
-    // get unique word total
-    textUniqueWords[i] = textWordCount[i].keys.length;
+// READ FILES
+for (let i = 0; i < texts.length; i++) {
+    textFiles[i] = fs.readFileSync('assets/' + texts[i], 'utf8');
 }
-// console.log(textRead[0]);
-// console.log(textWordCount[0].dict);
-// console.log(textTotalWords[0]);
-// console.log(textUniqueWords[0]);
-// console.log(textUniqueWords);
-
-function handleWCData(req, res) {
-    res.send({ 0: textTotalWords, 1: textUniqueWords });
-}
-
-
-// TF
-// // get term count
-// for (let j = 0; j < searchTerm.length; j++) {
-//     console.log(`-------- search term : ${searchTerm[j]} -----------`);
-//     let tc = [];
-//     for (let i = 0; i < text.length; i++) {
-//         tc[i] = textWordCount[i].getCount(searchTerm[j]);
-//         console.log(`total times ${searchTerm[j]} appears in the ${text[i]}: ${tc[i]}`);
-//     }
-//     textTermCount.push(tc);
-// }
-
-for (let j = 0; j < searchTerm.length; j++) {
-    console.log(`-------- search term : ${searchTerm[j]} -----------`);
-    let tf = [];
-    for (let i = 0; i < text.length; i++) {
-        tf[i] = textWordCount[i].getCount(searchTerm[j]) / textUniqueWords[i] * 100;
-        console.log(`${text[i]}: ${tf[i]}`);
-    }
-    TF.push(tf);
-}
-
-
 
 let fileBible = fs.readFileSync('assets/bible.txt', 'utf8');
 let fileQuran = fs.readFileSync('assets/quran.txt', 'utf8');
 let fileBagGit = fs.readFileSync('assets/bhagavadGita.txt', 'utf8');
 let fileVedas = fs.readFileSync('assets/vedas.txt', 'utf8');
+let fileTest = fs.readFileSync('assets/test.txt', 'utf8');
 
+console.log(fileTest)
+// console.log(textFiles[4])
 // Bible
 let bibCount = new WordCount();
 bibCount.process(fileBible);
+// // bibCount.sortByCountUp();
+// // bibCount.logTheDict();
+
 // Qur'an
 let qurCount = new WordCount();
 qurCount.process(fileQuran);
+// // qurCount.sortByCountUp();
+// // qurCount.logTheDict();
+
 // Bhagavad Gita
 let bagCount = new WordCount();
 bagCount.process(fileBagGit);
+// // bagCount.sortByCountUp();
+// // bagCount.logTheDict();
+
 // Vedas
 let vedCount = new WordCount();
 vedCount.process(fileVedas);
+// // console.log(vedCount.tokens);
+// console.log(`total tokens in Vedas: ${vedCount.tokens.length}`);
+// // console.log(vedCount.keys);
+// console.log(`total distinct words of 2+ chars in Vedas: ${vedCount.keys.length}`);
+// // vedCount.sortByCountUp();
+// // vedCount.logTheDict();
 
 
+// console.log(`================== SELECTED TERMS ==================`);
+
+// // console.log(`total times "god" appears in Bible: ${bibCount.getCount("god")}`);
+// console.log(`total times "pain" appears in Bible: ${bibCount.getCount("pain")}`);
+// // console.log(`total times "love" appears in Bible: ${bibCount.getCount("love")}`);
+// // console.log(`total times "hate" appears in Bible: ${bibCount.getCount("hate")}`);
+// // console.log(`total times "suffering" appears in Bible: ${bibCount.getCount("suffering")}`);
+
+// // console.log(`total times "god" appears in Qur'an: ${qurCount.getCount("god")}`);
+// console.log(`total times "pain" appears in Qur'an: ${qurCount.getCount("pain")}`);
+// // console.log(`total times "happy" appears in Qur'an: ${qurCount.getCount("happy")}`);
+// // console.log(`total times "sad" appears in Qur'an: ${qurCount.getCount("sad")}`);
+
+// // console.log(`total times "god" appears in Baghavad Gita: ${bagCount.getCount("god")}`);
+// console.log(`total times "pain" appears in Baghavad Gita: ${bagCount.getCount("pain")}`);
+// // console.log(`total times "happy" appears in Baghavad Gita: ${bagCount.getCount("happy")}`);
+// // console.log(`total times "sad" appears in Baghavad Gita: ${bagCount.getCount("sad")}`);
+
+// console.log(`total times "pain" appears in the Vedas: ${vedCount.getCount("pain")}`);
+
+
+function handleWCData(req, res) {
+    wtBib = bibCount.tokens.length; // 791684
+    wtQur = qurCount.tokens.length; // 12592
+    wtBag = bagCount.tokens.length; // 155543
+    wtVed = vedCount.tokens.length; // 6006
+    wdBib = bibCount.keys.length;
+    wdQur = qurCount.keys.length;
+    wdBag = bagCount.keys.length;
+    wdVed = vedCount.keys.length;
+    res.send({ 0: wtBib, 1: wtQur, 2: wtBag, 3: wtVed, 4: wdBib, 5: wdQur, 6: wdBag, 7: wdVed });
+}
 
 const TFIDF = require('./TFIDF');
 let tfIDF = new TFIDF();
@@ -198,11 +194,4 @@ function getTfVed() {
     return (cloudTFVed);
 }
 
-// var Analyzer = require('natural').SentimentAnalyzer;
-// var stemmer = require('natural').PorterStemmer;
-// var analyzer = new Analyzer("English", stemmer, "afinn");
-// console.log(analyzer.getSentiment(tokensCat));
-// console.log(analyzer.getSentiment(tokensBib));
-// console.log(analyzer.getSentiment(tokensQur));
-// console.log(analyzer.getSentiment(tokensBag));
-// console.log(analyzer.getSentiment(tokensVed));
+
