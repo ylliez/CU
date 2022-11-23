@@ -19,32 +19,77 @@ let tokensBag = tokenizer.tokenize(fileBagGit)
 let tokensVed = tokenizer.tokenize(fileVedas)
 // console.log(tokensCat)
 
-// // tf-idf
-// let tfidf = new natural.TfIdf();
-// // tfidf.addFileSync('assets/cat.txt');
-// // tfidf.addFileSync('assets/bible.txt');
-// // tfidf.addFileSync(`assets/quran.txt`);
-// // tfidf.addFileSync(`assets/bhagavadGita.txt`);
-// // tfidf.addFileSync(`assets/vedas.txt`);
-// tfidf.addDocument(fileBible);
-// tfidf.addDocument(fileQuran);
-// tfidf.addDocument(fileBagGit);
-// tfidf.addDocument(fileVedas);
-// // console.log('kingdom-----------');
-// // tfidf.tfidfs('kingdom', function (i, measure) { console.log('document #' + i + ' is ' + measure); });
-// // console.log('pain-----------');
-// // tfidf.tfidfs('pain', function (i, measure) { console.log('document #' + i + ' is ' + measure) });
+// TF-IDF
+let tfidf = new natural.TfIdf();
+// tfidf.addFileSync('assets/cat.txt');
+// tfidf.addFileSync('assets/bible.txt');
+// tfidf.addFileSync(`assets/quran.txt`);
+// tfidf.addFileSync(`assets/bhagavadGita.txt`);
+// tfidf.addFileSync(`assets/vedas.txt`);
+tfidf.addDocument(fileBible);
+tfidf.addDocument(fileQuran);
+tfidf.addDocument(fileBagGit);
+tfidf.addDocument(fileVedas);
+// console.log('kingdom-----------');
+// tfidf.tfidfs('kingdom', function (i, measure) { console.log('document #' + i + ' is ' + measure); });
+// console.log('pain-----------');
+// tfidf.tfidfs('pain', function (i, measure) { console.log('document #' + i + ' is ' + measure) });
 // tfidf.listTerms(0).forEach(function (item) {
 //     console.log(item.term + ': ' + item.tfidf);
 // });
+console.log('slaves-----------');
+tfidf.tfidfs('slaves', function (i, measure) { console.log('document #' + i + ' is ' + measure); });
+console.log('conquer-----------');
+tfidf.tfidfs('conquer', function (i, measure) { console.log('document #' + i + ' is ' + measure) });
+tfidf.tfidfs('english', function (i, measure) { console.log('document #' + i + ' is ' + measure) });
 
 
-// stem
-let pStemmer = require('natural').PorterStemmer;
-let stemTest = pStemmer.stem(tokensTest[3]);
-console.log(stemTest);
+// // SENTENCES
+// let sentenceSplitter = new natural.SentenceTokenizer();
+// let sentsBible = sentenceSplitter.tokenize(fileBible); // 29805 sentences
+// console.log(sentsBible[0]);
+
+
+// // STEM
+// console.log(natural.PorterStemmer.stem("words"));
 // console.log(natural.PorterStemmer.stem(tokensTest[3]));
 // console.log(natural.LancasterStemmer.stem(tokensTest[3]));
+// let pStemmer = natural.PorterStemmer;
+// let stemTest = pStemmer.stem(tokensTest[3]);
+// console.log(stemTest);
+// console.log(natural.PorterStemmer.stem(tokensCat[9]));
+// natural.PorterStemmer.attach();
+// let stemCat = "cat".stem();
+// // let stemCat = tokensCat[9].stem();
+// // let stemCat = pStemmerLg.stem(tokensCat);
+// console.log(stemCat);
+// natural.PorterStemmer.attach();
+// console.log(natural.PorterStemmer.tokenizeAndStem("i am waking up to the sounds of domestic chainsaws"));
+// console.log("chainsaws".stem());
+// let nData = natural.PorterStemmer.tokenizeAndStem(fileCat);
+// console.log(nData);
+// let mData = natural.LancasterStemmer.stem(tokensCat);
+// console.log(mData);
+
+
+// // POS tagger
+// const language = "EN"
+// const defaultCategory = 'N';
+// const defaultCategoryCapitalized = 'NNP';
+// let lexicon = new natural.Lexicon(language, defaultCategory, defaultCategoryCapitalized);
+// let ruleSet = new natural.RuleSet('EN');
+// let tagger = new natural.BrillPOSTagger(lexicon, ruleSet);
+// // console.log(tagger.tag(tokensBib));
+
+
+// // NGRAMS
+// let ngrams = natural.NGrams;
+// // let ngram = ngrams.ngrams(tokens, 3);
+// // console.log(ngram);
+// let bigrams = ngrams.ngrams(tokensBib, 5);
+// // let bigrams = ngrams.bigrams(tokens);
+// console.log(bigrams);
+
 
 // var Analyzer = require('natural').SentimentAnalyzer;
 // var stemmer = require('natural').PorterStemmer;
@@ -56,32 +101,10 @@ console.log(stemTest);
 // console.log(analyzer.getSentiment(tokensVed));
 
 
-
-// // // split sentences
-// // let sentenceSplitter = new natural.SentenceTokenizer();
-// // let sentences = sentenceSplitter.tokenize("The lazy dog jumped over the high fence. The dog was very happy.");
-// // console.log(sentences);
-
-// // // n-grams
-// // let ngrams = natural.NGrams;
-// // // let ngram = ngrams.ngrams(tokens, 3);
-// // // console.log(ngram);
-// // let bigrams = ngrams.ngrams(tokens, 5);
-// // // let bigrams = ngrams.bigrams(tokens);
-// // console.log(bigrams);
-
 // // // get word similarity
 // // let similarity = natural.JaroWinklerDistance(tokens[3], tokens[4]);
 // // console.log(`similarity between ${tokens[3]} and ${tokens[4]} is ${similarity}`);
 
-// // // POS tagger
-// // const language = "EN"
-// // const defaultCategory = 'N';
-// // const defaultCategoryCapitalized = 'NNP';
-// // let lexicon = new natural.Lexicon(language, defaultCategory, defaultCategoryCapitalized);
-// // let ruleSet = new natural.RuleSet('EN');
-// // let tagger = new natural.BrillPOSTagger(lexicon, ruleSet);
-// // console.log(tagger.tag(tokens));
 
 // // // WordNet
 // // let wordnet = new natural.WordNet();

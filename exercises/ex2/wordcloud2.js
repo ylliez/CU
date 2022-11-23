@@ -8,8 +8,6 @@
 
 'use strict'
 
-console.log(`wc script go`);
-
 // setImmediate
 if (!window.setImmediate) {
     window.setImmediate = (function setupSetImmediate() {

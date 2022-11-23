@@ -1,0 +1,54 @@
+<html>
+
+<head>
+    <title>NLP visualization</title>
+</head>
+
+<body>
+    <h1><b>Apocryphal Intelligence</b></h1>
+    <h2>Texts</h2>
+    <h3>Texts analyzed:</h3>
+    <ul>
+        <li>Bible</li>
+        <li>Qur'an</li>
+        <li>Bhagavad Gita</li>
+        <li>Vedas</li>
+    </ul>
+    <h2>Term Frequency</h2>
+    <h3>Total words</h3>
+    <svg id="svg1" width="600" height="400"></svg>
+    <h3>Total distinct words of 2+ characters</h3>
+    <svg id="svg2" width="600" height="400"></svg>
+    <h3>Bible</h3>
+    <canvas id="canvas1" width="400" height="300"></canvas>
+    <h3>Qur'an</h3>
+    <canvas id="canvas2" width="400" height="300"></canvas>
+    <h3>Bhagavad Gita</h3>
+    <canvas id="canvas3" width="400" height="300"></canvas>
+    <h3>Vedas</h3>
+    <canvas id="canvas4" width="400" height="300"></canvas>
+    <h2>Term Frequency - Inverse Document Frequency</h2>
+    <h3>High TFIDF (Unique)</h3>
+    <canvas id="canvas5" width="800" height="600"></canvas>
+    <h3>Low TFIDF (Common)</h3>
+    <canvas id="canvas6" width="800" height="600"></canvas>
+
+
+    <h2>Sentiment Analysis</h2>
+    <svg id="svg3" width="600" height="400"></svg>
+
+
+    <h2>Dependency Tree</h2>
+    <img src="assets/img/displacy_bible.png"></img>
+    <img src="assets/img/displacy_quran.png"></img>
+    <img src="assets/img/displacy_bhag.png"></img>
+    <img src="assets/img/displacy_vedas.png"></img>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js'></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="wordcloud2.js"></script>
+    <script src="5_cloud.js"></script>
+
+</body>
+
+</html>

@@ -87,12 +87,15 @@ class WordCount {
   }
 
 
-  fillCloudArray(array) {
+  fillCloudArray() {
     for (let i = 0; i < this.keys.length; i++) {
       array.push(this.dict[this.keys[i]] + ' ' + this.keys[i]);
     }
-    console.log(array);
-    // return array;
+    return array;
+  }
+
+  logDictCloud(array) {
+    return this.dict;
   }
 }
 

@@ -2,22 +2,24 @@ const WordCount = require('./wordCount');
 // const WordCloud = require('./wordcloud2');
 const fs = require('fs');
 
-const { createCanvas, loadImage } = require('canvas')
-const canvas = createCanvas(200, 200)
-const ctx = canvas.getContext('2d')
+// const { createCanvas } = require('canvas')
+// const cloud = require('d3-cloud');
 
-// Write "Awesome!"
-ctx.font = '30px Impact'
-ctx.rotate(0.1)
-ctx.fillText('Awesome!', 50, 100)
+// const canvas = createCanvas(200, 200)
+// const ctx = canvas.getContext('2d')
 
-// Draw line under text
-var text = ctx.measureText('Awesome!')
-ctx.strokeStyle = 'rgba(0,0,0,0.5)'
-ctx.beginPath()
-ctx.lineTo(50, 102)
-ctx.lineTo(50 + text.width, 102)
-ctx.stroke()
+// // Write "Awesome!"
+// ctx.font = '30px Impact'
+// ctx.rotate(0.1)
+// ctx.fillText('Awesome!', 50, 100)
+
+// // Draw line under text
+// var text = ctx.measureText('Awesome!')
+// ctx.strokeStyle = 'rgba(0,0,0,0.5)'
+// ctx.beginPath()
+// ctx.lineTo(50, 102)
+// ctx.lineTo(50 + text.width, 102)
+// ctx.stroke()
 
 
 let fileCat = fs.readFileSync('assets/cat.txt', 'utf8');
@@ -90,8 +92,46 @@ console.log(`total distinct words of 2+ chars in Vedas: ${vedCount.keys.length}`
 
 console.log(`================== SELECTED TERMS ==================`);
 
-// console.log(`total times "god" appears in Bible: ${bibCount.getCount("god")}`);
+console.log(`================== PAIN ==================`);
 console.log(`total times "pain" appears in Bible: ${bibCount.getCount("pain")}`);
+console.log(`total times "pain" appears in Qur'an: ${qurCount.getCount("pain")}`);
+console.log(`total times "pain" appears in Baghavad Gita: ${bagCount.getCount("pain")}`);
+console.log(`total times "pain" appears in the Vedas: ${vedCount.getCount("pain")}`);
+
+
+console.log(`================== LOVE ==================`);
+console.log(`total times "love" appears in Bible: ${bibCount.getCount("love")}`);
+console.log(`total times "love" appears in Qur'an: ${qurCount.getCount("love")}`);
+console.log(`total times "love" appears in Baghavad Gita: ${bagCount.getCount("love")}`);
+console.log(`total times "love" appears in the Vedas: ${vedCount.getCount("love")}`);
+
+console.log(`================== HATE ==================`);
+console.log(`total times "hate" appears in Bible: ${bibCount.getCount("hate")}`);
+console.log(`total times "hate" appears in Qur'an: ${qurCount.getCount("hate")}`);
+console.log(`total times "hate" appears in Baghavad Gita: ${bagCount.getCount("hate")}`);
+console.log(`total times "hate" appears in the Vedas: ${vedCount.getCount("hate")}`);
+
+console.log(`================== GOD ==================`);
+console.log(`total times "god" appears in Bible: ${bibCount.getCount("god")}`);
+console.log(`total times "god" appears in Qur'an: ${qurCount.getCount("god")}`);
+console.log(`total times "god" appears in Baghavad Gita: ${bagCount.getCount("god")}`);
+console.log(`total times "god" appears in the Vedas: ${vedCount.getCount("god")}`);
+
+console.log(`================== slave ==================`);
+console.log(`total times "slave" appears in Bible: ${bibCount.getCount("slave")}`);
+console.log(`total times "slave" appears in Qur'an: ${qurCount.getCount("slave")}`);
+console.log(`total times "slave" appears in Baghavad Gita: ${bagCount.getCount("slave")}`);
+console.log(`total times "slave" appears in the Vedas: ${vedCount.getCount("slave")}`);
+
+console.log(`================== conquer ==================`);
+console.log(`total times "conquer" appears in Bible: ${bibCount.getCount("conquer")}`);
+console.log(`total times "conquer" appears in Qur'an: ${qurCount.getCount("conquer")}`);
+console.log(`total times "conquer" appears in Baghavad Gita: ${bagCount.getCount("conquer")}`);
+console.log(`total times "conquer" appears in the Vedas: ${vedCount.getCount("conquer")}`);
+
+
+
+// console.log(`total times "god" appears in Bible: ${bibCount.getCount("god")}`);
 // console.log(`total times "love" appears in Bible: ${bibCount.getCount("love")}`);
 // console.log(`total times "hate" appears in Bible: ${bibCount.getCount("hate")}`);
 // console.log(`total times "suffering" appears in Bible: ${bibCount.getCount("suffering")}`);
@@ -99,16 +139,13 @@ console.log(`total times "pain" appears in Bible: ${bibCount.getCount("pain")}`)
 // console.table(
 
 // console.log(`total times "god" appears in Qur'an: ${qurCount.getCount("god")}`);
-console.log(`total times "pain" appears in Qur'an: ${qurCount.getCount("pain")}`);
 // console.log(`total times "happy" appears in Qur'an: ${qurCount.getCount("happy")}`);
 // console.log(`total times "sad" appears in Qur'an: ${qurCount.getCount("sad")}`);
 
 // console.log(`total times "god" appears in Baghavad Gita: ${bagCount.getCount("god")}`);
-console.log(`total times "pain" appears in Baghavad Gita: ${bagCount.getCount("pain")}`);
 // console.log(`total times "happy" appears in Baghavad Gita: ${bagCount.getCount("happy")}`);
 // console.log(`total times "sad" appears in Baghavad Gita: ${bagCount.getCount("sad")}`);
 
-console.log(`total times "pain" appears in the Vedas: ${vedCount.getCount("pain")}`);
 
 // let cloudArrayCat = [];
 // catCount.fillCloudArray(cloudArrayCat);

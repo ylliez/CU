@@ -12,6 +12,7 @@ function loadSamples() {
     tfIDF.finish(filenames.length);
     // tfIDF.sortByScoreAsc();
     tfIDF.sortByScoreDes();
+    // console.log(tfIDF.dict);
     tfIDF.logTheDict();
 }
 
@@ -29,4 +30,5 @@ function getDocFreq(filename) {
 
 // console.log(tfIDF.totalwords);
 // console.log(tfIDF.getScore(`pain`));
+// console.log(tfIDF.getScore(`allah`));
 
