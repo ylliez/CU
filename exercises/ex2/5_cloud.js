@@ -3,29 +3,23 @@ window.onload = function () {
     $.get(
         "/passWCData",
         (res) => {
-            console.log(res);
+            // console.log(res);
             makeBarChart(`svg1`, res[0], [0, 1000000]);
             makeBarChart(`svg2`, res[1], [0, 20000]);
+            // console.log(res)
+            // console.log(res[0])
         }
     );
 
 
     $.get(
         "/passCloudList",
-        (response) => {
-            cloudTfBibList = response[0];
-            cloudTfQurList = response[1];
-            cloudTfBagList = response[2];
-            cloudTfVedList = response[3];
-            cloudListTFIDF = response[4];
-            cloudListTFIDFInv = response[5];
+        (res) => {
+            // console.log(res.length);
             // WordCloud.minFontSize = "15px";
-            WordCloud(document.getElementById('canvas1'), { list: cloudTfBibList });
-            WordCloud(document.getElementById('canvas2'), { list: cloudTfQurList });
-            WordCloud(document.getElementById('canvas3'), { list: cloudTfBagList });
-            WordCloud(document.getElementById('canvas4'), { list: cloudTfVedList });
-            WordCloud(document.getElementById('canvas5'), { list: cloudListTFIDF });
-            WordCloud(document.getElementById('canvas6'), { list: cloudListTFIDFInv });
+            for (let i = 0; i < res.length; i++) {
+                WordCloud(document.getElementById(`canvas${i}`), { list: res[i] });
+            }
         }
     );
 

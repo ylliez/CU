@@ -52,7 +52,7 @@ for (let i = 0; i < text.length; i++) {
 // console.log(textUniqueWords);
 
 function handleWCData(req, res) {
-    res.send({ 0: textTotalWords, 1: textUniqueWords });
+    res.send([textTotalWords, textUniqueWords]);
 }
 
 
@@ -69,11 +69,11 @@ function handleWCData(req, res) {
 // }
 
 for (let j = 0; j < searchTerm.length; j++) {
-    console.log(`-------- search term : ${searchTerm[j]} -----------`);
+    // console.log(`-------- search term : ${searchTerm[j]} -----------`);
     let tf = [];
     for (let i = 0; i < text.length; i++) {
         tf[i] = textWordCount[i].getCount(searchTerm[j]) / textUniqueWords[i] * 100;
-        console.log(`${text[i]}: ${tf[i]}`);
+        // console.log(`${text[i]}: ${tf[i]}`);
     }
     TF.push(tf);
 }
@@ -106,55 +106,27 @@ loadSamples();
 
 function loadSamples() {
     let filenames = ['bible.txt', 'quran.txt', 'bhagavadGita.txt', 'vedas.txt'];
-    for (let i = 0; i < filenames.length; i++) { getTermFreq(filenames[i]); }
-    for (let i = 0; i < filenames.length; i++) { getDocFreq(filenames[i]); }
-    tfIDF.finish(filenames.length);
+    for (let i = 0; i < textRead.length; i++) { tfIDF.termFreq(textRead[i]); }
+    for (let i = 0; i < textRead.length; i++) { tfIDF.docFreq(textRead[i]); }
+    tfIDF.finish(textRead.length);
     // tfIDF.sortByScoreAsc();
     tfIDF.sortByScoreDes();
     // console.log(tfIDF.dict);
-    // tfIDF.logTheDict();
-}
-
-function getTermFreq(filename) {
-    let data = fs.readFileSync('assets/' + filename, 'utf8');
-    tfIDF.termFreq(data);
-}
-
-
-function getDocFreq(filename) {
-    let data = fs.readFileSync('assets/' + filename, 'utf8');
-    tfIDF.docFreq(data);
+    tfIDF.logTheDict();
 }
 
 // HANDLE CLOUD REQUEST
 function handleCloudList(req, res) {
     cloudTfBib = getTfBib();
     cloudTfQur = getTfQur();
+    // console.log(cloudTfQur)
     cloudTfBag = getTfBag();
     cloudTfVed = getTfVed();
     cloudTFIDF = getTfidfList();
     cloudTFIDFInv = getTfidfListInv();
-    res.send({ 0: cloudTfBib, 1: cloudTfQur, 2: cloudTfBag, 3: cloudTfVed, 4: cloudTFIDF, 5: cloudTFIDFInv });
-    // res.send({ 0: cloudTFIDF, 1: cloudTfBib, 2: cloudTfQur, 3: cloudTfBag, 4: cloudTfVed, 5: cloudTFIDFInv });
-}
+    // res.send({ 0: cloudTfBib, 1: cloudTfQur, 2: cloudTfBag, 3: cloudTfVed, 4: cloudTFIDF, 5: cloudTFIDFInv });
+    res.send([getTfBib(), cloudTfQur, cloudTfBag, cloudTfVed, cloudTFIDF, cloudTFIDFInv]);
 
-// TF-IDF CLOUD
-function getTfidfList() {
-    tfidfDict = tfIDF.dict;
-    // tfidfKeys = tfIDF.keys;
-    cloudTFIDF = []
-    for (var i in tfIDF.keys) { cloudTFIDF.push([tfIDF.keys[i], tfidfDict[tfIDF.keys[i]].tfidf * 100000]) }
-    // console.log(cloudTFIDF);
-    return (cloudTFIDF);
-}
-
-// TF-IDF INV
-function getTfidfListInv() {
-    tfidfDict = tfIDF.dict;
-    cloudTFIDFInv = []
-    for (var i in tfIDF.keys) { cloudTFIDFInv.push([tfIDF.keys[i], 100 - tfidfDict[tfIDF.keys[i]].tfidf * 100000]) }
-    // console.log(cloudTFIDF);
-    return (cloudTFIDFInv);
 }
 
 // TF CLOUD
@@ -165,6 +137,7 @@ function getTfBib() {
     for (var i in bibKeys) {
         cloudTFBib.push([bibKeys[i], bibDict[bibKeys[i]] / 100])
     }
+    // console.log(cloudTFBib)
     return (cloudTFBib);
 }
 
@@ -196,6 +169,26 @@ function getTfVed() {
         cloudTFVed.push([vedKeys[i], vedDict[vedKeys[i]] / 100])
     }
     return (cloudTFVed);
+}
+
+
+// TF-IDF CLOUD
+function getTfidfList() {
+    tfidfDict = tfIDF.dict;
+    // tfidfKeys = tfIDF.keys;
+    cloudTFIDF = []
+    for (var i in tfIDF.keys) { cloudTFIDF.push([tfIDF.keys[i], tfidfDict[tfIDF.keys[i]].tfidf * 100000]) }
+    // console.log(cloudTFIDF);
+    return (cloudTFIDF);
+}
+
+// TF-IDF INV
+function getTfidfListInv() {
+    tfidfDict = tfIDF.dict;
+    cloudTFIDFInv = []
+    for (var i in tfIDF.keys) { cloudTFIDFInv.push([tfIDF.keys[i], 100 - tfidfDict[tfIDF.keys[i]].tfidf * 100000]) }
+    // console.log(cloudTFIDF);
+    return (cloudTFIDFInv);
 }
 
 // var Analyzer = require('natural').SentimentAnalyzer;
