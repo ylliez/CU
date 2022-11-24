@@ -4,10 +4,9 @@ window.onload = function () {
         "/getWC",
         (res) => {
             // console.log(res);
+            // console.log(res[0])
             makeBarChart(`svg1`, res[1], [0, 1000000], res[0]);
             makeBarChart(`svg2`, res[2], [0, 20000], res[0]);
-            // console.log(res)
-            // console.log(res[0])
         }
     );
 
@@ -19,19 +18,18 @@ window.onload = function () {
             // console.log(res[0]);
             // WordCloud.minFontSize = "15px";
             for (let i = 0; i < res.length; i++) {
-                WordCloud(document.getElementById(`canvas${i}`), { list: res[i] });
+                WordCloud(document.getElementById(`TFcanvas${i}`), { list: res[i] });
             }
         }
     );
 
     $.get(
-        "/passCloudList",
+        "/getTFIDF",
         (res) => {
             // console.log(res.length);
             // console.log(res[0]);
-            // WordCloud.minFontSize = "15px";
             for (let i = 0; i < res.length; i++) {
-                WordCloud(document.getElementById(`canvas${i + 5}`), { list: res[i] });
+                WordCloud(document.getElementById(`TFIDFcanvas${i}`), { list: res[i] });
             }
         }
     );
