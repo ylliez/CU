@@ -11,38 +11,43 @@ app.use(express.static(__dirname));
 
 app.get('/', function (req, res) { res.sendFile(__dirname + '/index.html') });
 app.get('/cloud', function (req, res) { res.sendFile(__dirname + '/5_cloud.html') });
-app.get('/passWCData', handleWCData);
+app.get('/getWC', handleWCData);
+app.get('/getTF', handleTFData);
 app.get('/passCloudList', handleCloudList);
 
 
 const WordCount = require('./wordCount');
 const fs = require('fs');
 
-let text = ['bible', 'quran', 'bgita', 'vedas'];
+let textTitle = ['bible', 'quran', 'bgita', 'vedas'];
 let textFile = ['bible.txt', 'quran.txt', 'bgita.txt', 'vedas.txt'];
 let textRead = [];
+
+// search words
+let searchTerm = [`pain`, `slave`];
+// let searchTerm = [`god`, `love`, `hate`, `happy`, `sad`, `conquer`, `slave`];
+let textTermCount = [];
+let TF = []
+
+
+// WORD COUNT (total words & total unique words)
+// holder for WordCount object
 let textWordCount = [];
 // total word count
 let textTotalWords = [];
 // unique word count
 let textUniqueWords = [];
-// search words
-let searchTerm = [`pain`, `slave`];
-// let searchTerm = [`god`, `love`, `hate`, `happy`, `sad`, `conquer`, `slave`];
-let textTermCount = [];
-let TF = [];
-
-// WORDCOUNT
-for (let i = 0; i < text.length; i++) {
+// get texts' total & unique word count
+for (let i = 0; i < textTitle.length; i++) {
     // read files
     textRead[i] = fs.readFileSync('assets/' + textFile[i], 'utf8');
     // make WordCount object
     textWordCount[i] = new WordCount();
     // process text
     textWordCount[i].process(textRead[i]);
-    // get word total
+    // get total word count
     textTotalWords[i] = textWordCount[i].tokens.length;
-    // get unique word total
+    // get unique word count
     textUniqueWords[i] = textWordCount[i].keys.length;
 }
 // console.log(textRead[0]);
@@ -52,7 +57,84 @@ for (let i = 0; i < text.length; i++) {
 // console.log(textUniqueWords);
 
 function handleWCData(req, res) {
-    res.send([textTotalWords, textUniqueWords]);
+    res.send([textTitle, textTotalWords, textUniqueWords]);
+}
+
+// TF (term frequency)
+let textTF = [];
+let textTFNorm = [];
+// for (let j = 0; j < searchTerm.length; j++) {
+//     // console.log(`-------- search term : ${searchTerm[j]} -----------`);
+//     let tf = [];
+//     for (let i = 0; i < textTitle.length; i++) {
+//         tf[i] = textWordCount[i].getCount(searchTerm[j]) / textUniqueWords[i] * 100;
+//         // console.log(`${textTitle[i]}: ${tf[i]}`);
+//     }
+//     TF.push(tf);
+// }
+
+for (let i = 0; i < textTitle.length; i++) {
+    let tf = [];
+    let tfNorm = [];
+    for (let j = 0; j < textWordCount[i].keys.length; j++) {
+        tf.push([textWordCount[i].keys[j], textWordCount[i].dict[textWordCount[i].keys[j]] / textTotalWords[i]])
+        tfNorm.push([textWordCount[i].keys[j], textWordCount[i].dict[textWordCount[i].keys[j]] / textTotalWords[i] * 5000])
+    }
+    textTF.push(tf);
+    textTFNorm.push(tfNorm);
+}
+
+// console.log(textTF);
+// console.log(textWordCount[0].keys[0])
+// console.log(textWordCount[0].dict[textWordCount[0].keys[0]])
+// console.log(textTotalWords[0])
+// console.log(textWordCount[0].dict[textWordCount[0].keys[0]] / textTotalWords[0])
+// console.log(textTFNorm);
+
+function handleTFData(req, res) {
+    res.send(textTFNorm);
+}
+
+// TF CLOUD
+function getTfBib() {
+    bibDict = bibCount.dict;
+    bibKeys = bibCount.keys;
+    cloudTFBib = []
+    for (var i in bibKeys) {
+        cloudTFBib.push([bibKeys[i], bibDict[bibKeys[i]] / 100])
+    }
+    console.log(cloudTFBib)
+    return (cloudTFBib);
+}
+
+function getTfQur() {
+    qurDict = qurCount.dict;
+    qurKeys = qurCount.keys;
+    cloudTFQur = []
+    for (var i in qurKeys) {
+        cloudTFQur.push([qurKeys[i], qurDict[qurKeys[i]] / 100])
+    }
+    return (cloudTFQur);
+}
+
+function getTfBag() {
+    bagDict = bagCount.dict;
+    bagKeys = bagCount.keys;
+    cloudTFBag = []
+    for (var i in bagKeys) {
+        cloudTFBag.push([bagKeys[i], bagDict[bagKeys[i]] / 100])
+    }
+    return (cloudTFBag);
+}
+
+function getTfVed() {
+    vedDict = vedCount.dict;
+    vedKeys = vedCount.keys;
+    cloudTFVed = []
+    for (var i in vedKeys) {
+        cloudTFVed.push([vedKeys[i], vedDict[vedKeys[i]] / 100])
+    }
+    return (cloudTFVed);
 }
 
 
@@ -61,9 +143,9 @@ function handleWCData(req, res) {
 // for (let j = 0; j < searchTerm.length; j++) {
 //     console.log(`-------- search term : ${searchTerm[j]} -----------`);
 //     let tc = [];
-//     for (let i = 0; i < text.length; i++) {
+//     for (let i = 0; i < textTitle.length; i++) {
 //         tc[i] = textWordCount[i].getCount(searchTerm[j]);
-//         console.log(`total times ${searchTerm[j]} appears in the ${text[i]}: ${tc[i]}`);
+//         console.log(`total times ${searchTerm[j]} appears in the ${textTitle[i]}: ${tc[i]}`);
 //     }
 //     textTermCount.push(tc);
 // }
@@ -71,9 +153,9 @@ function handleWCData(req, res) {
 for (let j = 0; j < searchTerm.length; j++) {
     // console.log(`-------- search term : ${searchTerm[j]} -----------`);
     let tf = [];
-    for (let i = 0; i < text.length; i++) {
+    for (let i = 0; i < textTitle.length; i++) {
         tf[i] = textWordCount[i].getCount(searchTerm[j]) / textUniqueWords[i] * 100;
-        // console.log(`${text[i]}: ${tf[i]}`);
+        // console.log(`${textTitle[i]}: ${tf[i]}`);
     }
     TF.push(tf);
 }
@@ -112,7 +194,7 @@ function loadSamples() {
     // tfIDF.sortByScoreAsc();
     tfIDF.sortByScoreDes();
     // console.log(tfIDF.dict);
-    tfIDF.logTheDict();
+    // tfIDF.logTheDict();
 }
 
 // HANDLE CLOUD REQUEST
@@ -127,48 +209,6 @@ function handleCloudList(req, res) {
     // res.send({ 0: cloudTfBib, 1: cloudTfQur, 2: cloudTfBag, 3: cloudTfVed, 4: cloudTFIDF, 5: cloudTFIDFInv });
     res.send([getTfBib(), cloudTfQur, cloudTfBag, cloudTfVed, cloudTFIDF, cloudTFIDFInv]);
 
-}
-
-// TF CLOUD
-function getTfBib() {
-    bibDict = bibCount.dict;
-    bibKeys = bibCount.keys;
-    cloudTFBib = []
-    for (var i in bibKeys) {
-        cloudTFBib.push([bibKeys[i], bibDict[bibKeys[i]] / 100])
-    }
-    // console.log(cloudTFBib)
-    return (cloudTFBib);
-}
-
-function getTfQur() {
-    qurDict = qurCount.dict;
-    qurKeys = qurCount.keys;
-    cloudTFQur = []
-    for (var i in qurKeys) {
-        cloudTFQur.push([qurKeys[i], qurDict[qurKeys[i]] / 100])
-    }
-    return (cloudTFQur);
-}
-
-function getTfBag() {
-    bagDict = bagCount.dict;
-    bagKeys = bagCount.keys;
-    cloudTFBag = []
-    for (var i in bagKeys) {
-        cloudTFBag.push([bagKeys[i], bagDict[bagKeys[i]] / 100])
-    }
-    return (cloudTFBag);
-}
-
-function getTfVed() {
-    vedDict = vedCount.dict;
-    vedKeys = vedCount.keys;
-    cloudTFVed = []
-    for (var i in vedKeys) {
-        cloudTFVed.push([vedKeys[i], vedDict[vedKeys[i]] / 100])
-    }
-    return (cloudTFVed);
 }
 
 
