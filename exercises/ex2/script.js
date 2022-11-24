@@ -14,15 +14,24 @@ app.get('/cloud', function (req, res) { res.sendFile(__dirname + '/5_cloud.html'
 app.get('/getWC', handleWCData);
 app.get('/getTF', handleTFData);
 app.get('/getTFIDF', handleTFIDFData);
+app.get('/getSentiment', handleSentimentData);
+app.get('/getSingles', handleSinglesData);
 
 const WordCount = require('./wordCount');
 const TFIDF = require('./TFIDF');
+const natural = require('natural');
 const fs = require('fs');
 
 let textTitle = ['bible', 'quran', 'bgita', 'vedas'];
 let textFile = ['bible.txt', 'quran.txt', 'bgita.txt', 'vedas.txt'];
 let textRead = [];
 
+
+// INIT
+// read text files
+for (let i = 0; i < textFile.length; i++) {
+    textRead[i] = fs.readFileSync('assets/' + textFile[i], 'utf8');
+}
 
 // WORD COUNT (total words & total unique words)
 
@@ -34,8 +43,6 @@ let textTotalWords = [];
 let textUniqueWords = [];
 // get texts' total & unique word count
 for (let i = 0; i < textTitle.length; i++) {
-    // read files
-    textRead[i] = fs.readFileSync('assets/' + textFile[i], 'utf8');
     // make WordCount object
     textWordCount[i] = new WordCount();
     // process text
@@ -79,6 +86,7 @@ for (let i = 0; i < textTitle.length; i++) {
 
 // // tests
 // console.log(textTF);
+// console.log(textWordCount[0].dict);
 // console.log(textWordCount[0].keys[0])
 // console.log(textWordCount[0].dict[textWordCount[0].keys[0]])
 // console.log(textTotalWords[0])
@@ -158,42 +166,81 @@ function handleTFIDFData(req, res) {
 }
 
 
-// search words
-let searchTerm = [`pain`, `slave`];
-// let searchTerm = [`god`, `love`, `hate`, `happy`, `sad`, `conquer`, `slave`];
-let textTermCount = [];
-let TF = []
+// NATURAL
 
-// TF
-// // get term count
+// tokenize
+let tokenizer = new natural.WordTokenizer();
+let textToken = [];
+for (let i in textRead) {
+    textToken[i] = tokenizer.tokenize(textRead[i]);
+}
+// let testToken = tokenizer.tokenize("The smart dog jumped over the high fence.");
+// console.log(testToken);
+// console.log(textToken[0]);
+
+var Analyzer = natural.SentimentAnalyzer;
+var stemmer = natural.PorterStemmer;
+var analyzer = new Analyzer("English", stemmer, "afinn");
+let textSentiment = [];
+for (let i in textToken) {
+    textSentiment[i] = analyzer.getSentiment(textToken[i])
+}
+// testSentiment = analyzer.getSentiment(testToken)
+// console.log(testSentiment);
+// console.log(textSentiment[0]);
+// console.log(textSentiment);
+
+// send to visualizer
+function handleSentimentData(req, res) {
+    res.send(textSentiment);
+}
+
+// search words
+// let searchTerm = [`pain`, `slave`];
+let searchTerm = [`god`, `love`, `hate`, `happy`, `sad`, `pain`, `delight`, `conquer`, `slave`];
+let textSingleCount = [];
+let textSingleFrequency = [];
+// let textSingleFrequency = { texts: textTitle };
+
+// // TF
+// // get single term count
 // for (let j = 0; j < searchTerm.length; j++) {
 //     console.log(`-------- search term : ${searchTerm[j]} -----------`);
 //     let tc = [];
 //     for (let i = 0; i < textTitle.length; i++) {
 //         tc[i] = textWordCount[i].getCount(searchTerm[j]);
 //         console.log(`total times ${searchTerm[j]} appears in the ${textTitle[i]}: ${tc[i]}`);
+//         if (tc[i] == undefined) { tc[i] = 0; }
 //     }
-//     textTermCount.push(tc);
+//     textSingleCount.push(tc);
 // }
+// console.log(textSingleCount);
 
-// for (let j = 0; j < searchTerm.length; j++) {
-//     // console.log(`-------- search term : ${searchTerm[j]} -----------`);
-//     let tf = [];
-//     for (let i = 0; i < textTitle.length; i++) {
-//         tf[i] = textWordCount[i].getCount(searchTerm[j]) / textUniqueWords[i] * 100;
-//         // console.log(`${textTitle[i]}: ${tf[i]}`);
-//     }
-//     TF.push(tf);
-// }
+for (let j = 0; j < searchTerm.length; j++) {
+    console.log(`-------- search term : ${searchTerm[j]} -----------`);
+    // term count
+    let tc = [];
+    // term frequency
+    let tf = [];
+    // term frequency normalized
+    let tfNorm = [];
+    for (let i = 0; i < textTitle.length; i++) {
+        // get term count
+        tc[i] = textWordCount[i].getCount(searchTerm[j]);
+        if (tc[i] == undefined) { tc[i] = 0; }
+        // console.log(`total times ${searchTerm[j]} appears in the ${textTitle[i]}: ${tc[i]}`);
+        // get term frequency
+        tf[i] = tc[i] / textUniqueWords[i] * 100;
+        // console.log(`frequency of ${searchTerm[j]} in the ${textTitle[i]}: ${tf[i]}`);
+    }
+    textSingleCount.push(tc);
+    // textSingleFrequency[searchTerm[j]] = tf;
+    textSingleFrequency.push(tf);
+}
 
+console.log(textSingleFrequency);
 
-
-
-// var Analyzer = require('natural').SentimentAnalyzer;
-// var stemmer = require('natural').PorterStemmer;
-// var analyzer = new Analyzer("English", stemmer, "afinn");
-// console.log(analyzer.getSentiment(tokensCat));
-// console.log(analyzer.getSentiment(tokensBib));
-// console.log(analyzer.getSentiment(tokensQur));
-// console.log(analyzer.getSentiment(tokensBag));
-// console.log(analyzer.getSentiment(tokensVed));
+// send to visualizer
+function handleSinglesData(req, res) {
+    res.send(textSingleFrequency);
+}
