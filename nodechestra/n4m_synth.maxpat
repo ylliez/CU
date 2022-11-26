@@ -106,7 +106,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 101.0, 1007.180555085377364, 110.0, 55.0 ],
-					"presentation_linecount" : 2,
 					"text" : "use last saved Max preferences"
 				}
 
@@ -367,7 +366,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 733.791666666666629, 108.0, 50.0, 22.0 ],
-					"text" : "4 93. 0."
+					"text" : "3 88. 0."
 				}
 
 			}
@@ -379,7 +378,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 938.724016181815728, 141.0, 50.0, 22.0 ],
-					"text" : "105. 0."
+					"text" : "88. 0."
 				}
 
 			}
@@ -391,7 +390,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 867.0, 170.0, 50.0, 22.0 ],
-					"text" : "105. 0."
+					"text" : "88. 0."
 				}
 
 			}
@@ -527,13 +526,13 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-70",
-					"linecount" : 6,
+					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 596.706947055127785, 679.180555085377364, 50.0, 89.0 ],
-					"text" : "C2S - Client ID: 1669001105902"
+					"patching_rect" : [ 596.706947055127785, 679.180555085377364, 50.0, 36.0 ],
+					"text" : "�F���S"
 				}
 
 			}
@@ -552,13 +551,13 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-67",
-					"linecount" : 6,
+					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 366.875009973843817, 621.523408532215171, 50.0, 89.0 ],
-					"text" : "C2S - Client ID: 1669001105902"
+					"patching_rect" : [ 366.875009973843817, 621.523408532215171, 50.0, 36.0 ],
+					"text" : "�F���S"
 				}
 
 			}
@@ -577,26 +576,26 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-61",
-					"linecount" : 6,
+					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 314.875009973843817, 570.523408532215171, 50.0, 89.0 ],
-					"text" : "\"C2S - Client ID: 1669001105902\""
+					"patching_rect" : [ 314.875009973843817, 570.523408532215171, 50.0, 36.0 ],
+					"text" : "�F���S"
 				}
 
 			}
 , 			{
 				"box" : 				{
 					"id" : "obj-60",
-					"linecount" : 6,
+					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 536.263762474060059, 663.7362961769104, 50.0, 89.0 ],
-					"text" : "\"C2S - Client ID: 1669001105902\""
+					"patching_rect" : [ 536.263762474060059, 663.7362961769104, 50.0, 36.0 ],
+					"text" : "�F���S"
 				}
 
 			}
@@ -3685,8 +3684,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1111.5, 450.783171574274661, 255.0, 35.0 ],
-					"text" : ";\rmax launchbrowser http://localhost:4200/client"
+					"patching_rect" : [ 1111.5, 450.783171574274661, 227.0, 35.0 ],
+					"text" : ";\rmax launchbrowser http://localhost:4200/"
 				}
 
 			}
@@ -3783,6 +3782,8 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 0,
 						"defer" : 0,
+						"node_bin_path" : "",
+						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
@@ -8111,21 +8112,21 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "PanGt2.maxpat",
-				"bootpath" : "~/Documents/GitHub/CU/CART451/project/prototype",
+				"bootpath" : "~/Documents/GitHub/CU/CART451/nodechestra",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "PanSw2.maxpat",
-				"bootpath" : "~/Documents/GitHub/CU/CART451/project/prototype",
+				"bootpath" : "~/Documents/GitHub/CU/CART451/nodechestra",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "ReverbPlate.maxpat",
-				"bootpath" : "~/Documents/GitHub/CU/CART451/project/prototype",
+				"bootpath" : "~/Documents/GitHub/CU/CART451/nodechestra",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
@@ -8150,28 +8151,28 @@
 			}
 , 			{
 				"name" : "n4m_synth.js",
-				"bootpath" : "~/Documents/GitHub/CU/CART451/project/prototype",
+				"bootpath" : "~/Documents/GitHub/CU/CART451/nodechestra",
 				"patcherrelativepath" : ".",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "n4m_synth_arp.maxpat",
-				"bootpath" : "~/Documents/GitHub/CU/CART451/project/prototype",
+				"bootpath" : "~/Documents/GitHub/CU/CART451/nodechestra",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "n4m_synth_poly.maxpat",
-				"bootpath" : "~/Documents/GitHub/CU/CART451/project/prototype",
+				"bootpath" : "~/Documents/GitHub/CU/CART451/nodechestra",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "n4m_synth_voice.maxpat",
-				"bootpath" : "~/Documents/GitHub/CU/CART451/project/prototype",
+				"bootpath" : "~/Documents/GitHub/CU/CART451/nodechestra",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
