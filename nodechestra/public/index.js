@@ -1,4 +1,5 @@
-console.log("INDEX")
+
+console.log("n4m synth client page loaded");
 const socket = io();
 
 socket.on("connect", () => {
@@ -9,8 +10,17 @@ socket.on("connect", () => {
 //     console.log(socket.id); // undefined
 // });
 
-// window.onload = function () {
-//     console.log("n4m synth client page loaded");
+function inputNum(tag) {
+    // $.get(
+    //     "/passInputNum",
+    //     { cat, id, val },
+    //     (response) => {
+    //         console.log(response);
+    //     }
+    // );
+    socket.emit("inputNum", tag);
+}
+
 //     // create unique ID for client
 //     clientID = Date.now();
 //     console.log(`client ID: ${clientID}`);
@@ -44,3 +54,25 @@ socket.on("connect", () => {
 // window.onbeforeunload = () => {
 //     ws.close();
 // }
+
+
+function inputStr(cat, id, val) {
+    $.get(
+        "/passInputStr",
+        { cat, id, val },
+        (response) => {
+            console.log(response);
+        }
+    );
+}
+
+function clientInput(cat, id, val) {
+    $.get(
+        "/passClientInput",
+        { cat, id, val },
+        (response) => {
+            console.log(response);
+        }
+    );
+}
+

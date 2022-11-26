@@ -92,8 +92,14 @@ function handleInputNum(req, res, next) {
 io.on('connection', (socket) => {
   Max.post(`${socket.id} joined. ${io.engine.clientsCount} users connected`);
   socket.onAny((event, args) => {
-    Max.post(event, args);
+    // Max.post(event, args);
+    // Max.post(event);
+    Max.post(args);
+    Max.outlet(args);
   });
+  // socket.on("inputNum", (args) => {
+  //   Max.post(args);
+  // });
   socket.on("disconnecting", (reason) => {
     // for (const room of socket.rooms) {
     //   if (room !== socket.id) {
