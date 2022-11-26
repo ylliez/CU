@@ -7,6 +7,7 @@ const port = 4200;
 let server = http.createServer(app);
 server.listen(port, () => { Max.post('server listening on port ' + port); })
 const io = require('socket.io')(server);
+let sockets = io.sockets.sockets;
 
 // const fs = require('fs');
 // const path = require("path");
@@ -90,7 +91,23 @@ function handleInputNum(req, res, next) {
 
 
 io.on('connection', (socket) => {
-  Max.post(`${socket.id} joined. ${io.engine.clientsCount} users connected`);
+
+  Max.post(`${socket.id} joined ${socket.room}. ${io.engine.clientsCount} users connected`);
+  // Max.post(`${computeUserID(socket)} joined. ${io.engine.clientsCount} users connected`);
+  Max.post(Array.from(sockets));
+  Max.post(Array.from(sockets.keys()));
+  // Max.post(Array.from(sockets.values()));
+  // Max.post(io.fetchSockets())
+  // Max.post(findClientsSocket())
+  logSockets();
+
+  // Max.post("/ of(/).sockets.size: " + io.of("/").sockets.size);
+  // Max.post(io.of("/").sockets);
+
+
+  Max.post("/ sockets.sockets.size: " + sockets.size);
+
+
   socket.onAny((event, args) => {
     // Max.post(event, args);
     // Max.post(event);
@@ -107,10 +124,18 @@ io.on('connection', (socket) => {
     //   }
     // }
     Max.post(`${socket.id} left. ${io.engine.clientsCount} users connected`);
+    // logSockets();
   });
 });
 
-// socket.onAny
+async function logSockets() {
+  // const AsyncSockets = await io.fetchSockets();
+  // Max.post("fetchSockets: " + AsyncSockets.length);
+  // Max.post("/ of(/).sockets.size: " + io.of("/").sockets.size);
+  // Max.post(io.of("/").sockets);
+  // Max.post(Array.from(sockets));
+  // Max.post("/ sockets.sockets.size: " + sockets.size);
+}
 
 // // COPILOT
 // create unique ID for client
@@ -143,10 +168,6 @@ io.on('connection', (socket) => {
 //   Max.post(`C2S: new client at ${in_ip}`);
 //   ws.send("Connected");
 
-//   ws.on('message', function incoming(message) {
-//     // Max.post(message);
-//     Max.outlet(message);
-//   });
 
 //   // ws.on("close", function stop() {
 //   //   Max.removeHandlers("send");
