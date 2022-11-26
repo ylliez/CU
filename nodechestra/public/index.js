@@ -1,11 +1,14 @@
 
-console.log("n4m synth client page loaded");
-const socket = io();
+console.log(`nodechestra client page loaded`);
 
+const socket = io();
 socket.on("connect", () => {
-    console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+    console.log(`client ID: ${socket.id}`); // x8WIv7-mJelg7on_ALbx
 });
 
+socket.onAny((event, args) => {
+    console.log(event, args);
+});
 // socket.on("disconnect", () => {
 //     console.log(socket.id); // undefined
 // });
@@ -21,10 +24,6 @@ function inputNum(tag) {
     socket.emit("inputNum", tag);
 }
 
-//     // create unique ID for client
-//     clientID = Date.now();
-//     console.log(`client ID: ${clientID}`);
-//     let ws = new WebSocket("ws://localhost:4200");
 //     ws.onopen = function () {
 //         ws.send(`C2S - Client ID: ${clientID}`);
 //         ws.onmessage = function (event) {

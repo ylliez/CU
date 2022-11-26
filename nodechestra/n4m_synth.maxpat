@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 1475.0, -14.0, 667.0, 787.0 ],
+		"rect" : [ 1475.0, -14.0, 446.0, 787.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -254,36 +254,37 @@
 					"patching_rect" : [ 341.0, 673.0, 50.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 35.0, 263.0, 36.0, 22.0 ],
-					"text" : "1"
+					"text" : "0"
 				}
 
 			}
 , 			{
 				"box" : 				{
 					"id" : "obj-122",
-					"linecount" : 3,
+					"linecount" : 7,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 289.0, 673.0, 50.0, 49.0 ],
+					"patching_rect" : [ 289.0, 673.0, 50.0, 102.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 35.0, 230.0, 370.0, 22.0 ],
-					"text" : "doesn't understand #2"
+					"text" : "m[XtY47vGww9BHwgFmAAAB] = [object Object]"
 				}
 
 			}
 , 			{
 				"box" : 				{
 					"id" : "obj-67",
+					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 237.0, 673.0, 50.0, 22.0 ],
+					"patching_rect" : [ 237.0, 673.0, 50.0, 35.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 35.0, 193.0, 134.0, 22.0 ],
-					"text" : "ftom"
+					"text" : "node.script"
 				}
 
 			}
@@ -3991,7 +3992,7 @@
 					"numoutlets" : 1,
 					"offset" : [ 0.0, 0.0 ],
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 1010.0, 508.617575069304962, 400.0, 220.0 ],
+					"patching_rect" : [ 991.0, 506.319901406728832, 400.0, 220.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -4019,8 +4020,6 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 0,
 						"defer" : 0,
-						"node_bin_path" : "",
-						"npm_bin_path" : "",
 						"watch" : 0
 					}
 ,
@@ -7580,7 +7579,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-143", 0 ],
+					"destination" : [ "obj-143", 1 ],
 					"order" : 0,
 					"source" : [ "obj-141", 0 ]
 				}

@@ -7,7 +7,8 @@ const port = 4200;
 let server = http.createServer(app);
 server.listen(port, () => { Max.post('server listening on port ' + port); })
 const io = require('socket.io')(server);
-let sockets = io.sockets.sockets;
+const sockets = io.sockets.sockets;
+const nsp = io.of('/delay');
 
 // const fs = require('fs');
 // const path = require("path");
@@ -89,23 +90,56 @@ function handleInputNum(req, res, next) {
   Max.outlet(req.query.cat, req.query.id, parseFloat(req.query.val));
 }
 
+// IO & HMTL separation: https://stackoverflow.com/questions/64767505/socket-io-show-the-users-in-the-correct-div 
 
 io.on('connection', (socket) => {
+  Max.post(`${socket.id} joined. ${io.engine.clientsCount} users connected`);
+  // // Max.post(`${socket.id} joined ${socket.room}. ${io.engine.clientsCount} users connected`);
+  // // Max.post(Array.from(sockets));
+  // Max.post(Array.from(sockets.keys()));
+  // Max.post(Array.from(io.sockets.sockets.values()));
+  // Max.post("values" + sockets.values());
+  // logSockets();
+  // // Object.keys deprecated in 4.x
 
-  Max.post(`${socket.id} joined ${socket.room}. ${io.engine.clientsCount} users connected`);
-  // Max.post(`${computeUserID(socket)} joined. ${io.engine.clientsCount} users connected`);
-  Max.post(Array.from(sockets));
-  Max.post(Array.from(sockets.keys()));
-  // Max.post(Array.from(sockets.values()));
-  // Max.post(io.fetchSockets())
-  // Max.post(findClientsSocket())
-  logSockets();
-
+  // ALT
   // Max.post("/ of(/).sockets.size: " + io.of("/").sockets.size);
   // Max.post(io.of("/").sockets);
 
+  // Max.post("/ sockets.sockets.size: " + sockets.size);
 
-  Max.post("/ sockets.sockets.size: " + sockets.size);
+  // Max.post('io.sockets.sockets', io.sockets.sockets.keys());
+  // Max.post('io.sockets.sockets', io.sockets.sockets.keys().length);
+
+  // // NAMESPACES
+  // // MAINSPACE : io.sockets alias for io.of('/')
+  // io.sockets.emit("hi", "everyone");
+  // io.of("/").emit("hi", "y'all");
+  // // .SOCKETS : MAP of socket instances (Map<SocketId, Socket>)
+  // Max.post(io.of("/").sockets);
+  // Max.post(io.sockets.sockets);
+  // // SIZE : Map.size equiv of Array.length
+  // Max.post(io.sockets.sockets.size);
+  // KEYS : iterator
+  // Max.post(io.sockets.sockets.keys()); // empty object
+  // Max.post(Array.from(io.sockets.sockets.keys())); // array of IDs
+  // Max.post(io.sockets.sockets.values()); // empty object
+  // Max.post(Array.from(io.sockets.sockets.values())); // CRASH (circular ref) array of socket instances
+  // // CRASH
+  //   io.sockets.sockets.forEach(logMapElements);
+  //   function logMapElements(value, key, map) {
+  //     // Max.post(`m[${key}] = ${value}`);
+  //     Max.post(value);
+  //   }
+
+  // Max.post(sockets.allSockets())
+
+  // async function logSockets() {
+  //   // const AsyncSockets = await io.fetchSockets();
+  //   // Max.post("fetchSockets: " + AsyncSockets.length);
+  //   const AsyncSockets = await io.allSockets();
+  //   Max.post("fetchSockets: " + AsyncSockets.length);
+  // }
 
 
   socket.onAny((event, args) => {
@@ -118,24 +152,19 @@ io.on('connection', (socket) => {
   //   Max.post(args);
   // });
   socket.on("disconnecting", (reason) => {
-    // for (const room of socket.rooms) {
-    //   if (room !== socket.id) {
-    //     socket.to(room).emit("user has left", socket.id);
-    //   }
-    // }
+    for (const room of socket.rooms) {
+      Max.post(room)
+      //   if (room !== socket.id) {
+      //     socket.to(room).emit("user has left", socket.id);
+      //   }
+    }
     Max.post(`${socket.id} left. ${io.engine.clientsCount} users connected`);
-    // logSockets();
   });
 });
 
-async function logSockets() {
-  // const AsyncSockets = await io.fetchSockets();
-  // Max.post("fetchSockets: " + AsyncSockets.length);
-  // Max.post("/ of(/).sockets.size: " + io.of("/").sockets.size);
-  // Max.post(io.of("/").sockets);
-  // Max.post(Array.from(sockets));
-  // Max.post("/ sockets.sockets.size: " + sockets.size);
-}
+io.of("/client_delay").on('connection', (socket) => {
+  Max.post(`${socket.id} joined DELAY. ${io.engine.clientsCount} users connected`);
+});
 
 // // COPILOT
 // create unique ID for client
