@@ -8,7 +8,7 @@ let server = http.createServer(app);
 server.listen(port, () => { Max.post('server listening on port ' + port); })
 const io = require('socket.io')(server);
 const sockets = io.sockets.sockets;
-const nsp = io.of('/delay');
+// const nsp = io.of('/delay');
 
 // const fs = require('fs');
 // const path = require("path");
@@ -39,9 +39,9 @@ Max.post("Max/MSP API loaded");
 
 // serve pages from public dir
 app.use(express.static(__dirname + '/public'));
-app.use("/", defaultRoute);
+// app.use("/", defaultRoute);
 app.use("/ws", wsRoute);
-app.use("/client", clientRoute);
+// app.use("/client", clientRoute);
 app.use("/attr", attributionRoute);
 app.use("/delay", delayRoute);
 app.use("/reverb", reverbRoute);
@@ -51,8 +51,8 @@ app.use("/passClientInput", handleClientVal)
 app.use("/passInputStr", handleInputStr)
 app.use("/passInputNum", handleInputNum)
 
-function defaultRoute(req, res, next) { res.sendFile(__dirname + '/public/client.html'); }
-function clientRoute(req, res, next) { res.sendFile(__dirname + '/public/client.html'); }
+// function defaultRoute(req, res, next) { res.sendFile(__dirname + '/public/client.html'); }
+// function clientRoute(req, res, next) { res.sendFile(__dirname + '/public/client.html'); }
 function wsRoute(req, res, next) { res.sendFile(__dirname + '/public/ws.html'); }
 
 function attributionRoute(req, res, next) {
@@ -60,7 +60,8 @@ function attributionRoute(req, res, next) {
   let route = routes[Math.floor(Math.random() * routes.length)];
   res.sendFile(__dirname + `/public/${route}.html`);
 }
-function delayRoute(req, res, next) { res.sendFile(__dirname + '/public/client_delay.html'); }
+function delayRoute(req, res, next) { res.sendFile(__dirname + '/public/delay.html'); }
+// function delayRoute(req, res, next) { res.sendFile(__dirname + '/public/synth_delay.html'); }
 function reverbRoute(req, res, next) { res.sendFile(__dirname + '/public/client_reverb.html'); }
 
 function handleClientVal(req, res, next) {
@@ -91,6 +92,9 @@ function handleInputNum(req, res, next) {
 }
 
 // IO & HMTL separation: https://stackoverflow.com/questions/64767505/socket-io-show-the-users-in-the-correct-div 
+io.of("/").adapter.on("create-room", (room) => {
+  console.log(`room ${room} was created`);
+});
 
 io.on('connection', (socket) => {
   Max.post(`${socket.id} joined. ${io.engine.clientsCount} users connected`);
@@ -152,18 +156,18 @@ io.on('connection', (socket) => {
   //   Max.post(args);
   // });
   socket.on("disconnecting", (reason) => {
-    for (const room of socket.rooms) {
-      Max.post(room)
-      //   if (room !== socket.id) {
-      //     socket.to(room).emit("user has left", socket.id);
-      //   }
-    }
+    // for (const room of socket.rooms) {
+    //   Max.post(room)
+    //   //   if (room !== socket.id) {
+    //   //     socket.to(room).emit("user has left", socket.id);
+    //   //   }
+    // }
     Max.post(`${socket.id} left. ${io.engine.clientsCount} users connected`);
   });
 });
 
-io.of("/client_delay").on('connection', (socket) => {
-  Max.post(`${socket.id} joined DELAY. ${io.engine.clientsCount} users connected`);
+io.of("/delay").on('connection', (socket) => {
+  Max.post(`${socket.id} joined ${socket.room}. ${io.engine.clientsCount} users connected`);
 });
 
 // // COPILOT
