@@ -40,19 +40,13 @@ Max.post("Max/MSP API loaded");
 // serve pages from public dir
 app.use(express.static(__dirname + '/public'));
 // app.use("/", defaultRoute);
-// app.use("/ws", wsRoute);
 // app.use("/client", clientRoute);
 app.use("/attr", attributionRoute);
 app.use("/voice", (req, res) => { res.sendFile(__dirname + '/public/synth_voice.html'); });
-app.use("/delay", (req, res) => { res.sendFile(__dirname + '/public/synth_delay.html'); });
-app.use("/reverb", reverbRoute);
 app.use("/waveform", (req, res) => { res.sendFile(__dirname + '/public/synth_waveform.html'); });
 app.use("/noise", (req, res) => { res.sendFile(__dirname + '/public/synth_noise.html'); });
-
-app.use("/passVal", handleVal)
-app.use("/passClientInput", handleClientVal)
-app.use("/passInputStr", handleInputStr)
-app.use("/passInputNum", handleInputNum)
+app.use("/delay", (req, res) => { res.sendFile(__dirname + '/public/synth_delay.html'); });
+app.use("/reverb", (req, res) => { res.sendFile(__dirname + '/public/synth_reverb.html'); });
 
 // function defaultRoute(req, res, next) { res.sendFile(__dirname + '/public/client.html'); }
 // function clientRoute(req, res, next) { res.sendFile(__dirname + '/public/client.html'); }
@@ -61,34 +55,6 @@ function attributionRoute(req, res, next) {
   let routes = [`client`, `client_delay`, `client_reverb`];
   let route = routes[Math.floor(Math.random() * routes.length)];
   res.sendFile(__dirname + `/public/${route}.html`);
-}
-function reverbRoute(req, res, next) { res.sendFile(__dirname + '/public/synth_reverb.html'); }
-
-function handleClientVal(req, res, next) {
-  // res.send(req.query);
-  // res.send(req.query.val);
-  res.send(typeof req.query.val);
-  if (typeof req.query.val == "number") {
-    Max.outlet(req.query.id, parseFloat(req.query.val));
-  }
-  else {
-    Max.outlet(req.query.id, req.query.val);
-  }
-}
-
-function handleVal(req, res, next) {
-  res.send(req.query);
-  Max.outlet(req.query.id, parseFloat(req.query.val));
-}
-
-function handleInputStr(req, res, next) {
-  res.send(req.query);
-  Max.outlet(req.query.cat, req.query.id, req.query.val);
-}
-
-function handleInputNum(req, res, next) {
-  res.send(req.query);
-  Max.outlet(req.query.cat, req.query.id, parseFloat(req.query.val));
 }
 
 // IO & HMTL separation: https://stackoverflow.com/questions/64767505/socket-io-show-the-users-in-the-correct-div 
@@ -180,77 +146,32 @@ io.of("/voice").on('connection', (socket) => {
 
 io.of("/delay").on('connection', (socket) => {
   Max.post(`${socket.id} joined DELAY. ${io.engine.clientsCount} users connected`);
-  // Max.post(`${socket.id} joined ${socket.room}. ${io.engine.clientsCount} users connected`);
   socket.onAny((event, args) => {
-    // Max.post(event, args);
-    // Max.post(event);
-    Max.post(args);
+    Max.post(event, args);
     Max.outlet(args);
   });
 });
 
 io.of("/reverb").on('connection', (socket) => {
   Max.post(`${socket.id} joined REVERB. ${io.engine.clientsCount} users connected`);
-  // Max.post(`${socket.id} joined ${socket.room}. ${io.engine.clientsCount} users connected`);
   socket.onAny((event, args) => {
-    // Max.post(event, args);
-    // Max.post(event);
-    Max.post(args);
+    Max.post(event, args);
     Max.outlet(args);
   });
 });
 
 io.of("/noise").on('connection', (socket) => {
   Max.post(`${socket.id} joined NOISE. ${io.engine.clientsCount} users connected`);
-  // Max.post(`${socket.id} joined ${socket.room}. ${io.engine.clientsCount} users connected`);
   socket.onAny((event, args) => {
-    // Max.post(event, args);
-    // Max.post(event);
-    Max.post(args);
+    Max.post(event, args);
     Max.outlet(args);
   });
 });
 
 io.of("/waveform").on('connection', (socket) => {
-  Max.post(`${socket.id} joined ${socket.room}. ${io.engine.clientsCount} users connected`);
+  Max.post(`${socket.id} joined WAVEFORM. ${io.engine.clientsCount} users connected`);
+  socket.onAny((event, args) => {
+    Max.post(event, args);
+    Max.outlet(args);
+  });
 });
-
-// // COPILOT
-// create unique ID for client
-// let clientID = Date.now();
-// // create array to store client IDs
-// let clientIDs = [];
-// // create array to store client sockets
-// let clientSockets = [];
-// // create array to store client data
-// let clientData = [];
-// // create array to store client data
-// let clientDataObj = {};
-
-
-
-
-// // IMPLEMENT THE BROADCAST FUNCTION TO ALL --> outside of wss
-// wss.broadcast = function broadcast(data) {
-//   //get all clients (note that the Socket server instance maintains a list of clients)
-//   wss.clients.forEach(function each(client) {
-//     //if client is there
-//     if (client.readyState === WebSocket.OPEN) {
-//       client.send(data);
-//     }
-//   });
-// };
-
-// wss.on('connection', function connection(ws, req) {
-//   const in_ip = req.connection.remoteAddress;
-//   Max.post(`C2S: new client at ${in_ip}`);
-//   ws.send("Connected");
-
-
-//   // ws.on("close", function stop() {
-//   //   Max.removeHandlers("send");
-//   //   console.log("Connection closed");
-
-//   //   ws.terminate();
-//   // });
-// });

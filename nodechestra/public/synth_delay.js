@@ -50,12 +50,7 @@ function onResults(results) {
                 canvasCtx.beginPath();
                 canvasCtx.arc(indexTip.x * width, indexTip.y * height, 20, 0, 2 * Math.PI);
                 canvasCtx.fill();
-                // socket.emit("delay right", indexTip.x);
-                // socket.emit("delay right", indexTip.x * 100);
-                // socket.emit(`delay delAmt ${indexTip.x * 100}`);
-                // socket.emit("delay", "delay", "delAmt", indexTip.x * 100);
                 socket.emit("delay", `del delAmt ${(1 - indexTip.y) * 100}`);
-                // socket.emit("delay", {"delay", "delAmt", indexTip.x * 100);
             }
             if (results.multiHandedness[i].label === `Left`) {
                 // console.log("left index tip: ", indexTip);

@@ -19,7 +19,7 @@ const hands = new Hands({
 });
 hands.setOptions({
     selfieMode: true,
-    maxNumHands: 2,
+    maxNumHands: 1,
     modelComplexity: 1,
     minDetectionConfidence: 0.5,
     minTrackingConfidence: 0.5
@@ -37,7 +37,6 @@ camera.start();
 
 function onResults(results) {
     let handsOn = results.multiHandedness.length
-    let indexTip
     canvasCtx.save();
     canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
     // video feed
@@ -45,12 +44,15 @@ function onResults(results) {
     if (handsOn) {
         for (let i = 0; i < handsOn; i++) {
             let indexTip = results.multiHandLandmarks[i][8];
+            let indexTipXNorm = indexTip.x * 3.0;
             if (results.multiHandedness[i].label === `Right`) {
                 // console.log("right index tip: ", indexTip);
                 canvasCtx.fillStyle = "#FF0000";
                 canvasCtx.beginPath();
                 canvasCtx.arc(indexTip.x * width, indexTip.y * height, 20, 0, 2 * Math.PI);
                 canvasCtx.fill();
+                socket.emit("waveform", `wave waveform ${indexTipXNorm}`);
+                console.log(indexTipXNorm)
             }
             if (results.multiHandedness[i].label === `Left`) {
                 // console.log("left index tip: ", indexTip);
@@ -58,6 +60,10 @@ function onResults(results) {
                 canvasCtx.beginPath();
                 canvasCtx.arc(indexTip.x * width, indexTip.y * height, 20, 0, 2 * Math.PI);
                 canvasCtx.fill();
+                if (indexTipXNorm <= 0.75) { socket.emit("waveform", `wave waveform 0.0`); }
+                else if (indexTipXNorm > 0.75 && indexTipXNorm <= 1.5) { socket.emit("waveform", `wave waveform 1.0`); }
+                else if (indexTipXNorm > 1.5 && indexTipXNorm <= 2.25) { socket.emit("waveform", `wave waveform 2.0`); }
+                else if (indexTipXNorm > 2.25) { socket.emit("waveform", `wave waveform 3.0`); }
             }
         }
         canvasCtx.restore();

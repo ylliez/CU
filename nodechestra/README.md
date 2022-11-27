@@ -28,3 +28,26 @@
     - https://blog.openreplay.com/rendering-real-time-data-with-vue-node-and-socket-io
 - React & IO:
     - https://www.freecodecamp.org/news/build-a-realtime-chat-app-with-react-express-socketio-and-harperdb/
+
+
+
+
+## Components
+- Waveform    hands     panning between waveforms       Rx continuous / Lx discrete         OK
+- Delay       hands     delay parameters                Ry amt / Lx time                    OK
+- Noise       hands     noise parameters                Ry amt / Lx colour                  OK
+
+
+
+
+[MediaPipe](https://google.github.io/mediapipe/)
+[Hands](https://google.github.io/mediapipe/solutions/hands)
+[Face mesh landmarks](https://mediapipe.dev/images/mobile/hand_landmarks.png)
+[Hands Codepen](https://codepen.io/mediapipe/pen/RwGWYJw)
+
+[Face Mesh](https://google.github.io/mediapipe/solutions/face_mesh)
+[Face mesh landmarks](https://github.com/google/mediapipe/blob/master/mediapipe/modules/face_geometry/data/canonical_face_model_uv_visualization.png)
+
+[Pose](https://google.github.io/mediapipe/solutions/pose)
+[Face mesh landmarks](https://mediapipe.dev/images/mobile/pose_tracking_full_body_landmarks.png)
+[Pose Codepen](https://codepen.io/mediapipe/pen/jOMbvxw)

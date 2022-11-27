@@ -331,15 +331,15 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-122",
-					"linecount" : 4,
+					"linecount" : 3,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 289.0, 673.0, 50.0, 62.0 ],
+					"patching_rect" : [ 289.0, 673.0, 50.0, 49.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 35.0, 230.0, 370.0, 22.0 ],
-					"text" : "del delAmt 56.162402"
+					"text" : "noise noiseAmt 5.18"
 				}
 
 			}
@@ -712,7 +712,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 733.791666666666629, 108.0, 50.0, 22.0 ],
-					"text" : "4 93. 0."
+					"text" : "2 81. 0."
 				}
 
 			}
@@ -724,7 +724,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 938.724016181815728, 141.0, 50.0, 22.0 ],
-					"text" : "93. 0."
+					"text" : "81. 0."
 				}
 
 			}
@@ -736,7 +736,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 867.0, 170.0, 50.0, 22.0 ],
-					"text" : "93. 0."
+					"text" : "81. 0."
 				}
 
 			}
@@ -877,7 +877,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 451.862035296580984, 679.180555085377364, 194.8449117585468, 22.0 ],
-					"text" : "del delAmt 56.162402"
+					"text" : "noise noiseAmt 5.18"
 				}
 
 			}
