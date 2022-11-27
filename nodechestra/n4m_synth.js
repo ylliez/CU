@@ -40,11 +40,12 @@ Max.post("Max/MSP API loaded");
 // serve pages from public dir
 app.use(express.static(__dirname + '/public'));
 // app.use("/", defaultRoute);
-app.use("/ws", wsRoute);
+// app.use("/ws", wsRoute);
 // app.use("/client", clientRoute);
 app.use("/attr", attributionRoute);
 app.use("/delay", delayRoute);
 app.use("/reverb", reverbRoute);
+app.use("/waveform", waveformRoute);
 
 app.use("/passVal", handleVal)
 app.use("/passClientInput", handleClientVal)
@@ -53,7 +54,6 @@ app.use("/passInputNum", handleInputNum)
 
 // function defaultRoute(req, res, next) { res.sendFile(__dirname + '/public/client.html'); }
 // function clientRoute(req, res, next) { res.sendFile(__dirname + '/public/client.html'); }
-function wsRoute(req, res, next) { res.sendFile(__dirname + '/public/ws.html'); }
 
 function attributionRoute(req, res, next) {
   let routes = [`client`, `client_delay`, `client_reverb`];
@@ -63,6 +63,7 @@ function attributionRoute(req, res, next) {
 function delayRoute(req, res, next) { res.sendFile(__dirname + '/public/delay.html'); }
 // function delayRoute(req, res, next) { res.sendFile(__dirname + '/public/synth_delay.html'); }
 function reverbRoute(req, res, next) { res.sendFile(__dirname + '/public/client_reverb.html'); }
+function waveformRoute(req, res, next) { res.sendFile(__dirname + '/public/synth_waveform.html'); }
 
 function handleClientVal(req, res, next) {
   // res.send(req.query);
@@ -167,6 +168,10 @@ io.on('connection', (socket) => {
 });
 
 io.of("/delay").on('connection', (socket) => {
+  Max.post(`${socket.id} joined ${socket.room}. ${io.engine.clientsCount} users connected`);
+});
+
+io.of("/waveform").on('connection', (socket) => {
   Max.post(`${socket.id} joined ${socket.room}. ${io.engine.clientsCount} users connected`);
 });
 
