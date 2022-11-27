@@ -1,6 +1,6 @@
-console.log(`nodechestra waveform page loaded`);
+console.log(`nodechestra delay page loaded`);
 
-const socket = io("/waveform");
+const socket = io("/delay");
 socket.on("connect", () => {
     console.log(`client ID: ${socket.id}`);
 });
@@ -9,8 +9,8 @@ let width = innerWidth, height = innerHeight;
 const captureElement = document.getElementById('capture');
 const canvasElement = document.getElementById('canvas');
 const canvasCtx = canvasElement.getContext('2d');
-canvasElement.Width = width;
-canvasElement.Height = height;
+canvasElement.width = width;
+canvasElement.height = height;
 
 const hands = new Hands({
     locateFile: (file) => {
@@ -37,7 +37,6 @@ camera.start();
 
 function onResults(results) {
     let handsOn = results.multiHandedness.length
-    let indexTip
     canvasCtx.save();
     canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
     // video feed
@@ -51,6 +50,12 @@ function onResults(results) {
                 canvasCtx.beginPath();
                 canvasCtx.arc(indexTip.x * width, indexTip.y * height, 20, 0, 2 * Math.PI);
                 canvasCtx.fill();
+                // socket.emit("delay right", indexTip.x);
+                // socket.emit("delay right", indexTip.x * 100);
+                // socket.emit(`delay delAmt ${indexTip.x * 100}`);
+                // socket.emit("delay", "delay", "delAmt", indexTip.x * 100);
+                socket.emit("delay", `del delAmt ${(1 - indexTip.y) * 100}`);
+                // socket.emit("delay", {"delay", "delAmt", indexTip.x * 100);
             }
             if (results.multiHandedness[i].label === `Left`) {
                 // console.log("left index tip: ", indexTip);
@@ -58,6 +63,8 @@ function onResults(results) {
                 canvasCtx.beginPath();
                 canvasCtx.arc(indexTip.x * width, indexTip.y * height, 20, 0, 2 * Math.PI);
                 canvasCtx.fill();
+                socket.emit("delay", `del delTime ${indexTip.x * 2000}`);
+
             }
         }
         canvasCtx.restore();

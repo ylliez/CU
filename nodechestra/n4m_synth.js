@@ -43,9 +43,11 @@ app.use(express.static(__dirname + '/public'));
 // app.use("/ws", wsRoute);
 // app.use("/client", clientRoute);
 app.use("/attr", attributionRoute);
-app.use("/delay", delayRoute);
+app.use("/voice", (req, res) => { res.sendFile(__dirname + '/public/synth_voice.html'); });
+app.use("/delay", (req, res) => { res.sendFile(__dirname + '/public/synth_delay.html'); });
 app.use("/reverb", reverbRoute);
-app.use("/waveform", waveformRoute);
+app.use("/waveform", (req, res) => { res.sendFile(__dirname + '/public/synth_waveform.html'); });
+app.use("/noise", (req, res) => { res.sendFile(__dirname + '/public/synth_noise.html'); });
 
 app.use("/passVal", handleVal)
 app.use("/passClientInput", handleClientVal)
@@ -60,10 +62,7 @@ function attributionRoute(req, res, next) {
   let route = routes[Math.floor(Math.random() * routes.length)];
   res.sendFile(__dirname + `/public/${route}.html`);
 }
-function delayRoute(req, res, next) { res.sendFile(__dirname + '/public/delay.html'); }
-// function delayRoute(req, res, next) { res.sendFile(__dirname + '/public/synth_delay.html'); }
-function reverbRoute(req, res, next) { res.sendFile(__dirname + '/public/client_reverb.html'); }
-function waveformRoute(req, res, next) { res.sendFile(__dirname + '/public/synth_waveform.html'); }
+function reverbRoute(req, res, next) { res.sendFile(__dirname + '/public/synth_reverb.html'); }
 
 function handleClientVal(req, res, next) {
   // res.send(req.query);
@@ -153,6 +152,7 @@ io.on('connection', (socket) => {
     Max.post(args);
     Max.outlet(args);
   });
+
   // socket.on("inputNum", (args) => {
   //   Max.post(args);
   // });
@@ -167,8 +167,48 @@ io.on('connection', (socket) => {
   });
 });
 
+io.of("/voice").on('connection', (socket) => {
+  Max.post(`${socket.id} joined VOICE. ${io.engine.clientsCount} users connected`);
+  // Max.post(`${socket.id} joined ${socket.room}. ${io.engine.clientsCount} users connected`);
+  socket.onAny((event, args) => {
+    // Max.post(event, args);
+    // Max.post(event);
+    Max.post(args);
+    Max.outlet(args);
+  });
+});
+
 io.of("/delay").on('connection', (socket) => {
-  Max.post(`${socket.id} joined ${socket.room}. ${io.engine.clientsCount} users connected`);
+  Max.post(`${socket.id} joined DELAY. ${io.engine.clientsCount} users connected`);
+  // Max.post(`${socket.id} joined ${socket.room}. ${io.engine.clientsCount} users connected`);
+  socket.onAny((event, args) => {
+    // Max.post(event, args);
+    // Max.post(event);
+    Max.post(args);
+    Max.outlet(args);
+  });
+});
+
+io.of("/reverb").on('connection', (socket) => {
+  Max.post(`${socket.id} joined REVERB. ${io.engine.clientsCount} users connected`);
+  // Max.post(`${socket.id} joined ${socket.room}. ${io.engine.clientsCount} users connected`);
+  socket.onAny((event, args) => {
+    // Max.post(event, args);
+    // Max.post(event);
+    Max.post(args);
+    Max.outlet(args);
+  });
+});
+
+io.of("/noise").on('connection', (socket) => {
+  Max.post(`${socket.id} joined NOISE. ${io.engine.clientsCount} users connected`);
+  // Max.post(`${socket.id} joined ${socket.room}. ${io.engine.clientsCount} users connected`);
+  socket.onAny((event, args) => {
+    // Max.post(event, args);
+    // Max.post(event);
+    Max.post(args);
+    Max.outlet(args);
+  });
 });
 
 io.of("/waveform").on('connection', (socket) => {

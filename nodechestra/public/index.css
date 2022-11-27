@@ -4,3 +4,12 @@ body {
     padding: 0;
     color: rgb(21, 255, 0);
 }
+
+#titleDiv {
+    font-size: 2em;
+    font-weight: bold;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 50vw;
+}
