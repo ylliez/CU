@@ -38,6 +38,10 @@ const camera = new Camera(captureElement, {
 camera.start();
 
 function onResults(results) {
+    canvasCtx.save();
+    canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+    // video feed
+    // canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
     // console.log(results)
     // console.log(results.poseLandmarks)
     // https://mediapipe.dev/images/mobile/pose_tracking_full_body_landmarks.png
@@ -47,7 +51,7 @@ function onResults(results) {
         // let leftShoulder = results.poseLandmarks[11];
         // let rightShoulder = results.poseLandmarks[12];
         // let rightIndex = results.poseLandmarks[20];
-        //  SWAP DUE TO MIRROR
+        // SWAP DUE TO MIRROR
         let leftIndex = results.poseLandmarks[20];
         let leftShoulder = results.poseLandmarks[12];
         let rightShoulder = results.poseLandmarks[11];
@@ -61,11 +65,6 @@ function onResults(results) {
         let rightShoulderYNorm = rightShoulderY * 100;
         let rightIndexYNorm = rightIndexY * 100;
 
-
-        canvasCtx.save();
-        canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-        // video feed
-        // canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
         canvasCtx.fillStyle = "#FF0000";
         canvasCtx.beginPath();
         canvasCtx.arc(leftShoulder.x * width, leftShoulder.y * height, 20, 0, 2 * Math.PI);
@@ -86,7 +85,5 @@ function onResults(results) {
         canvasCtx.restore();
 
         socket.emit("reverb", `rev ${leftShoulderYNorm} ${leftIndexYNorm} ${rightIndexYNorm} ${rightShoulderYNorm}`);
-
-
     }
 }

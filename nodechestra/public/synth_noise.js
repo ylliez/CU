@@ -30,17 +30,17 @@ const camera = new Camera(captureElement, {
     onFrame: async () => {
         await hands.send({ image: captureElement, });
     },
-    width: canvasElement.Width,
-    height: canvasElement.Height
+    width: width,
+    height: height
 });
 camera.start();
 
 function onResults(results) {
-    let handsOn = results.multiHandedness.length
     canvasCtx.save();
     canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
     // video feed
     // canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+    let handsOn = results.multiHandedness.length
     if (handsOn) {
         for (let i = 0; i < handsOn; i++) {
             let indexTip = results.multiHandLandmarks[i][8];
