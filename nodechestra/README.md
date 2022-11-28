@@ -36,6 +36,7 @@
 - Waveform    hands     panning between waveforms       Rx continuous / Lx discrete         OK
 - Delay       hands     delay parameters                Ry amt / Lx time                    OK
 - Noise       hands     noise parameters                Ry amt / Lx colour                  OK
+- Reverb      pose      reverb parameters          Lsh amt / Lin dec / Rin dam / Rsh diff   OK
 
 
 
@@ -49,5 +50,5 @@
 [Face mesh landmarks](https://github.com/google/mediapipe/blob/master/mediapipe/modules/face_geometry/data/canonical_face_model_uv_visualization.png)
 
 [Pose](https://google.github.io/mediapipe/solutions/pose)
-[Face mesh landmarks](https://mediapipe.dev/images/mobile/pose_tracking_full_body_landmarks.png)
+[Pose landmarks](https://mediapipe.dev/images/mobile/pose_tracking_full_body_landmarks.png)
 [Pose Codepen](https://codepen.io/mediapipe/pen/jOMbvxw)

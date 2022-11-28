@@ -5,49 +5,20 @@ socket.on("connect", () => {
     console.log(`client ID: ${socket.id}`);
 });
 
-const videoElement = document.getElementsByClassName('input_video')[0];
-const canvasElement = document.getElementsByClassName('output_canvas')[0];
+const captureElement = document.getElementById('capture');
+const canvasElement = document.getElementById('canvas');
 const canvasCtx = canvasElement.getContext('2d');
-const landmarkContainer = document.getElementsByClassName('landmark-grid-container')[0];
-const grid = new LandmarkGrid(landmarkContainer);
-
-function onResults(results) {
-    if (!results.poseLandmarks) {
-        grid.updateLandmarks([]);
-        return;
-    }
-
-    canvasCtx.save();
-    canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-    // canvasCtx.drawImage(results.segmentationMask, 0, 0,
-    //     canvasElement.width, canvasElement.height);
-
-    // Only overwrite existing pixels.
-    canvasCtx.globalCompositeOperation = 'source-in';
-    canvasCtx.fillStyle = '#00FF00';
-    canvasCtx.fillRect(0, 0, canvasElement.width, canvasElement.height);
-
-    // Only overwrite missing pixels.
-    canvasCtx.globalCompositeOperation = 'destination-atop';
-    canvasCtx.drawImage(
-        results.image, 0, 0, canvasElement.width, canvasElement.height);
-
-    canvasCtx.globalCompositeOperation = 'source-over';
-    drawConnectors(canvasCtx, results.poseLandmarks, POSE_CONNECTIONS,
-        { color: '#00FF00', lineWidth: 4 });
-    drawLandmarks(canvasCtx, results.poseLandmarks,
-        { color: '#FF0000', lineWidth: 2 });
-    canvasCtx.restore();
-
-    grid.updateLandmarks(results.poseWorldLandmarks);
-}
+let width = innerWidth, height = innerHeight;
+canvasElement.width = width;
+canvasElement.height = height;
 
 const pose = new Pose({
     locateFile: (file) => {
-        return `https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.2/${file}`;
+        return `https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1635988162/${file}`;
     }
 });
 pose.setOptions({
+    selfieMode: true,
     modelComplexity: 1,
     smoothLandmarks: true,
     enableSegmentation: true,
@@ -57,74 +28,65 @@ pose.setOptions({
 });
 pose.onResults(onResults);
 
-const camera = new Camera(videoElement, {
+const camera = new Camera(captureElement, {
     onFrame: async () => {
-        await pose.send({ image: videoElement });
+        await pose.send({ image: captureElement });
     },
-    width: 1280,
-    height: 720
+    width: width,
+    height: height
 });
 camera.start();
 
-// let width = innerWidth, height = innerHeight;
-// const captureElement = document.getElementById('capture');
-// const canvasElement = document.getElementById('canvas');
-// const canvasCtx = canvasElement.getContext('2d');
-// canvasElement.width = width;
-// canvasElement.height = height;
+function onResults(results) {
+    // console.log(results)
+    // console.log(results.poseLandmarks)
+    // https://mediapipe.dev/images/mobile/pose_tracking_full_body_landmarks.png
+    if (results.poseLandmarks) {
+        // console.log(results.poseLandmarks[19])
+        // let leftIndex = results.poseLandmarks[19];
+        // let leftShoulder = results.poseLandmarks[11];
+        // let rightShoulder = results.poseLandmarks[12];
+        // let rightIndex = results.poseLandmarks[20];
+        //  SWAP DUE TO MIRROR
+        let leftIndex = results.poseLandmarks[20];
+        let leftShoulder = results.poseLandmarks[12];
+        let rightShoulder = results.poseLandmarks[11];
+        let rightIndex = results.poseLandmarks[19];
+        let leftIndexY = (1 - leftIndex.y);
+        let leftShoulderY = (1 - leftShoulder.y);
+        let rightShoulderY = (1 - rightShoulder.y);
+        let rightIndexY = (1 - rightIndex.y);
+        let leftIndexYNorm = leftIndexY * 100;
+        let leftShoulderYNorm = leftShoulderY * 100;
+        let rightShoulderYNorm = rightShoulderY * 100;
+        let rightIndexYNorm = rightIndexY * 100;
 
-// const hands = new Hands({
-//     locateFile: (file) => {
-//         return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
-//     }
-// });
-// hands.setOptions({
-//     selfieMode: true,
-//     maxNumHands: 2,
-//     modelComplexity: 1,
-//     minDetectionConfidence: 0.5,
-//     minTrackingConfidence: 0.5
-// });
-// hands.onResults(onResults)
 
-// const camera = new Camera(captureElement, {
-//     onFrame: async () => {
-//         await hands.send({ image: captureElement, });
-//     },
-//     width: canvasElement.Width,
-//     height: canvasElement.Height
-// });
-// camera.start();
+        canvasCtx.save();
+        canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+        // video feed
+        // canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+        canvasCtx.fillStyle = "#FF0000";
+        canvasCtx.beginPath();
+        canvasCtx.arc(leftShoulder.x * width, leftShoulder.y * height, 20, 0, 2 * Math.PI);
+        canvasCtx.fill();
+        canvasCtx.fillStyle = "#00FF00";
+        canvasCtx.beginPath();
+        canvasCtx.arc(rightShoulder.x * width, rightShoulder.y * height, 20, 0, 2 * Math.PI);
+        canvasCtx.fill();
+        canvasCtx.restore();
+        canvasCtx.fillStyle = "#0000FF";
+        canvasCtx.beginPath();
+        canvasCtx.arc(leftIndex.x * width, leftIndex.y * height, 20, 0, 2 * Math.PI);
+        canvasCtx.fill();
+        canvasCtx.fillStyle = "#FFFFFF";
+        canvasCtx.beginPath();
+        canvasCtx.arc(rightIndex.x * width, rightIndex.y * height, 20, 0, 2 * Math.PI);
+        canvasCtx.fill();
+        canvasCtx.restore();
 
-// function onResults(results) {
-//     let handsOn = results.multiHandedness.length
-//     let indexTip
-//     canvasCtx.save();
-//     canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-//     // video feed
-//     // canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
-//     if (handsOn) {
-//         for (let i = 0; i < handsOn; i++) {
-//             let indexTip = results.multiHandLandmarks[i][8];
-//             if (results.multiHandedness[i].label === `Right`) {
-//                 // console.log("right index tip: ", indexTip);
-//                 canvasCtx.fillStyle = "#FF0000";
-//                 canvasCtx.beginPath();
-//                 canvasCtx.arc(indexTip.x * width, indexTip.y * height, 20, 0, 2 * Math.PI);
-//                 canvasCtx.fill();
-//                 socket.emit("reverb", `rev revAmt ${(1 - indexTip.y) * 100}`);
-//             }
-//             if (results.multiHandedness[i].label === `Left`) {
-//                 // console.log("left index tip: ", indexTip);
-//                 canvasCtx.fillStyle = "#00FF00";
-//                 canvasCtx.beginPath();
-//                 canvasCtx.arc(indexTip.x * width, indexTip.y * height, 20, 0, 2 * Math.PI);
-//                 canvasCtx.fill();
-//                 socket.emit("reverb", `rev revDec ${(1 - indexTip.y) * 100}`);
+        socket.emit("reverb", `rev ${leftShoulderYNorm} ${leftIndexYNorm} ${rightIndexYNorm} ${rightShoulderYNorm}`);
 
-//             }
-//         }
-//         canvasCtx.restore();
-//     }
 
-// }
+    }
+}

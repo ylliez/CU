@@ -5,10 +5,10 @@ socket.on("connect", () => {
     console.log(`client ID: ${socket.id}`);
 });
 
-let width = innerWidth, height = innerHeight;
 const captureElement = document.getElementById('capture');
 const canvasElement = document.getElementById('canvas');
 const canvasCtx = canvasElement.getContext('2d');
+let width = innerWidth, height = innerHeight;
 canvasElement.width = width;
 canvasElement.height = height;
 
