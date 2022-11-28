@@ -47,6 +47,8 @@ app.use("/waveform", (req, res) => { res.sendFile(__dirname + '/public/synth_wav
 app.use("/noise", (req, res) => { res.sendFile(__dirname + '/public/synth_noise.html'); });
 app.use("/delay", (req, res) => { res.sendFile(__dirname + '/public/synth_delay.html'); });
 app.use("/reverb", (req, res) => { res.sendFile(__dirname + '/public/synth_reverb.html'); });
+app.use("/vbass", (req, res) => { res.sendFile(__dirname + '/public/synth_vbass.html'); });
+app.use("/vten", (req, res) => { res.sendFile(__dirname + '/public/synth_vten.html'); });
 
 // function defaultRoute(req, res, next) { res.sendFile(__dirname + '/public/client.html'); }
 // function clientRoute(req, res, next) { res.sendFile(__dirname + '/public/client.html'); }
@@ -142,6 +144,16 @@ io.of("/voice").on('connection', (socket) => {
     Max.post(args);
     Max.outlet(args);
   });
+});
+
+io.of("/vbass").on('connection', (socket) => {
+  Max.post(`${socket.id} joined BASS. ${io.engine.clientsCount} users connected`);
+  socket.onAny((event, args) => { Max.outlet(args); });
+});
+
+io.of("/vten").on('connection', (socket) => {
+  Max.post(`${socket.id} joined TENOR. ${io.engine.clientsCount} users connected`);
+  socket.onAny((event, args) => { Max.outlet(args); });
 });
 
 io.of("/delay").on('connection', (socket) => {
