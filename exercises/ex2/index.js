@@ -45,13 +45,13 @@ window.onload = function () {
     $.get(
         "/getSingles",
         (res) => {
-            // console.log(res);
-            console.log(res.texts);
-            // makeBarChart(`svg4`, res.pain, [0, 1]);
-            for (let i in res) {
-                makeBarChart(`svgSingles${i}`, res[i], [0, 1]);
-            }
-            // makeGroupedBarChart(`svg4`, res, [0, 1]);
+            // // console.log(res);
+            // console.log(res.texts);
+            // // makeBarChart(`svg4`, res.pain, [0, 1]);
+            // for (let i in res) {
+            //     makeBarChart(`svgSingles${i}`, res[i], [0, 1]);
+            // }
+            makeGroupedBarChart(`svg4`, res);
         }
     );
 
@@ -62,8 +62,8 @@ window.onload = function () {
     //             `joy`: [0.5, 0.2, 0.6, 0.4],
     //                 `peace`: [0.9, 0.1, 0.5, 0.7]
     // }
-
     // makeGroupedBarChart(`svg4`, groupedData, [-.5, .5]);
+    // makeGroupedBarChart();
 
     function makeBarChart(id, data, domain, titles) {
         var id = d3.select(`#${id}`),
@@ -187,6 +187,112 @@ window.onload = function () {
     //         .attr("width", xSubgroup.bandwidth())
     //         .attr("height", function (d) { return height - y(d.value); })
     //         .attr("fill", function (d) { return color(d.key); });
-
     // }
+    // from https://d3-graph-gallery.com/graph/barplot_basic.html & https://d3-graph-gallery.com/graph/barplot_grouped_basicWide.html
+
+    // from https://vaibhavkumar-19430.medium.com/how-to-create-a-grouped-bar-chart-in-d3-js-232c54f85894
+    function makeGroupedBarChart(id, termFreqs) {
+        termFreqs = termFreqs.map(i => {
+            i.searchTerm = i.searchTerm;
+            return i;
+        });
+
+        var container = d3.select(`#${id}`),
+            width = 1000,
+            height = 600,
+            margin = { top: 30, right: 20, bottom: 30, left: 50 },
+            barPadding = .2,
+            axisTicks = { qty: 5, outerSize: 0, dateFormat: '%m-%d' };
+
+        var svg = container
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        var xScale0 = d3.scaleBand().range([0, width - margin.left - margin.right]).padding(barPadding);
+        var xScale1 = d3.scaleBand();
+        var yScale = d3.scaleLinear().range([height - margin.top - margin.bottom, 0]);
+
+        var xAxis = d3.axisBottom(xScale0).tickSizeOuter(axisTicks.outerSize);
+        var yAxis = d3.axisLeft(yScale).ticks(axisTicks.qty).tickSizeOuter(axisTicks.outerSize);
+
+        xScale0.domain(termFreqs.map(d => d.searchTerm));
+        xScale1.domain(['bible', 'quran', 'bgita', 'vedas']).range([0, xScale0.bandwidth()]);
+        yScale.domain([0, d3.max(termFreqs, d => d.bible > d.quran ? d.bible : d.quran)]);
+
+        var searchTerm = svg.selectAll(".searchTerm")
+            .data(termFreqs)
+            .enter().append("g")
+            .attr("class", "searchTerm")
+            .attr("transform", d => `translate(${xScale0(d.searchTerm)},0)`);
+
+        /* Add bible bars */
+        searchTerm.selectAll(".bar.bible")
+            .data(d => [d])
+            .enter()
+            .append("rect")
+            .attr("class", "bar bible")
+            .style("fill", "blue")
+            .attr("x", d => xScale1('bible'))
+            .attr("y", d => yScale(d.bible))
+            .attr("width", xScale1.bandwidth())
+            .attr("height", d => {
+                return height - margin.top - margin.bottom - yScale(d.bible)
+            });
+
+        /* Add quran bars */
+        searchTerm.selectAll(".bar.quran")
+            .data(d => [d])
+            .enter()
+            .append("rect")
+            .attr("class", "bar quran")
+            .style("fill", "red")
+            .attr("x", d => xScale1('quran'))
+            .attr("y", d => yScale(d.quran))
+            .attr("width", xScale1.bandwidth())
+            .attr("height", d => {
+                return height - margin.top - margin.bottom - yScale(d.quran)
+            });
+
+        /* Add bgita bars */
+        searchTerm.selectAll(".bar.bgita")
+            .data(d => [d])
+            .enter()
+            .append("rect")
+            .attr("class", "bar bgita")
+            .style("fill", "green")
+            .attr("x", d => xScale1('bgita'))
+            .attr("y", d => yScale(d.bgita))
+            .attr("width", xScale1.bandwidth())
+            .attr("height", d => {
+                return height - margin.top - margin.bottom - yScale(d.bgita)
+            });
+
+        /* Add vedas bars */
+        searchTerm.selectAll(".bar.vedas")
+            .data(d => [d])
+            .enter()
+            .append("rect")
+            .attr("class", "bar vedas")
+            .style("fill", "purple")
+            .attr("x", d => xScale1('vedas'))
+            .attr("y", d => yScale(d.vedas))
+            .attr("width", xScale1.bandwidth())
+            .attr("height", d => {
+                return height - margin.top - margin.bottom - yScale(d.vedas)
+            });
+
+        // Add the X Axis
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", `translate(0,${height - margin.top - margin.bottom})`)
+            .call(xAxis);
+
+        // Add the Y Axis
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis);
+    }
 }

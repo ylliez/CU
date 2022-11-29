@@ -10,12 +10,13 @@ server.listen(portNumber, function () { console.log("listening on port:: " + por
 app.use(express.static(__dirname));
 
 app.get('/', function (req, res) { res.sendFile(__dirname + '/index.html') });
-app.get('/cloud', function (req, res) { res.sendFile(__dirname + '/5_cloud.html') });
+app.get('/vis', function (req, res) { res.sendFile(__dirname + '/vis.html') });
 app.get('/getWC', handleWCData);
 app.get('/getTF', handleTFData);
 app.get('/getTFIDF', handleTFIDFData);
 app.get('/getSentiment', handleSentimentData);
 app.get('/getSingles', handleSinglesData);
+app.get('/getSinglesArray', handleSinglesArrayData);
 
 const WordCount = require('./wordCount');
 const TFIDF = require('./TFIDF');
@@ -197,10 +198,12 @@ function handleSentimentData(req, res) {
 
 // search words
 // let searchTerm = [`pain`, `slave`];
-let searchTerm = [`god`, `love`, `hate`, `happy`, `sad`, `pain`, `delight`, `conquer`, `slave`];
+// let searchTerm = [`god`, `love`, `hate`, `happy`, `sad`, `pain`, `delight`, `conquer`, `slave`];
+let searchTerm = [`love`, `hate`, `happy`, `sad`, `pain`, `delight`, `conquer`, `slave`];
 let textSingleCount = [];
 let textSingleFrequency = [];
 // let textSingleFrequency = { texts: textTitle };
+let textSingleFrequencyArrays = [];
 
 // // TF
 // // get single term count
@@ -217,25 +220,45 @@ let textSingleFrequency = [];
 // console.log(textSingleCount);
 
 for (let j = 0; j < searchTerm.length; j++) {
-    console.log(`-------- search term : ${searchTerm[j]} -----------`);
+    // console.log(`-------- search term : ${searchTerm[j]} -----------`);
     // term count
     let tc = [];
     // term frequency
-    let tf = [];
-    // term frequency normalized
-    let tfNorm = [];
+    let tf = { "searchTerm": searchTerm[j], "bible": "0", "quran": "0", "bgita": "0", "vedas": "0" };
+    // console.log(tf);
+    let tfarray = [];
+
+    // // term frequency normalized
+    // let tfNorm = [];
+    // for (let i = 0; i < textTitle.length; i++) {
+    //     // get term count
+    //     tc[i] = textWordCount[i].getCount(searchTerm[j]);
+    //     if (tc[i] == undefined) { tc[i] = 0; }
+    //     // console.log(`total times ${searchTerm[j]} appears in the ${textTitle[i]}: ${tc[i]}`);
+    //     // get term frequency
+    //     tf[i] = tc[i] / textUniqueWords[i] * 100;
+    //     // console.log(`frequency of ${searchTerm[j]} in the ${textTitle[i]}: ${tf[i]}`);
+    // }
+    // textSingleCount.push(tc);
+    // // textSingleFrequency[searchTerm[j]] = tf;
+    // textSingleFrequency.push(tf);
+
     for (let i = 0; i < textTitle.length; i++) {
         // get term count
         tc[i] = textWordCount[i].getCount(searchTerm[j]);
         if (tc[i] == undefined) { tc[i] = 0; }
         // console.log(`total times ${searchTerm[j]} appears in the ${textTitle[i]}: ${tc[i]}`);
         // get term frequency
-        tf[i] = tc[i] / textUniqueWords[i] * 100;
+        // let textt = textTitle[i]
+        // console.log(toString(textTitle[i]))
+        tf[textTitle[i]] = tc[i] / textUniqueWords[i] * 100;
         // console.log(`frequency of ${searchTerm[j]} in the ${textTitle[i]}: ${tf[i]}`);
+        tfarray.push(tc[i] / textUniqueWords[i] * 100);
     }
     textSingleCount.push(tc);
     // textSingleFrequency[searchTerm[j]] = tf;
     textSingleFrequency.push(tf);
+    textSingleFrequencyArrays.push(tfarray);
 }
 
 console.log(textSingleFrequency);
@@ -243,4 +266,9 @@ console.log(textSingleFrequency);
 // send to visualizer
 function handleSinglesData(req, res) {
     res.send(textSingleFrequency);
+}
+
+// send to visualizer
+function handleSinglesArrayData(req, res) {
+    res.send(textSingleFrequencyArrays);
 }
