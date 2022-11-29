@@ -65,6 +65,7 @@ for (let i = 0; i < textTitle.length; i++) {
 function handleWCData(req, res) {
     res.send([textTitle, textTotalWords, textUniqueWords]);
 }
+// console.log([textTitle, textTotalWords, textUniqueWords]);
 
 
 // TF
@@ -84,6 +85,9 @@ for (let i = 0; i < textTitle.length; i++) {
     textTF.push(tf);
     textTFNorm.push(tfNorm);
 }
+// console.log(textTFNorm[0]);
+// fs.writeFileSync(`report/data.txt`, JSON.stringify(textTFNorm[0]), 'utf8');
+// fs.writeFileSync(`report/data.txt`, JSON.stringify(textTFNorm), 'utf8');
 
 // // tests
 // console.log(textTF);
@@ -98,6 +102,9 @@ for (let i = 0; i < textTitle.length; i++) {
 function handleTFData(req, res) {
     res.send(textTFNorm);
 }
+// const converter = require('convert-array-to-csv');
+// const csvFromArrayOfArrays = convertArrayToCSV(textTFNorm)
+// console.log(textTFNorm);
 
 
 // TF-IDF
@@ -165,6 +172,12 @@ for (let i in tfIDF.keys) {
 function handleTFIDFData(req, res) {
     res.send([TFIDFNorm, textTFIDFNorm[0], textTFIDFNorm[1], textTFIDFNorm[2], textTFIDFNorm[3], TFIDFInv]);
 }
+// console.log(TFIDFNorm, textTFIDFNorm[0], textTFIDFNorm[1], textTFIDFNorm[2], textTFIDFNorm[3], TFIDFInv)
+fs.writeFileSync(`report/TFIDF0.txt`, JSON.stringify(TFIDFNorm), 'utf8');
+for (let i = 0; i < textTitle.length; i++) {
+    fs.writeFileSync(`report/TFIDF${i + 1}.txt`, JSON.stringify(textTFIDFNorm[i]), 'utf8');
+}
+fs.writeFileSync(`report/TFIDF5.txt`, JSON.stringify(TFIDFInv), 'utf8');
 
 
 // NATURAL
@@ -261,7 +274,7 @@ for (let j = 0; j < searchTerm.length; j++) {
     textSingleFrequencyArrays.push(tfarray);
 }
 
-console.log(textSingleFrequency);
+// console.log(textSingleFrequency);
 
 // send to visualizer
 function handleSinglesData(req, res) {
