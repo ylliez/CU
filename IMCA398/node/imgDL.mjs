@@ -23,4 +23,5 @@ const downloadImage = async (url, path) => {
     });
 }
 
-await downloadImage("https://sabe.io/images/saturn.png", "imgDL/saturn.png")
+// await downloadImage("https://sabe.io/images/saturn.png", "imgDL/saturn.png")
+await downloadImage("https://replicate.delivery/pbxt/FeemCFfKfhmOwS6TSID0A0Fk4fPeVfXYNiFpCCx4KOb3raPQIA/out-0.png", "imgDL/1.jpg")

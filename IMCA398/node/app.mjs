@@ -19,16 +19,102 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
 import Replicate from 'replicate-js'
-import open from 'open'
-const replicate = new Replicate();
+// import open from 'open'
+import ipp from 'ipp'
+import fs from 'fs'
+import fetch from 'node-fetch'
 
+const replicate = new Replicate();
 const modelT2I = await replicate.models.get('stability-ai/stable-diffusion')
-console.log("------- T2I -------");
-const predictionT2I = await modelT2I.predict({ prompt: "sad gerbil" });
-console.log(predictionT2I[0])
-const openT2I = await open(predictionT2I[0])
 const modelI2T = await replicate.models.get("methexis-inc/img2prompt");
-console.log("------- I2T -------");
-const predictionI2T = await modelI2T.predict({ image: predictionT2I[0] });
-console.log(predictionI2T);
+let predictionT2I;
+let predictionI2T = "an angry hamster eating brie in an impressionist style";
+
+const printer = ipp.Printer("http://HP789327.local.:631/ipp/printer");
+
+// const downloadImage = async (url, path) => {
+//     const response = await fetch(url);
+//     const blob = await response.blob();
+//     const arrayBuffer = await blob.arrayBuffer();
+//     const buffer = Buffer.from(arrayBuffer);
+//     await fs.writeFile(path, buffer, function (err, result) {
+//         if (err) console.log('error', err);
+//     });
+// }
+
+// const printImage = async (file) => {
+//     let imgBuffer = fs.readFileSync(file);
+//     let msg = {
+//         "operation-attributes-tag": {
+//             "requesting-user-name": "isp",
+//             "job-name": "test-print",
+//             "document-format": "image/jpeg"
+//         },
+//         data: imgBuffer
+//     };
+//     printer.execute("Print-Job", msg, function (err, res) {
+//         console.log(res);
+//         console.log(err);
+//     });
+// }
+
+// // Print straight from buffer?
+// const printImage = async (url) => {
+//     const response = await fetch(url);
+//     const blob = await response.blob();
+//     const arrayBuffer = await blob.arrayBuffer();
+//     const buffer = Buffer.from(arrayBuffer);
+//     let msg = {
+//         "operation-attributes-tag": {
+//             "requesting-user-name": "isp",
+//             "job-name": "test-print",
+//             "document-format": "image/jpeg"
+//         },
+//         data: buffer
+//     };
+//     printer.execute("Print-Job", msg, function (err, res) {
+//         console.log(res);
+//         console.log(err);
+//     });
+// }
+
+
+const downloadImage = async (url, path) => {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const arrayBuffer = await blob.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    const file = await fs.writeFile(path, buffer, function (err, res) {
+        if (err) console.log('error', err);
+        if (res) printImage(path)
+    });
+}
+
+const printImage = async (path) => {
+    let imgBuffer = fs.readFileSync(path);
+    let msg = {
+        "operation-attributes-tag": {
+            "requesting-user-name": "isp",
+            "job-name": "test-print",
+            "document-format": "image/jpeg"
+        },
+        data: imgBuffer
+    };
+    printer.execute("Print-Job", msg, function (err, res) {
+        console.log(res);
+        console.log(err);
+    });
+}
+
+for (let i = 1; i <= 3; i++) {
+    console.log("------- T2I -------");
+    predictionT2I = await modelT2I.predict({ prompt: predictionI2T });
+    console.log(predictionT2I[0])
+    await downloadImage(predictionT2I[0], `assets/${i}.jpg`)
+    // await printImage(`assets/${i}.jpg`)
+    // await printImage(predictionT2I[0])
+    console.log("------- I2T -------");
+    predictionI2T = await modelI2T.predict({ image: predictionT2I[0] });
+    console.log(predictionI2T);
+}
 

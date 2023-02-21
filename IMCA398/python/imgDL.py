@@ -43,7 +43,7 @@
 # from https://stackoverflow.com/questions/63977849/recommended-way-to-download-images-in-python-requests
 import requests
 i = 2
-url = "https://replicate.delivery/pbxt/nJ9UM4x9zCb3P98ljgd8qJtcBA7ke9UJeOY4aIC0Ac3BlYgQA/out-0.png"
+url = "https://replicate.delivery/pbxt/Xci4OdhG4QLQJNFhfzJeQ73orBjfaEenSXs4G7NyvpxqU3BCB/out-0.png"
 with open('imgDL/file{}.png'.format(i), 'wb') as f:
     f.write(requests.get(url).content)
 # WORKS???
