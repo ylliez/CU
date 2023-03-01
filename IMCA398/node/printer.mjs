@@ -287,9 +287,109 @@
 // // IPP - test print 10 (HP/JPEG) --> OK?
 // import ipp from 'ipp'
 // import fs from 'fs'
-// let imgBuffer = fs.readFileSync('./RIPA_logo_cut.png');
+// // let imgBuffer = fs.readFileSync('./RIPA_logo_cut.png'); // NO
+// // let imgBuffer = fs.readFileSync('./testprintpng.png'); // NO
+// // let imgBuffer = fs.readFileSync('./RIPA_logo_cut.jpg'); // NO: "is corrupted"
+// // let imgBuffer = fs.readFileSync('./testprintjpg.JPG'); // OK
+// // let imgBuffer = fs.readFileSync('./imgDL/1.jpg'); // NO: "is corrupted"
+// // let imgBuffer = fs.readFileSync('./testprintjpg2.jpg'); // NO: "is corrupted"
+// // let imgBuffer = fs.readFileSync('./testprintpng.png'); // +change document format --> not supported
 // console.log(imgBuffer);
 // var printer = ipp.Printer("http://HP789327.local.:631/ipp/printer");
+// var msg = {
+//     "operation-attributes-tag": {
+//         "requesting-user-name": "isp",
+//         "job-name": "test-print",
+//         "document-format": "image/jpeg"
+//         // "document-format": "image/png"
+//     },
+//     data: imgBuffer
+// };
+// printer.execute("Print-Job", msg, function (err, res) {
+//     console.log(res);
+//     console.log(err);
+// });
+// // Results: only native jpg works, not png or jpg from other sources
+
+// // IPP - test print 11 (HP/buffer) --> NO: file corrupted!
+// import ipp from 'ipp'
+// import fs from 'fs'
+// import fetch from 'node-fetch';
+// var printer = ipp.Printer("http://HP789327.local.:631/ipp/printer");
+// let response, blob, arrayBuffer, buffer;
+
+// const getImage = async (url, path) => {
+//     response = await fetch(url);
+//     blob = await response.blob();
+//     arrayBuffer = await blob.arrayBuffer();
+//     buffer = Buffer.from(arrayBuffer);
+//     console.log(buffer)
+//     await fs.writeFile(path, buffer, function (err, result) {
+//         if (err) console.log('error', err);
+//     });
+// }
+
+// const printImage = async (buffer) => {
+//     var msg = {
+//         "operation-attributes-tag": {
+//             "requesting-user-name": "isp",
+//             "job-name": "test-print",
+//             "document-format": "image/jpeg"
+//         },
+//         data: buffer
+//     };
+//     printer.execute("Print-Job", msg, function (err, res) {
+//         console.log(res);
+//         console.log(err);
+//     });
+// }
+
+// // await getImage("https://replicate.delivery/pbxt/Ib0vihEn6spRBdzLgoEez8hHo3jFMdCZawEeEaueJb4ekGLCB/out-0.png", "imgDL/test.png")
+// await getImage("https://raw.githubusercontent.com/ylliez/CU/main/IMCA398/node/RIPA_logo_cut.jpg", "imgDL/test.png")
+// await printImage(buffer)
+
+
+// // // IPP -  printer information
+// import ipp from 'ipp'
+// // let uri = "http://HP789327.local.:631/ipp/printer";
+// // let uri = "http://BRN008077E90263.local.:631/duerqxesz5090"; // 404 Error
+// // let uri = "http://BRN008077E90263.local.:631/ipp/printer"; // 404 Error
+// // let uri = "http://brn008077e90263.local./main/main.html"; // OK BUT jumble
+// // let uri = "http://brn008077e90263.local."; // ISH BUT "server-error-version-not-supported"
+// // let uri = "http://brn008077e90263.local"; // ISH BUT "server-error-version-not-supported"
+// // let uri = "http://HP789327.local.";  // 404 Error
+// // let uri = "http://HP789327.local";  // 404 Error
+// // let uri = "http://brn008077e90263.local./main"; // 404 Error
+// // let uri = "http://brn008077e90263.local.:631/main/main.html"; // also OK BUT jumble ??
+// // let uri = "http://brn008077e90263.local.:631/ipp/printer"; // 404 Error
+// // let uri = "ipp://HP789327.local.:631/ipp/printer";
+// let uri = "http://10.115.140.28:631/ipp";
+// let data = ipp.serialize({
+//     "operation": "Get-Printer-Attributes",
+//     "operation-attributes-tag": {
+//         "attributes-charset": "utf-8",
+//         "attributes-natural-language": "en",
+//         "printer-uri": uri
+//     }
+// });
+// ipp.request(uri, data, function (err, res) {
+//     if (err) {
+//         return console.log(err);
+//     }
+//     console.log(JSON.stringify(res, null, 2));
+// })
+
+// Concordia 7th floor - Versalink c8000
+// IP address: 10.115.140.28
+
+
+// // IPP - test print 10 (HP/JPEG) --> OK?
+// import ipp from 'ipp'
+// import fs from 'fs'
+// import pngToJpeg from 'png-to-jpeg';
+// var printer = ipp.Printer("http://10.115.140.28:631/ipp");
+// let imgBuffer = fs.readFileSync('./testprintjpg.JPG'); // OK
+// console.log(imgBuffer);
 // var msg = {
 //     "operation-attributes-tag": {
 //         "requesting-user-name": "isp",
@@ -303,3 +403,19 @@
 //     console.log(err);
 // });
 
+// // IPP - get job attributes
+import ipp from 'ipp'
+var printer = ipp.Printer("http://HP789327.local.:631/ipp/printer");
+var msg = {
+    "operation-attributes-tag": {
+        // 'job-uri': 'http://HP789327.local.:631/ipp/printer/job-0013'
+        'job-uri': 'ipp://hp789327.local./ipp/printer/job-0012'
+    }
+};
+function go() {
+    printer.execute("Get-Job-Attributes", msg, function (err, res) {
+        console.log(res);
+        setTimeout(go, 0);
+    });
+}
+go();

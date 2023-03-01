@@ -312,3 +312,28 @@ previous approach: self-imvosed NDA, to svoid afcoresertioned issue
 current :orey into verbalizetion to determine shere SUC leeds.
 ```
 
+## 230228 - print debugging
+### HP ink
+[black ink tester - bands](http://www.refillinstructions.com/black.htm)
+
+### Concordia printer
+web access: https://10.115.140.28/home/index.html
+### PNG -> JPG
+[png-to-jpeg](https://www.npmjs.com/package/png-to-jpeg)
+
+
+
+### Synchronicity issue
+#### js acces method?
+- [fs.readFileSync()](https://www.geeksforgeeks.org/node-js-fs-readfilesync-method/?ref=lbp) vs. [fs.createReadStream()](https://www.geeksforgeeks.org/node-js-fs-createreadstream-method/)?
+
+
+### 230301 - Issue: image print size
+PNG from Replicate is 768\*768 -> [v. db21e45d / db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf](https://replicate.com/stability-ai/stable-diffusion/versions/db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf) [default](https://replicate.com/stability-ai/stable-diffusion/api#input-image_dimensions), alt. 512\*512
+Print area is 768*~524
+
+'image_dimensions': "768x768",  
+
+
+OFFICIAL REPLICATE JS CLIENT ==> [GH](https://github.com/replicate/replicate-js)/[NPM](https://www.npmjs.com/package/replicate) -- unstable alpha
+switch from unofficial [gh]()/no npm 
