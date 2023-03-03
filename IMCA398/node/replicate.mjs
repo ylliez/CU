@@ -73,3 +73,34 @@
 // console.log("------- I2T -------");
 // const predictionI2T = await modelI2T.predict({ image: predictionT2I[0] });
 // console.log(predictionI2T);
+
+/* REPLICATE */
+// missing API issue --> config
+// // import * as dotenv from 'dotenv'
+// console.log(process.env.REPLICATE_API_TOKEN)
+
+// const test = require('dotenv').config()
+
+// import dotenv from 'dotenv'
+// let test = dotenv.config()
+// console.log(test)
+
+// import dotenv from 'dotenv'
+// dotenv.config()
+// console.log(process.env.REPLICATE_API_TOKEN)
+// // OK!
+
+import dotenv from 'dotenv/config'
+// dotenv.config()
+console.log(process.env.REPLICATE_API_TOKEN)
+
+import replicate from "replicate";
+
+const prediction = await replicate
+    .model(
+        "stability-ai/stable-diffusion:db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf"
+    )
+    .predict({
+        // prompt: "painting of a cat by andy warhol",
+        prompt: "munchkins flabooding schmurtzles",
+    });

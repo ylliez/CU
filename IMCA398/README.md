@@ -328,12 +328,153 @@ web access: https://10.115.140.28/home/index.html
 - [fs.readFileSync()](https://www.geeksforgeeks.org/node-js-fs-readfilesync-method/?ref=lbp) vs. [fs.createReadStream()](https://www.geeksforgeeks.org/node-js-fs-createreadstream-method/)?
 
 
+### 230301 - Update to Official client
+OFFICIAL REPLICATE JS CLIENT ==> [GH](https://github.com/replicate/replicate-js)/[NPM](https://www.npmjs.com/package/replicate) -- unstable alpha
+switch from unofficial [gh](https://github.com/nicholascelestin/replicate-js)/no npm 
+#### Error: Missing token --> OK
+`ReplicateError: Missing API token`
+[change dotenv import grammar](https://stackoverflow.com/questions/44915758/node-process-env-variable-name-returning-undefined) & [adapt to mjs](https://github.com/motdotla/dotenv/issues/89)
+#### Error: Undefined T2I output
+Contra unofficial client, 0th element of T2I prediction output is undefined
+T2I prediction output is:
+```
+Prediction {
+  client: ReplicateClient {
+    baseURL: 'https://api.replicate.com',
+    token: 'e71f49fa960b9449f60546f396d9c1d86c1d4752'
+  },
+  id: 'j5tyraylvbasxe3p2d3jys7iga',
+  completedAt: '2023-03-01T20:53:10.508620Z',
+  createdAt: '2023-03-01T20:52:21.618981Z',
+  error: null,
+  input: { prompt: 'an angry hamster eating brie in an impressionist style' },
+  logs: 'Using seed: 2332\n' +
+    '  0%|          | 0/50 [00:00<?, ?it/s]\n' +
+    '  2%|▏         | 1/50 [00:03<03:02,  3.72s/it]\n' +
+    '  4%|▍         | 2/50 [00:03<01:20,  1.69s/it]\n' +
+    '  6%|▌         | 3/50 [00:04<00:48,  1.04s/it]\n' +
+    '  8%|▊         | 4/50 [00:04<00:33,  1.37it/s]\n' +
+    ' 10%|█         | 5/50 [00:04<00:25,  1.78it/s]\n' +
+    ' 12%|█▏        | 6/50 [00:05<00:20,  2.18it/s]\n' +
+    ' 14%|█▍        | 7/50 [00:05<00:16,  2.53it/s]\n' +
+    ' 16%|█▌        | 8/50 [00:05<00:14,  2.84it/s]\n' +
+    ' 18%|█▊        | 9/50 [00:05<00:13,  3.09it/s]\n' +
+    ' 20%|██        | 10/50 [00:06<00:12,  3.28it/s]\n' +
+    ' 22%|██▏       | 11/50 [00:06<00:11,  3.43it/s]\n' +
+    ' 24%|██▍       | 12/50 [00:06<00:10,  3.54it/s]\n' +
+    ' 26%|██▌       | 13/50 [00:06<00:10,  3.62it/s]\n' +
+    ' 28%|██▊       | 14/50 [00:07<00:09,  3.68it/s]\n' +
+    ' 30%|███       | 15/50 [00:07<00:09,  3.72it/s]\n' +
+    ' 32%|███▏      | 16/50 [00:07<00:09,  3.75it/s]\n' +
+    ' 34%|███▍      | 17/50 [00:07<00:08,  3.78it/s]\n' +
+    ' 36%|███▌      | 18/50 [00:08<00:08,  3.79it/s]\n' +
+    ' 38%|███▊      | 19/50 [00:08<00:08,  3.80it/s]\n' +
+    ' 40%|████      | 20/50 [00:08<00:07,  3.81it/s]\n' +
+    ' 42%|████▏     | 21/50 [00:08<00:07,  3.81it/s]\n' +
+    ' 44%|████▍     | 22/50 [00:09<00:07,  3.82it/s]\n' +
+    ' 46%|████▌     | 23/50 [00:09<00:07,  3.82it/s]\n' +
+    ' 48%|████▊     | 24/50 [00:09<00:06,  3.82it/s]\n' +
+    ' 50%|█████     | 25/50 [00:09<00:06,  3.83it/s]\n' +
+    ' 52%|█████▏    | 26/50 [00:10<00:06,  3.83it/s]\n' +
+    ' 54%|█████▍    | 27/50 [00:10<00:06,  3.83it/s]\n' +
+    ' 56%|█████▌    | 28/50 [00:10<00:05,  3.83it/s]\n' +
+    ' 58%|█████▊    | 29/50 [00:11<00:05,  3.83it/s]\n' +
+    ' 60%|██████    | 30/50 [00:11<00:05,  3.83it/s]\n' +
+    ' 62%|██████▏   | 31/50 [00:11<00:04,  3.83it/s]\n' +
+    ' 64%|██████▍   | 32/50 [00:11<00:04,  3.83it/s]\n' +
+    ' 66%|██████▌   | 33/50 [00:12<00:04,  3.83it/s]\n' +
+    ' 68%|██████▊   | 34/50 [00:12<00:04,  3.83it/s]\n' +
+    ' 70%|███████   | 35/50 [00:12<00:03,  3.84it/s]\n' +
+    ' 72%|███████▏  | 36/50 [00:12<00:03,  3.84it/s]\n' +
+    ' 74%|███████▍  | 37/50 [00:13<00:03,  3.83it/s]\n' +
+    ' 76%|███████▌  | 38/50 [00:13<00:03,  3.84it/s]\n' +
+    ' 78%|███████▊  | 39/50 [00:13<00:02,  3.84it/s]\n' +
+    ' 80%|████████  | 40/50 [00:13<00:02,  3.83it/s]\n' +
+    ' 82%|████████▏ | 41/50 [00:14<00:02,  3.84it/s]\n' +
+    ' 84%|████████▍ | 42/50 [00:14<00:02,  3.83it/s]\n' +
+    ' 86%|████████▌ | 43/50 [00:14<00:01,  3.83it/s]\n' +
+    ' 88%|████████▊ | 44/50 [00:14<00:01,  3.84it/s]\n' +
+    ' 90%|█████████ | 45/50 [00:15<00:01,  3.84it/s]\n' +
+    ' 92%|█████████▏| 46/50 [00:15<00:01,  3.84it/s]\n' +
+    ' 94%|█████████▍| 47/50 [00:15<00:00,  3.84it/s]\n' +
+    ' 96%|█████████▌| 48/50 [00:15<00:00,  3.84it/s]\n' +
+    ' 98%|█████████▊| 49/50 [00:16<00:00,  3.84it/s]\n' +
+    '100%|██████████| 50/50 [00:16<00:00,  3.84it/s]\n' +
+    '100%|██████████| 50/50 [00:16<00:00,  3.03it/s]',
+  metrics: { predict_time: 21.078172 },
+  output: [
+    'https://replicate.delivery/pbxt/DEZD5XU88n7XEFJagAVpy3e5gk5UzaxpfCJXxemRuE7rptGhA/out-0.png'
+  ],
+  startedAt: '2023-03-01T20:52:49.430448Z',
+  status: 'succeeded',
+  urls: {
+    get: 'https://api.replicate.com/v1/predictions/j5tyraylvbasxe3p2d3jys7iga',
+    cancel: 'https://api.replicate.com/v1/predictions/j5tyraylvbasxe3p2d3jys7iga/cancel'
+  },
+  version: 'f178fa7a1ae43a9a9af01b833b9d2ecf97b1bcb0acfd2dc5dd04895e042863f1',
+  webhookCompleted: null
+}
+```
+`predictionT2I.output[0]` instead of `predictionT2I[0]`
+#### Error: Undefined I2T output
+Same as above, I2T output is:
+```
+Prediction {
+  client: ReplicateClient {
+    baseURL: 'https://api.replicate.com',
+    token: 'e71f49fa960b9449f60546f396d9c1d86c1d4752'
+  },
+  id: 'apkom7z5pfdrpgrkybkcnnhvem',
+  completedAt: '2023-03-01T21:00:15.502685Z',
+  createdAt: '2023-03-01T20:59:51.906394Z',
+  error: null,
+  input: {
+    image: 'https://replicate.delivery/pbxt/IaHy2LBBgSYYOtpynAKuPGWGrwWOREi2GLPdo7OEhdaxu1IE/out-0.png'
+  },
+  logs: 'Interrogating with ViT-L/14...',
+  metrics: { predict_time: 23.522122 },
+  output: '\n' +
+    '\n' +
+    "a hamster with its mouth open and a fork in it's mouth, a photorealistic painting by Cicely Hey, shutterstock contest winner, pop surrealism, hyper realism, detailed painting, creative commons attribution",
+  startedAt: '2023-03-01T20:59:51.980563Z',
+  status: 'succeeded',
+  urls: {
+    get: 'https://api.replicate.com/v1/predictions/apkom7z5pfdrpgrkybkcnnhvem',
+    cancel: 'https://api.replicate.com/v1/predictions/apkom7z5pfdrpgrkybkcnnhvem/cancel'
+  },
+  version: '50adaf2d3ad20a6f911a8a9e3ccf777b263b8596fbd2c8fc26e8888f8a0edbb5',
+  webhookCompleted: null
+}
+```
+`predictionI2T.output` instead of `predictionI2T`
+
 ### 230301 - Issue: image print size
 PNG from Replicate is 768\*768 -> [v. db21e45d / db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf](https://replicate.com/stability-ai/stable-diffusion/versions/db21e45d3f7023abc2a46ee38a23973f6dce16bb082a930b0c49861f96d1e5bf) [default](https://replicate.com/stability-ai/stable-diffusion/api#input-image_dimensions), alt. 512\*512
 Print area is 768*~524
 
 'image_dimensions': "768x768",  
 
+photo paper sizes:
+- 4x6" / 102x152mm AKA 4R AR 1.49:1
+- 4x6.5" / 102x165mm --> close to 4R AR 1.62:1
+- 5x7" / 127x178mm AKA 5R || "13x18cm" AR 1.4:1
 
-OFFICIAL REPLICATE JS CLIENT ==> [GH](https://github.com/replicate/replicate-js)/[NPM](https://www.npmjs.com/package/replicate) -- unstable alpha
-switch from unofficial [gh]()/no npm 
+
+## HotW - versioning
+<img src="assets/IMCA398_diagram.png" width="500px"/>
+
+- v0.0 : tests
+- v0.5 : pre-official replicate JS client
+- v0.9 : final tests
+- v1.0 : T2I2T
+
+| prompt | image1 | text1 | image2 | text2 |
+| -- | -- | -- | -- | -- |
+| "an angry hamster eating brie in an impressionist style" | <img src="node/app/230303_1_1.png"/> | "a painting of a hamster eating a piece of cheese, a storybook illustration by Pamela Ascherson, deviantart, pop surrealism, deviantart, storybook illustration, made of cheese" | <img src="node/app/230303_1_2.png"/> | "a painting of a mouse eating a piece of cheese, a pastel by Raphaelle Peale, featured on deviantart, pop surrealism, storybook illustration, made of cheese, white background" |
+- v1.1 : T2I2T + P
+
+| prompt | image1 | text1 | image2 | text2 |
+| -- | -- | -- | -- | -- |
+| "an angry hamster eating brie in an impressionist style" | <img src="node/app/1677870043631_1.png"/> | "a painting of a rat eating a piece of cake, a pastel by Paul Feeley, featured on deviantart, sots art, 2d game art, storybook illustration, playstation 5 screenshot" | <img src="node/app/1677870043631_2.png"/> | "a cartoon rat holding a piece of cake, a pastel by Art Spiegelman, trending on deviantart, pop surrealism, storybook illustration, official art, art on instagram" |
+
+future: all human intervention (e.g. bringing photo to scanner/cam, bringing text to cam, listening and repeating text) & getting paid the same

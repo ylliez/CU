@@ -190,78 +190,78 @@
 
 /* 230301 */
 
-import * as dotenv from 'dotenv'
-dotenv.config()
-import Replicate from 'replicate-js'
-import ipp from 'ipp'
-import fs from 'fs'
-import fetch from 'node-fetch'
-import pngToJpeg from 'png-to-jpeg'
+// import * as dotenv from 'dotenv'
+// dotenv.config()
+// import Replicate from 'replicate-js'
+// import ipp from 'ipp'
+// import fs from 'fs'
+// import fetch from 'node-fetch'
+// import pngToJpeg from 'png-to-jpeg'
 
-const replicate = new Replicate();
-const modelT2I = await replicate.models.get('stability-ai/stable-diffusion')
-const modelI2T = await replicate.models.get("methexis-inc/img2prompt");
-let predictionT2I;
-let predictionI2T = "an angry hamster eating brie in an impressionist style";
-const printer = ipp.Printer("http://HP789327.local.:631/ipp/printer");
+// const replicate = new Replicate();
+// const modelT2I = await replicate.models.get('stability-ai/stable-diffusion')
+// const modelI2T = await replicate.models.get("methexis-inc/img2prompt");
+// let predictionT2I;
+// let predictionI2T = "an angry hamster eating brie in an impressionist style";
+// const printer = ipp.Printer("http://HP789327.local.:631/ipp/printer");
 
-const downloadImage = async (url, fileName) => {
-    const response = await fetch(url);
-    const blob = await response.blob();
-    const arrayBuffer = await blob.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    // const file = await fs.writeFile(fileName + `.png`, buffer, function (err, res) { if (err) console.log('error', err); });
-    await fs.writeFile(fileName + `.png`, buffer, function (err, res) { if (err) console.log('error', err); });
-    // await writeFile(buffer, fileName);
-}
-
-// const writeFile = async (buffer, fileName) => {
-//     fs.writeFile(fileName + `.png`, buffer, function (err, res) { if (err) console.log('error', err); });
+// const downloadImage = async (url, fileName) => {
+//     const response = await fetch(url);
+//     const blob = await response.blob();
+//     const arrayBuffer = await blob.arrayBuffer();
+//     const buffer = Buffer.from(arrayBuffer);
+//     // const file = await fs.writeFile(fileName + `.png`, buffer, function (err, res) { if (err) console.log('error', err); });
+//     await fs.writeFile(fileName + `.png`, buffer, function (err, res) { if (err) console.log('error', err); });
+//     // await writeFile(buffer, fileName);
 // }
 
-const convertImage = async (fileName) => {
-    let convertBuffer = fs.readFileSync(fileName + `.png`)
-    pngToJpeg({ quality: 90 })(convertBuffer)
-        .then(output => fs.writeFileSync(fileName + `.jpg`, output));
-}
+// // const writeFile = async (buffer, fileName) => {
+// //     fs.writeFile(fileName + `.png`, buffer, function (err, res) { if (err) console.log('error', err); });
+// // }
 
-const printImage = async (fileName) => {
-    let printBuffer = fs.readFileSync(fileName + `.jpg`);
-    let msg = {
-        "operation-attributes-tag": {
-            "requesting-user-name": "isp",
-            "job-name": "test-print",
-            "document-format": "image/jpeg"
-        },
-        data: printBuffer
-    };
-    printer.execute("Print-Job", msg, function (err, res) {
-        console.log(res);
-        console.log(err);
-    });
-}
+// const convertImage = async (fileName) => {
+//     let convertBuffer = fs.readFileSync(fileName + `.png`)
+//     pngToJpeg({ quality: 90 })(convertBuffer)
+//         .then(output => fs.writeFileSync(fileName + `.jpg`, output));
+// }
 
-// // code to get image from Replicate --> for simplicity (i.e. milking free credits), using a URL accessing previously generated image 
+// const printImage = async (fileName) => {
+//     let printBuffer = fs.readFileSync(fileName + `.jpg`);
+//     let msg = {
+//         "operation-attributes-tag": {
+//             "requesting-user-name": "isp",
+//             "job-name": "test-print",
+//             "document-format": "image/jpeg"
+//         },
+//         data: printBuffer
+//     };
+//     printer.execute("Print-Job", msg, function (err, res) {
+//         console.log(res);
+//         console.log(err);
+//     });
+// }
+
+// // // code to get image from Replicate --> for simplicity (i.e. milking free credits), using a URL accessing previously generated image 
+// // for (let i = 1; i <= 1; i++) {
+// //     console.log("------- T2I -------");
+// //     predictionT2I = await modelT2I.predict({ prompt: predictionI2T });
+// //     console.log(predictionT2I[0])
+// //     await downloadImage(predictionT2I[0], `app/${i}`)
+// //     await convertImage(`app/${i}`)
+// //     await printImage(`app/${i}`)
+// //     console.log("------- I2T -------");
+// //     predictionI2T = await modelI2T.predict({ image: predictionT2I[0] });
+// //     console.log(predictionI2T);
+// // }
+
+// let URL = `https://replicate.delivery/pbxt/TUkoT15HUO4jAtTt1hdId1uRDg3ovAo6uw4KupVaybHom0IE/out-0.png`
+// let prefix = `app/230301_`
+
 // for (let i = 1; i <= 1; i++) {
-//     console.log("------- T2I -------");
-//     predictionT2I = await modelT2I.predict({ prompt: predictionI2T });
-//     console.log(predictionT2I[0])
-//     await downloadImage(predictionT2I[0], `app/${i}`)
-//     await convertImage(`app/${i}`)
-//     await printImage(`app/${i}`)
-//     console.log("------- I2T -------");
-//     predictionI2T = await modelI2T.predict({ image: predictionT2I[0] });
-//     console.log(predictionI2T);
+//     // console.log(URL)
+//     // await downloadImage(URL, prefix + `${i}`)
+//     // await convertImage(prefix + `${i}`)
+//     // await printImage(prefix + `${i}`)
 // }
 
-let URL = `https://replicate.delivery/pbxt/TUkoT15HUO4jAtTt1hdId1uRDg3ovAo6uw4KupVaybHom0IE/out-0.png`
-let prefix = `app/230301_`
-
-for (let i = 1; i <= 1; i++) {
-    // console.log(URL)
-    // await downloadImage(URL, prefix + `${i}`)
-    // await convertImage(prefix + `${i}`)
-    // await printImage(prefix + `${i}`)
-}
-
-// await downloadImage(URL, prefix + `2`)
+// // await downloadImage(URL, prefix + `2`)
