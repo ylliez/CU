@@ -1,17 +1,25 @@
 #include <Servo.h>
 Servo Herve;
-int servoPos;
+int servoPos, start, end;
 
 void setup() {
   Herve.attach(9);
   Serial.begin(9600);
-  Herve.write(0);
+  // Herve.write(0);
   // Herve.write(180);
+  servoPos = 0;
+  start = 0;
+  // end = 77;
+  // end = 180; // 360
+  end = 180;
+  Herve.write(servoPos);
 }
 
 void loop() {
-  servoPos = 0;
   // servoPos = random(0,181);
+  // Serial.println(servoPos);
+  // Herve.write(servoPos);
+  // delay(100);
   /* for (servoPos = 0; servoPos < 180; servoPos++){
     Serial.println(servoPos);
     Herve.write(servoPos);
@@ -22,15 +30,14 @@ void loop() {
     Herve.write(servoPos);
     delay(10);
   } */
-  for (servoPos = 0; servoPos < 80; servoPos++){
+  for (servoPos = start; servoPos < end; servoPos++){
+    Serial.println(servoPos);
     Herve.write(servoPos);
-    delay(5);
+    delay(10);
   }
-  for (servoPos = 80; servoPos > 0; servoPos--){
+  for (servoPos = end; servoPos > start; servoPos--){
+    Serial.println(servoPos);
     Herve.write(servoPos);
-    delay(5);
+    delay(10);
   } 
-  // Serial.println(servoPos);
-  // Herve.write(servoPos);
-  // delay(100);
 }
