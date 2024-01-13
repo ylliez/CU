@@ -1,0 +1,80 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<!--
+3 Copyright 2013 The Android Open Source Project
+4
+5 Licensed under the Apache License, Version 2.0 (the "License");
+6 you may not use this file except in compliance with the License.
+7 Unless required by applicable law or agreed to in writing, software
+8 distributed under the License is distributed on an "AS IS" BASIS,
+9 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+10 See the License for the specific language governing permissions and
+11 limitations under the License.
+12-->
+13<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+14    package="com.example.android.bluetoothlegatt"
+15    android:versionCode="1"
+16    android:versionName="1.0" >
+17
+18    <uses-sdk
+19        android:minSdkVersion="23"
+19-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml
+20        android:targetSdkVersion="28" />
+20-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml
+21
+22    <uses-feature
+22-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:21:5-89
+23        android:name="android.hardware.bluetooth_le"
+23-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:21:19-63
+24        android:required="true" />
+24-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:21:64-87
+25
+26    <uses-permission android:name="android.permission.BLUETOOTH" />
+26-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:23:5-67
+26-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:23:22-65
+27    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+27-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:24:5-73
+27-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:24:22-71
+28    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+28-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:25:5-78
+28-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:25:22-76
+29
+30    <application
+30-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:27:5-39:19
+31        android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
+31-->[com.android.support:support-compat:28.0.0] /Users/isp/.gradle/caches/transforms-3/d732f4d1d5007e0f8f7829de1b79d464/transformed/support-compat-28.0.0/AndroidManifest.xml:22:18-91
+32        android:debuggable="true"
+33        android:extractNativeLibs="false"
+34        android:icon="@mipmap/ic_launcher"
+34-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:29:9-43
+35        android:label="@string/app_name"
+35-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:28:9-41
+36        android:testOnly="true"
+37        android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
+37-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:30:9-68
+38        <activity android:name="com.example.android.bluetoothlegatt.DrawLauncher" >
+38-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:31:9-36:20
+38-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:31:19-47
+39            <intent-filter>
+39-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:32:13-35:29
+40                <action android:name="android.intent.action.MAIN" />
+40-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:33:17-68
+40-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:33:25-66
+41
+42                <category android:name="android.intent.category.LAUNCHER" />
+42-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:34:17-76
+42-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:34:27-74
+43            </intent-filter>
+44        </activity>
+45        <activity android:name="com.example.android.bluetoothlegatt.DeviceControlActivity" />
+45-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:37:9-58
+45-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:37:19-56
+46
+47        <service
+47-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:38:9-77
+48            android:name="com.example.android.bluetoothlegatt.BluetoothLeService"
+48-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:38:18-52
+49            android:enabled="true" />
+49-->/Users/isp/Downloads/Telomatic/app/Application/src/main/AndroidManifest.xml:38:53-75
+50    </application>
+51
+52</manifest>
