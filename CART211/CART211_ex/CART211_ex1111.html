@@ -1,0 +1,25 @@
+<!--
+SKILLS:
+- drag&drop
+- storing local variables (window.localStorage.setItem("storedX",dragX);)
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> CART211 EX1111 </title>
+    <link rel="stylesheet" href="CART211_exStyle.css">
+    <script type="text/javascript" src="CART211_ex1111.js"></script>
+    <style>
+    .specialp { font-size:20px; color:#000000; padding: 10px; }
+    </style>
+  </head>
+  <body onmousemove="mouseMove()" onmouseup="mouseUp()"> <!-- for it to be active on whole page -->
+    <h1> EX1111 </h1>
+    <p> x-position: <span id="showXPos">0px</span></p>
+    <p> y-position: <span id="showYPos">0px</span></p>
+    <div>
+      <img id="dragImg" onload="onLoad()" onmousedown="mouseDown()" draggable="false" src="../CART211_media/stegtat.jpg" width="200px"> </img> <!-- onclick waits for mouseup -->
+    </div>
+  </body>
+</html>
