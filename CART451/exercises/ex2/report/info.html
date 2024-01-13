@@ -1,0 +1,92 @@
+<html>
+
+<head>
+    <title>CART451 - NLP - exercise</title>
+</head>
+
+<body>
+    <h1><b>Apocryphal Intelligence</b></h1>
+    <p>(mirror of node script, for full info, download folder and run script to access dynamic version on localhost) </p>
+    <h2>Texts</h2>
+    <h3>Sourced from <a href="https://www.gutenberg.org/">Project Gutenberg</a>, <a href="https://www.kaggle.com/">Kaggle</a> and the <a href="https://archive.org/">Internet Archive</a>. Texts
+        analyzed:</h3>
+    <ul>
+        <li><a href="https://www.gutenberg.org/cache/epub/10/pg10.txt">Bible</a></li>
+        <li><a href="https://archive.org/stream/EnglishTranslationOfTheHolyQuran/trans-quran-web_djvu.txt">Qur'an</a>
+        </li>
+        <li><a href="https://www.kaggle.com/datasets/tentotheminus9/religious-and-philosophical-texts">Bhagavad Gita</a>
+        </li>
+        <li><a href="https://www.kaggle.com/datasets/tentotheminus9/religious-and-philosophical-texts">Vedas</a></li>
+    </ul>
+    <p>(Drawn in this order on all graphs)</p>
+    <h2>Word Count</h2>
+    <!-- <div style="display: flex;"> -->
+    <h3>Total words</h3>
+    <svg id="svg1" width="600" height="400"></svg>
+    <h3>Total distinct words of 2+ characters</h3>
+    <svg id="svg2" width="600" height="400"></svg>
+    <!-- </div> -->
+
+    <h2>Term Frequency</h2>
+    <h3>Bible</h3>
+    <canvas id="TFcanvas0" width="400" height="300"></canvas>
+    <h3>Qur'an</h3>
+    <canvas id="TFcanvas1" width="400" height="300"></canvas>
+    <h3>Bhagavad Gita</h3>
+    <canvas id="TFcanvas2" width="400" height="300"></canvas>
+    <h3>Vedas</h3>
+    <canvas id="TFcanvas3" width="400" height="300"></canvas>
+    <h2>Term Frequency - Inverse Document Frequency</h2>
+    <canvas id="TFIDFcanvas0" width="800" height="600"></canvas>
+    <h3>Bible</h3>
+    <canvas id="TFIDFcanvas1" width="400" height="300"></canvas>
+    <h3>Qur'an</h3>
+    <canvas id="TFIDFcanvas2" width="400" height="300"></canvas>
+    <h3>Bhagavad Gita</h3>
+    <canvas id="TFIDFcanvas3" width="400" height="300"></canvas>
+    <h3>Vedas</h3>
+    <canvas id="TFIDFcanvas4" width="400" height="300"></canvas>
+
+    <h2>Low TFIDF (Common)</h2>
+    <canvas id="TFIDFcanvas5" width="800" height="600"></canvas>
+
+    <h2>Sentiment Analysis</h2>
+    <h3>Natural</h3>
+    <svg id="svg3" width="600" height="400"></svg>
+
+    <h3>Specific Word Frequencies</h3>
+    <div id="svg4" width="1200" height="800"></div>></div>
+    <!-- <h3>god</h3>
+    <svg id="svgSingles0" width="600" height="400"></svg>
+    <h3>love</h3>
+    <svg id="svgSingles1" width="600" height="400"></svg>
+    <h3>hate</h3>
+    <svg id="svgSingles2" width="600" height="400"></svg>
+    <h3>happy</h3>
+    <svg id="svgSingles3" width="600" height="400"></svg>
+    <h3>sad</h3>
+    <svg id="svgSingles4" width="600" height="400"></svg>
+    <h3>pain</h3>
+    <svg id="svgSingles5" width="600" height="400"></svg>
+    <h3>delight</h3>
+    <svg id="svgSingles6" width="600" height="400"></svg>
+    <h3>conquer</h3>
+    <svg id="svgSingles7" width="600" height="400"></svg>
+    <h3>slave</h3>
+    <svg id="svgSingles8" width="600" height="400"></svg> -->
+
+
+    <h2>Dependency Tree</h2>
+    <img src="assets/img/displacy_bible.png"></img>
+    <img src="assets/img/displacy_quran.png"></img>
+    <img src="assets/img/displacy_bhag.png"></img>
+    <img src="assets/img/displacy_vedas.png"></img>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js'></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="../wordcloud2.js"></script>
+    <script type="text/javascript" src="data.json"></script>
+    <script src="info.js"></script>
+</body>
+
+</html>

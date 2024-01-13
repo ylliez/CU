@@ -1,0 +1,18 @@
+{
+  "name": "ex2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "canvas": "^2.10.2",
+    "d3-cloud": "^1.2.5",
+    "express": "^4.18.2",
+    "natural": "^5.2.3",
+    "wordcloud": "^1.2.2"
+  }
+}

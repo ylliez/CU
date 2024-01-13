@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>JSON LOAD EX</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div style="background:#eeeeee;width:75%;margin-left:12%; padding:1%;">
+        <p>Click on the button to load result.html file:</p>
+        <div id="resultDiv" style="background-color:rgba(149, 0, 153,0.95); color:white; width:95%;margin-bottom:1%;">
+            RESULT PLACE HOLDER
+        </div>
+        <input type="button" id="getData" value="Load Data" />
+    </div>
+    <!-- <script>
+        $(document).ready(function() {
+              $("#getData").click(function(event){
+                 $('#resultDiv').load('loadFiles/result.txt');
+              });
+           });
+        </script> -->
+    <!-- <script>
+            $(document).ready(function() {
+                  $("#getData").click(function(event){
+                     $('#resultDiv').load('loadFiles/result.html',callbackF);
+                  });
+           
+                  function callbackF(){
+                    console.log("data was loaded");
+                    // now do stuff in the canvas that was loaded!
+                  // get the canvas
+                  let canvas = document.getElementById("testCanvas");
+           
+                  //get the context
+                  let context = canvas.getContext("2d");
+                  context.fillStyle = "rgba(255,255,255,255)";
+                  // can use properties of the canvas object -> width, height ...
+                  console.log(canvas);
+                  context.fillRect(canvas.width/2,canvas.height/2,50,50);
+                  context.clearRect(canvas.width/2+12.5,canvas.height/2+12.5,25,25);
+                  }
+               });
+           
+            </script> -->
+    <!-- <script>
+        $(document).ready(function () {
+            $("#getData").click(function (event) {
+                //can we just load a json object? Of course but it will not be converted from
+                //the string....
+                $('#resultDiv').load('loadFiles/result.json', callbackF);
+            });
+
+            function callbackF() {
+                console.log("data was loaded");
+            }
+        });
+    </script> -->
+    <script>
+        $.getJSON('loadFiles/books.json',function(data) {
+        //success
+          //step 1: console.log the result
+          console.log(data);
+          //set boolean to true
+          loaded=true;
+        })
+        //fail
+        .fail(function() {
+          console.log( "error" );
+        });
+
+        function populateHeader(data){
+      let sampleHeader = $("<h1>");
+      $(sampleHeader).text(data.Label);
+      $(sampleHeader).appendTo(header);
+ 
+    }
+ 
+    function showBooks(data){
+      let resultContainer = $("#result-container");
+      for(let i = 0; i< data.BookItems.length;i++ ){
+      displaySingle(data.BookItems[i],resultContainer);
+    }
+ 
+    }
+/** remember this??? */
+    function displaySingle(book,parentContainer){
+ 
+         //make the book container and append to parent
+         let singleBookContainer = $("<article>").addClass("single-book").appendTo(parentContainer);
+       $.each(book, function( index, value ) {
+ 
+ 
+         if(index ==="Detail"){
+ 
+           //console.log(value)
+           let detailContainer = $("<div>").addClass("detail-container").appendTo(singleBookContainer);
+ 
+           $.each(value, function( indexDetail, valueDetail ) {
+           //  console.log(indexDetail);
+             //console.log(valueDetail);
+             let detailProperty = $("<p>").addClass("detail-prop"); // creating an element  ** NOT accessing
+ 
+             detailProperty.html(`${indexDetail} : ${valueDetail}`);
+             $(detailProperty).appendTo(detailContainer);
+ 
+         });
+       }//if Detail
+ 
+       else if(index ==="Edition_Years"){
+         //is an array we would need to iterate at do its thing..
+         let editionYearsPara =  $("<p>").addClass("single-book-para").appendTo(singleBookContainer);
+         let label =  $("<span>").addClass("single-year-test").appendTo(editionYearsPara);
+         label.text("Editions: ");
+         theContentArray = value;
+ 
+         for(let i = 0; i<theContentArray.length; i++){
+           let singleYear =  $("<span>").addClass("single-year-test").appendTo(editionYearsPara);
+           singleYear.text(`*${theContentArray[i]}*-`);
+         }
+       }
+       else if(index ==="Book_Image"){
+         //show the image ...
+           let detailImage = $("<img>").addClass("single-book-image").appendTo(singleBookContainer);
+           $(detailImage).attr("src",value)
+       }
+       //default
+       else{
+         let bookPropertyPara = $("<p>").addClass("single-book-para").appendTo(singleBookContainer); // creating an element  ** NOT accessing
+         bookPropertyPara.html(`${index} : ${value}`);
+       }
+     });
+    } //display single
+    </script>
+</body>
+
+</html>

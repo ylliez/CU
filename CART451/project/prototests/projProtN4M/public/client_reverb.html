@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>N4M Synth - Reverb</title>
+  <!-- <link rel='stylesheet' href='/css/style.css' /> -->
+</head>
+
+<body>
+  <h1><b>N4M Synth - Reverb</b></h1>
+  <table style="width:500px">
+    <tr>
+      <th>REVERB</th>
+      <th>Amount</th>
+      <th>Decay</th>
+      <th>Dampening</th>
+      <th>Diffusion</th>
+    </tr>
+    <tr>
+      <td><input type="checkbox" alt="rev" id="revIO" oninput="inputStr(this.alt, this.id, this.checked)"></input></td>
+      <td><input type="range" alt="rev" id="revAmt" value="0" oninput="inputNum(this.alt, this.id, this.value)"></input>
+      </td>
+      <td><input type="range" alt="rev" id="revDec" value="50"
+          oninput="inputNum(this.alt, this.id, this.value)"></input></td>
+      <td><input type="range" alt="rev" id="revDamp" value="50"
+          oninput="inputNum(this.alt, this.id, this.value)"></input></td>
+      <td><input type="range" alt="rev" id="revDiff" value="50"
+          oninput="inputNum(this.alt, this.id, this.value)"></input></td>
+    </tr>
+  </table>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js'></script>
+  <script src="./client.js"></script>
+</body>
+
+</html>

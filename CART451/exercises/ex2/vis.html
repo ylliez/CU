@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CART451 - NLP - visualization</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #barContainer {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .bar {
+            width: 25vw;
+            height: 100vh;
+            text-align: center;
+        }
+
+        #bible {
+            background-color: #ff0000;
+        }
+
+        #quran {
+            background-color: #00ff00;
+        }
+
+        #bgita {
+            background-color: #ffff00;
+        }
+
+        #vedas {
+            background-color: #0000ff;
+        }
+
+        #dropdown {
+            display: none;
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            top: 10%;
+            z-index: 1;
+        }
+
+        button {
+            position: absolute;
+            right: 5%;
+            bottom: 5%;
+            z-index: 2;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="dropdown">
+        <label for="searchTerm">WORD:</label><br>
+        <select name="searchTerm" id="searchTerm">
+            <option value="default"></option>
+            <option value="love">love</option>
+            <option value="hate">hate</option>
+            <option value="happy">happy</option>
+            <option value="sad">sad</option>
+            <option value="pain">pain</option>
+            <option value="delight">delight</option>
+            <option value="conquer">conquer</option>
+            <option value="slave">slave</option>
+        </select><br>
+    </div>
+    <button onclick="location.href='/';">?</button>
+    <div id="barContainer">
+        <div class="bar" id="bible">
+            BIBLE
+        </div>
+        <div class="bar" id="quran">
+            QUR'AN
+        </div>
+        <div class="bar" id="bgita">
+            BHAGAVAD GITA
+        </div>
+        <div class="bar" id="vedas">
+            VEDAS
+        </div>
+    </div>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js'></script>
+    <script src="vis.js"></script>
+</body>
+
+</html>
