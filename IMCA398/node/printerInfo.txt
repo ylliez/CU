@@ -1,0 +1,423 @@
+Photosmart 5510 series[789327] 
+http://HP789327.local.:631/ipp/printer
+
+{
+  "version": "2.0",
+  "statusCode": "successful-ok",
+  "id": 71131864,
+  "operation-attributes-tag": {
+    "attributes-charset": "utf-8",
+    "attributes-natural-language": "en-us"
+  },
+  "printer-attributes-tag": {
+    "printer-uri-supported": "ipp://hp789327.local./ipp/printer",
+    "uri-security-supported": "none",
+    "uri-authentication-supported": "requesting-user-name",
+    "printer-name": "HP789327",
+    "printer-location": "",
+    "printer-more-info": "http://hp789327.local.",
+    "printer-info": "Photosmart 5510 series [789327]",
+    "printer-make-and-model": "HP Photosmart 5510 series",
+    "printer-state": "idle",
+    "printer-state-reasons": "none",
+    "ipp-versions-supported": [
+      "1.0",
+      "1.1",
+      "2.0"
+    ],
+    "operations-supported": [
+      "Print-Job",
+      "Validate-Job",
+      "Cancel-Job",
+      "Get-Job-Attributes",
+      "Get-Jobs",
+      "Get-Printer-Attributes",
+      "Print-URI"
+    ],
+    "charset-configured": "us-ascii",
+    "charset-supported": [
+      "us-ascii",
+      "utf-8"
+    ],
+    "natural-language-configured": "en-us",
+    "generated-natural-language-supported": "en-us",
+    "document-format-default": "application/octet-stream",
+    "document-format-supported": [
+      "application/vnd.hp-PCL",
+      "image/jpeg",
+      "application/PCLm",
+      "image/urf",
+      "application/octet-stream"
+    ],
+    "printer-is-accepting-jobs": true,
+    "queued-job-count": 0,
+    "pdl-override-supported": "attempted",
+    "printer-up-time": 64866,
+    "compression-supported": "none",
+    "color-supported": true,
+    "job-creation-attributes-supported": [
+      "copies",
+      "finishings",
+      "sides",
+      "orientation-requested",
+      "media",
+      "print-quality",
+      "printer-resolution",
+      "output-bin",
+      "media-col",
+      "output-mode",
+      "ipp-attribute-fidelity",
+      "job-name"
+    ],
+    "reference-uri-schemes-supported": [
+      "http",
+      "https"
+    ],
+    "printer-device-id": "MFG:HP;MDL:Photosmart 5510 series;CMD:PCL3GUI,PCL3,PJL,JPEG,PCLM,URF,DW-PCL,802.11,DESKJET,DYN;CLS:PRINTER;DES:CQ176A;CID:HPIJVIPAV2;LEDMDIS:USB#FF#CC#00,USB#07#01#02,USB#FF#04#01;SN:CN19Q0544D05NR;S:038000C484201021005a020000045280100442801004628010041280014;Z:0102,05000009000008000008000008000001,0600,0700000000000000000000,0b0000000000000000000099ac0000000099ac0000000099ac000000009a87,0c0,0e00000000000000000000,0f00000000000000000000,10000002000008000008000008000008,110,12000,150,17000000000000000000000000000000,181;",
+    "printer-alert": [
+      "code=unknown;severity=warning;group=other",
+      "code=unknown;severity=other;group=other"
+    ],
+    "printer-alert-description": [
+      "cartridgeCounterfeitQuestion",
+      "inPowerSave"
+    ],
+    "printer-uuid": "urn:uuid:1c852a4d-b800-1f08-abcd-2c768a789327",
+    "landscape-orientation-requested-preferred": 5,
+    "media-supported": [
+      "na_executive_7.25x10.5in",
+      "na_letter_8.5x11in",
+      "na_legal_8.5x14in",
+      "na_govt-letter_8x10in",
+      "na_invoice_5.5x8.5in",
+      "iso_a5_148x210mm",
+      "iso_a4_210x297mm",
+      "jis_b5_182x257mm",
+      "jpn_hagaki_100x148mm",
+      "iso_a6_105x148mm",
+      "na_index-4x6_4x6in",
+      "na_index-5x8_5x8in",
+      "na_index-3x5_3x5in",
+      "na_monarch_3.875x7.5in",
+      "na_number-10_4.125x9.5in",
+      "iso_dl_110x220mm",
+      "iso_c5_162x229mm",
+      "iso_c6_114x162mm",
+      "na_a2_4.375x5.75in",
+      "jpn_chou3_120x235mm",
+      "jpn_chou4_90x205mm",
+      "oe_l_3.5x5in",
+      "na_5x7_5x7in",
+      "na_personal_3.625x6.5in",
+      "jpn_oufuku_148x200mm",
+      "iso_b5_176x250mm",
+      "om_small-photo_100x150mm"
+    ],
+    "media-default": "na_letter_8.5x11in",
+    "media-col-supported": [
+      "media-type",
+      "media-size",
+      "media-top-margin",
+      "media-left-margin",
+      "media-right-margin",
+      "media-bottom-margin",
+      "media-source"
+    ],
+    "media-col-default": {
+      "media-size": {
+        "x-dimension": 21590,
+        "y-dimension": 27940
+      },
+      "media-top-margin": 182,
+      "media-bottom-margin": 299,
+      "media-left-margin": 317,
+      "media-right-margin": 317,
+      "media-source": "main",
+      "media-type": "stationery"
+    },
+    "media-left-margin-supported": [
+      317,
+      0
+    ],
+    "media-right-margin-supported": [
+      317,
+      0
+    ],
+    "media-top-margin-supported": [
+      182,
+      0
+    ],
+    "media-bottom-margin-supported": [
+      299,
+      0
+    ],
+    "media-source-supported": "main",
+    "media-type-supported": [
+      "stationery",
+      "com.hp.premium-inkjet",
+      "photographic-glossy",
+      "transparency",
+      "com.hp.brochure-glossy",
+      "com.hp.brochure-matte",
+      "com.hp.everyday-glossy",
+      "com.hp.advanced-photo",
+      "com.hp.everyday-matte",
+      "com.hp.premium-photo"
+    ],
+    "pages-per-minute": 8,
+    "pages-per-minute-color": 7,
+    "jpeg-k-octets-supported": [
+      0,
+      15904
+    ],
+    "jpeg-x-dimension-supported": [
+      0,
+      8192
+    ],
+    "jpeg-y-dimension-supported": [
+      1,
+      8192
+    ],
+    "pdf-versions-supported": "none",
+    "urf-supported": [
+      "CP1",
+      "MT1-2-8-9-10-11",
+      "OB9",
+      "OFU0",
+      "PQ3-4-5",
+      "RS300-600",
+      "SRGB24",
+      "W8",
+      "DEVW8",
+      "DEVRGB24-48",
+      "ADOBERGB24-48",
+      "IS1"
+    ],
+    "marker-names": [
+      "black ink",
+      "cyan ink",
+      "magenta ink",
+      "yellow ink"
+    ],
+    "marker-colors": [
+      "#000000",
+      "#00FFFF",
+      "#FF00FF",
+      "#FFFF00"
+    ],
+    "marker-types": [
+      "inkCartridge",
+      "inkCartridge",
+      "inkCartridge",
+      "inkCartridge"
+    ],
+    "marker-low-levels": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "marker-high-levels": [
+      100,
+      100,
+      100,
+      100
+    ],
+    "marker-levels": [
+      20,
+      0,
+      0,
+      0
+    ],
+    "copies-default": 1,
+    "finishings-default": "none",
+    "orientation-requested-default": "portrait",
+    "print-quality-default": "normal",
+    "printer-resolution-default": [
+      600,
+      600,
+      "dpi"
+    ],
+    "sides-default": "one-sided",
+    "output-bin-default": "face-up",
+    "output-mode-default": "color",
+    "print-color-mode-default": "auto",
+    "copies-supported": [
+      1,
+      99
+    ],
+    "finishings-supported": "none",
+    "orientation-requested-supported": "portrait",
+    "print-quality-supported": [
+      "draft",
+      "normal",
+      "high"
+    ],
+    "printer-resolution-supported": [
+      [
+        300,
+        300,
+        "dpi"
+      ],
+      [
+        600,
+        600,
+        "dpi"
+      ],
+      [
+        1200,
+        1200,
+        "dpi"
+      ]
+    ],
+    "sides-supported": "one-sided",
+    "output-bin-supported": "face-up",
+    "output-mode-supported": [
+      "color",
+      "monochrome"
+    ],
+    "print-color-mode-supported": [
+      "auto",
+      "monochrome",
+      "color",
+      "process-monochrome"
+    ],
+    "printer-icons": "http://hp789327.local./webApps/images/printer.png",
+    "printer-supplies-info": "http://hp789327.local./SureSupplyMobile/",
+    "print-content-optimize-default": "text-and-graphics",
+    "print-content-optimize-supported": [
+      "photo",
+      "graphics",
+      "text",
+      "text-and-graphics"
+    ],
+    "epcl-version-supported": "1.0",
+    "fit-to-page-default": false,
+    "manual-duplex-supported": false,
+    "pclm-source-resolution-supported": [
+      [
+        300,
+        300,
+        "dpi"
+      ],
+      [
+        600,
+        600,
+        "dpi"
+      ]
+    ],
+    "pclm-source-resolution-default": [
+      600,
+      600,
+      "dpi"
+    ],
+    "pclm-strip-height-supported": 32,
+    "pclm-strip-height-preferred": 32,
+    "pclm-raster-back-side": "rotated",
+    "pclm-compression-method-preferred": "rle",
+    "document-format-varying-attributes": "copies"
+  }
+}
+
+------------
+
+Brother MFC - 7840W 
+http://BRN008077E90263.local.:631/duerqxesz5090 
+
+Error
+    at new IppResponseError (/Users/mac/Documents/GitHub/CU/IMCA398/node3/node_modules/ipp/lib/request.js:72:17)
+    at ClientRequest.<anonymous> (/Users/mac/Documents/GitHub/CU/IMCA398/node3/node_modules/ipp/lib/request.js:40:8)
+    at Object.onceWrapper (node:events:628:26)
+    at ClientRequest.emit (node:events:513:28)
+    at HTTPParser.parserOnIncomingClient [as onIncoming] (node:_http_client:674:27)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:128:17)
+    at Socket.socketOnData (node:_http_client:521:22)
+    at Socket.emit (node:events:513:28)
+    at addChunk (node:internal/streams/readable:315:12)
+    at readableAddChunk (node:internal/streams/readable:289:9) {
+  statusCode: 404,
+  message: 'Received unexpected response status 404 from the printer'
+}
+404 response
+
+
+ipp.Printer("http://BRN008077E90263.local.", { version: '1.0' });
+
+{
+  version: '1.0',
+  statusCode: 'successful-ok',
+  id: 83588574,
+  'operation-attributes-tag': {
+    'attributes-charset': 'utf-8',
+    'attributes-natural-language': 'en-us'
+  },
+  'printer-attributes-tag': {
+    'generated-natural-language-supported': [
+      'en-us', 'da', 'nl',
+      'fi',    'fr', 'de',
+      'it',    'no', 'pt',
+      'sv',    'es', 'pl',
+      'ja',    'ru', 'cs',
+      'hu'
+    ],
+    'printer-uri-supported': [
+      'http://192.168.37.227:631/',
+      'http://192.168.37.227:631/ipp',
+      'http://192.168.37.227:631/ipp/port1',
+      'http://192.168.37.227:631/brn008077e90263',
+      'http://192.168.37.227:631/binary_p1',
+      'http://192.168.37.227:631/text_p1',
+      'http://192.168.37.227:631/postscript_p1',
+      'http://192.168.37.227:631/pcl_p1',
+      'http://192.168.37.227:631/brn008077e90263_at',
+      'http://192.168.37.227:631/ipp/rseuqzdex5001',
+      'http://192.168.37.227:631/rseuqzdex5001',
+      'http://192.168.37.227:631/ipp/duerqxesz5090',
+      'http://192.168.37.227:631/duerqxesz5090'
+    ],
+    'uri-security-supported': [
+      'none', 'none', 'none',
+      'none', 'none', 'none',
+      'none', 'none', 'none',
+      'none', 'none', 'none',
+      'none'
+    ],
+    'uri-authentication-supported': [
+      'none', 'none', 'none',
+      'none', 'none', 'none',
+      'none', 'none', 'none',
+      'none', 'none', 'none',
+      'none'
+    ],
+    'printer-name': 'BRW00234DDB5A57',
+    'printer-location': undefined,
+    'printer-info': 'MFG:Brother;CMD:PJL,PCL,PCLXL;MDL:MFC-7840W;CLS:PRINTER;',
+    'printer-make-and-model': 'Brother MFC-7840W',
+    'printer-state': 'idle',
+    'printer-state-reasons': 'none',
+    'printer-state-message': 'Online',
+    'ipp-version-supported': '1.0',
+    'operations-supported': [
+      'Print-Job',
+      'Validate-Job',
+      'Create-Job',
+      'Send-Document',
+      'Cancel-Job',
+      'Get-Job-Attributes',
+      'Get-Jobs',
+      'Get-Printer-Attributes'
+    ],
+    'multiple-document-jobs-supported': true,
+    'multiple-operation-time-out': 150,
+    'natural-language-configured': 'en-us',
+    'charset-configured': 'utf-8',
+    'charset-supported': 'utf-8',
+    'document-format-supported': 'application/vnd.hp-PCL',
+    'document-format-default': 'application/octet-stream',
+    'printer-is-accepting-jobs': true,
+    'queued-job-count': 0,
+    'pdl-override-supported': 'not-attempted',
+    'printer-up-time': 89899,
+    'compression-supported': 'none'
+  }
+}

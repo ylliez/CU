@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HotW</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="heading">
+            <h1>The Humiliation of the Word</h1>
+        </div>
+        <div class="button-container">
+            <button id="start" class="start" onclick="startNodeProcess()">ATHENA</button>
+            <button id="reset" class="reset" onclick="resetNodeProcess()">APHRODITE</button>
+            <button id="stop" class="stop" onclick="stopNodeProcess()">ATTIS</button>
+        </div>
+        <div class="data-container" id="data-container">
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const startButton = document.getElementById('start');
+        const babruButton = document.getElementById('reset');
+        const stopButton = document.getElementById('stop');
+        const printDataContainer = document.getElementById('data-container');
+        let isNodeProcessRunning = false;
+        socket.on('S2CAck', () => { handleHandshakeAck(); });
+        function handleHandshakeAck() {
+            startButton.innerHTML = 'RUNNING...';
+            startButton.style.backgroundColor = 'green';
+            isNodeProcessRunning = true;
+        }
+        function startNodeProcess() {
+            if (!isNodeProcessRunning) {
+                socket.emit('startNodeProcess');
+            }
+        }
+        function resetNodeProcess() {
+            if (isNodeProcessRunning) {
+                socket.emit('resetNodeProcess');
+                startButton.innerHTML = 'ATHENA';
+                startButton.style.backgroundColor = 'red';
+                isNodeProcessRunning = false;
+                printDataContainer.innerHTML = '';
+            }
+        }
+        function stopNodeProcess() {
+            // if (isNodeProcessRunning) {
+            socket.emit('stopNodeProcess');
+            startButton.innerHTML = 'ATHENA';
+            startButton.style.backgroundColor = 'red';
+            isNodeProcessRunning = false;
+            printDataContainer.innerHTML = '';
+            // }
+        }
+        socket.on('S2CData', (data) => { displayPrintData(data); });
+        function displayPrintData(data) {
+            let printDataParagraph = document.createElement('p');
+            printDataParagraph.innerHTML = `${data}`;
+            printDataContainer.appendChild(printDataParagraph);
+        }
+    </script>
+</body>
+
+</html>
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HotW</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="heading">
+            <h1>The Humiliation of the Word</h1>
+        </div>
+        <div class="button-container">
+            <button id="button">START</button>
+        </div>
+        <div id="data-container">
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const Button = document.getElementById('button');
+        const printDataContainer = document.getElementById('data-container');
+        let isNodeProcessRunning = false;
+        socket.on('S2CAck', () => { handleHandshakeAck(); });
+        function handleHandshakeAck() {
+            Button.innerHTML = 'RESET';
+            Button.style.backgroundColor = 'green';
+            isNodeProcessRunning = true;
+        }
+        Button.addEventListener('click', () => {
+            if (!isNodeProcessRunning) {
+                socket.emit('startNodeProcess');
+            } else {
+                socket.emit('resetNodeProcess');
+                Button.innerHTML = 'START';
+                Button.style.backgroundColor = 'red';
+                isNodeProcessRunning = false;
+                printDataContainer.innerHTML = '';
+            }
+        });
+        socket.on('S2CData', (data) => { displayPrintData(data); });
+        function displayPrintData(data) {
+            let printDataParagraph = document.createElement('p');
+            printDataParagraph.innerHTML = `${data}`;
+            printDataContainer.appendChild(printDataParagraph);
+        }
+    </script>
+</body>
+
+</html> -->
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HotW</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>The Humiliation of the Word</h1>
+        <button onclick="startNodeProcess()">START</button>
+        <button onclick="resetNodeProcess()">RESET</button>
+        <div id="print-data-container"></div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        function startNodeProcess() { socket.emit("startNodeProcess"); }
+        function resetNodeProcess() { socket.emit('resetNodeProcess'); }
+        function displayPrintData(printData) {
+            const printDataContainer = document.getElementById('print-data-container');
+            printDataContainer.innerHTML = `<p><strong>Print Data:</strong> ${printData}</p>`;
+            // const printDataParagraph = document.createElement('p');
+            // printDataParagraph.innerHTML = `<strong>Print Data:</strong> ${printData}`;
+            // printDataContainer.appendChild(printDataParagraph);
+        }
+        socket.on('printData', (printData) => { displayPrintData(printData); });
+        socket.on("S2CAck", (handShakeData) => { console.log(`S2C: ${handShakeData}`); });
+    </script>
+</body>
+
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HotW</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+    <h1>The Humiliation of the Word</h1>
+    <button onclick="handleButtonPress()">START</button>
+    <script>
+        const socket = io();
+        function handleButtonPress() { 
+            socket.emit("buttonPress"); 
+        }
+        socket.on("S2C", (data) => { console.log(`S2C: ${data}`); });
+    </script>
+</body>
+
+</html> -->
