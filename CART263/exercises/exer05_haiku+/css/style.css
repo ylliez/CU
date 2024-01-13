@@ -1,0 +1,31 @@
+/*********************************************
+
+Here is a description of any special CSS used.
+By default that's nothing.
+
+**********************************************/
+
+body {
+  background-color: #fff;
+  margin: 0% 0%;
+}
+
+#haiku {
+  font-family: cursive;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+
+p { position: absolute; }
+#line-1 { top: 15vh; left: 25vw; }
+#line-2 { top: 30vh; left: 35vw; }
+#line-3 { top: 45vh; left: 55vw; }
+
+button {
+  position: absolute;
+  display: none;
+  top: 75vh;
+}
+#buttNew { left: 33%; }
+#buttPrint { left: 66%; }

@@ -1,0 +1,32 @@
+body {{
+  font-family: cursive;}
+}
+
+label {
+  display: inline-block;
+  width: 5em;
+  z-index: 1;
+}
+
+#answer {
+  height: 100px;
+  width: auto;
+  background-color: #ccc;
+  font-size: 100px;
+  text-align: center;
+}
+
+#text {
+  margin: 25px;
+  text-align: center;
+  font-size: 70px;
+}
+
+.found { background-color: #f00; }
+
+#hidden{ display: none; }
+
+.message {
+  background-color: green;
+  padding-left: 10px;
+}

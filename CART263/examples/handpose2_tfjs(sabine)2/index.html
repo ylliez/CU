@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<head>
+<title> TEST 123</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Require the peer dependencies of hand-pose-detection. -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+
+<!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
+ <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection"></script>
+
+
+    <!-- p5 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/addons/p5.sound.min.js"></script>
+
+<script src = "indexHandTest.js"></script>
+<style>
+  canvas{
+    top:0;
+    left:0;
+    position:absolute;
+  }
+  video{
+      visibility: hidden;
+
+
+  }
+  </style>
+
+</head>
+<body>
+
+    <video id="video"  autoplay="autoplay" controls="true" ></video>
+
+ </body>

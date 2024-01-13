@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CART263</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="icon" type="image/ico" href="favicon.ico">
+    <meta charset=“utf-8”>
+  </head>
+  <body>
+    <header>
+    <div class="title">CART263</div>
+    <div class="subtitle">Creative Computation II</div>
+    <div class="menu">
+      <ul>
+        <li>lectures
+          <ul>
+            <li> <a href="lectures/lect01_review/">lecture 1 - Review</a> </li>
+            <li> <a href="lectures/lect02_voices/">lecture 2 - Voices</a> </li>
+            <li> <a href="lectures/lect03_data/">lecture 3 - Data</a> </li>
+            <li> <a href="lectures/lect04_AI/">lecture 4 - AI</a> </li>
+            <li> <a href="lectures/lect05_webpage/">lecture 5 - Webpage</a> </li>
+            <li> <a href="lectures/lect06_jQuery/">lecture 6 - jQuery</a> </li>
+            <li> <a href="lectures/lect07_jQueryUI/">lecture 7 - jQuery UI</a> </li>
+            <li> <a href="lectures/lect08_phaser/">lecture 8 - Phaser</a> </li>
+          </ul>
+        </li>
+        <li>activities
+          <ul>
+            <li> <a href="activities/actv01_sausageDog/">activity 1 - Where's Sausage Dog?</a></li>
+            <li> <a href="activities/actv02_slamina/">activity 2 - Slamina</a></li>
+            <li> <a href="activities/actv03_spies/">activity 3 - Spy Profile Generator</a></li>
+            <li> <a href="activities/actv04_bubble/">activity 4 - Bubble Popper</a></li>
+            <li> <a href="activities/actv05_haiku/">activity 5 - Haiku Generator</a></li>
+            <li> <a href="activities/actv06_redact/">activity 6 - Raving Redactor</a></li>
+            <li> <a href="activities/actv07_code/">activity 7 - Code Taker</a></li>
+            <li> <a href="activities/actv08_sadness/">activity 8 - Seeking Sadness</a></li>
+          </ul>
+        </li>
+        <li>exercises
+          <ul>
+            <li> <a href="exercises/exer01_sausageDog+/">exercise 1 - Where's Sausage Dog?+</a></li>
+            <li> <a href="exercises/exer02_slamina+/">exercise 2 - Slamina+</a></li>
+            <li> <a href="exercises/exer03_spies+/">exercise 3 - Spy Profile Generator+</a></li>
+            <li> <a href="exercises/exer04_bubble+/">exercise 4 - Bubble Popper+</a></li>
+            <li> <a href="exercises/exer05_haiku+/">exercise 5 - Haiku Generator+</a></li>
+            <li> <a href="exercises/exer06_redact+/">exercise 6 - Raving Redactor+</a></li>
+            <li> <a href="exercises/exer07_code+/">exercise 7 - Code Taker+</a></li>
+            <li> <a href="exercises/exer08_sadness+/">exercise 8 - Seeking Sadness+</a></li>
+          </ul>
+        </li>
+        <li>projects
+          <ul>
+            <li> <a id="proj1_link" href="projects/proj01_movieNight/">project 1 - A Night at the Movies</a>
+              <ul>
+                <li> <a href="projects/proj01_movieNight/proj01_clockPyright/">01.1_Clock Pyright</a> </li>
+                <li> <a href="projects/proj01_movieNight/proj01_steelyStylite/">01.2_Steely Stylite</a> </li>
+                <li> <a href="projects/proj01_movieNight/proj01_doigtAndalou/">01.3_Doigt Andalou</a> </li>
+              </ul>
+              </li>
+              <li>project 2 - Anything
+                <ul>
+                  <li> <a href="projects/proj02_proposal/">02_Prototype</a> </li>
+                  <li> <a href="projects/proj02_telomatic/">02_Project</a> </li>
+                </ul>
+              </li>
+          </ul>
+        </li>
+        <li>examples</i></a>
+          <ul>
+            <li> <a href="examples/charRNN">charRNN</a></li>
+            <li> <a href="examples/RiTa">Rita</a></li>
+            <li> <a href="examples/wordle">wordle</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </header>
+  <script type="text/javascript">
+  	let proj1_URLs = ["clockPirate", "steelyStylite", "doigtAndalou"];
+    document.getElementById('proj1_link').href = `projects/proj01_movieNight/proj01_${proj1_URLs[Math.floor(Math.random()*3)]}/`;
+  </script>
+</body>
+<footer>
+  <span class="lAlign">
+    <a href="."> <i class="fa fa-home"></i></a>
+  </span>
+  <span>illiez, 2021</span>
+  <span class="rAlign">
+    <a href="https://www.youtube.com/channel/UC7iSss5svNGAQXHGDte47LA" target="_blank"><i class="fa fa-youtube-play"></i></a>
+    <a href="https://www.instagram.com/illeyai/" target="_blank"><i class="fa fa-instagram"></i></a>
+    <a href="https://www.facebook.com/illiez" target="_blank"><i class="fa fa-facebook"></i></a>
+  </span>
+</footer>
+</html>

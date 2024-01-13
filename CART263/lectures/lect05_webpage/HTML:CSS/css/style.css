@@ -1,0 +1,35 @@
+body { /* selector, applies styling information to body of HTML */
+  font-family: Helvetica, sans-serif; /* property name: value, ?fallback; */
+}
+
+h1 {
+  font-size: 3rem;  /* root em (rem) is default for overall html tag, multiples */
+}
+
+h2 {
+  text-decoration: underline;
+}
+
+p {
+  color: #444444;
+}
+
+strong, em {  /* multiple selectors separated by comma */
+  color: #4488aa;
+}
+
+#first-section {  /* id selector */
+  background-color: rgb(200,200,200);
+}
+
+.sub-sub { /* class selector */
+ background-color: rgb(200,255,255);
+}
+
+.sub-em {
+  font-family: monospace;
+}
+
+a:hover { /* pseudo-classes, added to existing selectors */
+  color: yellow;
+}

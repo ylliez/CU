@@ -1,0 +1,76 @@
+<!DOCTYPE html>  <!-- obligatory document type declaration -->
+
+<html>  <!-- container for entire content -->
+
+  <head>  <!-- undisplayed webpage information (e.g. title, css, js, meta) -->
+
+    <meta charset="utf-8">  <!-- ??? -->
+    <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>  <!-- ??? -->
+
+    <title>Title of webpage</title>  <!-- title appearing on browser and bookmark -->
+
+    <link rel="stylesheet" type="text/css" href="css/style.css" />  <!-- CSS stylesheet link -->
+
+    <style> p { color: #ff0000; } </style>  <!-- addition style in HMTL head, overrides .css file style -->
+
+     <!-- Library script(s) <script src="XXX.js"></script> -->
+
+  </head>  <!-- usually obligatory tag closure using </tag_name> -->
+
+  <body>  <!-- webpage content opening tag -->
+
+    <div>  <!-- invisible structuring tag -->
+
+      <p>A paragraph of text. </p>  <!-- plain text -->
+
+      <p>Another paragraph of text. </p>
+
+    </div>
+
+    <header>  <!-- more specific structuring tag -->
+
+      <h1>Main heading</h1>  <!-- heading specified by level; h1 (top-level) -> h6 -->
+
+    </header>
+
+    <section id="first-section">  <!-- given an id for styling -->
+
+      <h2>Sub-heading</h2> <!-- h2 sub-heading <h1 but >h3-6 -->
+
+      <p>An <em>emphasized</em> word.</p>  <!-- <em> for emphasis, default italicized -->
+
+      <p>An <strong>strong</strong> word.</p>  <!-- <strong> for importance, default bolded -->
+
+    </section>
+
+    <section id="second-section">
+
+      <h2>Another <span class="sub-em">sub</span>-heading</h2> <!-- styling span with class -->
+
+      <h3 class="sub-sub">A sub-sub-heading</h3>  <!-- given an class for styling -->
+
+      <p>A <a href="https://thi.cc/">thicc link</a>.</p>  <!-- a hypertext link -->
+
+      <h3 class="sub-sub" style="color: #ff00ff;">Another sub-sub-heading</h3>  <!-- span styling -->
+
+      <img src="assets/images/clown.png" alt="A clown emoji.">  <!-- an image -->
+
+    </section>
+
+    <section id="third-section">
+
+      <h2 class="image-display">A third <span class="sub-em">sub</span>-heading</h2>
+
+      <a href="https://thi.cc/">
+        <img src="assets/images/clown.png" alt="A clown emoji.">  <!-- an image in a hypertext link -->
+      </a>
+    </section>
+
+    <footer>
+      <strong>Contact details</strong>: don't call me, I'll call you.
+    </footer>
+
+    <!-- local script(s) <script src="js/script.js"></script>  -->
+
+  </body>
+</html>
