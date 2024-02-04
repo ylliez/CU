@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>[ml5.js - PoseNet]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+</head>
+
+<body>
+    <h1>[ml5.js - PoseNet - template]</h1>
+    <canvas id="canvas" width="640" height="480"></canvas>
+    <video id="video" width="640" height="480" autoplay style="display: none"></video>
+    <script>
+        var video = document.getElementById("video");
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+
+        let poses = [];
+
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
+                video.srcObject = stream;
+                video.play();
+            });
+        }
+
+        function drawCameraIntoCanvas() {
+            ctx.drawImage(video, 0, 0, 640, 480);
+            drawKeypoints();
+            drawSkeleton();
+            window.requestAnimationFrame(drawCameraIntoCanvas);
+        }
+
+        drawCameraIntoCanvas();
+
+        const poseNet = ml5.poseNet(video, modelReady);
+        poseNet.on("pose", gotPoses);
+
+        function gotPoses(results) { poses = results; }
+
+        function modelReady() { poseNet.multiPose(video); }
+
+        function drawKeypoints() {
+            for (let i = 0; i < poses.length; i += 1) {
+                for (let j = 0; j < poses[i].pose.keypoints.length; j += 1) {
+                    let keypoint = poses[i].pose.keypoints[j];
+                    if (keypoint.score > 0.2) {
+                        ctx.strokeStyle = "red";
+                        ctx.lineWidth = 5;
+                        ctx.beginPath();
+                        ctx.arc(keypoint.position.x, keypoint.position.y, 1, 0, 2 * Math.PI);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        // A function to draw the skeletons
+        function drawSkeleton() {
+            // Loop through all the skeletons detected
+            for (let i = 0; i < poses.length; i += 1) {
+                // For every skeleton, loop through all body connections
+                for (let j = 0; j < poses[i].skeleton.length; j += 1) {
+                    let partA = poses[i].skeleton[j][0];
+                    let partB = poses[i].skeleton[j][1];
+                    ctx.strokeStyle = "green";
+                    ctx.beginPath();
+                    ctx.moveTo(partA.position.x, partA.position.y);
+                    ctx.lineTo(partB.position.x, partB.position.y);
+                    ctx.stroke();
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

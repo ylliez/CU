@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Screen Luminosity</title>
+</head>
+
+<body>
+    <h1>Brightness Control</h1>
+    <button id="increaseBtn">Increase Brightness</button>
+    <button id="decreaseBtn">Decrease Brightness</button>
+
+    <script>
+        const increaseBtn = document.getElementById('increaseBtn');
+        const decreaseBtn = document.getElementById('decreaseBtn');
+
+        increaseBtn.addEventListener('click', () => {
+            fetch('/increase-brightness')
+                .then(() => location.reload());
+        });
+
+        decreaseBtn.addEventListener('click', () => {
+            fetch('/decrease-brightness')
+                .then(() => location.reload());
+        });
+    </script>
+</body>
+
+</html>

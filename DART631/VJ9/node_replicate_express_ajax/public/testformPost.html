@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>DART631 - AEYE</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+    <script src="clientPost.js"></script>
+</head>
+
+<body>
+    <!-- <h1> Input, upload and send some data using POST!</h1>
+    <div id="container">
+        <form id="formFavs" action="">
+            <p><label> FAVORITE COLOR:</label> <input id="color" type="text" value="default" name="color" /></p>
+            <p><label> FAVORITE CITY:</label> <input id="city" type="text" value="default" name="city" /></p>
+            <p><label> UPLOAD IMAGE:</label> <input id="imageF" type="file" value="default" name="imageF" /></p>
+            <p><input id="uploadFavs" type="submit" value="SUBMIT YOUR CHOICES" />
+            </form>
+        </div> -->
+    <h1>AEYE</h1>
+    <h2>LIVE FEED - edge detection</h2>
+    <canvas id="canvas2" width="640" height="480"></canvas>
+    <video id="video" width="640" height="480" autoplay style="display: none;"></video>
+    <canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
+    <video id="video2" width="640" height="480" autoplay controls style="display: none;"></video>
+    <!-- <video id="video" width="49%%" autoplay></video>
+        <canvas id="canvas" width="320" height="240"></canvas>
+        <video id="video2" width="49%" autoplay controls></video> -->
+    <h2>EYE VISION - perception extrapolation</h2>
+    <button id="buttonGen" style="display:block;">GENERATE SNAPSHOT</button>
+    <div id="container">
+        <!-- <p> Labeled as <span id="result">...</span> with a confidence of <span id="probability">...</span>. </p> -->
+        <p>
+            It's a <span id="result">...</span>!
+            <br> <span id="probability">...</span>
+        </p>
+        <img id="image1" src="../assets/line.png" width="49.5%" />
+        <img id="image2" src="../assets/line.png" width="49.5%" />
+    </div>
+</body>
+
+</html>
