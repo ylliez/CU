@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Image Processing</title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+
+    .imageBig {
+      width: 24%;
+      margin-right: 0.5%;
+    }
+
+    .imageSmall {
+      width: 13.5%;
+      margin-top: 0.5%;
+      margin-right: 0.5%;
+    }
+  </style>
+</head>
+
+<body>
+  <div style="display: flex;">
+    <!-- <img id="originalImage" class="imageBig" alt="Original Image" src="origImage.jpeg"> -->
+    <img id="gridImage0" class="imageBig" alt="Grid Image">
+    <img id="outputImage0" class="imageBig" alt="Output Image">
+    <!-- <img id="materialImage" class="imageBig" alt="Material Image" src="matImage.jpeg"> -->
+    <img id="gridImage1" class="imageBig" alt="Grid Image">
+    <img id="outputImage1" class="imageBig" alt="Output Image">
+    <img id="gridMat" class="imageBig" alt="Grid Image">
+    <img id="materialImageOutput" class="imageBig" alt="Material Image">
+  </div>
+  <div style="display: flex;">
+    <img id="outputImage2" class="imageSmall" alt="Output 2 Image">
+    <img id="outputImage3" class="imageSmall" alt="Output 3 Image">
+    <img id="outputImage4" class="imageSmall" alt="Output 4 Image">
+    <img id="outputImage5" class="imageSmall" alt="Output 5 Image">
+    <img id="outputImage6" class="imageSmall" alt="Output 6 Image">
+    <img id="outputImage7" class="imageSmall" alt="Output 7 Image">
+    <img id="outputImage8" class="imageSmall" alt="Output 8 Image">
+  </div>
+  <script>
+    const image = new Image();
+    // image.src = 'image.png';
+    image.src = 'origImage.jpeg';
+
+    const matImage = new Image();
+    matImage.src = 'matImage.jpeg';
+
+    image.onload = function () {
+      const canvas = document.createElement('canvas');
+      canvas.width = image.width;
+      canvas.height = image.height;
+      const context = canvas.getContext('2d');
+      context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+      const matCanvas = document.createElement('canvas');
+      matCanvas.width = matImage.width;
+      matCanvas.height = matImage.height;
+      const matContext = matCanvas.getContext('2d');
+      matContext.drawImage(matImage, 0, 0, matCanvas.width, matCanvas.height);
+
+      splitImage(0, canvas, context, 12, 8);
+      splitImage(1, matCanvas, matContext, 12, 8);
+      for (let i = 0; i < 7; i++) {
+        let r = 3 * (2 ** i);
+        let c = 2 ** (i + 1);
+        splitImage(i + 2, canvas, context, r, c);
+      }
+      // splitImage(2, canvas, context, 3, 2);
+      // splitImage(3, canvas, context, 6, 4);
+      // splitImage(4, canvas, context, 12, 8);
+      // splitImage(5, canvas, context, 24, 16);
+      // splitImage(6, canvas, context, 48, 32);
+      // splitImage(7, canvas, context, 96, 64);
+      // splitImage(8, canvas, context, 192, 128);
+      // splitImage(9, canvas, context, 384, 256);
+    };
+
+    function splitImage(n, cnv, ctx, rows, columns) {
+      // Define grid (# rows and columns, square size)
+      let squareWidth = cnv.width / columns;
+      let squareHeight = cnv.height / rows;
+
+      // Draw grid lines on the original image
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.95)';
+      ctx.lineWeight = 5;
+
+      for (let i = 1; i < rows; i++) {
+        ctx.beginPath();
+        ctx.moveTo(0, i * squareHeight);
+        ctx.lineTo(cnv.width, i * squareHeight);
+        ctx.stroke();
+      }
+
+      for (let i = 1; i < columns; i++) {
+        ctx.beginPath();
+        ctx.moveTo(i * squareWidth, 0);
+        ctx.lineTo(i * squareWidth, cnv.height);
+        ctx.stroke();
+      }
+
+      // Convert cnv to a data URL, create a new image element with the data URL, and display it
+      if (n < 2) {
+        let gridDataURL = cnv.toDataURL('image/png');
+        let gridImage = new Image();
+        document.getElementById(`gridImage${n}`).src = gridDataURL;
+      }
+
+      // Create a new cnv for the output image
+      let outputCanvas = document.createElement('canvas');
+      outputCanvas.width = cnv.width;
+      outputCanvas.height = cnv.height;
+      let outputCtx = outputCanvas.getContext('2d');
+
+      // Iterate over each square in the grid
+      for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < columns; col++) {
+          // Calculate the coordinates of the current square
+          let x = col * squareWidth;
+          let y = row * squareHeight;
+
+          // Get the pixel data for the current square
+          let imageData = ctx.getImageData(x, y, squareWidth, squareHeight);
+          let pixels = imageData.data;
+
+          // Initialize variables to store the total color components
+          let totalRed = 0;
+          let totalGreen = 0;
+          let totalBlue = 0;
+
+          // Iterate over the pixels in the square
+          for (let i = 0; i < pixels.length; i += 4) {
+            // Extract the red, green, and blue components of the pixel
+            let red = pixels[i];
+            let green = pixels[i + 1];
+            let blue = pixels[i + 2];
+
+            // Add the color components to the totals
+            totalRed += red;
+            totalGreen += green;
+            totalBlue += blue;
+          }
+
+          // Calculate the average color for the square
+          let numPixels = squareWidth * squareHeight;
+          let averageRed = totalRed / numPixels;
+          let averageGreen = totalGreen / numPixels;
+          let averageBlue = totalBlue / numPixels;
+
+          // Set the fill style to the average color
+          outputCtx.fillStyle = `rgb(${averageRed.toFixed(0)}, ${averageGreen.toFixed(0)}, ${averageBlue.toFixed(0)})`;
+
+          // Draw a rectangle with the average color
+          outputCtx.fillRect(x, y, squareWidth, squareHeight);
+        }
+      }
+
+      // Convert canvas to a data URL, create a new image element with the data URL, and display it
+      let outputDataURL = outputCanvas.toDataURL('image/png');
+      let outputImage = new Image();
+      document.getElementById(`outputImage${n}`).src = outputDataURL;
+    };
+  </script>
+</body>
+
+</html>
